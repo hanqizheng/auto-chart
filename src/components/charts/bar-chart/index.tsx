@@ -2,33 +2,111 @@
 
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { ChartContainer } from "@/components/ui/chart";
+import { BarChartProps, BarChartValidationResult, BarChartData } from "./types";
 
-interface BarChartData {
-  [key: string]: string | number;
+/**
+ * 验证柱状图数据格式和完整性
+ */
+export function validateBarChartData(data: BarChartData): BarChartValidationResult {
+  const errors: string[] = [];
+  
+  // 检查数据是否存在且非空
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    errors.push("数据不能为空");
+    return {
+      isValid: false,
+      errors,
+      stats: {
+        dataPointCount: 0,
+        seriesCount: 0,
+        categoryKey: "",
+        valueKeys: [],
+      },
+    };
+  }
+
+  // 检查数据点结构一致性
+  const firstItem = data[0];
+  const keys = Object.keys(firstItem);
+  
+  if (keys.length < 2) {
+    errors.push("每个数据点至少需要包含 2 个字段（1个分类字段 + 至少1个数值字段）");
+  }
+
+  const categoryKey = keys[0];
+  const valueKeys = keys.slice(1);
+  
+  // 验证数据类型一致性
+  data.forEach((item, index) => {
+    const itemKeys = Object.keys(item);
+    
+    // 检查字段数量一致性
+    if (itemKeys.length !== keys.length) {
+      errors.push(`数据点 ${index} 的字段数量与第一个数据点不一致`);
+    }
+    
+    // 检查分类字段类型
+    if (typeof item[categoryKey] !== 'string') {
+      errors.push(`数据点 ${index} 的分类字段 "${categoryKey}" 必须为字符串类型`);
+    }
+    
+    // 检查数值字段类型
+    valueKeys.forEach(key => {
+      const value = item[key];
+      if (typeof value !== 'number' || isNaN(value)) {
+        errors.push(`数据点 ${index} 的数值字段 "${key}" 必须为有效数字`);
+      }
+    });
+  });
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    stats: {
+      dataPointCount: data.length,
+      seriesCount: valueKeys.length,
+      categoryKey,
+      valueKeys,
+    },
+  };
 }
 
-interface BarChartProps {
-  data: BarChartData[];
-  config: ChartConfig;
-  title?: string;
-  description?: string;
-  className?: string;
-}
-
+/**
+ * 美化柱状图组件
+ * 专为静态图像导出设计，显示完整的数据信息和统计分析
+ */
 export function BeautifulBarChart({ data, config, title, description, className }: BarChartProps) {
-  if (!data?.length) return null;
+  // 数据验证
+  const validation = validateBarChartData(data);
+  
+  if (!validation.isValid) {
+    return (
+      <Card className={className}>
+        <CardHeader>
+          <CardTitle className="text-red-600">数据格式错误</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-red-600 space-y-1">
+            {validation.errors.map((error, index) => (
+              <p key={index} className="text-sm">• {error}</p>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
-  const xAxisKey = Object.keys(data[0])[0];
-  const dataKeys = Object.keys(config);
+  const { stats } = validation;
+  const { categoryKey, valueKeys } = stats;
 
-  // Calculate totals and stats for display
-  const totalDataPoints = data.length;
-  const dataRange =
-    data.length > 0 ? `${data[0][xAxisKey]} - ${data[data.length - 1][xAxisKey]}` : "";
+  // 计算统计数据
+  const dataRange = data.length > 0 
+    ? `${data[0][categoryKey]} - ${data[data.length - 1][categoryKey]}` 
+    : "";
 
-  // Calculate max values for each series
-  const maxValues = dataKeys.map(key => {
+  // 计算每个系列的最大值
+  const maxValues = valueKeys.map(key => {
     const max = Math.max(...data.map(item => Number(item[key]) || 0));
     return { key, max };
   });
@@ -38,26 +116,26 @@ export function BeautifulBarChart({ data, config, title, description, className 
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span>{title}</span>
-          <div className="text-muted-foreground text-sm font-normal">Bar Chart</div>
+          <div className="text-muted-foreground text-sm font-normal">柱状图</div>
         </CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
 
-        {/* Data Summary */}
+        {/* 数据概览 */}
         <div className="grid grid-cols-2 gap-4 text-sm md:grid-cols-4">
           <div className="space-y-1">
-            <p className="text-muted-foreground">Data Points</p>
-            <p className="font-semibold">{totalDataPoints}</p>
+            <p className="text-muted-foreground">数据点</p>
+            <p className="font-semibold">{stats.dataPointCount}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-muted-foreground">Series</p>
-            <p className="font-semibold">{dataKeys.length}</p>
+            <p className="text-muted-foreground">数据系列</p>
+            <p className="font-semibold">{stats.seriesCount}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-muted-foreground">Range</p>
+            <p className="text-muted-foreground">数据范围</p>
             <p className="text-xs font-semibold">{dataRange}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-muted-foreground">Peak Values</p>
+            <p className="text-muted-foreground">峰值数据</p>
             <div className="space-y-0.5">
               {maxValues.slice(0, 2).map(({ key, max }) => (
                 <div key={key} className="flex items-center gap-1">
@@ -90,7 +168,7 @@ export function BeautifulBarChart({ data, config, title, description, className 
               opacity={0.3}
             />
             <XAxis
-              dataKey={xAxisKey}
+              dataKey={categoryKey}
               tickLine={false}
               axisLine={false}
               tick={{ fontSize: 12 }}
@@ -104,8 +182,7 @@ export function BeautifulBarChart({ data, config, title, description, className 
               tick={{ fontSize: 12 }}
               tickFormatter={value => value.toLocaleString()}
             />
-            {/* Removed tooltip since we're showing values directly on bars */}
-            {dataKeys.map(key => (
+            {valueKeys.map(key => (
               <Bar
                 key={key}
                 dataKey={key}
@@ -128,15 +205,15 @@ export function BeautifulBarChart({ data, config, title, description, className 
           </BarChart>
         </ChartContainer>
 
-        {/* Complete Data Table - All values visible for static export */}
+        {/* 完整数据表格 - 为静态导出显示所有数值 */}
         <div className="mt-6 space-y-4">
-          <h4 className="text-sm font-semibold">Complete Data Values</h4>
+          <h4 className="text-sm font-semibold">完整数据表</h4>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr className="border-b">
-                  <th className="p-2 text-left font-semibold">{xAxisKey}</th>
-                  {dataKeys.map(key => (
+                  <th className="p-2 text-left font-semibold">{categoryKey}</th>
+                  {valueKeys.map(key => (
                     <th key={key} className="p-2 text-right font-semibold">
                       <div className="flex items-center justify-end gap-2">
                         <div
@@ -152,8 +229,8 @@ export function BeautifulBarChart({ data, config, title, description, className 
               <tbody>
                 {data.map((item, index) => (
                   <tr key={index} className={index % 2 === 0 ? "bg-muted/20" : ""}>
-                    <td className="p-2 font-mono">{item[xAxisKey]}</td>
-                    {dataKeys.map(key => (
+                    <td className="p-2 font-mono">{item[categoryKey]}</td>
+                    {valueKeys.map(key => (
                       <td key={key} className="p-2 text-right font-mono">
                         {Number(item[key]).toLocaleString()}
                       </td>
@@ -165,9 +242,9 @@ export function BeautifulBarChart({ data, config, title, description, className 
           </div>
         </div>
 
-        {/* Summary Statistics */}
+        {/* 统计摘要 */}
         <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-          {dataKeys.map(key => {
+          {valueKeys.map(key => {
             const total = data.reduce((sum, item) => sum + (Number(item[key]) || 0), 0);
             const avg = total / data.length;
             return (
@@ -179,7 +256,7 @@ export function BeautifulBarChart({ data, config, title, description, className 
                 <div className="space-y-0.5">
                   <div className="font-medium">{config[key]?.label || key}</div>
                   <div className="text-muted-foreground text-xs">
-                    Avg: {avg.toFixed(1)} | Total: {total.toLocaleString()}
+                    平均: {avg.toFixed(1)} | 总计: {total.toLocaleString()}
                   </div>
                 </div>
               </div>
@@ -190,3 +267,6 @@ export function BeautifulBarChart({ data, config, title, description, className 
     </Card>
   );
 }
+
+// 默认导出
+export default BeautifulBarChart;
