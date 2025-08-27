@@ -1,0 +1,52 @@
+{
+  "common": {
+    "send": "Send",
+    "cancel": "Cancel",
+    "upload": "Upload",
+    "clear": "Clear",
+    "export": "Export",
+    "loading": "Loading...",
+    "refresh": "Refresh"
+  },
+  "chat": {
+    "inputPlaceholder": "Type your message...",
+    "uploadFile": "Upload File",
+    "dragDropHint": "Drag and drop files here or click to upload",
+    "supportedFormats": "Supports Excel, CSV files",
+    "attachedFiles": "Attached Files",
+    "removeFile": "Remove File",
+    "aiThinking": "AI is thinking...",
+    "aiTyping": "AI is typing...",
+    "noMessages": "No messages yet",
+    "startConversation": "Start a conversation"
+  },
+  "chart": {
+    "preview": "Chart Preview",
+    "noChart": "No Chart",
+    "generateChart": "Enter content on the left to generate a chart",
+    "chartTypes": {
+      "bar": "Bar Chart",
+      "line": "Line Chart",
+      "pie": "Pie Chart",
+      "area": "Area Chart"
+    }
+  },
+  "layout": {
+    "chatPosition": "Chat Position",
+    "left": "Left",
+    "right": "Right"
+  },
+  "mobile": {
+    "tabs": {
+      "chat": "Chat",
+      "chart": "Chart"
+    }
+  },
+  "errors": {
+    "fileUploadFailed": "File upload failed",
+    "unsupportedFileType": "Unsupported file type",
+    "fileTooLarge": "File too large",
+    "networkError": "Network error",
+    "aiError": "AI processing error"
+  }
+}

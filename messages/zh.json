@@ -1,0 +1,52 @@
+{
+  "common": {
+    "send": "发送",
+    "cancel": "取消",
+    "upload": "上传",
+    "clear": "清空",
+    "export": "导出",
+    "loading": "加载中...",
+    "refresh": "刷新"
+  },
+  "chat": {
+    "inputPlaceholder": "请输入您的消息...",
+    "uploadFile": "上传文件",
+    "dragDropHint": "拖拽文件到此处或点击上传",
+    "supportedFormats": "支持 Excel、CSV 文件",
+    "attachedFiles": "已附加文件",
+    "removeFile": "移除文件",
+    "aiThinking": "AI 正在思考...",
+    "aiTyping": "AI 正在输入...",
+    "noMessages": "暂无聊天记录",
+    "startConversation": "开始对话"
+  },
+  "chart": {
+    "preview": "图表预览",
+    "noChart": "暂无图表",
+    "generateChart": "请在左侧输入内容生成图表",
+    "chartTypes": {
+      "bar": "柱状图",
+      "line": "折线图",
+      "pie": "饼图",
+      "area": "面积图"
+    }
+  },
+  "layout": {
+    "chatPosition": "聊天位置",
+    "left": "左侧",
+    "right": "右侧"
+  },
+  "mobile": {
+    "tabs": {
+      "chat": "聊天",
+      "chart": "图表"
+    }
+  },
+  "errors": {
+    "fileUploadFailed": "文件上传失败",
+    "unsupportedFileType": "不支持的文件类型",
+    "fileTooLarge": "文件过大",
+    "networkError": "网络错误",
+    "aiError": "AI 处理出错"
+  }
+}
