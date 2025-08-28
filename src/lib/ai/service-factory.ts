@@ -32,9 +32,15 @@ export class DefaultAIServiceFactory implements AIServiceFactory {
    * 创建 AI 服务实例
    */
   createService(provider: AIServiceProvider, config: AIModelConfig): AIService {
-
     // 合并默认配置
     const mergedConfig = this.mergeWithDefaults(provider, config);
+
+    // 检查是否有缓存实例
+    const cacheKey = `${provider}-${config.modelName}`;
+    const cachedService = this.serviceInstances.get(cacheKey);
+    if (cachedService) {
+      return cachedService;
+    }
 
     // 创建服务实例
     let service: AIService;
@@ -70,8 +76,7 @@ export class DefaultAIServiceFactory implements AIServiceFactory {
         );
     }
 
-    // 缓存服务实例（可选）
-    const cacheKey = `${provider}-${config.modelName}`;
+    // 缓存服务实例
     this.serviceInstances.set(cacheKey, service);
 
     return service;
@@ -293,7 +298,6 @@ export function createDeepseekService(config: {
  * 便捷函数：使用环境变量创建服务
  */
 export function createServiceFromEnv(provider: AIServiceProvider = "deepseek"): AIService {
-  console.log('provider: ', provider);
   let apiKey: string;
   let modelName: string;
 
@@ -313,8 +317,6 @@ export function createServiceFromEnv(provider: AIServiceProvider = "deepseek"): 
     default:
       throw new Error(`不支持从环境变量创建 ${provider} 服务`);
   }
-
-  console.log('apiKey: ', apiKey, !apiKey);
 
   return createAIService(provider, {
     apiKey,

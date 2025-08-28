@@ -18,6 +18,9 @@ interface DeepseekRequest {
   frequency_penalty?: number;
   presence_penalty?: number;
   stream?: boolean;
+  response_format?: {
+    type: "text" | "json_object";
+  };
 }
 
 /**
@@ -82,6 +85,7 @@ export class DeepseekAIService extends BaseAIService {
       frequency_penalty: request.params?.frequencyPenalty,
       presence_penalty: request.params?.presencePenalty,
       stream: false,
+      response_format: request.params?.response_format,
     };
 
     // 使用重试机制发送请求

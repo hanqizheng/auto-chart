@@ -31,6 +31,9 @@ export interface AIModelConfig {
     topP?: number;
     frequencyPenalty?: number;
     presencePenalty?: number;
+    response_format?: {
+      type: "text" | "json_object";
+    };
   };
 }
 
