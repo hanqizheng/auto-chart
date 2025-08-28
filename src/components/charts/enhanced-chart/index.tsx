@@ -1,7 +1,5 @@
 "use client";
 
-import { useRef, useImperativeHandle, forwardRef } from "react";
-import { useBetterScreenshot } from "@/hooks/use-better-screenshot";
 import { BeautifulAreaChart } from "../area-chart";
 import { BeautifulBarChart } from "../bar-chart";
 import { BeautifulLineChart } from "../line-chart";
@@ -10,8 +8,6 @@ import {
   EnhancedChartProps,
   StandardChartData,
   ChartTypeValidationResult,
-  ExportConfig,
-  ShareConfig,
   ENHANCED_CHART_DEFAULTS,
 } from "./types";
 import { PieChartData } from "../pie-chart/types";
@@ -157,15 +153,9 @@ export function transformToPieData(data: StandardChartData): PieChartData {
 
 /**
  * 增强图表组件
- * 统一的图表包装器，支持所有图表类型和导出功能
+ * 统一的图表包装器，支持所有图表类型
  */
-export const EnhancedChart = forwardRef<
-  {
-    exportChart: (config?: Partial<ExportConfig>) => Promise<void>;
-    shareChart: (config?: Partial<ShareConfig>) => Promise<void>;
-  },
-  EnhancedChartProps
->(function EnhancedChart({
+export function EnhancedChart({
   type,
   data,
   config,
@@ -178,16 +168,7 @@ export const EnhancedChart = forwardRef<
   outerRadius = ENHANCED_CHART_DEFAULTS.outerRadius,
   showPercentage = ENHANCED_CHART_DEFAULTS.showPercentage,
   showLegend = ENHANCED_CHART_DEFAULTS.showLegend,
-}, ref) {
-  const chartRef = useRef<HTMLDivElement>(null);
-  const { isCapturing, error, exportChart } = useBetterScreenshot();
-
-  // 暴露导出和分享方法给父组件
-  useImperativeHandle(ref, () => ({
-    exportChart: handleExport,
-    shareChart: handleShare,
-  }), []);
-
+}: EnhancedChartProps) {
   // 验证数据兼容性
   const validation = validateChartTypeCompatibility(data, type);
 
@@ -206,157 +187,77 @@ export const EnhancedChart = forwardRef<
     );
   }
 
-  // 导出配置
-  const handleExport = async (config?: Partial<ExportConfig>) => {
-    if (!chartRef.current) return;
-
-    try {
-      const exportConfig = {
-        ...ENHANCED_CHART_DEFAULTS.export,
-        ...config,
-      };
-
-      const filename =
-        exportConfig.filename ||
-        `${title?.replace(/[^a-z0-9]/gi, "_") || "chart"}.${exportConfig.format}`;
-
-      await exportChart(chartRef.current, filename);
-    } catch (error) {
-      console.error("Export failed:", error);
-    }
-  };
-
-  // 分享配置
-  const handleShare = async (config?: Partial<ShareConfig>) => {
-    if (!chartRef.current) return;
-
-    try {
-      const shareConfig = {
-        ...ENHANCED_CHART_DEFAULTS.share,
-        title: title || ENHANCED_CHART_DEFAULTS.share.title,
-        text: description || ENHANCED_CHART_DEFAULTS.share.text,
-        url: window.location.href,
-        ...config,
-      };
-
-      // 现代浏览器的 Web Share API
-      if (navigator.share && typeof navigator.canShare === "function") {
-        await navigator.share({
-          title: shareConfig.title,
-          text: shareConfig.text,
-          url: shareConfig.url,
-        });
-      } else {
-        // 降级方案：复制到剪贴板
-        await navigator.clipboard.writeText(shareConfig.url);
-        // 这里可以显示一个 toast 通知，但现在先用 alert
-        alert("链接已复制到剪贴板!");
-      }
-    } catch (error) {
-      console.error("Share failed:", error);
-    }
-  };
-
   // 渲染对应的图表组件
-  const renderChart = () => {
-    switch (type) {
-      case "bar":
-        return (
-          <BeautifulBarChart
-            data={data as StandardChartData}
-            config={config}
-            title={title}
-            description={description}
-          />
-        );
+  switch (type) {
+    case "bar":
+      return (
+        <BeautifulBarChart
+          data={data as StandardChartData}
+          config={config}
+          title={title}
+          description={description}
+        />
+      );
 
-      case "line":
-        return (
-          <BeautifulLineChart
-            data={data as StandardChartData}
-            config={config}
-            title={title}
-            description={description}
-          />
-        );
+    case "line":
+      return (
+        <BeautifulLineChart
+          data={data as StandardChartData}
+          config={config}
+          title={title}
+          description={description}
+        />
+      );
 
-      case "pie":
-        // 数据格式转换处理
-        let pieData: PieChartData;
-        if (Array.isArray(data) && data.length > 0) {
-          const firstItem = data[0];
-          if ("name" in firstItem && "value" in firstItem) {
-            // 已经是饼图格式
-            pieData = data as PieChartData;
-          } else {
-            // 转换标准数据为饼图格式
-            pieData = transformToPieData(data as StandardChartData);
-          }
+    case "pie":
+      // 数据格式转换处理
+      let pieData: PieChartData;
+      if (Array.isArray(data) && data.length > 0) {
+        const firstItem = data[0];
+        if ("name" in firstItem && "value" in firstItem) {
+          // 已经是饼图格式
+          pieData = data as PieChartData;
         } else {
-          pieData = [];
+          // 转换标准数据为饼图格式
+          pieData = transformToPieData(data as StandardChartData);
         }
+      } else {
+        pieData = [];
+      }
 
-        return (
-          <BeautifulPieChart
-            data={pieData}
-            config={config}
-            title={title}
-            description={description}
-            showPercentage={showPercentage}
-            showLegend={showLegend}
-            innerRadius={innerRadius}
-            outerRadius={outerRadius}
-          />
-        );
+      return (
+        <BeautifulPieChart
+          data={pieData}
+          config={config}
+          title={title}
+          description={description}
+          showPercentage={showPercentage}
+          showLegend={showLegend}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+        />
+      );
 
-      case "area":
-        return (
-          <BeautifulAreaChart
-            data={data as StandardChartData}
-            config={config}
-            title={title}
-            description={description}
-            stacked={stacked}
-            fillOpacity={fillOpacity}
-          />
-        );
+    case "area":
+      return (
+        <BeautifulAreaChart
+          data={data as StandardChartData}
+          config={config}
+          title={title}
+          description={description}
+          stacked={stacked}
+          fillOpacity={fillOpacity}
+        />
+      );
 
-      default:
-        return (
-          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
-            <p className="text-sm text-gray-600">不支持的图表类型: {type}</p>
-          </div>
-        );
-    }
-  };
-
-  return (
-    <div className={className}>
-      {/* 错误显示 */}
-      {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/20 mb-4">
-          <p className="text-sm font-medium text-red-800 dark:text-red-400">❌ 导出错误</p>
-          <p className="mt-1 text-sm text-red-700 dark:text-red-300">{error}</p>
+    default:
+      return (
+        <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+          <p className="text-sm text-gray-600">不支持的图表类型: {type}</p>
         </div>
-      )}
-
-      {/* 图表容器 */}
-      <div ref={chartRef} data-chart-container className="no-capture-controls">
-        {renderChart()}
-      </div>
-
-      {/* 开发模式说明 */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="no-capture mt-4 rounded-lg border border-blue-200 bg-blue-50 p-3 dark:border-blue-800 dark:bg-blue-950/20">
-          <p className="text-sm text-blue-800 dark:text-blue-300">
-            💡 <strong>开发模式:</strong> 为了获得最佳的截图质量，你也可以使用系统的原生截图工具
-            (Mac 上的 Cmd+Shift+4，Windows 上的 Win+Shift+S) 直接截取图表区域。
-          </p>
-        </div>
-      )}
-    </div>
-  );
-});
+      );
+  }
+}
 
 // 默认导出
 export default EnhancedChart;

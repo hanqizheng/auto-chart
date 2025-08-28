@@ -11,6 +11,7 @@ import {
   RotateCcw,
   Share,
 } from "lucide-react";
+import { useChartExport } from "@/hooks/use-chart-export";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
@@ -33,23 +34,44 @@ interface ChartPreviewProps {
 
 export function ChartPreview({ chartData, onExport, onRefresh }: ChartPreviewProps) {
   const [selectedType, setSelectedType] = useState<ChartType>(CHART_TYPES.BAR);
-  const chartRef = useRef<{
-    exportChart: (config?: any) => Promise<void>;
-    shareChart: (config?: any) => Promise<void>;
-  }>(null);
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+  const { exportChart, isExporting, error } = useChartExport();
   const t = useTranslations();
 
   const handleExport = async () => {
-    if (chartRef.current) {
-      await chartRef.current.exportChart();
+    if (chartContainerRef.current) {
+      try {
+        const filename = chartData?.title?.replace(/[^a-z0-9]/gi, "_") || "chart";
+        await exportChart(chartContainerRef.current, {
+          filename,
+          format: "png",
+          scale: 2, // 高清导出
+          backgroundColor: "#ffffff",
+        });
+      } catch (error) {
+        console.error("Export failed:", error);
+      }
     } else if (onExport) {
       onExport("png");
     }
   };
 
   const handleShare = async () => {
-    if (chartRef.current) {
-      await chartRef.current.shareChart();
+    try {
+      const shareData = {
+        title: chartData?.title || "图表",
+        text: chartData?.description || "查看这个图表",
+        url: window.location.href,
+      };
+
+      if (navigator.share && typeof navigator.canShare === "function") {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(shareData.url);
+        alert("链接已复制到剪贴板!");
+      }
+    } catch (error) {
+      console.error("Share failed:", error);
     }
   };
 
@@ -111,10 +133,15 @@ export function ChartPreview({ chartData, onExport, onRefresh }: ChartPreviewPro
               variant="outline"
               size="sm"
               onClick={handleExport}
+              disabled={isExporting}
               className="flex items-center space-x-1"
             >
-              <Download className="h-4 w-4" />
-              <span>{t("common.export")}</span>
+              {isExporting ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              ) : (
+                <Download className="h-4 w-4" />
+              )}
+              <span>{isExporting ? "导出中..." : t("common.export")}</span>
             </Button>
           </div>
         </div>
@@ -138,10 +165,17 @@ export function ChartPreview({ chartData, onExport, onRefresh }: ChartPreviewPro
 
       {/* Chart Content */}
       <div className="flex-1 overflow-hidden p-6">
+        {/* 错误显示 */}
+        {error && (
+          <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/20">
+            <p className="text-sm font-medium text-red-800 dark:text-red-400">❌ 导出错误</p>
+            <p className="mt-1 text-sm text-red-700 dark:text-red-300">{error}</p>
+          </div>
+        )}
+
         <CardContent className="h-full">
-          <div className="h-[400px] w-full">
+          <div ref={chartContainerRef} className="h-[400px] w-full">
             <EnhancedChart
-              ref={chartRef}
               type={currentChartType}
               data={chartData.data}
               title={chartData.title}

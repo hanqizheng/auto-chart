@@ -4,7 +4,7 @@ import { useState } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import { ChatPanel } from "@/components/chat/chat-panel";
 import { ChartPreview } from "@/components/chart-preview";
-import { ChartGenerationResult } from "@/types/ai";
+import { ChartGenerationResult } from "@/lib/ai-chart-system";
 import { UploadedFile } from "@/types/chat";
 import { ExportFormat } from "@/types/common";
 
@@ -14,6 +14,14 @@ export default function Home() {
   const handleChartGenerate = (chartData: ChartGenerationResult) => {
     setCurrentChart(chartData);
   };
+
+  // 转换为ChartPreview期望的格式
+  const chartPreviewData = currentChart ? {
+    type: currentChart.chartType,
+    data: currentChart.data,
+    title: currentChart.title,
+    description: currentChart.description,
+  } : undefined;
 
   const handleMessageSend = (message: string, files: UploadedFile[]) => {
     console.log("Message sent:", message, "Files:", files);
@@ -35,7 +43,7 @@ export default function Home() {
       }
       chartPanel={
         <ChartPreview
-          chartData={currentChart}
+          chartData={chartPreviewData}
           onExport={handleChartExport}
           onRefresh={handleRefresh}
         />
