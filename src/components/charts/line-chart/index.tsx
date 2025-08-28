@@ -161,44 +161,6 @@ export function BeautifulLineChart({
         </CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
 
-        {/* 趋势分析摘要 */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {trendAnalysis.map(({ key, trend, changePercent, min, max, avg }) => (
-            <div key={key} className="bg-muted/30 space-y-2 rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div
-                    className="h-3 w-3 rounded-full"
-                    style={{ backgroundColor: config[key]?.color || `var(--color-${key})` }}
-                  />
-                  <span className="text-sm font-medium">{config[key]?.label || key}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  {trend === "up" && <TrendingUp className="h-4 w-4 text-green-500" />}
-                  {trend === "down" && <TrendingDown className="h-4 w-4 text-red-500" />}
-                  {trend === "stable" && <Minus className="h-4 w-4 text-gray-500" />}
-                  <span
-                    className={`font-mono text-sm ${
-                      trend === "up"
-                        ? "text-green-600"
-                        : trend === "down"
-                          ? "text-red-600"
-                          : "text-gray-600"
-                    }`}
-                  >
-                    {changePercent > 0 ? "+" : ""}
-                    {changePercent.toFixed(1)}%
-                  </span>
-                </div>
-              </div>
-              <div className="text-muted-foreground grid grid-cols-3 gap-2 text-xs">
-                <div>最小: {min.toFixed(1)}</div>
-                <div>平均: {avg.toFixed(1)}</div>
-                <div>最大: {max.toFixed(1)}</div>
-              </div>
-            </div>
-          ))}
-        </div>
       </CardHeader>
 
       <CardContent>
@@ -244,32 +206,43 @@ export function BeautifulLineChart({
             )}
 
             {/* 折线渲染 */}
-            {valueKeys.map(key => (
+            {valueKeys.map((key, index) => (
               <Line
                 key={key}
                 type="monotone"
                 dataKey={key}
-                stroke={`var(--color-${key})`}
+                stroke={config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 50%)`}
                 strokeWidth={3}
+                strokeOpacity={1}
                 dot={{
-                  fill: `var(--color-${key})`,
+                  fill: config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 50%)`,
                   strokeWidth: 2,
                   r: 6,
+                  stroke: "#fff",
+                }}
+                activeDot={{
+                  r: 8,
+                  stroke: config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 50%)`,
+                  strokeWidth: 2,
+                  fill: "#fff",
                 }}
                 name={String(config[key]?.label || key)}
+                animationBegin={index * 200}
+                animationDuration={1500}
+                connectNulls={false}
               />
             ))}
             
             {/* 数值标签 - 仅在系列较少时显示，避免重叠 */}
             {valueKeys.length <= 2 &&
-              valueKeys.map(key => (
+              valueKeys.map((key, index) => (
                 <LabelList
                   key={`label-${key}`}
                   dataKey={key}
                   position="top"
                   style={{
                     fontSize: "9px",
-                    fill: config[key]?.color || `var(--color-${key})`,
+                    fill: config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 45%)`,
                     fontWeight: "700",
                     textShadow: "0 1px 2px rgba(255,255,255,0.8)",
                   }}
@@ -279,73 +252,7 @@ export function BeautifulLineChart({
           </LineChart>
         </ChartContainer>
 
-        {/* 完整数据表格 - 为静态导出显示所有数值 */}
-        <div className="mt-6 space-y-4">
-          <h4 className="text-sm font-semibold">完整数据表</h4>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
-              <thead>
-                <tr className="border-b">
-                  <th className="p-2 text-left font-semibold">{xAxisKey}</th>
-                  {valueKeys.map(key => (
-                    <th key={key} className="p-2 text-right font-semibold">
-                      <div className="flex items-center justify-end gap-2">
-                        <div
-                          className="h-3 w-3 rounded-full"
-                          style={{ backgroundColor: config[key]?.color || `var(--color-${key})` }}
-                        />
-                        {config[key]?.label || key}
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item, index) => (
-                  <tr key={index} className={index % 2 === 0 ? "bg-muted/20" : ""}>
-                    <td className="p-2 font-mono">{item[xAxisKey]}</td>
-                    {valueKeys.map(key => (
-                      <td key={key} className="p-2 text-right font-mono">
-                        {Number(item[key]).toLocaleString()}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
 
-        {/* 数据概览信息 */}
-        <div className="bg-muted/30 mt-4 rounded-lg p-4">
-          <h4 className="mb-2 text-sm font-semibold">数据概览</h4>
-          <div className="grid grid-cols-2 gap-4 text-sm md:grid-cols-4">
-            <div>
-              <p className="text-muted-foreground">时间范围</p>
-              <p className="font-mono text-xs">
-                {data[0][xAxisKey]} → {data[data.length - 1][xAxisKey]}
-              </p>
-            </div>
-            <div>
-              <p className="text-muted-foreground">数据点</p>
-              <p className="font-mono">{data.length}</p>
-            </div>
-            <div>
-              <p className="text-muted-foreground">{referenceLabel || "参考线"}</p>
-              <p className="font-mono">{overallAverage.toFixed(2)}</p>
-            </div>
-            <div>
-              <p className="text-muted-foreground">最佳表现</p>
-              <p className="font-mono text-xs">
-                {
-                  trendAnalysis.reduce((best, current) =>
-                    current.changePercent > best.changePercent ? current : best
-                  ).key
-                }
-              </p>
-            </div>
-          </div>
-        </div>
       </CardContent>
     </Card>
   );

@@ -6,7 +6,8 @@
     "clear": "清空",
     "export": "导出",
     "loading": "加载中...",
-    "refresh": "刷新"
+    "refresh": "刷新",
+    "share": "分享"
   },
   "chat": {
     "inputPlaceholder": "请输入您的消息...",

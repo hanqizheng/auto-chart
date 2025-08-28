@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import * as XLSX from "xlsx";
 import { ChatMessages } from "./chat-messages";
 import { ChatInput } from "./chat-input";
 import { ChatMessage, UploadedFile } from "@/types/chat";
@@ -19,21 +20,85 @@ export function ChatPanel({ onMessageSend, onChartGenerate }: ChatPanelProps) {
   const [isCancelling, setIsCancelling] = useState(false);
   const t = useTranslations();
 
+  const parseExcelFile = async (file: File): Promise<{ data: any[], headers: string[] }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = new Uint8Array(e.target?.result as ArrayBuffer);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          
+          if (jsonData.length === 0) {
+            resolve({ data: [], headers: [] });
+            return;
+          }
+          
+          const headers = jsonData[0] as string[];
+          const rows = jsonData.slice(1);
+          const parsedData = rows.map((row: any) => {
+            const obj: any = {};
+            headers.forEach((header, index) => {
+              obj[header] = row[index] || '';
+            });
+            return obj;
+          });
+          
+          resolve({ data: parsedData, headers });
+        } catch (error) {
+          reject(error);
+        }
+      };
+      reader.onerror = () => reject(new Error('文件读取失败'));
+      reader.readAsArrayBuffer(file);
+    });
+  };
+
   const processAIResponse = useCallback(
     async (userMessage: string, files: UploadedFile[]) => {
       try {
         // Convert UploadedFile objects to File objects for AI service
         const fileObjects: File[] = files.map(f => f.data as File).filter(Boolean);
 
-        // Build context data from conversation history and files
-        const contextData = {
-          fileData: files.map(f => ({
+        // Parse file data if files exist
+        const fileDataPromises = files.map(async (f) => {
+          if (f.name.endsWith('.xlsx') || f.name.endsWith('.xls')) {
+            try {
+              const { data, headers } = await parseExcelFile(f.data as File);
+              return {
+                name: f.name,
+                data,
+                headers,
+                rowCount: data.length,
+                fileType: f.type,
+              };
+            } catch (error) {
+              console.error(`解析文件 ${f.name} 失败:`, error);
+              return {
+                name: f.name,
+                data: [],
+                headers: [],
+                rowCount: 0,
+                fileType: f.type,
+              };
+            }
+          }
+          return {
             name: f.name,
-            data: [], // TODO: Parse actual file data
+            data: [],
             headers: [],
             rowCount: 0,
             fileType: f.type,
-          })),
+          };
+        });
+
+        const fileData = await Promise.all(fileDataPromises);
+
+        // Build context data from conversation history and files
+        const contextData = {
+          fileData,
           previousCharts: [], // TODO: Track previous chart generations
           userPreferences: {
             preferredChartTypes: ["bar" as const, "line" as const],

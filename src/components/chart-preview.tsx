@@ -1,8 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { BarChart3, LineChart, PieChart, TrendingUp, Download, RotateCcw } from "lucide-react";
+import {
+  BarChart3,
+  LineChart,
+  PieChart,
+  TrendingUp,
+  Download,
+  RotateCcw,
+  Share,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
@@ -25,7 +33,25 @@ interface ChartPreviewProps {
 
 export function ChartPreview({ chartData, onExport, onRefresh }: ChartPreviewProps) {
   const [selectedType, setSelectedType] = useState<ChartType>(CHART_TYPES.BAR);
+  const chartRef = useRef<{
+    exportChart: (config?: any) => Promise<void>;
+    shareChart: (config?: any) => Promise<void>;
+  }>(null);
   const t = useTranslations();
+
+  const handleExport = async () => {
+    if (chartRef.current) {
+      await chartRef.current.exportChart();
+    } else if (onExport) {
+      onExport("png");
+    }
+  };
+
+  const handleShare = async () => {
+    if (chartRef.current) {
+      await chartRef.current.shareChart();
+    }
+  };
 
   if (!chartData) {
     return (
@@ -71,17 +97,25 @@ export function ChartPreview({ chartData, onExport, onRefresh }: ChartPreviewPro
               </Button>
             )}
 
-            {onExport && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onExport("png")}
-                className="flex items-center space-x-1"
-              >
-                <Download className="h-4 w-4" />
-                <span>{t("common.export")}</span>
-              </Button>
-            )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleShare}
+              className="flex items-center space-x-1"
+            >
+              <Share className="h-4 w-4" />
+              <span>{t("common.share") || "分享"}</span>
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExport}
+              className="flex items-center space-x-1"
+            >
+              <Download className="h-4 w-4" />
+              <span>{t("common.export")}</span>
+            </Button>
           </div>
         </div>
 
@@ -104,27 +138,18 @@ export function ChartPreview({ chartData, onExport, onRefresh }: ChartPreviewPro
 
       {/* Chart Content */}
       <div className="flex-1 overflow-hidden p-6">
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle>
-              {chartData.title || `${t("chart.chartTypes." + currentChartType)}`}
-            </CardTitle>
-            {chartData.description && (
-              <p className="text-muted-foreground text-sm">{chartData.description}</p>
-            )}
-          </CardHeader>
-          <CardContent className="h-full">
-            <div className="h-[400px] w-full">
-              <EnhancedChart
-                type={currentChartType}
-                data={chartData.data}
-                title={chartData.title}
-                className="h-full w-full"
-                config={{}}
-              />
-            </div>
-          </CardContent>
-        </Card>
+        <CardContent className="h-full">
+          <div className="h-[400px] w-full">
+            <EnhancedChart
+              ref={chartRef}
+              type={currentChartType}
+              data={chartData.data}
+              title={chartData.title}
+              className="h-full w-full"
+              config={{}}
+            />
+          </div>
+        </CardContent>
       </div>
     </div>
   );

@@ -120,35 +120,6 @@ export function BeautifulBarChart({ data, config, title, description, className 
         </CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
 
-        {/* 数据概览 */}
-        <div className="grid grid-cols-2 gap-4 text-sm md:grid-cols-4">
-          <div className="space-y-1">
-            <p className="text-muted-foreground">数据点</p>
-            <p className="font-semibold">{stats.dataPointCount}</p>
-          </div>
-          <div className="space-y-1">
-            <p className="text-muted-foreground">数据系列</p>
-            <p className="font-semibold">{stats.seriesCount}</p>
-          </div>
-          <div className="space-y-1">
-            <p className="text-muted-foreground">数据范围</p>
-            <p className="text-xs font-semibold">{dataRange}</p>
-          </div>
-          <div className="space-y-1">
-            <p className="text-muted-foreground">峰值数据</p>
-            <div className="space-y-0.5">
-              {maxValues.slice(0, 2).map(({ key, max }) => (
-                <div key={key} className="flex items-center gap-1">
-                  <div
-                    className="h-2 w-2 rounded-full"
-                    style={{ backgroundColor: config[key]?.color || "var(--color-" + key + ")" }}
-                  />
-                  <span className="font-mono text-xs">{max.toLocaleString()}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </CardHeader>
 
       <CardContent>
@@ -205,64 +176,7 @@ export function BeautifulBarChart({ data, config, title, description, className 
           </BarChart>
         </ChartContainer>
 
-        {/* 完整数据表格 - 为静态导出显示所有数值 */}
-        <div className="mt-6 space-y-4">
-          <h4 className="text-sm font-semibold">完整数据表</h4>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
-              <thead>
-                <tr className="border-b">
-                  <th className="p-2 text-left font-semibold">{categoryKey}</th>
-                  {valueKeys.map(key => (
-                    <th key={key} className="p-2 text-right font-semibold">
-                      <div className="flex items-center justify-end gap-2">
-                        <div
-                          className="h-3 w-3 rounded-sm"
-                          style={{ backgroundColor: config[key]?.color || `var(--color-${key})` }}
-                        />
-                        {config[key]?.label || key}
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item, index) => (
-                  <tr key={index} className={index % 2 === 0 ? "bg-muted/20" : ""}>
-                    <td className="p-2 font-mono">{item[categoryKey]}</td>
-                    {valueKeys.map(key => (
-                      <td key={key} className="p-2 text-right font-mono">
-                        {Number(item[key]).toLocaleString()}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
 
-        {/* 统计摘要 */}
-        <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-          {valueKeys.map(key => {
-            const total = data.reduce((sum, item) => sum + (Number(item[key]) || 0), 0);
-            const avg = total / data.length;
-            return (
-              <div key={key} className="flex items-center space-x-2 text-sm">
-                <div
-                  className="h-3 w-3 rounded-sm"
-                  style={{ backgroundColor: config[key]?.color || `var(--color-${key})` }}
-                />
-                <div className="space-y-0.5">
-                  <div className="font-medium">{config[key]?.label || key}</div>
-                  <div className="text-muted-foreground text-xs">
-                    平均: {avg.toFixed(1)} | 总计: {total.toLocaleString()}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </CardContent>
     </Card>
   );

@@ -6,7 +6,8 @@
     "clear": "Clear",
     "export": "Export",
     "loading": "Loading...",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "share": "Share"
   },
   "chat": {
     "inputPlaceholder": "Type your message...",
