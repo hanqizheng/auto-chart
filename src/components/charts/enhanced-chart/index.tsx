@@ -252,8 +252,8 @@ export function EnhancedChart({
 
     default:
       return (
-        <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
-          <p className="text-sm text-gray-600">不支持的图表类型: {type}</p>
+        <div className="bg-muted rounded-lg border p-4">
+          <p className="text-muted-foreground text-sm">不支持的图表类型: {type}</p>
         </div>
       );
   }
