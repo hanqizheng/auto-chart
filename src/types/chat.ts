@@ -8,6 +8,7 @@ export interface ChatMessage {
   content: string;
   timestamp: Date;
   isLoading?: boolean;
+  files?: UploadedFile[]; // 消息附件
 }
 
 export interface UploadedFile {
