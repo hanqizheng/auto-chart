@@ -17,7 +17,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { SimpleChartType } from "@/types/chart";
-import { useScreenshot } from "@/hooks/use-screenshot";
+import { useSimpleExport } from "@/hooks/use-simple-export";
 
 interface ChartData {
   [key: string]: string | number;
@@ -28,11 +28,18 @@ interface SimpleChartProps {
   data: ChartData[];
   title?: string;
   config: ChartConfig;
+  showExportButton?: boolean; // 可选的导出按钮
 }
 
-export function SimpleChart({ type, data, title, config }: SimpleChartProps) {
+export function SimpleChart({
+  type,
+  data,
+  title,
+  config,
+  showExportButton = true,
+}: SimpleChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
-  const { isCapturing, error, exportChart } = useScreenshot();
+  const { isExporting, error, exportChart } = useSimpleExport();
 
   const handleChartExport = async () => {
     if (!chartRef.current) return;
@@ -164,22 +171,24 @@ export function SimpleChart({ type, data, title, config }: SimpleChartProps) {
 
   return (
     <div className="w-full">
-      {/* Export button */}
-      <div className="mb-4 flex items-center justify-end gap-2">
-        <button
-          onClick={handleChartExport}
-          disabled={isCapturing}
-          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:bg-blue-600/50"
-          title="Export chart as PNG image"
-        >
-          {isCapturing ? (
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-          ) : (
-            <Download className="h-4 w-4" />
-          )}
-          {isCapturing ? "Exporting..." : "Export PNG"}
-        </button>
-      </div>
+      {/* Export button - 可选显示 */}
+      {showExportButton && (
+        <div className="mb-4 flex items-center justify-end gap-2">
+          <button
+            onClick={handleChartExport}
+            disabled={isExporting}
+            className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:bg-blue-600/50"
+            title="Export chart as PNG image"
+          >
+            {isExporting ? (
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+            ) : (
+              <Download className="h-4 w-4" />
+            )}
+            {isExporting ? "Exporting..." : "Export PNG"}
+          </button>
+        </div>
+      )}
 
       {/* Error display */}
       {error && (
