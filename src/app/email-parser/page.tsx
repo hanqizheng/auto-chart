@@ -153,7 +153,7 @@ export default function EmailParserPage() {
           result.partnerEmail || "未识别",
           stageName,
           subStageName, // 子阶段列
-          result.success ? "解析成功" : "解析失败",
+          result.success ? "解析成功" : "无法解析",
           result.errorReason || "-",
           result.emailSubject.replace(/"/g, '""'), // 转义CSV中的引号
           result.emailDate || "-",
@@ -473,8 +473,8 @@ export default function EmailParserPage() {
                           onCheckedChange={() => toggleResultSelection(index)}
                         />
                       </TableCell>
-                      <TableCell className="font-mono text-xs max-w-48">
-                        <span className="truncate block" title={result.filename}>
+                      <TableCell className="max-w-48 font-mono text-xs">
+                        <span className="block truncate" title={result.filename}>
                           {result.filename}
                         </span>
                       </TableCell>
@@ -510,7 +510,7 @@ export default function EmailParserPage() {
                           </Badge>
                         ) : (
                           <Badge variant="destructive" className="text-xs">
-                            解析失败
+                            无法解析
                           </Badge>
                         )}
                       </TableCell>
