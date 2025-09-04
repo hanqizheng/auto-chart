@@ -30,6 +30,8 @@ export default function EmailParserPage() {
     errors: []
   });
   const [enableAI, setEnableAI] = useState(true);
+  const [enableBatchProcessing, setEnableBatchProcessing] = useState(false);
+  const [batchSize, setBatchSize] = useState(10);
   const [selectedResults, setSelectedResults] = useState<Set<number>>(new Set());
   const [testEmailsInfo, setTestEmailsInfo] = useState<{
     count: number;
@@ -43,10 +45,16 @@ export default function EmailParserPage() {
         const response = await fetch('/api/email-parser');
         if (response.ok) {
           const data = await response.json();
-          setTestEmailsInfo({
-            count: data.filesCount || 0,
-            files: data.files || []
-          });
+          const count = data.filesCount || 0;
+          const files = data.files || [];
+          
+          setTestEmailsInfo({ count, files });
+          
+          // 自动推荐批处理模式（文件数量大于50时）
+          if (count > 50) {
+            setEnableBatchProcessing(true);
+            setBatchSize(data.config?.batchSize || 10);
+          }
         }
       } catch (error) {
         console.error('获取测试邮件信息失败:', error);
@@ -69,7 +77,8 @@ export default function EmailParserPage() {
     });
 
     try {
-      console.log(`📧 开始解析 ${testEmailsInfo.count} 个邮件文件，AI处理: ${enableAI}`);
+      const mode = enableBatchProcessing ? '批处理' : '普通';
+      console.log(`📧 开始解析 ${testEmailsInfo.count} 个邮件文件，模式: ${mode}，AI处理: ${enableAI}，批次大小: ${batchSize}`);
 
       const response = await fetch('/api/email-parser', {
         method: 'POST',
@@ -77,7 +86,12 @@ export default function EmailParserPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          enableAI
+          enableAI,
+          useBatchProcessing: enableBatchProcessing,
+          batchSize,
+          batchDelay: 1000,
+          enableAutoSave: true,
+          resumeFromProgress: true
         }),
       });
 
@@ -235,6 +249,8 @@ export default function EmailParserPage() {
               {/* 解析选项 */}
               <div className="space-y-4">
                 <h4 className="font-medium">解析选项</h4>
+                
+                {/* AI 配置 */}
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="enable-ai"
@@ -245,9 +261,49 @@ export default function EmailParserPage() {
                     启用 AI 辅助解析 (提取联盟客姓名和识别沟通阶段)
                   </label>
                 </div>
+                
+                {/* 批处理配置 */}
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="enable-batch"
+                      checked={enableBatchProcessing}
+                      onCheckedChange={(checked) => setEnableBatchProcessing(checked === true)}
+                    />
+                    <label htmlFor="enable-batch" className="text-sm">
+                      启用分批处理模式 {testEmailsInfo && testEmailsInfo.count > 50 && (
+                        <span className="text-amber-600">(推荐：文件数量较多)</span>
+                      )}
+                    </label>
+                  </div>
+                  
+                  {enableBatchProcessing && (
+                    <div className="ml-6 space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <label htmlFor="batch-size" className="text-xs text-muted-foreground">
+                          每批处理数量:
+                        </label>
+                        <input
+                          id="batch-size"
+                          type="number"
+                          min="5"
+                          max="50"
+                          value={batchSize}
+                          onChange={(e) => setBatchSize(Math.max(5, Math.min(50, parseInt(e.target.value) || 10)))}
+                          className="w-16 px-2 py-1 text-xs border rounded"
+                        />
+                        <span className="text-xs text-muted-foreground">个文件</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
                 <div className="text-xs text-muted-foreground">
                   • 规则匹配：从邮件头部和内容提取项目名称和联盟客邮箱<br/>
-                  • AI 辅助：智能识别联盟客姓名和当前沟通阶段
+                  • AI 辅助：智能识别联盟客姓名和当前沟通阶段<br/>
+                  {enableBatchProcessing && (
+                    <>• 分批处理：支持大批量文件解析，自动保存进度，可断点续传</>
+                  )}
                 </div>
               </div>
 
@@ -285,13 +341,25 @@ export default function EmailParserPage() {
             <CardTitle className="flex items-center gap-2">
               <Clock className="h-5 w-5" />
               解析进度
+              {enableBatchProcessing && <Badge variant="secondary" className="text-xs">批处理模式</Badge>}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <Progress value={processing.progress} className="w-full" />
-            <p className="text-sm text-muted-foreground">
-              正在处理邮件文件，请稍候...
-            </p>
+            <div className="space-y-1">
+              <p className="text-sm text-muted-foreground">
+                正在处理邮件文件，请稍候...
+              </p>
+              {enableBatchProcessing && (
+                <p className="text-xs text-muted-foreground">
+                  • 批次大小: {batchSize} 个文件
+                  <br />
+                  • 自动保存: 已启用
+                  <br />
+                  • 断点续传: 已启用
+                </p>
+              )}
+            </div>
           </CardContent>
         </Card>
       )}
@@ -326,6 +394,9 @@ export default function EmailParserPage() {
             <CardDescription>
               成功解析 {processing.results.filter(r => r.success).length} / {processing.results.length} 个邮件
               {processing.errors.length > 0 && ` (${processing.errors.length} 个文件读取失败)`}
+              {enableBatchProcessing && (
+                <><br />批处理模式：自动保存结果到 parsing-results 文件夹</>
+              )}
             </CardDescription>
           </CardHeader>
           <CardContent>

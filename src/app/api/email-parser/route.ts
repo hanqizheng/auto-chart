@@ -5,7 +5,7 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 import { SimpleEmailParser } from '@/lib/email-parser';
 import { EMAIL_PARSER_CONFIG, FILE_VALIDATION } from '@/constants/email';
-import type { EmailFile, ParsingConfig, ProjectInfo, StageInfo } from '@/types/email';
+import type { EmailFile, ParsingConfig, ProjectInfo, StageInfo, BatchConfig } from '@/types/email';
 
 /**
  * 加载项目和阶段数据
@@ -125,9 +125,16 @@ export async function POST(request: NextRequest) {
     
     // 解析请求参数
     const body = await request.json();
-    const { enableAI = true } = body;
+    const { 
+      enableAI = true,
+      useBatchProcessing = false,
+      batchSize = EMAIL_PARSER_CONFIG.BATCH_SIZE,
+      batchDelay = EMAIL_PARSER_CONFIG.BATCH_DELAY,
+      enableAutoSave = true,
+      resumeFromProgress = true
+    } = body;
     
-    console.log(`📧 [API] 解析配置: AI=${enableAI}`);
+    console.log(`📧 [API] 解析配置: AI=${enableAI}, 批处理=${useBatchProcessing}, 批次大小=${batchSize}`);
     
     // 读取邮件文件
     const emailFiles = await loadTestEmails();
@@ -142,18 +149,19 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // 检查文件数量限制
-    if (emailFiles.length > EMAIL_PARSER_CONFIG.MAX_FILES_COUNT) {
+    // 检查文件数量限制（批处理模式下限制更宽松）
+    const maxFiles = useBatchProcessing ? EMAIL_PARSER_CONFIG.MAX_FILES_COUNT : 50;
+    if (emailFiles.length > maxFiles) {
       return NextResponse.json(
         { 
           error: `邮件文件数量过多`,
-          details: `找到 ${emailFiles.length} 个文件，最多支持 ${EMAIL_PARSER_CONFIG.MAX_FILES_COUNT} 个文件`
+          details: `找到 ${emailFiles.length} 个文件，当前模式最多支持 ${maxFiles} 个文件。${!useBatchProcessing ? '建议启用批处理模式' : ''}`
         },
         { status: 400 }
       );
     }
     
-    console.log(`📧 [API] 准备解析 ${emailFiles.length} 个邮件文件`);
+    console.log(`📧 [API] 准备解析 ${emailFiles.length} 个邮件文件，使用${useBatchProcessing ? '批处理' : '普通'}模式`);
     
     // 加载配置数据
     const { projects, stages } = await loadProjectsAndStages();
@@ -170,13 +178,58 @@ export async function POST(request: NextRequest) {
     
     console.log(`📧 [API] 配置加载完成: ${projects.length} 个项目, ${stages.length} 个阶段`);
     
-    // 创建解析器并执行解析
+    // 创建解析器
     const parser = new SimpleEmailParser();
-    const result = await parser.parseEmails(emailFiles, config);
     
-    console.log(`📧 [API] 解析完成: 成功 ${result.summary.successful}/${result.summary.total}, 耗时 ${result.summary.processingTime}ms`);
-    
-    return NextResponse.json(result);
+    if (useBatchProcessing) {
+      // 批处理模式
+      const batchConfig: BatchConfig = {
+        batchSize,
+        batchDelay,
+        enableAutoSave,
+        resumeFromProgress
+      };
+      
+      const { combinedResults, progress } = await parser.parseEmailsInBatches(
+        emailFiles,
+        config,
+        batchConfig
+      );
+      
+      // 构建与普通模式兼容的响应格式
+      const summary = {
+        total: progress.totalFiles,
+        successful: combinedResults.filter(r => r.success).length,
+        failed: combinedResults.filter(r => !r.success).length,
+        averageConfidence: combinedResults.length > 0 
+          ? combinedResults.reduce((sum, r) => sum + r.confidence, 0) / combinedResults.length 
+          : 0,
+        processingTime: Date.now() - new Date(progress.startTime).getTime()
+      };
+      
+      console.log(`📧 [API] 批处理解析完成: 成功 ${summary.successful}/${summary.total}, 总批次 ${progress.totalBatches}`);
+      
+      return NextResponse.json({
+        results: combinedResults,
+        summary,
+        errors: progress.failedFiles,
+        batchInfo: {
+          totalBatches: progress.totalBatches,
+          completedBatches: progress.completedBatches,
+          processingStatus: progress.status,
+          startTime: progress.startTime,
+          lastUpdateTime: progress.lastUpdateTime
+        }
+      });
+      
+    } else {
+      // 普通模式
+      const result = await parser.parseEmails(emailFiles, config);
+      
+      console.log(`📧 [API] 普通解析完成: 成功 ${result.summary.successful}/${result.summary.total}, 耗时 ${result.summary.processingTime}ms`);
+      
+      return NextResponse.json(result);
+    }
     
   } catch (error) {
     console.error('❌ [API] 邮件解析API错误:', error);
@@ -214,6 +267,10 @@ export async function GET() {
         supportedFormats: FILE_VALIDATION.ALLOWED_EXTENSIONS,
         fuzzyMatchThreshold: EMAIL_PARSER_CONFIG.FUZZY_MATCH_THRESHOLD,
         aiConfidenceThreshold: EMAIL_PARSER_CONFIG.AI_CONFIDENCE_THRESHOLD,
+        // 批处理配置
+        batchSize: EMAIL_PARSER_CONFIG.BATCH_SIZE,
+        batchDelay: EMAIL_PARSER_CONFIG.BATCH_DELAY,
+        resultStoragePath: EMAIL_PARSER_CONFIG.RESULT_STORAGE_PATH,
       },
       
       // 元数据

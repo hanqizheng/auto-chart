@@ -47,10 +47,16 @@ export const MATCH_TYPES = {
 // 邮件解析基础配置
 export const EMAIL_PARSER_CONFIG = {
   MAX_FILE_SIZE: 10 * 1024 * 1024,     // 10MB
-  MAX_FILES_COUNT: 50,                  // 最多50个文件
+  MAX_FILES_COUNT: 200,                 // 增加到200个文件支持大批量处理
   FUZZY_MATCH_THRESHOLD: 0.6,          // 模糊匹配阈值
   AI_CONFIDENCE_THRESHOLD: 0.5,        // AI置信度阈值
   MAX_CONTENT_LENGTH: 5000,            // 最大内容长度（减少AI token消耗）
+  
+  // 分批处理配置
+  BATCH_SIZE: 10,                      // 每批处理的文件数量
+  BATCH_DELAY: 1000,                   // 批次间延迟时间(ms)
+  RESULT_STORAGE_PATH: './parsing-results', // 结果存储目录
+  PROGRESS_FILE: 'parsing-progress.json',   // 进度文件名
 } as const;
 
 // 邮件字段提取规则

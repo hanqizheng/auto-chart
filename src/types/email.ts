@@ -153,3 +153,40 @@ export interface CSVExportData {
   邮件主题: string;
   邮件日期: string;
 }
+
+/**
+ * 批处理进度信息
+ */
+export interface BatchProgress {
+  totalFiles: number;              // 总文件数
+  processedFiles: number;          // 已处理文件数
+  currentBatch: number;           // 当前批次
+  totalBatches: number;           // 总批次数
+  completedBatches: number;       // 已完成批次数
+  failedFiles: string[];          // 处理失败的文件
+  processedFileNames: string[];   // 已处理的文件名列表
+  startTime: string;              // 开始时间
+  lastUpdateTime: string;         // 最后更新时间
+  status: 'idle' | 'processing' | 'paused' | 'completed' | 'failed';
+}
+
+/**
+ * 批处理配置
+ */
+export interface BatchConfig {
+  batchSize: number;              // 批次大小
+  batchDelay: number;             // 批次间延迟
+  enableAutoSave: boolean;        // 是否启用自动保存
+  resumeFromProgress: boolean;    // 是否从进度文件恢复
+}
+
+/**
+ * 持久化的解析结果
+ */
+export interface PersistedBatchResult {
+  batchId: string;                // 批次ID
+  timestamp: string;              // 时间戳
+  progress: BatchProgress;        // 进度信息
+  results: EmailParsingResult[];  // 解析结果
+  config: BatchConfig;            // 使用的配置
+}

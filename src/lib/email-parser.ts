@@ -23,7 +23,11 @@ import type {
   AIResult,
   CommunicationStage,
   MatchType,
+  BatchConfig,
+  BatchProgress,
+  PersistedBatchResult,
 } from "@/types/email";
+import { BatchProcessor, delay } from "./batch-processor";
 
 /**
  * 统一邮件解析器
@@ -94,6 +98,126 @@ export class SimpleEmailParser {
     console.log(`✅ [SimpleEmailParser] 批量解析完成:`, summary);
 
     return { results, summary, errors };
+  }
+
+  /**
+   * 分批解析邮件（支持断点续传和结果持久化）
+   */
+  async parseEmailsInBatches(
+    files: EmailFile[],
+    config: ParsingConfig,
+    batchConfig: BatchConfig,
+    onProgress?: (progress: BatchProgress) => void
+  ): Promise<{ combinedResults: EmailParsingResult[]; progress: BatchProgress }> {
+    const batchProcessor = new BatchProcessor();
+    const batchSize = batchConfig.batchSize;
+
+    console.log(`🚀 [SimpleEmailParser] 开始分批解析 ${files.length} 个邮件文件，批次大小: ${batchSize}`);
+
+    // 1. 尝试加载之前的进度
+    let progress: BatchProgress;
+    let remainingFiles = files;
+
+    if (batchConfig.resumeFromProgress) {
+      const savedProgress = await batchProcessor.loadProgress();
+      if (savedProgress && savedProgress.status !== 'completed') {
+        progress = savedProgress;
+        remainingFiles = batchProcessor.filterUnprocessedFiles(files, savedProgress.processedFileNames);
+        console.log(`🔄 [SimpleEmailParser] 从断点恢复: ${remainingFiles.length} 个文件待处理`);
+      } else {
+        progress = batchProcessor.initializeProgress(files.length, batchSize);
+      }
+    } else {
+      progress = batchProcessor.initializeProgress(files.length, batchSize);
+    }
+
+    // 2. 创建批次
+    const batches = batchProcessor.createBatches(remainingFiles, batchSize);
+    
+    // 3. 初始化项目模糊搜索
+    this.initializeProjectFuse(config.projects);
+
+    // 4. 逐批处理
+    progress.status = 'processing';
+    await batchProcessor.saveProgress(progress);
+    onProgress?.(progress);
+
+    for (let i = progress.currentBatch; i < batches.length; i++) {
+      const batch = batches[i];
+      const batchId = batchProcessor.generateBatchId();
+      
+      console.log(`📦 [SimpleEmailParser] 处理批次 ${i + 1}/${batches.length} (${batch.length} 个文件)`);
+      
+      progress.currentBatch = i;
+      progress.status = 'processing';
+      
+      try {
+        // 处理当前批次
+        const batchResult = await this.parseEmails(batch, config);
+        
+        // 保存批次结果
+        if (batchConfig.enableAutoSave) {
+          const persistedResult: PersistedBatchResult = {
+            batchId,
+            timestamp: new Date().toISOString(),
+            progress: { ...progress },
+            results: batchResult.results,
+            config: batchConfig
+          };
+          await batchProcessor.saveBatchResult(persistedResult);
+        }
+
+        // 更新进度
+        const processedFileNames = batch.map(f => f.filename);
+        const failedFiles = batchResult.results
+          .filter(r => !r.success)
+          .map(r => r.filename);
+
+        progress = batchProcessor.updateProgress(
+          progress,
+          batch.length,
+          failedFiles,
+          processedFileNames
+        );
+        
+        progress.completedBatches = i + 1;
+        
+        // 保存进度
+        await batchProcessor.saveProgress(progress);
+        onProgress?.(progress);
+
+        console.log(`✅ [SimpleEmailParser] 批次 ${i + 1} 完成: ${batchResult.summary.successful}/${batchResult.summary.total} 成功`);
+
+        // 批次间延迟
+        if (i < batches.length - 1 && batchConfig.batchDelay > 0) {
+          console.log(`⏳ [SimpleEmailParser] 批次间延迟 ${batchConfig.batchDelay}ms`);
+          await delay(batchConfig.batchDelay);
+        }
+
+      } catch (error) {
+        console.error(`❌ [SimpleEmailParser] 批次 ${i + 1} 处理失败:`, error);
+        progress.status = 'failed';
+        await batchProcessor.saveProgress(progress);
+        onProgress?.(progress);
+        throw error;
+      }
+    }
+
+    // 5. 完成处理
+    progress.status = 'completed';
+    progress.lastUpdateTime = new Date().toISOString();
+    await batchProcessor.saveProgress(progress);
+    onProgress?.(progress);
+
+    // 6. 获取合并结果
+    const combinedResults = await batchProcessor.getCombinedResults();
+    
+    console.log(`🎉 [SimpleEmailParser] 分批解析完成: ${combinedResults.length} 个结果`);
+
+    // 7. 清理旧结果（可选）
+    await batchProcessor.cleanupOldResults(10);
+
+    return { combinedResults, progress };
   }
 
   /**
