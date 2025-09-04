@@ -23,6 +23,50 @@
         "request",
         "账号邀请"
       ],
+      "subStages": [
+        {
+          "id": "account-invitation",
+          "name": "账号邀请入驻",
+          "description": "邀请联盟客账号入驻平台",
+          "keywords": [
+            "邀请",
+            "入驻",
+            "账号邀请",
+            "平台入驻",
+            "注册",
+            "开户",
+            "账户",
+            "invitation",
+            "register",
+            "account",
+            "platform",
+            "welcome",
+            "join"
+          ]
+        },
+        {
+          "id": "mediakit-request",
+          "name": "Mediakit索要",
+          "description": "索要媒体资料包和相关信息",
+          "keywords": [
+            "mediakit",
+            "媒体资料",
+            "媒体包",
+            "索要",
+            "资料",
+            "介绍",
+            "材料",
+            "信息",
+            "详情",
+            "media kit",
+            "portfolio",
+            "profile",
+            "information",
+            "details",
+            "material"
+          ]
+        }
+      ],
       "order": 1
     },
     {
@@ -52,6 +96,67 @@
         "price",
         "rate",
         "placement"
+      ],
+      "subStages": [
+        {
+          "id": "budget-commission",
+          "name": "客户预算&账号佣金情况提供",
+          "description": "讨论客户预算范围和账号佣金标准",
+          "keywords": [
+            "预算",
+            "佣金",
+            "费用",
+            "价格",
+            "报价",
+            "成本",
+            "budget",
+            "commission",
+            "rate",
+            "cost",
+            "price",
+            "quote",
+            "fee"
+          ]
+        },
+        {
+          "id": "proposal-placement",
+          "name": "媒体直接推荐方案/Mediakit版位指定",
+          "description": "推荐具体投放方案和版位选择",
+          "keywords": [
+            "方案",
+            "推荐",
+            "版位",
+            "指定",
+            "计划",
+            "媒体包",
+            "placement",
+            "proposal",
+            "recommend",
+            "plan",
+            "mediakit",
+            "position",
+            "slot"
+          ]
+        },
+        {
+          "id": "price-negotiation",
+          "name": "砍价",
+          "description": "价格谈判和优惠讨论",
+          "keywords": [
+            "砍价",
+            "谈判",
+            "折扣",
+            "优惠",
+            "降价",
+            "议价",
+            "negotiate",
+            "discount",
+            "bargain",
+            "deal",
+            "offer",
+            "reduce"
+          ]
+        }
       ],
       "order": 2
     },
@@ -96,6 +201,94 @@
         "screenshot",
         "link",
         "feedback"
+      ],
+      "subStages": [
+        {
+          "id": "io-signing",
+          "name": "IO签署",
+          "description": "插入订单合同签署",
+          "keywords": [
+            "IO",
+            "签署",
+            "合同",
+            "协议",
+            "签约",
+            "contract",
+            "agreement",
+            "sign",
+            "document",
+            "insertion order"
+          ]
+        },
+        {
+          "id": "invoice-prepay",
+          "name": "Invoice发送（预付情况）",
+          "description": "发送预付款发票",
+          "keywords": [
+            "invoice",
+            "预付",
+            "发票",
+            "账单",
+            "付款",
+            "prepay",
+            "prepayment",
+            "advance",
+            "bill",
+            "payment"
+          ]
+        },
+        {
+          "id": "payment-proof",
+          "name": "付款凭证提供",
+          "description": "提供付款凭证和确认",
+          "keywords": [
+            "付款凭证",
+            "凭证",
+            "付款",
+            "证明",
+            "确认",
+            "payment proof",
+            "proof",
+            "payment",
+            "confirm",
+            "receipt"
+          ]
+        },
+        {
+          "id": "creative-upload",
+          "name": "上线素材提供",
+          "description": "提供广告创意素材",
+          "keywords": [
+            "素材",
+            "上线素材",
+            "创意",
+            "广告",
+            "图片",
+            "视频",
+            "creative",
+            "material",
+            "upload",
+            "content",
+            "asset"
+          ]
+        },
+        {
+          "id": "screenshot-feedback",
+          "name": "上线版位截图&链接反馈",
+          "description": "提供版位截图和链接确认",
+          "keywords": [
+            "截图",
+            "版位截图",
+            "链接",
+            "反馈",
+            "确认",
+            "screenshot",
+            "link",
+            "feedback",
+            "placement",
+            "confirm"
+          ]
+        }
       ],
       "order": 3
     },
@@ -142,6 +335,45 @@
         "improve",
         "test",
         "make good"
+      ],
+      "subStages": [
+        {
+          "id": "compensation-placement",
+          "name": "补偿版位处理（效果不佳时）",
+          "description": "处理效果不佳时的补偿版位安排",
+          "keywords": [
+            "补偿",
+            "补偿版位",
+            "补位",
+            "效果不佳",
+            "重投",
+            "赔偿",
+            "compensation",
+            "make good",
+            "poor performance",
+            "underperform",
+            "remedy"
+          ]
+        },
+        {
+          "id": "next-cycle-booking",
+          "name": "预定下一周期/季度版位（效果佳时）",
+          "description": "效果良好时预定下一周期版位",
+          "keywords": [
+            "下一周期",
+            "季度版位",
+            "预定",
+            "续约",
+            "继续合作",
+            "效果佳",
+            "next cycle",
+            "quarterly",
+            "booking",
+            "renewal",
+            "continue",
+            "good performance"
+          ]
+        }
       ],
       "order": 4
     }

@@ -1,848 +1,667 @@
 {
   "projects": [
     {
+      "id": "89",
+      "name": "Silksilky",
+      "aliases": ["silksilky"],
+      "description": "Silksilky联盟代运营",
+      "status": "active"
+    },
+    {
       "id": "88",
       "name": "Tenways EU",
-      "aliases": [
-        "tenways eu"
-      ],
+      "aliases": ["tenways eu"],
       "description": "Tenways联盟代运营",
       "status": "active"
     },
     {
       "id": "87",
       "name": "Tenways US",
-      "aliases": [
-        "tenways us"
-      ],
+      "aliases": ["tenways us"],
       "description": "Tenways联盟代运营",
       "status": "active"
     },
     {
       "id": "86",
       "name": "长沙掌游",
-      "aliases": [
-        "长沙掌游"
-      ],
+      "aliases": ["长沙掌游"],
       "description": "长沙掌游",
       "status": "active"
     },
     {
       "id": "85",
       "name": "GUU",
-      "aliases": [
-        "guu"
-      ],
+      "aliases": ["guu"],
       "description": "GUU",
       "status": "active"
     },
     {
       "id": "84",
       "name": "AWOL Vision",
-      "aliases": [
-        "awol vision"
-      ],
+      "aliases": ["awol vision"],
       "description": "AWOL Vision 联盟项目邀约",
       "status": "active"
     },
     {
       "id": "83",
       "name": "AWOL Vision EU",
-      "aliases": [
-        "awol vision eu"
-      ],
+      "aliases": ["awol vision eu"],
       "description": "AWOL Vision EU 联盟项目邀约",
       "status": "active"
     },
     {
       "id": "82",
       "name": "Valerion US",
-      "aliases": [
-        "valerion us"
-      ],
+      "aliases": ["valerion us"],
       "description": "Valerion US 联盟项目邀约",
       "status": "active"
     },
     {
       "id": "81",
       "name": "Valerion US",
-      "aliases": [
-        "valerion us"
-      ],
+      "aliases": ["valerion us"],
       "description": "Valerion US 联盟项目邀约",
       "status": "active"
     },
     {
       "id": "80",
       "name": "AWOL Vision",
-      "aliases": [
-        "awol vision"
-      ],
+      "aliases": ["awol vision"],
       "description": "AWOL Vision 联盟项目邀约",
       "status": "active"
     },
     {
       "id": "79",
       "name": "AWOL Vision EU",
-      "aliases": [
-        "awol vision eu"
-      ],
+      "aliases": ["awol vision eu"],
       "description": "AWOL Vision EU 联盟项目邀约",
       "status": "active"
     },
     {
       "id": "78",
       "name": "Getpairr",
-      "aliases": [
-        "getpairr"
-      ],
+      "aliases": ["getpairr"],
       "description": "Getpairr",
       "status": "active"
     },
     {
       "id": "77",
       "name": "Ottocast",
-      "aliases": [
-        "ottocast"
-      ],
+      "aliases": ["ottocast"],
       "description": "Ottocast",
       "status": "active"
     },
     {
       "id": "76",
       "name": "Navimow EU",
-      "aliases": [
-        "navimow eu"
-      ],
+      "aliases": ["navimow eu"],
       "description": "Navimow EU",
       "status": "active"
     },
     {
       "id": "75",
       "name": "Navimow US",
-      "aliases": [
-        "navimow us"
-      ],
+      "aliases": ["navimow us"],
       "description": "Navimow US",
       "status": "active"
     },
     {
       "id": "74",
       "name": "Jackery CA Awin",
-      "aliases": [
-        "jackery ca awin"
-      ],
+      "aliases": ["jackery ca awin"],
       "description": "/",
       "status": "active"
     },
     {
       "id": "73",
       "name": "云步",
-      "aliases": [
-        "云步"
-      ],
+      "aliases": ["云步"],
       "description": "云步游戏项目消耗情况",
       "status": "active"
     },
     {
       "id": "72",
       "name": "Oneisall US",
-      "aliases": [
-        "oneisall us"
-      ],
+      "aliases": ["oneisall us"],
       "description": "/",
       "status": "active"
     },
     {
       "id": "71",
       "name": "Hobibear",
-      "aliases": [
-        "hobibear"
-      ],
+      "aliases": ["hobibear"],
       "description": "联盟运营",
       "status": "active"
     },
     {
       "id": "70",
       "name": "Jackery DE",
-      "aliases": [
-        "jackery de"
-      ],
+      "aliases": ["jackery de"],
       "description": "储能品牌DE媒体邀约",
       "status": "active"
     },
     {
       "id": "69",
       "name": "Jackery UK",
-      "aliases": [
-        "jackery uk"
-      ],
+      "aliases": ["jackery uk"],
       "description": "储能品牌UK媒体邀约",
       "status": "active"
     },
     {
       "id": "68",
       "name": "Dreame CA",
-      "aliases": [
-        "dreame ca"
-      ],
+      "aliases": ["dreame ca"],
       "description": "/",
       "status": "active"
     },
     {
       "id": "67",
       "name": "测试邀约",
-      "aliases": [
-        "测试邀约"
-      ],
+      "aliases": ["测试邀约"],
       "description": "所有站内自动化邀约使用此项目进行测试",
       "status": "active"
     },
     {
       "id": "66",
       "name": "iGarden",
-      "aliases": [
-        "igarden"
-      ],
+      "aliases": ["igarden"],
       "description": "iGarden 项目邀约和数据分析",
       "status": "active"
     },
     {
       "id": "65",
       "name": "OnePlus",
-      "aliases": [
-        "oneplus"
-      ],
+      "aliases": ["oneplus"],
       "description": "OnePlus FR、OnePlus DE、OnePlus UK&EMEA的数据分析和邀约管理",
       "status": "active"
     },
     {
       "id": ",9877,2025-08-15,2099-01-01,[],[{user_id: 14",
       "name": "user_name: 李芳",
-      "aliases": [
-        "user_name: 李芳"
-      ],
+      "aliases": ["user_name: 李芳"],
       "description": "user_email: fang.li5@bluefocus.com}",
       "status": "active"
     },
     {
       "id": "64",
       "name": "OPPO",
-      "aliases": [
-        "oppo"
-      ],
+      "aliases": ["oppo"],
       "description": "OPPO FR、OPPO ES、OPPO UK 数据分析和邀约管理",
       "status": "active"
     },
     {
       "id": ",9877,2025-08-15,2099-01-01,[],[{user_id: 16",
       "name": "user_name: 王靖繁",
-      "aliases": [
-        "user_name: 王靖繁"
-      ],
+      "aliases": ["user_name: 王靖繁"],
       "description": "user_email: jingfan.wang@bluefocus.com}",
       "status": "active"
     },
     {
       "id": "63",
       "name": "Dreame",
-      "aliases": [
-        "dreame"
-      ],
+      "aliases": ["dreame"],
       "description": "Dreame DTC、Dreame US AMZ项目的邀约和数据分析",
       "status": "active"
     },
     {
       "id": ",25331,2025-08-13,2099-01-01,[],[{user_id: 15",
       "name": "user_name: 刘婉茹",
-      "aliases": [
-        "user_name: 刘婉茹"
-      ],
+      "aliases": ["user_name: 刘婉茹"],
       "description": "user_email: wanru.liu@bluefocus.com}",
       "status": "active"
     },
     {
       "id": "62",
       "name": "Ugreen",
-      "aliases": [
-        "ugreen"
-      ],
+      "aliases": ["ugreen"],
       "description": "Ugreen US&DE AMZ、Ugreen DTC的项目邀约和数据分析",
       "status": "active"
     },
     {
       "id": ",23990,2025-08-13,2099-01-01,[],[{user_id: 11",
       "name": "user_name: 陈芷萱",
-      "aliases": [
-        "user_name: 陈芷萱"
-      ],
+      "aliases": ["user_name: 陈芷萱"],
       "description": "user_email: zhixuan.chen@bluefocus.com}",
       "status": "active"
     },
     {
       "id": "61",
       "name": "Anker",
-      "aliases": [
-        "anker"
-      ],
+      "aliases": ["anker"],
       "description": "Anker EufyMake、Anker Eufy NL&CA 、Anker Soundcore Au、Anker US&DE、Anker Au 的项目邀约和数据分析",
       "status": "active"
     },
     {
       "id": ",618,2025-08-13,2099-01-01,[],[{user_id: 19",
       "name": "user_name: 赵佳桐",
-      "aliases": [
-        "user_name: 赵佳桐"
-      ],
+      "aliases": ["user_name: 赵佳桐"],
       "description": "user_email: jiatong.zhao@bluefocus.com}",
       "status": "active"
     },
     {
       "id": "60",
       "name": "Plaud.ai",
-      "aliases": [
-        "plaud.ai"
-      ],
+      "aliases": ["plaud.ai"],
       "description": "Plaud.ai-AMZ、Plaud.ai-CA、Plaud.ai-US 邀约和数据分析管理",
       "status": "active"
     },
     {
       "id": ",24553,2025-08-13,2099-01-01,[],[{user_id: 12",
       "name": "user_name: 桂一丹",
-      "aliases": [
-        "user_name: 桂一丹"
-      ],
+      "aliases": ["user_name: 桂一丹"],
       "description": "user_email: yidan.gui@bluefocus.com}",
       "status": "active"
     },
     {
       "id": "59",
       "name": "项目重复",
-      "aliases": [
-        "项目重复"
-      ],
+      "aliases": ["项目重复"],
       "description": "项目重复testing",
       "status": "active"
     },
     {
       "id": "58",
       "name": "媒介测试",
-      "aliases": [
-        "媒介测试"
-      ],
+      "aliases": ["媒介测试"],
       "description": "测试",
       "status": "active"
     },
     {
       "id": "57",
       "name": "smart-哥伦比亚上市媒体pitch",
-      "aliases": [
-        "smart-哥伦比亚上市媒体pitch"
-      ],
+      "aliases": ["smart-哥伦比亚上市媒体pitch"],
       "description": "哥伦比亚、巴西、秘鲁、厄瓜多尔等国家记者",
       "status": "active"
     },
     {
       "id": "56",
       "name": "MajorFitness AU",
-      "aliases": [
-        "majorfitness au"
-      ],
+      "aliases": ["majorfitness au"],
       "description": "联盟营销",
       "status": "active"
     },
     {
       "id": "55",
       "name": "test_impact",
-      "aliases": [
-        "test_impact"
-      ],
+      "aliases": ["test_impact"],
       "description": "test_impact",
       "status": "active"
     },
     {
       "id": "54",
       "name": "vivo",
-      "aliases": [
-        "vivo"
-      ],
+      "aliases": ["vivo"],
       "description": "111",
       "status": "active"
     },
     {
       "id": "53",
       "name": "科沃斯品牌",
-      "aliases": [
-        "科沃斯品牌"
-      ],
+      "aliases": ["科沃斯品牌"],
       "description": "品牌团队科沃斯项目",
       "status": "active"
     },
     {
       "id": "52",
       "name": "realme",
-      "aliases": [
-        "realme"
-      ],
+      "aliases": ["realme"],
       "description": "realme品牌媒介",
       "status": "active"
     },
     {
       "id": "51",
       "name": "Anker EufyMake",
-      "aliases": [
-        "anker eufymake"
-      ],
+      "aliases": ["anker eufymake"],
       "description": "Eufy Make 的自动邀约",
       "status": "active"
     },
     {
       "id": "50",
       "name": "Anker Eufy NL&CA",
-      "aliases": [
-        "anker eufy nl&ca"
-      ],
+      "aliases": ["anker eufy nl&ca"],
       "description": "Eufy NL&CA 的自动邀约",
       "status": "active"
     },
     {
       "id": "49",
       "name": "Anker Soundcore Au",
-      "aliases": [
-        "anker soundcore au"
-      ],
+      "aliases": ["anker soundcore au"],
       "description": "Soundcore Au 的自动邀约",
       "status": "active"
     },
     {
       "id": "48",
       "name": "Anker US&DE",
-      "aliases": [
-        "anker us&de"
-      ],
+      "aliases": ["anker us&de"],
       "description": "anker us&de 的自动邀约",
       "status": "active"
     },
     {
       "id": "47",
       "name": "Anker Au",
-      "aliases": [
-        "anker au"
-      ],
+      "aliases": ["anker au"],
       "description": "Anker au 自动邀约计划",
       "status": "active"
     },
     {
       "id": "46",
       "name": "OnePlus",
-      "aliases": [
-        "oneplus"
-      ],
+      "aliases": ["oneplus"],
       "description": "联盟客邀约",
       "status": "active"
     },
     {
       "id": "45",
       "name": "AMIRO",
-      "aliases": [
-        "amiro"
-      ],
+      "aliases": ["amiro"],
       "description": "联盟客邀约",
       "status": "active"
     },
     {
       "id": "44",
       "name": "Major Fitness",
-      "aliases": [
-        "major fitness"
-      ],
+      "aliases": ["major fitness"],
       "description": "联盟客邀约",
       "status": "active"
     },
     {
       "id": "43",
       "name": "Ugreen US&DE AMZ",
-      "aliases": [
-        "ugreen us&de amz"
-      ],
+      "aliases": ["ugreen us&de amz"],
       "description": "/",
       "status": "active"
     },
     {
       "id": "42",
       "name": "CINCOM",
-      "aliases": [
-        "cincom"
-      ],
+      "aliases": ["cincom"],
       "description": "联盟运营",
       "status": "active"
     },
     {
       "id": "41",
       "name": "OPPO FR",
-      "aliases": [
-        "oppo fr"
-      ],
+      "aliases": ["oppo fr"],
       "description": "联盟运营",
       "status": "active"
     },
     {
       "id": "40",
       "name": "OPPO ES",
-      "aliases": [
-        "oppo es"
-      ],
+      "aliases": ["oppo es"],
       "description": "联盟运营",
       "status": "active"
     },
     {
       "id": "39",
       "name": "OPPO UK",
-      "aliases": [
-        "oppo uk"
-      ],
+      "aliases": ["oppo uk"],
       "description": "联盟运营",
       "status": "active"
     },
     {
       "id": "38",
       "name": "OnePlus FR",
-      "aliases": [
-        "oneplus fr"
-      ],
+      "aliases": ["oneplus fr"],
       "description": "联盟运营",
       "status": "active"
     },
     {
       "id": "37",
       "name": "OnePlus DE",
-      "aliases": [
-        "oneplus de"
-      ],
+      "aliases": ["oneplus de"],
       "description": "联盟运营",
       "status": "active"
     },
     {
       "id": "36",
       "name": "OnePlus UK&EMEA",
-      "aliases": [
-        "oneplus uk&emea"
-      ],
+      "aliases": ["oneplus uk&emea"],
       "description": "联盟运营",
       "status": "active"
     },
     {
       "id": "35",
       "name": "Actbest",
-      "aliases": [
-        "actbest"
-      ],
+      "aliases": ["actbest"],
       "description": "联盟营销运营",
       "status": "active"
     },
     {
       "id": "34",
       "name": "FITKING",
-      "aliases": [
-        "fitking"
-      ],
+      "aliases": ["fitking"],
       "description": "联盟营销运营",
       "status": "active"
     },
     {
       "id": "33",
       "name": "AMIRO",
-      "aliases": [
-        "amiro"
-      ],
+      "aliases": ["amiro"],
       "description": "联盟营销运营",
       "status": "active"
     },
     {
       "id": "32",
       "name": "MajorFitness",
-      "aliases": [
-        "majorfitness"
-      ],
+      "aliases": ["majorfitness"],
       "description": "Major Fitness 和Major Fitness AU 的数据分析和联盟客邀约",
       "status": "active"
     },
     {
       "id": "31",
       "name": "Plaud.ai-AMZ",
-      "aliases": [
-        "plaud.ai-amz"
-      ],
+      "aliases": ["plaud.ai-amz"],
       "description": "IMPACT邀约",
       "status": "active"
     },
     {
       "id": "30",
       "name": "Plaud.ai-CA",
-      "aliases": [
-        "plaud.ai-ca"
-      ],
+      "aliases": ["plaud.ai-ca"],
       "description": "IMPACT邀约",
       "status": "active"
     },
     {
       "id": "29",
       "name": "TikTok Lite",
-      "aliases": [
-        "tiktok lite"
-      ],
+      "aliases": ["tiktok lite"],
       "description": "IMPACT邀约",
       "status": "active"
     },
     {
       "id": "28",
       "name": "Petlibro 3.0",
-      "aliases": [
-        "petlibro 3.0"
-      ],
+      "aliases": ["petlibro 3.0"],
       "description": "IMPACT邀约",
       "status": "active"
     },
     {
       "id": "27",
       "name": "Plaud.ai-US",
-      "aliases": [
-        "plaud.ai-us"
-      ],
+      "aliases": ["plaud.ai-us"],
       "description": "IMPACT邀约",
       "status": "active"
     },
     {
       "id": "26",
       "name": "Dreame DTC",
-      "aliases": [
-        "dreame dtc"
-      ],
+      "aliases": ["dreame dtc"],
       "description": "新接入项目，负责US&CA",
       "status": "active"
     },
     {
       "id": "25",
       "name": "Ugreen DTC",
-      "aliases": [
-        "ugreen dtc"
-      ],
+      "aliases": ["ugreen dtc"],
       "description": "成熟3C项目，负责US&DE, 有转化型资源邀约需求（coupon&deal&cashback&loyalty）",
       "status": "active"
     },
     {
       "id": "24",
       "name": "Dreame US AMZ",
-      "aliases": [
-        "dreame us amz"
-      ],
+      "aliases": ["dreame us amz"],
       "description": "/",
       "status": "active"
     },
     {
       "id": "23",
       "name": "Jackery CA",
-      "aliases": [
-        "jackery ca"
-      ],
+      "aliases": ["jackery ca"],
       "description": "/",
       "status": "active"
     },
     {
       "id": "22",
       "name": "Oneisall EU",
-      "aliases": [
-        "oneisall eu"
-      ],
+      "aliases": ["oneisall eu"],
       "description": "/",
       "status": "active"
     },
     {
       "id": "21",
       "name": "Jackery CA",
-      "aliases": [
-        "jackery ca"
-      ],
+      "aliases": ["jackery ca"],
       "description": "/",
       "status": "active"
     },
     {
       "id": "20",
       "name": "CFL",
-      "aliases": [
-        "cfl"
-      ],
+      "aliases": ["cfl"],
       "description": "beta test",
       "status": "active"
     },
     {
       "id": "19",
       "name": "CFL",
-      "aliases": [
-        "cfl"
-      ],
+      "aliases": ["cfl"],
       "description": "Beta test",
       "status": "active"
     },
     {
       "id": "18",
       "name": "依露希尔",
-      "aliases": [
-        "依露希尔"
-      ],
+      "aliases": ["依露希尔"],
       "description": "依露希尔项目管理",
       "status": "active"
     },
     {
       "id": "17",
       "name": "国航",
-      "aliases": [
-        "国航"
-      ],
+      "aliases": ["国航"],
       "description": "国航项目管理",
       "status": "active"
     },
     {
       "id": "16",
       "name": "泡泡玛特",
-      "aliases": [
-        "泡泡玛特"
-      ],
+      "aliases": ["泡泡玛特"],
       "description": "泡泡玛特项目管理",
       "status": "active"
     },
     {
       "id": "15",
       "name": "PPX",
-      "aliases": [
-        "ppx"
-      ],
+      "aliases": ["ppx"],
       "description": "PPX 投放项目管理",
       "status": "active"
     },
     {
       "id": "14",
       "name": "得物",
-      "aliases": [
-        "得物"
-      ],
+      "aliases": ["得物"],
       "description": "得物投放项目管理",
       "status": "active"
     },
     {
       "id": "13",
       "name": "SATELLAI",
-      "aliases": [
-        "satellai"
-      ],
+      "aliases": ["satellai"],
       "description": "IMPACT邀约",
       "status": "active"
     },
     {
       "id": "12",
       "name": "Backend Testing Project 2025-06-18 - EDITED",
-      "aliases": [
-        "backend testing project 2025-06-18 - edited"
-      ],
+      "aliases": ["backend testing project 2025-06-18 - edited"],
       "description": "This is a comprehensive backend testing project to verify all CRUD operations are properly sent to the server. Testing includes create, read, update, delete operations with full network monitoring.",
       "status": "active"
     },
     {
       "id": "11",
       "name": "测试项目创建功能-已编辑",
-      "aliases": [
-        "测试项目创建功能-已编辑"
-      ],
+      "aliases": ["测试项目创建功能-已编辑"],
       "description": "这是一个用于测试项目创建功能的测试项目。测试包括表单验证、字段输入、数据保存等功能。",
       "status": "active"
     },
     {
       "id": "10",
       "name": "lazada_ID",
-      "aliases": [
-        "lazada_id"
-      ],
+      "aliases": ["lazada_id"],
       "description": "针对印尼市场，为 Lazada App 制定并执行用户增长及促销相关广告投放策略，覆盖新客引流与转化提升目标。",
       "status": "active"
     },
     {
       "id": "9",
       "name": "test03",
-      "aliases": [
-        "test03"
-      ],
+      "aliases": ["test03"],
       "description": "giajsij",
       "status": "active"
     },
     {
       "id": "8",
       "name": "test",
-      "aliases": [
-        "test"
-      ],
+      "aliases": ["test"],
       "description": "test描述",
       "status": "active"
     },
     {
       "id": "7",
       "name": "追觅",
-      "aliases": [
-        "追觅"
-      ],
+      "aliases": ["追觅"],
       "description": "西红柿追觅项目",
       "status": "active"
     },
     {
       "id": "6",
       "name": "sunseeker",
-      "aliases": [
-        "sunseeker"
-      ],
+      "aliases": ["sunseeker"],
       "description": "西红柿sunseeker项目",
       "status": "active"
     },
     {
       "id": "5",
       "name": "test",
-      "aliases": [
-        "test"
-      ],
+      "aliases": ["test"],
       "description": "caadkaod",
       "status": "active"
     },
     {
       "id": "4",
       "name": "test",
-      "aliases": [
-        "test"
-      ],
+      "aliases": ["test"],
       "description": "test",
       "status": "active"
     },
     {
       "id": "3",
       "name": "Luna-test",
-      "aliases": [
-        "luna-test"
-      ],
+      "aliases": ["luna-test"],
       "description": "测试项目-上传素材",
       "status": "active"
     },
     {
       "id": "2",
       "name": "增强测试",
-      "aliases": [
-        "增强测试"
-      ],
+      "aliases": ["增强测试"],
       "description": "测试",
       "status": "active"
     },
     {
       "id": "1",
       "name": "研发",
-      "aliases": [
-        "研发"
-      ],
+      "aliases": ["研发"],
       "description": "测试",
       "status": "active"
     }

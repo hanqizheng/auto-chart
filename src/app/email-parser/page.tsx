@@ -7,7 +7,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 
@@ -27,7 +34,7 @@ export default function EmailParserPage() {
     progress: 0,
     currentFile: "",
     results: [],
-    errors: []
+    errors: [],
   });
   const [enableAI, setEnableAI] = useState(true);
   const [enableBatchProcessing, setEnableBatchProcessing] = useState(false);
@@ -42,14 +49,14 @@ export default function EmailParserPage() {
   useEffect(() => {
     const fetchTestEmailsInfo = async () => {
       try {
-        const response = await fetch('/api/email-parser');
+        const response = await fetch("/api/email-parser");
         if (response.ok) {
           const data = await response.json();
           const count = data.filesCount || 0;
           const files = data.files || [];
-          
+
           setTestEmailsInfo({ count, files });
-          
+
           // 自动推荐批处理模式（文件数量大于50时）
           if (count > 50) {
             setEnableBatchProcessing(true);
@@ -57,10 +64,10 @@ export default function EmailParserPage() {
           }
         }
       } catch (error) {
-        console.error('获取测试邮件信息失败:', error);
+        console.error("获取测试邮件信息失败:", error);
       }
     };
-    
+
     fetchTestEmailsInfo();
   }, []);
 
@@ -73,17 +80,19 @@ export default function EmailParserPage() {
       progress: 0,
       currentFile: "",
       results: [],
-      errors: []
+      errors: [],
     });
 
     try {
-      const mode = enableBatchProcessing ? '批处理' : '普通';
-      console.log(`📧 开始解析 ${testEmailsInfo.count} 个邮件文件，模式: ${mode}，AI处理: ${enableAI}，批次大小: ${batchSize}`);
+      const mode = enableBatchProcessing ? "批处理" : "普通";
+      console.log(
+        `📧 开始解析 ${testEmailsInfo.count} 个邮件文件，模式: ${mode}，AI处理: ${enableAI}，批次大小: ${batchSize}`
+      );
 
-      const response = await fetch('/api/email-parser', {
-        method: 'POST',
+      const response = await fetch("/api/email-parser", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           enableAI,
@@ -91,7 +100,7 @@ export default function EmailParserPage() {
           batchSize,
           batchDelay: 1000,
           enableAutoSave: true,
-          resumeFromProgress: true
+          resumeFromProgress: true,
         }),
       });
 
@@ -101,58 +110,65 @@ export default function EmailParserPage() {
       }
 
       const result = await response.json();
-      
-      console.log('✅ 解析完成:', result);
+
+      console.log("✅ 解析完成:", result);
 
       setProcessing({
         status: "success",
         progress: 100,
         currentFile: "",
         results: result.results || [],
-        errors: result.errors || []
+        errors: result.errors || [],
       });
-
     } catch (error) {
-      console.error('❌ 解析失败:', error);
+      console.error("❌ 解析失败:", error);
       setProcessing(prev => ({
         ...prev,
         status: "failed",
-        errors: [...prev.errors, error instanceof Error ? error.message : "解析失败"]
+        errors: [...prev.errors, error instanceof Error ? error.message : "解析失败"],
       }));
     }
   }, [testEmailsInfo, enableAI]);
 
   // 导出 CSV
   const exportCSV = useCallback(() => {
-    const resultsToExport = selectedResults.size > 0 
-      ? processing.results.filter((_, index) => selectedResults.has(index))
-      : processing.results;
+    const resultsToExport =
+      selectedResults.size > 0
+        ? processing.results.filter((_, index) => selectedResults.has(index))
+        : processing.results;
 
     if (resultsToExport.length === 0) return;
 
-    const csvHeaders = "邮件文件名,项目名称,联盟客名称,联盟客邮箱,沟通阶段,解析状态,失败原因,邮件主题,邮件日期\n";
-    
-    const csvContent = resultsToExport.map(result => {
-      const stageName = getStageDisplayName(result.communicationStage);
-      return [
-        result.filename || "未知文件",
-        result.projectName || "未识别",
-        result.partnerName || "未识别", 
-        result.partnerEmail || "未识别",
-        stageName,
-        result.success ? "解析成功" : "解析失败",
-        result.errorReason || "-",
-        result.emailSubject.replace(/"/g, '""'), // 转义CSV中的引号
-        result.emailDate || "-"
-      ].map(field => `"${field}"`).join(",");
-    }).join("\n");
+    const csvHeaders =
+      "邮件文件名,项目名称,联盟客名称,联盟客邮箱,沟通阶段,沟通子阶段,解析状态,失败原因,邮件主题,邮件日期\n";
+
+    const csvContent = resultsToExport
+      .map(result => {
+        const stageName = getStageDisplayName(result.communicationStage);
+        const subStageName = getSubStageDisplayName((result as any).communicationSubStage);
+        return [
+          result.filename || "未知文件", // 添加邮件文件名作为第一列
+          result.projectName || "未识别",
+          result.partnerName || "未识别",
+          result.partnerEmail || "未识别",
+          stageName,
+          subStageName, // 子阶段列
+          result.success ? "解析成功" : "解析失败",
+          result.errorReason || "-",
+          result.emailSubject.replace(/"/g, '""'), // 转义CSV中的引号
+          result.emailDate || "-",
+        ]
+          .map(field => `"${field}"`)
+          .join(",");
+      })
+      .join("\n");
 
     const csvData = csvHeaders + csvContent;
     const blob = new Blob(["\ufeff" + csvData], { type: "text/csv;charset=utf-8;" }); // 添加BOM
     const link = document.createElement("a");
     const url = URL.createObjectURL(blob);
     link.setAttribute("href", url);
-    link.setAttribute("download", `邮件解析结果_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute("download", `邮件解析结果_${new Date().toISOString().split("T")[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -163,11 +179,37 @@ export default function EmailParserPage() {
   const getStageDisplayName = (stage: string | null) => {
     const stageMap: Record<string, string> = {
       "initial-inquiry": "前置了解",
-      "proposal-discussion": "方案沟通", 
+      "proposal-discussion": "方案沟通",
       "partnership-confirmed": "确认合作",
-      "after-service": "售后服务"
+      "after-service": "售后服务",
     };
     return stage ? stageMap[stage] || stage : "未识别";
+  };
+
+  // 获取子阶段显示名称
+  const getSubStageDisplayName = (subStage: string | null) => {
+    const subStageMap: Record<string, string> = {
+      // 前置了解子阶段
+      "account-invitation": "账号邀请入驻",
+      "mediakit-request": "Mediakit索要",
+
+      // 方案沟通子阶段
+      "budget-commission": "客户预算&账号佣金情况提供",
+      "proposal-placement": "媒体直接推荐方案/Mediakit版位指定",
+      "price-negotiation": "砍价",
+
+      // 确认合作子阶段
+      "io-signing": "IO签署",
+      "invoice-prepay": "Invoice发送（预付情况）",
+      "payment-proof": "付款凭证提供",
+      "creative-upload": "上线素材提供",
+      "screenshot-feedback": "上线版位截图&链接反馈",
+
+      // 售后服务子阶段
+      "compensation-placement": "补偿版位处理（效果不佳时）",
+      "next-cycle-booking": "预定下一周期/季度版位（效果佳时）",
+    };
+    return subStage ? subStageMap[subStage] || subStage : "未识别";
   };
 
   // 切换结果选择
@@ -193,7 +235,7 @@ export default function EmailParserPage() {
   };
 
   return (
-    <div className="container mx-auto py-8 space-y-8">
+    <div className="container mx-auto space-y-8 py-8">
       {/* 页面标题 */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">邮件解析工具</h1>
@@ -209,34 +251,32 @@ export default function EmailParserPage() {
             <FileText className="h-5 w-5" />
             Test-emails 文件夹
           </CardTitle>
-          <CardDescription>
-            自动读取 test-emails 文件夹中的邮件文件进行解析
-          </CardDescription>
+          <CardDescription>自动读取 test-emails 文件夹中的邮件文件进行解析</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {testEmailsInfo ? (
             <>
               {/* 邮件文件统计 */}
-              <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+              <div className="bg-muted/50 flex items-center justify-between rounded-lg p-4">
                 <div>
                   <div className="text-sm font-medium">找到的邮件文件</div>
-                  <div className="text-2xl font-bold text-primary">{testEmailsInfo.count}</div>
+                  <div className="text-primary text-2xl font-bold">{testEmailsInfo.count}</div>
                 </div>
-                <FileText className="h-8 w-8 text-muted-foreground" />
+                <FileText className="text-muted-foreground h-8 w-8" />
               </div>
 
               {/* 文件列表预览 */}
               {testEmailsInfo.files.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="font-medium text-sm text-muted-foreground">文件列表预览</h4>
-                  <div className="max-h-32 overflow-y-auto space-y-1 border rounded p-2">
+                  <h4 className="text-muted-foreground text-sm font-medium">文件列表预览</h4>
+                  <div className="max-h-32 space-y-1 overflow-y-auto rounded border p-2">
                     {testEmailsInfo.files.slice(0, 10).map((filename, index) => (
-                      <div key={index} className="text-xs font-mono p-1 bg-muted/30 rounded">
+                      <div key={index} className="bg-muted/30 rounded p-1 font-mono text-xs">
                         {filename}
                       </div>
                     ))}
                     {testEmailsInfo.files.length > 10 && (
-                      <div className="text-xs text-muted-foreground text-center py-1">
+                      <div className="text-muted-foreground py-1 text-center text-xs">
                         ... 还有 {testEmailsInfo.files.length - 10} 个文件
                       </div>
                     )}
@@ -249,38 +289,39 @@ export default function EmailParserPage() {
               {/* 解析选项 */}
               <div className="space-y-4">
                 <h4 className="font-medium">解析选项</h4>
-                
+
                 {/* AI 配置 */}
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="enable-ai"
                     checked={enableAI}
-                    onCheckedChange={(checked) => setEnableAI(checked === true)}
+                    onCheckedChange={checked => setEnableAI(checked === true)}
                   />
                   <label htmlFor="enable-ai" className="text-sm">
                     启用 AI 辅助解析 (提取联盟客姓名和识别沟通阶段)
                   </label>
                 </div>
-                
+
                 {/* 批处理配置 */}
                 <div className="space-y-3">
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="enable-batch"
                       checked={enableBatchProcessing}
-                      onCheckedChange={(checked) => setEnableBatchProcessing(checked === true)}
+                      onCheckedChange={checked => setEnableBatchProcessing(checked === true)}
                     />
                     <label htmlFor="enable-batch" className="text-sm">
-                      启用分批处理模式 {testEmailsInfo && testEmailsInfo.count > 50 && (
+                      启用分批处理模式{" "}
+                      {testEmailsInfo && testEmailsInfo.count > 50 && (
                         <span className="text-amber-600">(推荐：文件数量较多)</span>
                       )}
                     </label>
                   </div>
-                  
+
                   {enableBatchProcessing && (
                     <div className="ml-6 space-y-2">
                       <div className="flex items-center space-x-2">
-                        <label htmlFor="batch-size" className="text-xs text-muted-foreground">
+                        <label htmlFor="batch-size" className="text-muted-foreground text-xs">
                           每批处理数量:
                         </label>
                         <input
@@ -289,18 +330,22 @@ export default function EmailParserPage() {
                           min="5"
                           max="50"
                           value={batchSize}
-                          onChange={(e) => setBatchSize(Math.max(5, Math.min(50, parseInt(e.target.value) || 10)))}
-                          className="w-16 px-2 py-1 text-xs border rounded"
+                          onChange={e =>
+                            setBatchSize(Math.max(5, Math.min(50, parseInt(e.target.value) || 10)))
+                          }
+                          className="w-16 rounded border px-2 py-1 text-xs"
                         />
-                        <span className="text-xs text-muted-foreground">个文件</span>
+                        <span className="text-muted-foreground text-xs">个文件</span>
                       </div>
                     </div>
                   )}
                 </div>
-                
-                <div className="text-xs text-muted-foreground">
-                  • 规则匹配：从邮件头部和内容提取项目名称和联盟客邮箱<br/>
-                  • AI 辅助：智能识别联盟客姓名和当前沟通阶段<br/>
+
+                <div className="text-muted-foreground text-xs">
+                  • 规则匹配：从邮件头部和内容提取项目名称和联盟客邮箱
+                  <br />
+                  • AI 辅助：智能识别联盟客姓名和当前沟通阶段
+                  <br />
                   {enableBatchProcessing && (
                     <>• 分批处理：支持大批量文件解析，自动保存进度，可断点续传</>
                   )}
@@ -308,7 +353,7 @@ export default function EmailParserPage() {
               </div>
 
               {/* 开始解析按钮 */}
-              <Button 
+              <Button
                 onClick={startParsing}
                 disabled={processing.status === "processing" || testEmailsInfo.count === 0}
                 className="w-full"
@@ -319,15 +364,13 @@ export default function EmailParserPage() {
                     解析中...
                   </>
                 ) : (
-                  <>
-                    开始解析 ({testEmailsInfo.count} 个文件)
-                  </>
+                  <>开始解析 ({testEmailsInfo.count} 个文件)</>
                 )}
               </Button>
             </>
           ) : (
-            <div className="text-center py-8 text-muted-foreground">
-              <Loader2 className="h-6 w-6 animate-spin mx-auto mb-2" />
+            <div className="text-muted-foreground py-8 text-center">
+              <Loader2 className="mx-auto mb-2 h-6 w-6 animate-spin" />
               正在扫描 test-emails 文件夹...
             </div>
           )}
@@ -341,22 +384,23 @@ export default function EmailParserPage() {
             <CardTitle className="flex items-center gap-2">
               <Clock className="h-5 w-5" />
               解析进度
-              {enableBatchProcessing && <Badge variant="secondary" className="text-xs">批处理模式</Badge>}
+              {enableBatchProcessing && (
+                <Badge variant="secondary" className="text-xs">
+                  批处理模式
+                </Badge>
+              )}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <Progress value={processing.progress} className="w-full" />
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">
-                正在处理邮件文件，请稍候...
-              </p>
+              <p className="text-muted-foreground text-sm">正在处理邮件文件，请稍候...</p>
               {enableBatchProcessing && (
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   • 批次大小: {batchSize} 个文件
                   <br />
                   • 自动保存: 已启用
-                  <br />
-                  • 断点续传: 已启用
+                  <br />• 断点续传: 已启用
                 </p>
               )}
             </div>
@@ -374,28 +418,24 @@ export default function EmailParserPage() {
                 解析结果
               </div>
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={toggleSelectAll}
-                >
+                <Button variant="outline" size="sm" onClick={toggleSelectAll}>
                   {selectedResults.size === processing.results.length ? "取消全选" : "全选"}
                 </Button>
-                <Button
-                  onClick={exportCSV}
-                  size="sm"
-                  disabled={processing.results.length === 0}
-                >
+                <Button onClick={exportCSV} size="sm" disabled={processing.results.length === 0}>
                   <Download className="mr-2 h-4 w-4" />
                   导出 CSV {selectedResults.size > 0 && `(${selectedResults.size})`}
                 </Button>
               </div>
             </CardTitle>
             <CardDescription>
-              成功解析 {processing.results.filter(r => r.success).length} / {processing.results.length} 个邮件
+              成功解析 {processing.results.filter(r => r.success).length} /{" "}
+              {processing.results.length} 个邮件
               {processing.errors.length > 0 && ` (${processing.errors.length} 个文件读取失败)`}
               {enableBatchProcessing && (
-                <><br />批处理模式：自动保存结果到 parsing-results 文件夹</>
+                <>
+                  <br />
+                  批处理模式：自动保存结果到 parsing-results 文件夹
+                </>
               )}
             </CardDescription>
           </CardHeader>
@@ -406,7 +446,10 @@ export default function EmailParserPage() {
                   <TableRow>
                     <TableHead className="w-12">
                       <Checkbox
-                        checked={selectedResults.size === processing.results.length && processing.results.length > 0}
+                        checked={
+                          selectedResults.size === processing.results.length &&
+                          processing.results.length > 0
+                        }
                         onCheckedChange={toggleSelectAll}
                       />
                     </TableHead>
@@ -415,6 +458,7 @@ export default function EmailParserPage() {
                     <TableHead>联盟客名称</TableHead>
                     <TableHead>联盟客邮箱</TableHead>
                     <TableHead>沟通阶段</TableHead>
+                    <TableHead>沟通子阶段</TableHead>
                     <TableHead>解析状态</TableHead>
                     <TableHead>置信度</TableHead>
                     <TableHead>失败原因</TableHead>
@@ -455,19 +499,26 @@ export default function EmailParserPage() {
                         </Badge>
                       </TableCell>
                       <TableCell>
+                        <Badge variant="outline" className="text-xs">
+                          {getSubStageDisplayName((result as any).communicationSubStage)}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
                         {result.success ? (
-                          <Badge variant="default" className="text-xs">解析成功</Badge>
+                          <Badge variant="default" className="text-xs">
+                            解析成功
+                          </Badge>
                         ) : (
-                          <Badge variant="destructive" className="text-xs">解析失败</Badge>
+                          <Badge variant="destructive" className="text-xs">
+                            解析失败
+                          </Badge>
                         )}
                       </TableCell>
                       <TableCell>
-                        <div className="text-xs">
-                          {(result.confidence * 100).toFixed(0)}%
-                        </div>
+                        <div className="text-xs">{(result.confidence * 100).toFixed(0)}%</div>
                       </TableCell>
                       <TableCell className="max-w-xs">
-                        <span className="text-muted-foreground text-xs truncate block">
+                        <span className="text-muted-foreground block truncate text-xs">
                           {result.errorReason || "-"}
                         </span>
                       </TableCell>
@@ -487,7 +538,7 @@ export default function EmailParserPage() {
           <AlertDescription>
             <div className="space-y-1">
               <p>解析过程中出现以下错误：</p>
-              <ul className="list-disc list-inside space-y-1 text-sm">
+              <ul className="list-inside list-disc space-y-1 text-sm">
                 {processing.errors.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}
