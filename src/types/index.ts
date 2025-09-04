@@ -38,3 +38,21 @@ export type {
 
 // 通用类型
 export type { Size, State, ExportFormat, MobileTabValue } from "./common";
+
+// 邮件解析相关类型
+export type {
+  ParsingStatus,
+  CommunicationStage,
+  MatchType,
+  ConfidenceLevel,
+  ProjectInfo,
+  StageInfo,
+  EmailParsingResult,
+  BatchParsingResult,
+  EmailFile,
+  ParsingConfig,
+  ProjectMatchResult,
+  PartnerInfo,
+  AIResult,
+  CSVExportData,
+} from "./email";

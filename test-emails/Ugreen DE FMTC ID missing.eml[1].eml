@@ -1,0 +1,201 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp6002483nji;
+        Mon, 25 Aug 2025 12:58:01 -0700 (PDT)
+X-Received: by 2002:a05:6402:44d2:b0:618:aed3:38a with SMTP id 4fb4d7f45d1cf-61c1b6f52edmr8414066a12.31.1756151881415;
+        Mon, 25 Aug 2025 12:58:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756151881; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bxYviKM6LTFgSFMJPBGoJLXnC4xz5jqMHuGk4n838v8d1YPsBgFwo/qxRgVHWFAAs+
+         ZcLmRbnWx7PD7A0XG3kEY9cxOgj7t/f6YBzknbI7EAIfLi8nk+pyP0NkXCfyyyKJO6pO
+         xza4RnEcvrJLnXh16UnZlQvS5G847U+g0OLQfKGhkUAXKBhz4wyF0+QgJ2raHpIzIaqi
+         wRTief79ag/BYea4GOH+ZSS83WL5bZl/QIrnAHAGwNzS9wK5XKcmCd4XCfFFChLEXn+2
+         XME5EZMi0NAZSh0XuFWFLn7n55liIAYRKqKaVcIq+PBxJDl+xMPZZlKeco4NANLIgaDr
+         yxMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=5YtLjjoIBjeWcO6gNWMOszOzbmiByqEfOgTmQC1Gq5Y=;
+        fh=z1MbCQN7ZmJy1kdV6Fjt4GRE80TsQd9EasJ/8pjS0dI=;
+        b=kyCQfoe91Sf1OvXQpEXEU6WN+nJjQNBav0FhIWo2wvwqRn9qPiOXIfzY5w4E/XiVHJ
+         BLXEeGlL+zuMjF6UHzgG7uvsftnP/F0v3Jt6LDDIxmOkDH4issGQQO6ERYy1mbMp3RLZ
+         h32OE2+p23sMdbvpWPf+jEaSqk7ccNnBUxHUta/3kdbLxYSzZqRrPlt85WckLmvSVC/m
+         vBQltxioxJfApFJWjgY3nT7aD2mOwATknQaL3237nynt5T1fm1r/+H37VNiLWHclg7nH
+         TxQQcvsyNl6nSt4gjdnD8T8zRFMZkE9GEDd6tKzrb6wCLwAEO0jaClOVCVzxaxgjq0SA
+         sMMA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@fmtc-co.20230601.gappssmtp.com header.s=20230601 header.b=f0uPsAO3;
+       spf=pass (google.com: domain of kim.lohrberg@fmtc.co designates 209.85.220.41 as permitted sender) smtp.mailfrom=kim.lohrberg@fmtc.co;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=fmtc.co;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <kim.lohrberg@fmtc.co>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 4fb4d7f45d1cf-61c312b736csor3011663a12.3.2025.08.25.12.58.01
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Mon, 25 Aug 2025 12:58:01 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kim.lohrberg@fmtc.co designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@fmtc-co.20230601.gappssmtp.com header.s=20230601 header.b=f0uPsAO3;
+       spf=pass (google.com: domain of kim.lohrberg@fmtc.co designates 209.85.220.41 as permitted sender) smtp.mailfrom=kim.lohrberg@fmtc.co;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=fmtc.co;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fmtc-co.20230601.gappssmtp.com; s=20230601; t=1756151880; x=1756756680; darn=affiliate.bluefocus.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5YtLjjoIBjeWcO6gNWMOszOzbmiByqEfOgTmQC1Gq5Y=;
+        b=f0uPsAO305H3BVGhWyefZqhBXXSQI/vHocnUfC0YCYA6udnM6fncz8mxvW33n5ptsV
+         K2tpx0Iic6eWNpEDx5iQadD0sRilOFCak9/v0Nd+IrtznKlgDL9ft/XVRoul2cc4kRW3
+         fZXRXjeDsl2R7SCgWyL6qd1hT2eYUwj0bAbvBdY2ywCs5p2WpBcdfhTgJ3444ENjDm/Z
+         lLmnAY2Aqo+nJiW0kRq0RegMFGKD4QgdZa2udareQPAELzYWLcuTm0wzPNAGqY+ivRPF
+         +uRsOOkUm2/LU3qJrlbvxrACVUMrxBdltMHPAwp02ujxj4QHZMwl2H4U307ZKcB42Wf0
+         i/Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756151880; x=1756756680;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5YtLjjoIBjeWcO6gNWMOszOzbmiByqEfOgTmQC1Gq5Y=;
+        b=G20yk5Sonz5bGpbx+3HWCbk/gwUb8uw1smANNI0DYvDdzgiPn82enVk+uj01FBqCH/
+         8fKpRZDcnoZXucZeV5cK+9/G782RuHvEKM5c2pC/V+yg7oj1//VmSJ3TCRDEwq0fRrll
+         gOpEWtp2k6OFg75rjYzaeLlPt0KuNN5EVL0/W+cfwyoytdzXfYSH1VZ5ffcAFmZFdw6A
+         ir8t1BQWfHhGvOd9Nx2/aqhy5Y9oHCvW3BZVBamsObQ9k9DCjYhltKs5A/SL//sfYZOe
+         ykGZMnsFV18aDZOb+/h8v5jpUvTvPNOREo08ANpXkjYf8tN+UEI3W+5Zd/LbVW4SPLwK
+         tbxQ==
+X-Gm-Message-State: AOJu0Yx26s0V9VAUxqfxLbWK6fh1LMK+8I3mXwxk0WD9tOQzlhcCiZOf
+	JfRkSq7Kdmn9os6WxSVwnopLGu0bYR/ftjzdk5JUKx4AY2Q5tNIvVDckJP35rNUax0+BXFawqe1
+	YEPt8DDzzoiSpI+FG4vPeT/ShLiHweqV3c3ikySaP8psCFKhhmAWFhEA=
+X-Gm-Gg: ASbGnctX7y+ELacPlkB34m5cQT8RcuQ0BUS/NsTDVdSrpCqUpd5c41OCcDEO+F11St8
+	7GvOciSA3tms0s4zmuv2aYZeN39nIHa9ibbAdxcId/nwzxgFqNMi/DVVdmj2+32ZCyaIVGDdr+Y
+	iqlo7NK7KNlFws/0qZbAzOPbDZIz5BdQh79jqzRmCweT9Ts48aI+LeGlNwyUu1cGYYpoeMA1cQS
+	baYocPbdw==
+X-Google-Smtp-Source: AGHT+IGvvrgND4l5rpEX+MRHFr+b8l8BjcS5pvhYMRaAffU4saU09FMNFDvCngYH2ESZ66+n/FTfLTbpLFR+9LEa31U=
+X-Received: by 2002:a05:6402:26d2:b0:61c:8781:d05d with SMTP id
+ 4fb4d7f45d1cf-61c8781d1d0mr1670265a12.27.1756151880514; Mon, 25 Aug 2025
+ 12:58:00 -0700 (PDT)
+References: <CANCt8OyT_eVRxCrUEhbgKV9Oi-1st2z3NWTbXCKe07j6KmQrDQ@mail.gmail.com>
+In-Reply-To: <CANCt8OyT_eVRxCrUEhbgKV9Oi-1st2z3NWTbXCKe07j6KmQrDQ@mail.gmail.com>
+From: Kim Lohrberg <kim.lohrberg@fmtc.co>
+Date: Mon, 25 Aug 2025 14:57:48 -0500
+X-Gm-Features: Ac12FXwU82sezq11XOG5MY7O6W-j6Ugt1nQCwcqbvC0Q1Dd0POgw02apTjcMsTI
+Message-ID: <CABkc4qQqQwAZRoHp_0fQ6xSPoOBEh_Vy_2KJh10OneP9bmS3Bg@mail.gmail.com>
+Subject: Re: Ugreen DE FMTC ID missing
+To: Rita Liu <rita@affiliate.bluefocus.com>
+Content-Type: multipart/alternative; boundary="000000000000028f2a063d35f984"
+MIME-Version: 1.0
+
+--000000000000028f2a063d35f984
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Rita,
+
+I apologize for the delay in response. We only service US, UK, CA, and
+Australia, so that is why we do not list Ugreen DE in our directory.
+
+I have added SilkSilky to your account, but Ugreen is already claimed by
+the Ugreen account.
+
+Please let me know if you have any other questions.
+
+*Kim Lohrberg / *FMTC
+<https://cTx0D04.na1.hs-sales-engage.com/Ctc/GE+23284/cTx0D04/Jks2-6qcW69sM=
+D-6lZ3l5W5BGTH636bl9lW3Kgg3Z2c8XHZW5gZ9KN1mtBS-W2YW5Fq5WwWYHW59lT6C5C17_2W6=
+cZFRj6g5sm0W6WvGBc4FcjWQW9knwV96-4D28W3Czv5f2llzpTW8b7rJv8yz0yLW7tSLYJ2Fk0y=
+hW1LR64t5hywNvW86P_8l5fV5GYN1_xpYTj394tN3LbqmKh3tylW84V5kP1FmWPXW71CNJT6yZr=
+L0W8sR0J77qlLTyN7ZBPSbSXRS0VpZ59z9kTTGpf2hYMxs04>
+*Award-Winning Freemium Affiliate Tools | Enterprise Deal and Product Feed
+APIs | Solutions for Merchants and Agencies*
+
+
+On Wed, Aug 20, 2025 at 10:21=E2=80=AFPM Rita Liu <rita@affiliate.bluefocus=
+.com>
+wrote:
+
+> Hi team,
+>
+> I'm Rita, affiliate marketing manager at BlueFocus representing *Ugreen*.
+> I'm responsible for the Ugreen Impact affiliate program.
+> =C2=B7 Category: Charging devices and NAS
+> =C2=B7 Commission: 8%-15%
+> =C2=B7 Impact ID: 31970
+>
+> *I didn't find Ugreen DE FMTC ID, please help me find out the reason.*
+> *The ID for other regions could be found.*
+> US: 82258
+> CA:82257
+> UK: 82085
+> NAS US:82594
+> NAS UK:82595
+>
+> Besides, could you add Ugreen ( impact 31970) and Silksilky (impact
+> 507226) to the account *huimin.zheng1@bluefocus.com
+> <huimin.zheng1@bluefocus.com>*? I'm responsible for these 2 affiliate
+> program.
+>
+> Regards,
+> Rita
+>
+
+--000000000000028f2a063d35f984
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><d=
+iv dir=3D"ltr"><div dir=3D"ltr"><div>Hi Rita,&nbsp;</div><div><br></div><di=
+v>I apologize for the delay in response. We only service US, UK, CA, and Au=
+stralia, so that is why we do not list Ugreen DE in our directory.&nbsp;</d=
+iv><div><br></div><div>I have added SilkSilky to your account, but Ugreen i=
+s already claimed by the Ugreen account.&nbsp;</div><div><br></div><div>Ple=
+ase&nbsp;let me know if you have any other questions.&nbsp;</div><div><div =
+dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><div style=3D"font-f=
+amily:Roboto,RobotoDraft,Helvetica,Arial,sans-serif"><span style=3D"font-fa=
+mily:Verdana,Geneva,sans-serif"><font color=3D"#666666"><strong><br></stron=
+g></font></span></div><div style=3D"font-family:Roboto,RobotoDraft,Helvetic=
+a,Arial,sans-serif"><span style=3D"font-family:Verdana,Geneva,sans-serif"><=
+font color=3D"#666666"><strong>Kim Lohrberg /&nbsp;</strong></font></span><=
+a href=3D"https://cTx0D04.na1.hs-sales-engage.com/Ctc/GE+23284/cTx0D04/Jks2=
+-6qcW69sMD-6lZ3l5W5BGTH636bl9lW3Kgg3Z2c8XHZW5gZ9KN1mtBS-W2YW5Fq5WwWYHW59lT6=
+C5C17_2W6cZFRj6g5sm0W6WvGBc4FcjWQW9knwV96-4D28W3Czv5f2llzpTW8b7rJv8yz0yLW7t=
+SLYJ2Fk0yhW1LR64t5hywNvW86P_8l5fV5GYN1_xpYTj394tN3LbqmKh3tylW84V5kP1FmWPXW7=
+1CNJT6yZrL0W8sR0J77qlLTyN7ZBPSbSXRS0VpZ59z9kTTGpf2hYMxs04" style=3D"color:r=
+gb(17,85,204);font-family:Verdana,Geneva,sans-serif" target=3D"_blank">FMTC=
+</a></div><div style=3D"font-family:Roboto,RobotoDraft,Helvetica,Arial,sans=
+-serif"><span style=3D"font-family:Verdana,Geneva,sans-serif"><font color=
+=3D"#666666"><em>Award-Winning Freemium Affiliate Tools | Enterprise Deal a=
+nd Product Feed APIs | Solutions for Merchants and Agencies</em></font></sp=
+an></div></div></div></div><br></div><br><div class=3D"gmail_quote gmail_qu=
+ote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Aug 20, 2025 a=
+t 10:21=E2=80=AFPM Rita Liu &lt;<a href=3D"mailto:rita@affiliate.bluefocus.=
+com">rita@affiliate.bluefocus.com</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex"><div dir=3D"ltr">Hi team,<div><br></div><d=
+iv><div><span style=3D"font-family:arial,sans-serif">I'm Rita,&nbsp;</span>=
+<span style=3D"font-family:arial,sans-serif;color:rgb(0,0,0)">affiliate mar=
+keting manager at BlueFocus representing&nbsp;<b>Ugreen</b>.</span><br></di=
+v><div><span style=3D"font-family:arial,sans-serif;color:rgb(0,0,0)">I'm re=
+sponsible for the Ugreen Impact affiliate program.</span></div><div><div st=
+yle=3D"font-size:13px"><font face=3D"arial, sans-serif">=C2=B7 Category: Ch=
+arging devices and NAS</font></div><div style=3D"font-size:13px"><font face=
+=3D"arial, sans-serif" color=3D"#000000">=C2=B7 Commission:&nbsp;8%-15%</fo=
+nt></div><div style=3D"font-size:13px"><font face=3D"arial, sans-serif" col=
+or=3D"#000000">=C2=B7 Impact ID:&nbsp;31970</font></div></div><div style=3D=
+"font-size:13px"><font face=3D"arial, sans-serif" color=3D"#000000"><br></f=
+ont></div><div style=3D"font-size:13px"><font face=3D"arial, sans-serif" co=
+lor=3D"#000000"><b>I didn't find Ugreen DE FMTC ID, please help me find out=
+ the reason.</b></font></div><div style=3D"font-size:13px"><font face=3D"ar=
+ial, sans-serif" color=3D"#000000"><b>The ID for other regions could be fou=
+nd.</b></font></div><div>US: 82258&nbsp;</div><div>CA:82257 &nbsp;&nbsp;</d=
+iv><div>UK: 82085 <br>NAS US:82594 &nbsp;&nbsp;</div><div>NAS UK:82595</div=
+></div><div><br></div><div>Besides, could you add Ugreen ( impact 31970) an=
+d Silksilky (impact 507226) to the account <b><a href=3D"mailto:huimin.zhen=
+g1@bluefocus.com" target=3D"_blank">huimin.zheng1@bluefocus.com</a></b>? I'=
+m responsible for these 2 affiliate program.</div><div><br></div><div>Regar=
+ds,</div><div>Rita</div></div>
+</blockquote></div><img src=3D"https://cTx0D04.na1.hs-sales-engage.com/Cto/=
+GE+23284/cTx0D04/R5R8b48LWN6-W03m2fDmMW3H5fnk3BMSxvW1Q4XMN1W--8DW1GyxJV24QZ=
+tLW1Zm4hJ3LGsPxW3BMmPB22VX3Kn1Q68_n4W1" alt=3D"" height=3D"1" width=3D"1" s=
+tyle=3D"display: none !important;"><div></div><div id=3D"data-hbsasc-v0-65d=
+86c6f-68f2-4f15-8719-344737b000a7"></div></div>
+
+--000000000000028f2a063d35f984--
