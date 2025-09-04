@@ -1,0 +1,608 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp4274614nji;
+        Fri, 22 Aug 2025 11:31:30 -0700 (PDT)
+X-Received: by 2002:a17:907:72cd:b0:af9:479b:8cc8 with SMTP id a640c23a62f3a-afe2904323fmr335675066b.36.1755887490088;
+        Fri, 22 Aug 2025 11:31:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1755887490; cv=none;
+        d=google.com; s=arc-20240605;
+        b=UwenOEVTmxYEH1LZZG28vyExMu+sLRAWwJS3esCHhBwJiXLyadKaxrSXc5us2EjiNx
+         AaBVz8WMCry1HxDz5XCzyq9oVHchx1v9BnmyOT0rv1DBvBVcwzIf0Hzv8PVrfdQGZGx7
+         Yce+IV77R4RWJrd9aQ6U5G1gHrGX7O3QBM3NK1ev9fZ7zOByQGjj7DsHP98tRtoytWwA
+         AEy8Jkpjmr9rXG2vATnI2bZvStnWMgpNqUQ/TMja5upiPViW29X4Gp8OsZmIg7h+Xckv
+         mAf7HrweCgIx9DkWQxZZGy3qvhnsPdo78hbGXkSNJ/zz54kXQJEYU1qSKVbR+xz6a6j0
+         u1WA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=XZk4wtic2Grh44Z5iCxFr1gr+crc4NK9FwGleMH9xrs=;
+        fh=wRRpEmM7lWXYBbHzQajQfzlUmshdCGqSqlbsfyU4LwE=;
+        b=TJ/OE2OykhjZyJrp3BFnIQIfDvlNYyHcCd4+wDZHbm5hmtk7ZkB4OmrKFIn+huJq52
+         7fUHy/M0FXlJCSrNdqjV8gsS6YtMuUlTUBmsCQ8Cc0//as2JfNPu0KZ+5GNzsp3rLeO6
+         WSWLUj3qvmPJlGW4J5CmhOqr6yKjH5Pl1wnhqURFMPpX84m/qXsyuD3U5ZmQnzXs1AHq
+         T/vE58lUIjX0hdGLPJ6T1oY6G/F8VwbR+bC/W1RoqZMokCeJlJAickO22sgHeF4qy88M
+         cRfZeOS+GwP6lqMBFgb5/QMbkT7nzmudZ/3eHxXvOCLIgnQl9pSBpdmk53NB9dTahdWi
+         YoPw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@levanta.io header.s=google header.b=fwVI7IX5;
+       spf=pass (google.com: domain of shannon@levanta.io designates 209.85.220.41 as permitted sender) smtp.mailfrom=shannon@levanta.io;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=levanta.io;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <shannon@levanta.io>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 4fb4d7f45d1cf-61c314b69acsor213501a12.4.2025.08.22.11.31.29
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Fri, 22 Aug 2025 11:31:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of shannon@levanta.io designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@levanta.io header.s=google header.b=fwVI7IX5;
+       spf=pass (google.com: domain of shannon@levanta.io designates 209.85.220.41 as permitted sender) smtp.mailfrom=shannon@levanta.io;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=levanta.io;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=levanta.io; s=google; t=1755887489; x=1756492289; darn=affiliate.bluefocus.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=XZk4wtic2Grh44Z5iCxFr1gr+crc4NK9FwGleMH9xrs=;
+        b=fwVI7IX5dmUcW4jHXj7QAeiuVYbDeoyh5UhVq7QBMJtOEbLjlE5dOjsg6yQOny2wmq
+         9jWyJ6tYxLvyyswhkIXRxwziU+smrRKOzXWasBzJx/W0x/f+HslHCReQoxwq+x9lHM9j
+         4EfV1Rvi0EL8V/402kbdxeFcyz7cOgK1kJuY9xiHY/3TM5l0ABVU3SGrK9zXewGCw7nX
+         bZ6Xv+r0j2qIN4YDZ8LCSJUcwdOvnpIeoAQI64KVql1CDCG3Z/NGNr1uPMYItihrswhi
+         3rb95ozSLh7HMv+nqJPCOcAyl/oCIK6ooT2xI9XGPy8dwi5gyFbCvtwnXXgbz2zrwQmW
+         ZR8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755887489; x=1756492289;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XZk4wtic2Grh44Z5iCxFr1gr+crc4NK9FwGleMH9xrs=;
+        b=gGx/DwaVp25M4SU5o2lISlOvAvYPPq6xBu/M58rqauW6jtGP/CfagJLg6Y/d+8Qqna
+         QCPUHbPXyDDsspMYJ3xeFo9ugKlwk+U2cxlEhvKfgWbJSiGPN7K9HaxxdCvx+ZCKUat7
+         pENShrG3na0drKQlh8VvGjMfm5ktLojHxTSZAJ1O0vW4sHcWOuNwtykP3DVmiQhQuAw6
+         7KqMiRNDPR1inK0lxKXLeVlg78Di8kGIMOkCMb19Kj8SxBrbQdx2zGaaCGR5j0Tg/1yR
+         y76kdIqe+xyx1rbT74c+MPkV2+8G1UZoUtMdOQvD7R4dFPQv1AwLf5B4/br20tUXRBxR
+         Kw3g==
+X-Gm-Message-State: AOJu0YwIPtr40g0W3tnyda8aqzankqFbspdS1ttJ2Yb11oes3onM37gk
+	DNeHB/k9h7KImGcplswuzWtx6CkIk6NAqmquU99wbPRRqJC+mzZPT0E56eUJ+G8lnecgfzt/jVz
+	YhwsfEJRnskk74slc6e2R1zsllpbFbq3gDtHnaaRuGvrQTKanyoXn
+X-Gm-Gg: ASbGnctJZvf2OmsO2yTa7XZJIAHL9SHEJaCytjHeu4KPn242OdnwyMdIlzfhVaVU0ej
+	9Uhsi1nKfZHKjCUNLz4UW210/ssD8qd980JByTjhTqVvTQJhU/gp0dWBQSjvcDj4OaOH8rv3NiF
+	KgcFu6ST3NlzqiYr8ky4hAvx8hpNsElm/K5V/KWsyPr8t7Otr4/OaH7c3l8ns14HzGsr8Hymmj8
+	7Ap6XJa
+X-Google-Smtp-Source: AGHT+IG/bKcNkHl0xVMHWu3z12ihFtNnGqNr+70NPZF3IayHXaWxA6d4IDb6IrQ4aqFrbyWUx6VWb+oLqR0i73nPglk=
+X-Received: by 2002:a05:6402:34c9:b0:618:229d:708c with SMTP id
+ 4fb4d7f45d1cf-61c1b43dbbbmr3332859a12.6.1755887489215; Fri, 22 Aug 2025
+ 11:31:29 -0700 (PDT)
+References: <CANCt8Owc0jEhWNP1SPTF8WTH2CmJNL1ZB2OHxZbGBGrBx_JRKw@mail.gmail.com>
+ <CA+e1r6dYucqJ2opXMSprqY0AtkX8nZYQwfCrRG5i-4m+HWT=wg@mail.gmail.com>
+ <CALmT8Gk96jnFO+bPYbhWa6hiFuXfpmcwaan-Mz=AsdhLWhwyrw@mail.gmail.com>
+ <CANCt8OyfHK92cy_ZmfxAEYjU0iX6SfrD4G_2d=XxTiUFD=Rm7Q@mail.gmail.com>
+ <CALmT8GmayA=p1GynrQBBTdzAxFxBAd07s781uRGCAHhYU-RCgA@mail.gmail.com>
+ <CANCt8OzB7jjy+hUk5WBdeVLbm-cK9p04hz0Unb_ZMQ8mQbwp0g@mail.gmail.com> <CALmT8Gk51nRjOdfRFTjB2JyKdnT26bKSw6F2sMEW6nMy6T3Mjg@mail.gmail.com>
+In-Reply-To: <CALmT8Gk51nRjOdfRFTjB2JyKdnT26bKSw6F2sMEW6nMy6T3Mjg@mail.gmail.com>
+From: Shannon Fiander <shannon@levanta.io>
+Date: Fri, 22 Aug 2025 11:31:18 -0700
+X-Gm-Features: Ac12FXwQ6t47Wqcxx8iR8iQkWmy9Ib48ErjHaTfORRFroAcvFWNQeUAcyU7G9a4
+Message-ID: <CALmT8GmdC0_t85O+7NABGD_peyiL6AyqPH9a9gs6-x7tv7cj7Q@mail.gmail.com>
+Subject: Re: Termination of Partnership with Levanta Platform
+To: Rita Liu <rita@affiliate.bluefocus.com>
+Cc: Owen Guetschow <owen@levanta.io>, "jeremydai0731@gmail.com" <jeremydai0731@gmail.com>, 
+	chaton@affiliate.bluefocus.com, TJ Spero <tj@levanta.io>
+Content-Type: multipart/alternative; boundary="0000000000000f80ea063cf86ac1"
+MIME-Version: 1.0
+
+--0000000000000f80ea063cf86ac1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Rita,
+
+I hope you're doing well. I wanted to check in with you to confirm that
+RealRelax would still like to move forward with cancelling? They've seen
+nearly $3k in sales in the last few days and almost $8k in August so far,
+so we'd like to support the team in continuing to see this success. If you
+wouldn't mind sharing more about the strategic adjustments that have been
+made resulting in your decision to cancel, that would help us to provide
+specific guidance for your team.
+
+I've also gotten approval from our leadership team to offer a discounted
+monthly subscription fee of $500/month - would the team be open to moving
+forward with this new fee? Please let me know and we can share an updated
+agreement.
+
+Thank you,
+Shannon
+--
+*Shannon Fiander *
+Customer Success Manager | Levanta
+Schedule a meeting
+<https://meetings.hubspot.com/shannon-fiander?uuid=3D907c6229-7f60-4a50-9d4=
+9-d1f4ddf687d7>
+
+
+
+
+On Tue, Aug 12, 2025 at 9:06=E2=80=AFAM Shannon Fiander <shannon@levanta.io=
+> wrote:
+
+> Hi Rita,
+>
+> I've gone ahead and scheduled your account for cancellation at the end of
+> this billing cycle on August 27. Please let me know if you have any
+> questions about your outstanding creator commission invoices.
+>
+> Thank you,
+> Shannon
+> --
+> *Shannon Fiander *
+> Customer Success Manager | Levanta
+> Schedule a meeting
+> <https://meetings.hubspot.com/shannon-fiander?uuid=3D907c6229-7f60-4a50-9=
+d49-d1f4ddf687d7>
+>
+>
+>
+>
+> On Sat, Aug 9, 2025 at 8:54=E2=80=AFPM Rita Liu <rita@affiliate.bluefocus=
+.com>
+> wrote:
+>
+>> Hi Shannon,
+>>
+>> We'll finish all the payment this month, we can cancel the account at th=
+e
+>> end of this billing cycle on August 27.
+>> Thanks a lot for your support!
+>>
+>> Regards,
+>> Rita
+>>
+>> Shannon Fiander <shannon@levanta.io> =E4=BA=8E2025=E5=B9=B48=E6=9C=887=
+=E6=97=A5=E5=91=A8=E5=9B=9B 01:15=E5=86=99=E9=81=93=EF=BC=9A
+>>
+>>> Hi Rita,
+>>>
+>>> If you do want to opt out, then you won't be charged any more monthly
+>>> subscription invoices and we can cancel the account at the end of this
+>>> billing cycle on August 27. That being said, with the revenue that Real
+>>> Relax is generating through Levanta, it would be great to understand ho=
+w we
+>>> can continue to support you in the partnership.
+>>>
+>>> Regarding the fees - It looks like the most recent subscription fee has
+>>> been paid, however, there are two outstanding creator commission invoic=
+es.
+>>> If any other sales are made through Levanta between now and August 27, =
+the
+>>> client would still be responsible for paying the creators their
+>>> commissions. After August 27, they wouldn't generate any new sales or f=
+ees
+>>> if the account is cancelled.
+>>>
+>>> Thank you,
+>>> Shannon
+>>> --
+>>> *Shannon Fiander *
+>>> Customer Success Manager | Levanta
+>>> Schedule a meeting
+>>> <https://meetings.hubspot.com/shannon-fiander?uuid=3D907c6229-7f60-4a50=
+-9d49-d1f4ddf687d7>
+>>>
+>>>
+>>>
+>>>
+>>> On Tue, Aug 5, 2025 at 7:17=E2=80=AFPM Rita Liu <rita@affiliate.bluefoc=
+us.com>
+>>> wrote:
+>>>
+>>>> Hi Shannon,
+>>>>
+>>>> Due to internal strategic and budgetary adjustments, we have to
+>>>> make the decision to terminate our partnership.
+>>>> So could the end date of our cooperation be August 27th this year?
+>>>> The client needs to pay this month's monthly fee, which is the monthly
+>>>> fee for the last cycle, as well as all media fees before August 27.
+>>>> The media commission generated after August 27 will not be
+>>>> automatically generated in the system, right?
+>>>>
+>>>> Looking forward to your feedback.
+>>>>
+>>>> Regards,
+>>>> Rita
+>>>>
+>>>> Shannon Fiander <shannon@levanta.io> =E4=BA=8E2025=E5=B9=B48=E6=9C=886=
+=E6=97=A5=E5=91=A8=E4=B8=89 04:49=E5=86=99=E9=81=93=EF=BC=9A
+>>>>
+>>>>> Thank you for looping me in, Alexa.
+>>>>>
+>>>>> Hi Rita,
+>>>>>
+>>>>> I hope you're doing well, and thanks for reaching out. I'm sorry to
+>>>>> hear you're considering parting ways with Levanta for Real Relax, as =
+we're
+>>>>> seeing some great results in your program with nearly $25k in sales t=
+his
+>>>>> past month. Could you please share more about what's led to your deci=
+sion
+>>>>> to end your efforts on Levanta? You've developed a lot of valuable
+>>>>> partnerships that can continue to drive conversions for you, and I'm =
+here
+>>>>> to support you in scaling further.
+>>>>>
+>>>>> Regarding your agreement with Levanta, your opt-out window concludes
+>>>>> at the end of this current billing cycle, so you have the opportunity=
+ to
+>>>>> continue using Levanta through August 27 or revisit this conversation=
+ in
+>>>>> February 2026 prior to your renewal. Please let us know how you'd lik=
+e to
+>>>>> proceed.
+>>>>>
+>>>>> Thank you,
+>>>>> Shannon
+>>>>> --
+>>>>> *Shannon Fiander *
+>>>>> Customer Success Manager | Levanta
+>>>>> Schedule a meeting
+>>>>> <https://meetings.hubspot.com/shannon-fiander?uuid=3D907c6229-7f60-4a=
+50-9d49-d1f4ddf687d7>
+>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>>> On Tue, Aug 5, 2025 at 1:05=E2=80=AFPM Alexa Kosloski <alexa@levanta.=
+io>
+>>>>> wrote:
+>>>>>
+>>>>>> Hi Rita,
+>>>>>>
+>>>>>> Looping in @Shannon Fiander <shannon@levanta.io> your dedicated CSM
+>>>>>> to discuss this with you further.
+>>>>>>
+>>>>>> Thank you.
+>>>>>>
+>>>>>> Sincerely Your CSM,
+>>>>>> Alexa Kosloski
+>>>>>>
+>>>>>> Alexa Kosloski
+>>>>>>
+>>>>>> Customer Success Manager
+>>>>>>
+>>>>>> Levanta
+>>>>>>
+>>>>>> Book A Meeting With Me:
+>>>>>>
+>>>>>> *https://meetings.hubspot.com/akosloski/check-in-with-alexa
+>>>>>> <https://meetings.hubspot.com/akosloski/check-in-with-alexa>*
+>>>>>> [image: emailAddress] alexa@levanta.io <yabi@levanta.io>
+>>>>>> [image: website] www.levanta.io
+>>>>>> [image: address] Long Island, NY
+>>>>>>
+>>>>>>
+>>>>>> On Tue, Aug 5, 2025 at 7:02=E2=80=AFAM Rita Liu <rita@affiliate.blue=
+focus.com>
+>>>>>> wrote:
+>>>>>>
+>>>>>>> Hi Owen,
+>>>>>>>
+>>>>>>> Hope you're doing well. I'm Rita at BlueFocus, managing Levanta
+>>>>>>> affiliate program for Realrelaxmall.
+>>>>>>>
+>>>>>>> This message serves as formal notice that Realrelaxmall has made th=
+e
+>>>>>>> decision to terminate our partnership with Levanta due to internal
+>>>>>>> strategic and budgetary adjustments.
+>>>>>>>
+>>>>>>> In accordance with the terms outlined in our contract, we are
+>>>>>>> providing one month=E2=80=99s notice prior to termination. As such,=
+ the partnership
+>>>>>>> will officially conclude on September 5, 2025. We will ensure all
+>>>>>>> outstanding payments are settled in full prior to this date.
+>>>>>>>
+>>>>>>> Should you have any additional requirements or feedback, we kindly
+>>>>>>> request that you share them with us by the end of this week to ensu=
+re a
+>>>>>>> smooth transition.
+>>>>>>>
+>>>>>>>
+>>>>>>> We sincerely appreciate the collaboration and support Levanta has
+>>>>>>> provided thus far. Should future opportunities arise, we remain ope=
+n to
+>>>>>>> re-engaging.
+>>>>>>>
+>>>>>>> Thank you for your understanding and cooperation. Please feel free
+>>>>>>> to contact me directly with any questions.
+>>>>>>>
+>>>>>>>
+>>>>>>> Regards,
+>>>>>>>
+>>>>>>> Rita
+>>>>>>>
+>>>>>>> Rita Liu | Affiliate Marketing Manager
+>>>>>>> Email: rita@affiliate.bluefocus.com
+>>>>>>> WeChat: 15204063709
+>>>>>>>
+>>>>>>
+
+--0000000000000f80ea063cf86ac1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><d=
+iv dir=3D"ltr"><div>Hi Rita,</div><div><br></div><div>I hope you're doing w=
+ell. I wanted to check in with you to confirm that RealRelax would still li=
+ke to move forward with cancelling? They've seen nearly $3k in sales in the=
+ last few days and almost $8k in&nbsp;August so far, so we'd like to suppor=
+t the team in continuing to see this success. If you wouldn't mind sharing =
+more about the strategic adjustments&nbsp;that have been made resulting in =
+your decision&nbsp;to cancel, that would help us to provide specific guidan=
+ce for your team.&nbsp;</div><div><br></div><div>I've also gotten approval =
+from our leadership team to offer a discounted monthly subscription fee of =
+$500/month - would the team be open to moving forward with this new fee? Pl=
+ease let me know and we can share an updated agreement.&nbsp;</div><div><br=
+></div><div>Thank you,</div><div>Shannon</div><div><div dir=3D"ltr" class=
+=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><d=
+iv><font color=3D"#666666">--</font></div><b><font color=3D"#000000">Shanno=
+n Fiander&nbsp;</font></b><div><font color=3D"#000000">Customer Success Man=
+ager | Levanta&nbsp;</font></div><div><font color=3D"#000000"><a href=3D"ht=
+tps://meetings.hubspot.com/shannon-fiander?uuid=3D907c6229-7f60-4a50-9d49-d=
+1f4ddf687d7" target=3D"_blank">Schedule a meeting</a>&nbsp;<br></font><br><=
+/div><div><div style=3D"color:rgb(34,34,34)"><img width=3D"96" height=3D"22=
+" src=3D"https://ci3.googleusercontent.com/mail-sig/AIorK4xl99ETvAtwG5oHlZv=
+bnnutXR-L-BzzLnFeMp5b6RCXaXIR35F8DFvQ3Kj3nsz0ZdTylTu-9qQ"></div></div></div=
+></div></div><br><div></div><div id=3D"data-hbsasc-v0-38524301-5a12-42e6-92=
+4b-60573e30bbac"></div></div><br><div class=3D"gmail_quote gmail_quote_cont=
+ainer"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 12, 2025 at 9:06=
+=E2=80=AFAM Shannon Fiander &lt;<a href=3D"mailto:shannon@levanta.io">shann=
+on@levanta.io</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex"><div dir=3D"ltr"><div>Hi Rita,</div><div><br></div><div>I've g=
+one ahead and scheduled your account for cancellation at the end of this bi=
+lling cycle on August 27. Please let me know if you have any questions abou=
+t your outstanding creator commission invoices.&nbsp;</div><div><br></div><=
+div>Thank you,</div><div>Shannon</div><div><div dir=3D"ltr" class=3D"gmail_=
+signature"><div dir=3D"ltr"><div><font color=3D"#666666">--</font></div><b>=
+<font color=3D"#000000">Shannon Fiander&nbsp;</font></b><div><font color=3D=
+"#000000">Customer Success Manager | Levanta&nbsp;</font></div><div><font c=
+olor=3D"#000000"><a href=3D"https://meetings.hubspot.com/shannon-fiander?uu=
+id=3D907c6229-7f60-4a50-9d49-d1f4ddf687d7" target=3D"_blank">Schedule a mee=
+ting</a>&nbsp;<br></font><br></div><div><div style=3D"color:rgb(34,34,34)">=
+<img width=3D"96" height=3D"22" src=3D"https://ci3.googleusercontent.com/ma=
+il-sig/AIorK4xl99ETvAtwG5oHlZvbnnutXR-L-BzzLnFeMp5b6RCXaXIR35F8DFvQ3Kj3nsz0=
+ZdTylTu-9qQ"></div></div></div></div></div><br><div></div><div id=3D"m_-210=
+4305463229059377data-hbsasc-v0-04d5924b-89dc-4694-878e-397737eef927"></div>=
+</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=
+On Sat, Aug 9, 2025 at 8:54=E2=80=AFPM Rita Liu &lt;<a href=3D"mailto:rita@=
+affiliate.bluefocus.com" target=3D"_blank">rita@affiliate.bluefocus.com</a>=
+&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div=
+ dir=3D"ltr">Hi Shannon,<div><br></div><div>We'll finish all the payment th=
+is month, we can cancel the account at the end of this billing cycle on Aug=
+ust 27.</div><div>Thanks a lot for your support!</div><div><br></div><div>R=
+egards,</div><div>Rita</div></div><br><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">Shannon Fiander &lt;<a href=3D"mailto:shannon=
+@levanta.io" target=3D"_blank">shannon@levanta.io</a>&gt; =E4=BA=8E2025=E5=
+=B9=B48=E6=9C=887=E6=97=A5=E5=91=A8=E5=9B=9B 01:15=E5=86=99=E9=81=93=EF=BC=
+=9A<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
+0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"=
+ltr"><div>Hi Rita,</div><div><br></div><div>If you do want to opt out, then=
+ you won't be charged any more monthly subscription invoices and we can can=
+cel the account at the end of this billing cycle on August 27. That being s=
+aid, with the revenue that Real Relax is generating through Levanta, it wou=
+ld be great to understand how we can continue to support you in the partner=
+ship.&nbsp;</div><div><br></div><div>Regarding the fees - It looks like the=
+&nbsp;most recent subscription fee has been paid, however, there are two ou=
+tstanding creator commission invoices. If any other sales are made through =
+Levanta between now and August 27, the client would still be responsible fo=
+r paying the creators their commissions. After August 27, they wouldn't gen=
+erate any new sales or fees if the account is cancelled.&nbsp;</div><div><b=
+r></div><div>Thank you,<br>Shannon</div><div><div dir=3D"ltr" class=3D"gmai=
+l_signature"><div dir=3D"ltr"><div><font color=3D"#666666">--</font></div><=
+b><font color=3D"#000000">Shannon Fiander&nbsp;</font></b><div><font color=
+=3D"#000000">Customer Success Manager | Levanta&nbsp;</font></div><div><fon=
+t color=3D"#000000"><a href=3D"https://meetings.hubspot.com/shannon-fiander=
+?uuid=3D907c6229-7f60-4a50-9d49-d1f4ddf687d7" target=3D"_blank">Schedule a =
+meeting</a>&nbsp;<br></font><br></div><div><div style=3D"color:rgb(34,34,34=
+)"><img width=3D"96" height=3D"22" src=3D"https://ci3.googleusercontent.com=
+/mail-sig/AIorK4xl99ETvAtwG5oHlZvbnnutXR-L-BzzLnFeMp5b6RCXaXIR35F8DFvQ3Kj3n=
+sz0ZdTylTu-9qQ"></div></div></div></div></div><br><div></div><div id=3D"m_-=
+2104305463229059377m_-653496107319240262m_-3063475141853966690data-hbsasc-v=
+0-3589e9e0-c5fe-425d-a4a6-e9d4c8326490"></div></div><br><div class=3D"gmail=
+_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 5, 2025 at 7:17=
+=E2=80=AFPM Rita Liu &lt;<a href=3D"mailto:rita@affiliate.bluefocus.com" ta=
+rget=3D"_blank">rita@affiliate.bluefocus.com</a>&gt; wrote:<br></div><block=
+quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
+px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Hi Shannon,<di=
+v><br></div><div><font face=3D"arial, sans-serif" color=3D"#000000">Due to =
+internal strategic and budgetary adjustments, we have to make&nbsp;the deci=
+sion to terminate our partnership.</font></div><div><font face=3D"arial, sa=
+ns-serif" color=3D"#000000">So could the end date of our cooperation be Aug=
+ust 27th this year?</font></div><div><font face=3D"arial, sans-serif" color=
+=3D"#000000">The client needs to pay this month's monthly fee, which is the=
+ monthly fee for the last cycle, as well as all media fees before August 27=
+.&nbsp;</font></div><div><font face=3D"arial, sans-serif" color=3D"#000000"=
+>The media commission generated after August 27 will not be automatically g=
+enerated in the system, right?</font></div><div><font face=3D"arial, sans-s=
+erif" color=3D"#000000"><br></font></div><div><font face=3D"arial, sans-ser=
+if" color=3D"#000000">Looking forward to your feedback.</font></div><div><f=
+ont face=3D"arial, sans-serif" color=3D"#000000"><br></font></div><div><fon=
+t face=3D"arial, sans-serif" color=3D"#000000">Regards,</font></div><div><f=
+ont face=3D"arial, sans-serif" color=3D"#000000">Rita</font></div></div><br=
+><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">Shannon F=
+iander &lt;<a href=3D"mailto:shannon@levanta.io" target=3D"_blank">shannon@=
+levanta.io</a>&gt; =E4=BA=8E2025=E5=B9=B48=E6=9C=886=E6=97=A5=E5=91=A8=E4=
+=B8=89 04:49=E5=86=99=E9=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex"><div dir=3D"ltr"><div>Thank you for looping me in, =
+Alexa.&nbsp;</div><div><br></div><div>Hi Rita,</div><div><br></div><div>I h=
+ope you're doing well, and thanks for reaching out. I'm sorry to hear you'r=
+e considering parting ways with Levanta for Real Relax, as we're seeing som=
+e great results in your program with nearly&nbsp;$25k in sales this past mo=
+nth. Could you please share more about what's led to your decision to end y=
+our efforts on Levanta? You've developed&nbsp;a lot of valuable partnership=
+s that can continue to drive conversions for you, and I'm here to support y=
+ou in scaling further.&nbsp;</div><div><br></div><div>Regarding your agreem=
+ent&nbsp;with Levanta, your opt-out window concludes at the end of this cur=
+rent billing cycle, so you have the opportunity to continue using Levanta t=
+hrough August 27 or revisit this conversation in February 2026 prior to you=
+r renewal. Please let us know how you'd like to proceed.&nbsp;</div><div><b=
+r></div><div>Thank you,</div><div>Shannon</div><div><div dir=3D"ltr" class=
+=3D"gmail_signature"><div dir=3D"ltr"><div><font color=3D"#666666">--</font=
+></div><b><font color=3D"#000000">Shannon Fiander&nbsp;</font></b><div><fon=
+t color=3D"#000000">Customer Success Manager | Levanta&nbsp;</font></div><d=
+iv><font color=3D"#000000"><a href=3D"https://meetings.hubspot.com/shannon-=
+fiander?uuid=3D907c6229-7f60-4a50-9d49-d1f4ddf687d7" target=3D"_blank">Sche=
+dule a meeting</a>&nbsp;<br></font><br></div><div><div style=3D"color:rgb(3=
+4,34,34)"><img width=3D"96" height=3D"22" src=3D"https://ci3.googleusercont=
+ent.com/mail-sig/AIorK4xl99ETvAtwG5oHlZvbnnutXR-L-BzzLnFeMp5b6RCXaXIR35F8DF=
+vQ3Kj3nsz0ZdTylTu-9qQ"></div></div></div></div></div><br><div></div><div id=
+=3D"m_-2104305463229059377m_-653496107319240262m_-3063475141853966690m_4969=
+215016341714960m_6405799066532853311data-hbsasc-v0-1cc6b709-3b8a-40c7-9bee-=
+52efb802692c"></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" c=
+lass=3D"gmail_attr">On Tue, Aug 5, 2025 at 1:05=E2=80=AFPM Alexa Kosloski &=
+lt;<a href=3D"mailto:alexa@levanta.io" target=3D"_blank">alexa@levanta.io</=
+a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><d=
+iv dir=3D"ltr"><div>Hi Rita,</div><div><br></div><div>Looping in&nbsp;<a cl=
+ass=3D"gmail_plusreply" id=3D"m_-2104305463229059377m_-653496107319240262m_=
+-3063475141853966690m_4969215016341714960m_6405799066532853311m_-3395111391=
+543016571plusReplyChip-3" href=3D"mailto:shannon@levanta.io" target=3D"_bla=
+nk">@Shannon Fiander</a>&nbsp;your dedicated CSM to discuss this with you f=
+urther.</div><div><br></div><div>Thank you.</div><div><br></div><div>Sincer=
+ely Your CSM,</div><div>Alexa Kosloski</div><div><div dir=3D"ltr" class=3D"=
+gmail_signature"><div dir=3D"ltr"><table cellpadding=3D"0" cellspacing=3D"0=
+" style=3D"border-collapse:collapse;border-spacing:0px;width:448.281px;colo=
+r:rgb(255,255,255);font-size:medium;vertical-align:-webkit-baseline-middle;=
+font-family:Arial"><tbody><tr style=3D"border:0px;margin:0px;padding:0px"><=
+td style=3D"border:0px;padding:0px"><table cellpadding=3D"0" cellspacing=3D=
+"0" style=3D"border-collapse:collapse;border-spacing:0px;width:448.281px;ve=
+rtical-align:-webkit-baseline-middle"><tbody><tr style=3D"border:0px;margin=
+:0px;padding:0px"><td style=3D"border:0px;padding:0px"><table cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"border-collapse:collapse;border-spacing:0=
+px;width:448.281px;vertical-align:-webkit-baseline-middle"><tbody><tr style=
+=3D"border:0px;margin:0px;padding:0px"><td width=3D"150" style=3D"border:0p=
+x;padding:0px;vertical-align:middle"><span style=3D"margin-right:20px;displ=
+ay:block"><img width=3D"131" height=3D"200" src=3D"https://ci3.googleuserco=
+ntent.com/mail-sig/AIorK4x2i29gDnXRmSoiL9qeNRr7tlNmrtZ0kETBx4XnW8mAYhYYODbV=
+bCt_eAmtTQXTQ6nJDY_AmIXWFG5k"><br></span></td><td style=3D"border:0px;paddi=
+ng:0px;vertical-align:middle"><h2 color=3D"#000000" style=3D"text-align:lef=
+t;font-size:18px;line-height:1.38;margin:0px;color:rgb(0,0,0)">Alexa Koslos=
+ki</h2><p color=3D"#000000" style=3D"line-height:22px;margin:0px;color:rgb(=
+0,0,0)"><font size=3D"2">Customer Success Manager</font></p><p color=3D"#00=
+0000" style=3D"line-height:22px;margin:0px;color:rgb(0,0,0)"><font size=3D"=
+2">Levanta</font></p><p color=3D"#000000" style=3D"line-height:22px;margin:=
+0px;color:rgb(0,0,0)"><font size=3D"2">Book A Meeting With Me:</font></p><p=
+ color=3D"#000000" style=3D"line-height:22px;margin:0px"><font color=3D"#11=
+55cc" size=3D"2"><u><a href=3D"https://meetings.hubspot.com/akosloski/check=
+-in-with-alexa" target=3D"_blank">https://meetings.hubspot.com/akosloski/ch=
+eck-in-with-alexa</a></u></font></p></td><td width=3D"30" style=3D"border:0=
+px;padding:0px"></td><td color=3D"#00a33c" width=3D"1" height=3D"auto" styl=
+e=3D"border-top:0px;border-right:0px;border-bottom:none;border-left:1px sol=
+id rgb(0,163,60);padding:0px;width:1px"></td><td width=3D"30" style=3D"bord=
+er:0px;padding:0px"><div style=3D"width:30px"></div></td><td style=3D"borde=
+r:0px;padding:0px;vertical-align:middle"><table cellpadding=3D"0" cellspaci=
+ng=3D"0" style=3D"border-collapse:collapse;border-spacing:0px;width:117.398=
+px;vertical-align:-webkit-baseline-middle"><tbody><tr height=3D"25" style=
+=3D"border:0px;margin:0px;padding:0px;vertical-align:middle"><td width=3D"3=
+0" style=3D"border:0px;padding:0px;vertical-align:middle"><table cellpaddin=
+g=3D"0" cellspacing=3D"0" style=3D"border-collapse:collapse;border-spacing:=
+0px;width:30px;vertical-align:-webkit-baseline-middle"><tbody><tr style=3D"=
+border:0px;margin:0px;padding:0px"><td style=3D"border:0px;padding:0px;vert=
+ical-align:bottom"><span color=3D"#00a33c" width=3D"11" style=3D"display:in=
+line-block;background-color:rgb(0,163,60)"><img src=3D"https://cdn2.hubspot=
+.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png" colo=
+r=3D"#00a33c" alt=3D"emailAddress" width=3D"13" style=3D"border-style: none=
+; display: block;"></span></td></tr></tbody></table></td><td style=3D"borde=
+r:0px;padding:0px"><a href=3D"mailto:yabi@levanta.io" color=3D"#000000" sty=
+le=3D"color:rgb(0,0,0);background-color:rgba(0,0,0,0);font-size:12px" targe=
+t=3D"_blank">alexa@levanta.io</a></td></tr><tr height=3D"25" style=3D"borde=
+r:0px;margin:0px;padding:0px;vertical-align:middle"><td width=3D"30" style=
+=3D"border:0px;padding:0px;vertical-align:middle"><table cellpadding=3D"0" =
+cellspacing=3D"0" style=3D"border-collapse:collapse;border-spacing:0px;widt=
+h:30px;vertical-align:-webkit-baseline-middle"><tbody><tr style=3D"border:0=
+px;margin:0px;padding:0px"><td style=3D"border:0px;padding:0px;vertical-ali=
+gn:bottom"><span color=3D"#00a33c" width=3D"11" style=3D"display:inline-blo=
+ck;background-color:rgb(0,163,60)"><img src=3D"https://cdn2.hubspot.net/hub=
+fs/53/tools/email-signature-generator/icons/link-icon-2x.png" color=3D"#00a=
+33c" alt=3D"website" width=3D"13" style=3D"border-style: none; display: blo=
+ck;"></span></td></tr></tbody></table></td><td style=3D"border:0px;padding:=
+0px"><a href=3D"https://www.levanta.io/" color=3D"#000000" style=3D"color:r=
+gb(0,0,0);background-color:rgba(0,0,0,0);font-size:12px" target=3D"_blank">=
+www.levanta.io</a></td></tr><tr height=3D"25" style=3D"border:0px;margin:0p=
+x;padding:0px;vertical-align:middle"><td width=3D"30" style=3D"border:0px;p=
+adding:0px;vertical-align:middle"><table cellpadding=3D"0" cellspacing=3D"0=
+" style=3D"border-collapse:collapse;border-spacing:0px;width:30px;vertical-=
+align:-webkit-baseline-middle"><tbody><tr style=3D"border:0px;margin:0px;pa=
+dding:0px"><td style=3D"border:0px;padding:0px;vertical-align:bottom"><span=
+ color=3D"#00a33c" width=3D"11" style=3D"display:inline-block;background-co=
+lor:rgb(0,163,60)"><img src=3D"https://cdn2.hubspot.net/hubfs/53/tools/emai=
+l-signature-generator/icons/address-icon-2x.png" color=3D"#00a33c" alt=3D"a=
+ddress" width=3D"13" style=3D"border-style: none; display: block;"></span><=
+/td></tr></tbody></table></td><td style=3D"border:0px;padding:0px"><span co=
+lor=3D"#000000" style=3D"font-size:12px;color:rgb(0,0,0)">Long Island, NY</=
+span></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr styl=
+e=3D"border:0px;margin:0px;padding:0px"><td style=3D"border:0px;padding:0px=
+"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"border-collapse:colla=
+pse;border-spacing:0px;width:448.281px;vertical-align:-webkit-baseline-midd=
+le"><tbody><tr style=3D"border:0px;margin:0px;padding:0px"><td height=3D"30=
+" style=3D"border:0px;padding:0px"></td></tr><tr style=3D"border:0px;margin=
+:0px;padding:0px"><td color=3D"#00a33c" width=3D"auto" height=3D"1" style=
+=3D"border-top:0px;border-right:0px;border-bottom:1px solid rgb(0,163,60);b=
+order-left:none;padding:0px;width:448.281px;display:block"></td></tr><tr st=
+yle=3D"border:0px;margin:0px;padding:0px"></tr></tbody></table></td></tr></=
+tbody></table></td></tr></tbody></table></div></div></div><br></div><br><di=
+v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 5=
+, 2025 at 7:02=E2=80=AFAM Rita Liu &lt;<a href=3D"mailto:rita@affiliate.blu=
+efocus.com" target=3D"_blank">rita@affiliate.bluefocus.com</a>&gt; wrote:<b=
+r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">=
+<font color=3D"#000000">Hi Owen,</font><div><font color=3D"#000000"><br></f=
+ont></div><div><font face=3D"arial, sans-serif" color=3D"#000000">Hope you'=
+re doing well. I'm Rita at BlueFocus, managing Levanta affiliate program fo=
+r Realrelaxmall.</font></div><div><p style=3D"margin:13.716px 0px;line-heig=
+ht:28.575px"><font face=3D"arial, sans-serif" color=3D"#000000">This messag=
+e serves as formal notice that Realrelaxmall has made the decision to termi=
+nate our partnership with Levanta due to internal strategic and budgetary a=
+djustments.</font></p><p style=3D"margin:13.716px 0px;line-height:28.575px"=
+><font face=3D"arial, sans-serif" color=3D"#000000">In accordance with the =
+terms outlined in our contract, we are providing one month=E2=80=99s notice=
+ prior to termination. As such, the partnership will officially conclude on=
+&nbsp;<span style=3D"font-weight:600">September 5, 2025</span>. We will ens=
+ure all outstanding payments are settled in full prior to this date.</font>=
+</p><p style=3D"margin:13.716px 0px;line-height:28.575px"><font face=3D"ari=
+al, sans-serif" color=3D"#000000">Should you have any additional requiremen=
+ts or feedback, we kindly request that you share them with us by the end of=
+ this week to ensure a smooth transition.</font></p><p style=3D"margin:13.7=
+16px 0px;line-height:28.575px"><font face=3D"arial, sans-serif" color=3D"#0=
+00000"><br></font></p><p style=3D"margin:13.716px 0px;line-height:28.575px"=
+><font face=3D"arial, sans-serif" color=3D"#000000">We sincerely appreciate=
+ the collaboration and support Levanta has provided thus far. Should future=
+ opportunities arise, we remain open to re-engaging.</font></p><p style=3D"=
+margin:13.716px 0px;line-height:28.575px"><font face=3D"arial, sans-serif" =
+color=3D"#000000">Thank you for your understanding and cooperation. Please =
+feel free to contact me directly with any questions.</font></p><p style=3D"=
+margin:13.716px 0px;line-height:28.575px"><font face=3D"arial, sans-serif" =
+color=3D"#000000"><br></font></p><p style=3D"margin:13.716px 0px;line-heigh=
+t:28.575px"><font face=3D"arial, sans-serif" color=3D"#000000">Regards,</fo=
+nt></p><p style=3D"margin:13.716px 0px;line-height:28.575px"><font face=3D"=
+arial, sans-serif" color=3D"#000000">Rita</font></p></div><div dir=3D"ltr" =
+class=3D"gmail_signature"><div dir=3D"ltr"><font face=3D"arial, sans-serif"=
+><img src=3D"https://ci3.googleusercontent.com/mail-sig/AIorK4zcIndiDu20i3N=
+rZSz-eZ_95Y1KhtB_UYQX_3UXqAy-te22rKijcwEkRDSdbVw5hxZgf4F-x8bOZNmZ"><br></fo=
+nt><div><span style=3D"color:rgb(34,34,34)"><font face=3D"arial, sans-serif=
+">Rita Liu | Affiliate Marketing Manager</font></span></div><div><font face=
+=3D"arial, sans-serif"><font color=3D"#222222">Email:&nbsp;</font><span sty=
+le=3D"color:rgb(34,34,34)"><a href=3D"mailto:rita@affiliate.bluefocus.com" =
+target=3D"_blank">rita@affiliate.bluefocus.com</a></span></font></div><div>=
+<font color=3D"#222222" face=3D"arial, sans-serif">WeChat: 15204063709</fon=
+t></div></div></div></div>
+</blockquote></div>
+</blockquote></div>
+</blockquote></div>
+</blockquote></div>
+</blockquote></div>
+</blockquote></div>
+</blockquote></div>
+
+--0000000000000f80ea063cf86ac1--

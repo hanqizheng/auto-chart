@@ -1,0 +1,335 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5669003nji;
+        Mon, 25 Aug 2025 03:37:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNup+om02rUxgNyDSRibBbFmBuJGrDEbLnmtr5mtUP2bbqVTrJd3/sr3uG+XWhIj+x1I2b
+X-Received: by 2002:a05:600c:1c92:b0:458:bfe1:4a81 with SMTP id 5b1f17b1804b1-45b6193c94dmr18457785e9.17.1756118232558;
+        Mon, 25 Aug 2025 03:37:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756118232; cv=none;
+        d=google.com; s=arc-20240605;
+        b=UN435dDLIjld/Ar2GsSIQrhnNQtXVjfMKwPdhQV9TjP5q7MJ1PVezEMNqwg2nPPzIh
+         DG7s2NaTqVsPryOf/k1gk60OZpwEOTqtHrkctg+IRcqTtC8uF4zSgP53JwhsmPRZHEc5
+         htTXOJpfU3x6Y+7kY47gHZD+NkAxzOmED3dKLEan2ZZL5vtnwTtgL33Kcyw6X1YioUeE
+         qNPTOFI3NPCeblB6eYAc8kK4ORpNW/tclwkwTjRtD+LECKEEk6ymVl9BudJxEgvkKBIp
+         AyNwtXWccgMKJGZ+t1YHaM5g44B3f57R4tIcp9vFKpUmoDPRUzEMCLyAXlyGWWPmN8jH
+         bzgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:mime-version:subject:message-id:to:reply-to:from:date
+         :dkim-signature:dkim-signature;
+        bh=ER5LsNmXKPXIWuW5sPaIGvSICCJHzIazNZ+v8QxKwoE=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=Q7XkFrgIQdN/WpSJLcVIOHDIIrCCgTxJJvmbA7jr/OsOoyg5N1oZFJnZc+EwSD/iEa
+         WrfmvjmnwXJeRrdH5CE1I333UluWfolWVSrZadVwFCwa+UsrrEGwXErLD8/VOyolDccJ
+         ZpdFoNzsDxmgbejIqXaeikD5riWw55S0quCattGMdi5THDAUlrB+WvVYrfP6LGDPsQH9
+         cZO6mkX3L2YGA1F+1tmRvdNKPikopAYhktNZcCAPm+xR0S0iBMW8noMdPcJEFLup/6wx
+         E6Nfhta8quQuEc56So5+NnAbQNrh7Lv5AQ7a5zEgVT0lukzqVWprhAm8dAaQ1TIVp2GI
+         C0eA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@awin.com header.s=eulq4joy7yb2oi7ppx2o44slc37fwqml header.b=Nx0rPkvJ;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=YWIJKuZD;
+       spf=pass (google.com: domain of 01020198e0cdaa29-acf6920a-2531-4c70-a9a8-d854f0d71fc2-000000@bounce.awin.com designates 54.240.6.163 as permitted sender) smtp.mailfrom=01020198e0cdaa29-acf6920a-2531-4c70-a9a8-d854f0d71fc2-000000@bounce.awin.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=awin.com
+Return-Path: <01020198e0cdaa29-acf6920a-2531-4c70-a9a8-d854f0d71fc2-000000@bounce.awin.com>
+Received: from a6-163.smtp-out.eu-west-1.amazonses.com (a6-163.smtp-out.eu-west-1.amazonses.com. [54.240.6.163])
+        by mx.google.com with ESMTPS id ffacd0b85a97d-3c70ef57bebsi3583044f8f.116.2025.08.25.03.37.12
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Aug 2025 03:37:12 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 01020198e0cdaa29-acf6920a-2531-4c70-a9a8-d854f0d71fc2-000000@bounce.awin.com designates 54.240.6.163 as permitted sender) client-ip=54.240.6.163;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@awin.com header.s=eulq4joy7yb2oi7ppx2o44slc37fwqml header.b=Nx0rPkvJ;
+       dkim=pass header.i=@amazonses.com header.s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn header.b=YWIJKuZD;
+       spf=pass (google.com: domain of 01020198e0cdaa29-acf6920a-2531-4c70-a9a8-d854f0d71fc2-000000@bounce.awin.com designates 54.240.6.163 as permitted sender) smtp.mailfrom=01020198e0cdaa29-acf6920a-2531-4c70-a9a8-d854f0d71fc2-000000@bounce.awin.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=awin.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=eulq4joy7yb2oi7ppx2o44slc37fwqml; d=awin.com; t=1756118231;
+	h=Date:From:Reply-To:To:Message-ID:Subject:MIME-Version:Content-Type;
+	bh=DcdjLYeRueJidi7bH4lgQdkuFDV4VU8DtFxnkYHJtuw=;
+	b=Nx0rPkvJprg38nEcQEBph4qhYzzu92Y9K/q4npBesFlH52OetDZjXrwJqIf5Muq6
+	tg6+7HvQIYdNZZfy3ZxomlQ5n9PIfW/W36/4p2Pk8ykCGkrKpAEsb5l/+HfWCFJHmig
+	cDse7hgsfiMTyFdFHJBBPoH+C5iokP0AcImB4wIo=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=ihchhvubuqgjsxyuhssfvqohv7z3u4hn; d=amazonses.com; t=1756118231;
+	h=Date:From:Reply-To:To:Message-ID:Subject:MIME-Version:Content-Type:Feedback-ID;
+	bh=DcdjLYeRueJidi7bH4lgQdkuFDV4VU8DtFxnkYHJtuw=;
+	b=YWIJKuZDDm1AdamkOVV7LS8x25MbDb0iaQEUfo+JHuAOMt505NBFWkefEpct/p6j
+	Q/nQwhexlJ0HSBT46mmvVxRSJyRXsEpQFxx72XAX7s7yvKCbFEPSCesHo37G5AQRQUT
+	UH6qINjUIBLjFmhCdgeI0wwOnC+2i+VdKj2iz/0s=
+Date: Mon, 25 Aug 2025 10:37:11 +0000
+From: Awin <no-reply@awin.com>
+Reply-To: no-reply@awin.com
+To: rita@affiliate.bluefocus.com
+Message-ID: <01020198e0cdaa29-acf6920a-2531-4c70-a9a8-d854f0d71fc2-000000@eu-west-1.amazonses.com>
+Subject: =?utf-8?Q?[TEST]_SILKSILKY_(95193):_This_Week_O?=
+ =?utf-8?Q?nly:_SilkSilky_Deals_=E2=80=93_Up_to_70%_Off!?=
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_1005_912796193.1756118231564"
+Feedback-ID: ::1.eu-west-1.ZUwK3JUMeY4ii4cT1kFyP3qrXyop6tAELe1NSwFOKKY=:AmazonSES
+X-SES-Outgoing: 2025.08.25-54.240.6.163
+MIME-Version: 1.0
+
+------=_Part_1005_912796193.1756118231564
+Content-Type: multipart/related; 
+	boundary="----=_Part_1006_1781782025.1756118231564"
+
+------=_Part_1006_1781782025.1756118231564
+Content-Type: text/html;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><t=
+able width=3D"100%"><tbody><tr><td style=3D"width: 100.0%;"><center><table =
+class=3D"content-wrap" style=3D"margin: 0.0px auto;width: 600.0px;"><tbody>=
+<tr><td style=3D"margin: 0.0px auto;overflow: hidden;padding: 0.0px;border:=
+ 0.0px dotted rgb(238,238,238);"><!----><div style=3D"margin: 0.0px auto;ma=
+x-width: 600.0px;"><table align=3D"center" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" style=3D"background-color: rgb(255,255,255);background-rep=
+eat: no-repeat;background-position: 1.0% 50.0%;"><tbody><tr><td style=3D"di=
+rection: ltr;font-size: 0.0px;text-align: center;vertical-align: top;width:=
+ 600.0px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D=
+"vertical-align: top;" width=3D"100%"><tbody><tr><td class=3D"oneColumn col=
+umn1" style=3D"width: 100.0%;max-width: 100.0%;min-height: 1.0px;font-size:=
+ 13.0px;text-align: left;direction: ltr;vertical-align: top;padding: 0.0px;=
+"><div class=3D"full" style=3D"margin: 0.0px auto;max-width: 600.0px;"><tab=
+le align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"fullTable" style=3D"width: 600.0px;"><tbody><tr><td class=3D"fullTd" st=
+yle=3D"direction: ltr;width: 600.0px;font-size: 0.0px;padding-bottom: 0.0px=
+;text-align: center;vertical-align: top;"><div style=3D"vertical-align: top=
+;width: 100.0%;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"vertical-align: top;" width=3D"100%"><tbody><tr><td style=3D"font-si=
+ze: 0.0px;width: 580.0px;text-align: center;padding: 10.0px;"><div><img alt=
+=3D"" src=3D"https://www.drageasy.com/9bfbf7da36a85d56c9a6430bb187057a.jpg?=
+imageslim" style=3D"border: 0.0px;outline: none;text-decoration: none;heigh=
+t: auto;max-width: 100.0%;padding: 0.0px;" width=3D"580"></div></td></tr></=
+tbody></table></div></td></tr></tbody></table></div></td></tr></tbody></tab=
+le></td></tr></tbody></table></div><div class=3D"full" style=3D"margin: 0.0=
+px auto;max-width: 600.0px;"><table align=3D"center" border=3D"0" cellpaddi=
+ng=3D"0" cellspacing=3D"0" class=3D"fullTable" style=3D"width: 600.0px;"><t=
+body><tr><td class=3D"fullTd" style=3D"direction: ltr;width: 600.0px;font-s=
+ize: 0.0px;padding-bottom: 0.0px;text-align: center;vertical-align: top;bac=
+kground-repeat: no-repeat;background-position: 10.0% 50.0%;"><table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align: top;" w=
+idth=3D"100%"><tbody><tr><td align=3D"left" style=3D"font-size: 0.0px;paddi=
+ng: 20.0px;"><div class=3D"text" style=3D"margin: 0.0px;text-align: center;=
+line-height: 1.6;color: rgb(102,102,102);font-size: 14.0px;font-weight: nor=
+mal;"><div><div style=3D"text-align: left;"> <div> <div> <div class=3D"ace-=
+line ace-line old-record-id-doxcnfYXHzAVNtRGJ1OV034gorj" style=3D"line-heig=
+ht: 1;"> <p class=3D"p1" style=3D"font-size-adjust: none;font-stretch: norm=
+al;font-size: 14.0px;line-height: 1.6;font-family: Helvetica;color: rgb(0,0=
+,233);background-color: rgb(255,255,255);text-align: left;margin: 0.0px;"><=
+span style=3D"color: rgb(0,0,0);"><span style=3D"font-family: &quot;Microso=
+ft YaHei&quot; , &quot;Helvetica Neue&quot; , &quot;PingFang SC&quot; , san=
+s-serif;font-size: 16.0px;">=E2=80=8B</span><span style=3D"font-size: 16.0p=
+x;font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quot; , &=
+quot;PingFang SC&quot; , sans-serif;">Hi team,&nbsp;<br></span></span></p> =
+<p class=3D"p2" style=3D"font-size-adjust: none;font-stretch: normal;font-s=
+ize: 14.0px;line-height: 1.6;font-family: Helvetica;text-align: left;margin=
+: 0.0px;"><span style=3D"font-family: &quot;Microsoft YaHei&quot; , &quot;H=
+elvetica Neue&quot; , &quot;PingFang SC&quot; , sans-serif;font-size: 16.0p=
+x;color: rgb(0,0,0);"><br>Hope you're doing well. I'm Rita, affiliate marke=
+ting manager at BlueFocus representing SilkSilky</span></p> <p class=3D"p2"=
+ style=3D"font-size-adjust: none;font-stretch: normal;font-size: 14.0px;lin=
+e-height: 1.6;font-family: Helvetica;text-align: left;margin: 0.0px;"><span=
+ style=3D"font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&q=
+uot; , &quot;PingFang SC&quot; , sans-serif;font-size: 16.0px;color: rgb(0,=
+0,0);"><br>Category: Women's wear</span></p> <p class=3D"p2" style=3D"font-=
+size-adjust: none;font-stretch: normal;font-size: 14.0px;line-height: 1.6;f=
+ont-family: Helvetica;text-align: left;margin: 0.0px;"><span style=3D"font-=
+size: 16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neu=
+e&quot; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);">Commissi=
+on:10%-20%</span></p> <p class=3D"p2" style=3D"font-size-adjust: none;font-=
+stretch: normal;font-size: 14.0px;line-height: 1.6;font-family: Helvetica;t=
+ext-align: left;margin: 0.0px;"><span style=3D"font-family: &quot;Microsoft=
+ YaHei&quot; , &quot;Helvetica Neue&quot; , &quot;PingFang SC&quot; , sans-=
+serif;font-size: 16.0px;color: rgb(0,0,0);">Impact ID: 22953<span class=3D"=
+Apple-converted-space">&nbsp;</span></span></p> <p class=3D"p2" style=3D"fo=
+nt-size-adjust: none;font-stretch: normal;font-size: 14.0px;line-height: 1.=
+6;font-family: Helvetica;text-align: left;margin: 0.0px;"><span style=3D"fo=
+nt-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quot; , &quot=
+;PingFang SC&quot; , sans-serif;font-size: 16.0px;color: rgb(0,0,0);"><span=
+ class=3D"Apple-converted-space">Website: https://silksilky.com/</span><br>=
+</span></p> <p class=3D"p4" style=3D"font-size-adjust: none;font-stretch: n=
+ormal;font-size: 14.0px;line-height: 1.6;font-family: Helvetica;min-height:=
+ 16.0px;text-align: left;margin: 0.0px;">&nbsp;</p> <p class=3D"p2" style=
+=3D"font-size-adjust: none;font-stretch: normal;font-size: 14.0px;line-heig=
+ht: 1.6;font-family: Helvetica;text-align: left;margin: 0.0px;"><span style=
+=3D"font-size: 16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helv=
+etica Neue&quot; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);"=
+>We=E2=80=99re excited to share our latest campaigns with you, which are&nb=
+sp;<span style=3D"font-weight: bold;"><span style=3D"background-color: rgb(=
+247,218,100);">only available this week</span></span>&nbsp;and would be a p=
+erfect fit for your audience.<br><br><span style=3D"font-weight: bold;">Cam=
+paign Details</span></span><br><br></p> <p class=3D"p2" style=3D"font-size-=
+adjust: none;font-stretch: normal;font-size: 14.0px;line-height: 1.6;font-f=
+amily: Helvetica;text-align: left;margin: 0.0px;"><span style=3D"font-size:=
+ 16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quo=
+t; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);"><span style=
+=3D"font-weight: bold;">Discount Code:&nbsp;<span style=3D"background-color=
+: rgb(247,218,100);">SLS10</span></span></span></p> <p class=3D"p2" style=
+=3D"font-size-adjust: none;font-stretch: normal;font-size: 14.0px;line-heig=
+ht: 1.6;font-family: Helvetica;text-align: left;margin: 0.0px;"><span style=
+=3D"font-size: 16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helv=
+etica Neue&quot; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);"=
+><span style=3D"font-weight: bold;">Description: Silksilky Save $10 on orde=
+rs over $109</span></span></p> <p class=3D"p3" style=3D"font-size-adjust: n=
+one;font-stretch: normal;font-size: 14.0px;line-height: 1.6;font-family: He=
+lvetica;color: rgb(0,0,233);text-align: left;margin: 0.0px;"><span class=3D=
+"s1" style=3D"color: rgb(0,0,0);font-size: 16.0px;font-family: &quot;Micros=
+oft YaHei&quot; , &quot;Helvetica Neue&quot; , &quot;PingFang SC&quot; , sa=
+ns-serif;"><span style=3D"font-weight: bold;">URL:&nbsp;</span><a href=3D"h=
+ttps://silksilky.com/collections/best-seller" rel=3D"nofollow" style=3D"col=
+or: rgb(0,0,0);text-decoration: none;font-weight: normal;"><span class=3D"s=
+4"><span style=3D"font-weight: bold;">https://silksilky.com/collections/bes=
+t-seller</span></span></a></span></p> <p class=3D"p2" style=3D"font-size-ad=
+just: none;font-stretch: normal;font-size: 14.0px;line-height: 1.6;font-fam=
+ily: Helvetica;text-align: left;margin: 0.0px;"><span style=3D"font-size: 1=
+6.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quot;=
+ , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);"><span style=3D"=
+font-weight: bold;">Validity: 8/20-8/31</span></span></p> <p class=3D"p4" s=
+tyle=3D"font-size-adjust: none;font-stretch: normal;font-size: 14.0px;line-=
+height: 1.6;font-family: Helvetica;min-height: 16.0px;text-align: left;marg=
+in: 0.0px;"><span style=3D"font-size: 16.0px;font-family: &quot;Microsoft Y=
+aHei&quot; , &quot;Helvetica Neue&quot; , &quot;PingFang SC&quot; , sans-se=
+rif;color: rgb(0,0,0);">&nbsp;</span></p> <p class=3D"p2" style=3D"font-siz=
+e-adjust: none;font-stretch: normal;font-size: 14.0px;line-height: 1.6;font=
+-family: Helvetica;text-align: left;margin: 0.0px;"><span style=3D"font-siz=
+e: 16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&q=
+uot; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);"><span style=
+=3D"font-weight: bold;">Discount Code:&nbsp;<span style=3D"background-color=
+: rgb(247,218,100);">SLS30</span></span></span></p> <p class=3D"p2" style=
+=3D"font-size-adjust: none;font-stretch: normal;font-size: 14.0px;line-heig=
+ht: 1.6;font-family: Helvetica;text-align: left;margin: 0.0px;"><span style=
+=3D"font-size: 16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helv=
+etica Neue&quot; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);"=
+><span style=3D"font-weight: bold;">Description: Silksilky Save $30 on orde=
+rs over $199</span></span></p> <p class=3D"p3" style=3D"font-size-adjust: n=
+one;font-stretch: normal;font-size: 14.0px;line-height: 1.6;font-family: He=
+lvetica;color: rgb(0,0,233);text-align: left;margin: 0.0px;"><span class=3D=
+"s1" style=3D"color: rgb(0,0,0);font-size: 16.0px;font-family: &quot;Micros=
+oft YaHei&quot; , &quot;Helvetica Neue&quot; , &quot;PingFang SC&quot; , sa=
+ns-serif;"><span style=3D"font-weight: bold;">URL:&nbsp;</span><a href=3D"h=
+ttps://silksilky.com/collections/best-seller" rel=3D"nofollow" style=3D"col=
+or: rgb(0,0,0);text-decoration: none;font-weight: normal;"><span class=3D"s=
+4"><span style=3D"font-weight: bold;">https://silksilky.com/collections/bes=
+t-seller</span></span></a></span></p> <p class=3D"p2" style=3D"font-size-ad=
+just: none;font-stretch: normal;font-size: 14.0px;line-height: 1.6;font-fam=
+ily: Helvetica;text-align: left;margin: 0.0px;"><span style=3D"font-size: 1=
+6.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quot;=
+ , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);"><span style=3D"=
+font-weight: bold;">Validity: 8/20-8/31</span></span></p> <p class=3D"p2" s=
+tyle=3D"font-size-adjust: none;font-stretch: normal;font-size: 14.0px;line-=
+height: 1.6;font-family: Helvetica;text-align: left;margin: 0.0px;"><span s=
+tyle=3D"font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quo=
+t; , &quot;PingFang SC&quot; , sans-serif;font-size: 16.0px;color: rgb(0,0,=
+0);"><br><span style=3D"font-weight: bold;">Campaign Name</span><span class=
+=3D"s5" style=3D"font-size-adjust: none;font-stretch: normal;line-height: n=
+ormal;"><span style=3D"font-weight: bold;">=EF=BC=9A</span></span><span sty=
+le=3D"font-weight: bold;"><span style=3D"background-color: rgb(247,218,100)=
+;">Silk Apparel for Women</span></span><br><span style=3D"font-weight: bold=
+;">Description: Silk Apparel for Women</span><span class=3D"s5" style=3D"fo=
+nt-size-adjust: none;font-stretch: normal;line-height: normal;"><span style=
+=3D"font-weight: bold;">=EF=BC=9A</span></span><span style=3D"font-weight: =
+bold;"><span style=3D"background-color: rgb(247,218,100);">save up to 70%</=
+span></span><span class=3D"s5" style=3D"font-size-adjust: none;font-stretch=
+: normal;line-height: normal;"><span style=3D"font-weight: bold;"><span sty=
+le=3D"background-color: rgb(247,218,100);">=EF=BC=81</span></span></span></=
+span></p> <p class=3D"p3" style=3D"font-size-adjust: none;font-stretch: nor=
+mal;font-size: 14.0px;line-height: 1.6;font-family: Helvetica;color: rgb(0,=
+0,233);text-align: left;margin: 0.0px;"><span class=3D"s1" style=3D"color: =
+rgb(0,0,0);font-size: 16.0px;font-family: &quot;Microsoft YaHei&quot; , &qu=
+ot;Helvetica Neue&quot; , &quot;PingFang SC&quot; , sans-serif;"><span styl=
+e=3D"font-weight: bold;">URL:&nbsp;</span><a href=3D"https://silksilky.com/=
+collections/silk-apparel-for-women" rel=3D"nofollow" style=3D"color: rgb(0,=
+0,0);text-decoration: none;font-weight: normal;"><span class=3D"s4"><span s=
+tyle=3D"font-weight: bold;">https://silksilky.com/collections/silk-apparel-=
+for-women</span></span></a></span></p> <p class=3D"p2" style=3D"font-size-a=
+djust: none;font-stretch: normal;font-size: 14.0px;line-height: 1.6;font-fa=
+mily: Helvetica;text-align: left;margin: 0.0px;"><span style=3D"font-size: =
+16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quot=
+; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);"><span style=3D=
+"font-weight: bold;">Validity: 8/20-8/31</span></span></p> <p class=3D"p4" =
+style=3D"font-size-adjust: none;font-stretch: normal;font-size: 14.0px;line=
+-height: 1.6;font-family: Helvetica;min-height: 16.0px;text-align: left;mar=
+gin: 0.0px;"><span style=3D"font-size: 16.0px;font-family: &quot;Microsoft =
+YaHei&quot; , &quot;Helvetica Neue&quot; , &quot;PingFang SC&quot; , sans-s=
+erif;color: rgb(0,0,0);">&nbsp;</span></p> <p class=3D"p2" style=3D"font-si=
+ze-adjust: none;font-stretch: normal;font-size: 14.0px;line-height: 1.6;fon=
+t-family: Helvetica;text-align: left;margin: 0.0px;"><span style=3D"font-si=
+ze: 16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&=
+quot; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);">If you nee=
+d any support, feel free to reach out. Please also send over your latest me=
+dia kit<span style=3D"font-weight: bold;">, rate card</span>, and details r=
+egarding&nbsp;<span style=3D"font-weight: bold;">available placements or ex=
+posure opportunities.</span></span></p> <p class=3D"p4" style=3D"font-size-=
+adjust: none;font-stretch: normal;font-size: 14.0px;line-height: 1.6;font-f=
+amily: Helvetica;min-height: 16.0px;text-align: left;margin: 0.0px;"><span =
+style=3D"font-size: 16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot=
+;Helvetica Neue&quot; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0=
+,0);">&nbsp;</span></p> <p class=3D"p2" style=3D"font-size-adjust: none;fon=
+t-stretch: normal;font-size: 14.0px;line-height: 1.6;font-family: Helvetica=
+;text-align: left;margin: 0.0px;"><span style=3D"font-size: 16.0px;font-fam=
+ily: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quot; , &quot;PingF=
+ang SC&quot; , sans-serif;color: rgb(0,0,0);">We're open to the following t=
+ypes of partnerships:</span></p> <ul class=3D"ul1" style=3D"font-family: &q=
+uot;PingFang SC&quot;;text-align: left;"> <li class=3D"li2" style=3D"margin=
+: 0.0px;font-size-adjust: none;font-stretch: normal;font-size: 18.0px;line-=
+height: normal;font-family: arial , helvetica , sans-serif;list-style: none=
+;"><strong><span style=3D"font-family: &quot;Microsoft YaHei&quot; , &quot;=
+Helvetica Neue&quot; , &quot;PingFang SC&quot; , sans-serif;font-size: 16.0=
+px;color: rgb(0,0,0);">1. Paid placement for additional exposure</span></st=
+rong></li> <li class=3D"li2" style=3D"margin: 0.0px;font-size-adjust: none;=
+font-stretch: normal;font-size: 18.0px;line-height: normal;font-family: ari=
+al , helvetica , sans-serif;list-style: none;"><strong><span style=3D"font-=
+family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quot; , &quot;Pi=
+ngFang SC&quot; , sans-serif;font-size: 16.0px;color: rgb(0,0,0);">2. CPAi =
+for additional exposure</span></strong></li> <li class=3D"li2" style=3D"mar=
+gin: 0.0px;font-size-adjust: none;font-stretch: normal;font-size: 18.0px;li=
+ne-height: normal;font-family: arial , helvetica , sans-serif;list-style: n=
+one;"><strong><span style=3D"font-family: &quot;Microsoft YaHei&quot; , &qu=
+ot;Helvetica Neue&quot; , &quot;PingFang SC&quot; , sans-serif;font-size: 1=
+6.0px;color: rgb(0,0,0);">3. exclusive code for additional exposure</span><=
+/strong></li> </ul> <p class=3D"p4" style=3D"font-size-adjust: none;font-st=
+retch: normal;font-size: 14.0px;line-height: 1.6;font-family: Helvetica;min=
+-height: 16.0px;text-align: left;margin: 0.0px;"><span style=3D"font-size: =
+16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helvetica Neue&quot=
+; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);">&nbsp;</span><=
+/p> <p class=3D"p2" style=3D"font-size-adjust: none;font-stretch: normal;fo=
+nt-size: 14.0px;line-height: 1.6;font-family: Helvetica;text-align: left;ma=
+rgin: 0.0px;"><span style=3D"font-size: 16.0px;font-family: &quot;Microsoft=
+ YaHei&quot; , &quot;Helvetica Neue&quot; , &quot;PingFang SC&quot; , sans-=
+serif;color: rgb(0,0,0);">Best regards,</span></p> <p class=3D"p2" style=3D=
+"font-size-adjust: none;font-stretch: normal;font-size: 14.0px;line-height:=
+ 1.6;font-family: Helvetica;text-align: left;margin: 0.0px;"><span style=3D=
+"font-size: 16.0px;font-family: &quot;Microsoft YaHei&quot; , &quot;Helveti=
+ca Neue&quot; , &quot;PingFang SC&quot; , sans-serif;color: rgb(0,0,0);">Ri=
+ta</span></p> </div> </div> </div> </div></div></div></td></tr></tbody></ta=
+ble></td></tr></tbody></table></div></td></tr></tbody></table></center></td=
+></tr></tbody></table><centre><table border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" width=3D"780" id=3D"awin-footer"><tr><td align=3D"center" valign=
+=3D"top"><table border=3D"0" cellpadding=3D"20" cellspacing=3D"0" width=3D"=
+100%"><tr><td height=3D"20" style=3D"font-size:20px; line-height:20px;">&nb=
+sp;</td></tr><tr><td align=3D"center" valign=3D"top" style=3D"font-family:A=
+rial,sans-serif; font-size:11px;"><img alt=3D"Awin logo" src=3D"https://ima=
+ges.awin.com/awin-interface/AWIN-logo.png" height=3D"32" width=3D"72"><p al=
+ign=3D"center" style=3D"margin-top:1.3em; text-align: center !important;">T=
+his email is sent by Awin on behalf of the advertiser programme, !!!program=
+me!!!, which you are participating in.</p><p align=3D"justify" style=3D"mar=
+gin-top:1.3em; text-align: justify !important; text-align-last: center !imp=
+ortant;">If you have a tax residence in the EU, this email is sent by Awin =
+AG, Landsberger Allee 104 BC, 10249 Berlin, incorporated in Germany with co=
+mpany number HRB 75459. If you have a non-EU tax residence, including the U=
+K, this email is sent by Awin Ltd, 5th Floor, 2 Thomas More Square, London =
+E1W 1YN, incorporated in England and Wales with company number 4010229, and=
+/or if you are a Brazilian-registered publisher and you work on programmes =
+in Brazilian Real, this email is sent by AWIN VEICULA=C3=87=C3=83O DE PUBLI=
+CIDADE NA INTERNET LTDA., Av. Paulista, 37, conj. 131, Bela Vista CEP 01311=
+-000, S=C3=A3o Paulo, incorporated in Brazil with CNPJ number 14.182.871/00=
+01-88.</p><p align=3D"center" style=3D"margin-top:1.3em; text-align: center=
+ !important;">You can <a href=3D"!!!unsubscribe!!!">unsubscribe</a> at any =
+point to stop receiving !!!category!!! from !!!programme!!!. To unsubscribe=
+ from other advertisers or communication categories, please update your <a =
+href=3D"!!!preference!!!">communication preferences</a>.</p></td></tr></tab=
+le></td></tr></table></centre>=
+
+------=_Part_1006_1781782025.1756118231564--
+
+------=_Part_1005_912796193.1756118231564--

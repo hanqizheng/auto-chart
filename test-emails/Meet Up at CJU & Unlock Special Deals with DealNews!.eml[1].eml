@@ -1,0 +1,597 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:4f8c:b0:1d03:27cf:8dbe with SMTP id he12csp449517njb;
+        Tue, 26 Aug 2025 06:18:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8ALV5Fkuxjo57MhnD65f4SfsO8Ij/M/P/mg06+BTkJoXpvFHs5Dpg1glcymRq4FzfwDe6
+X-Received: by 2002:a05:622a:2d1:b0:4b2:8ac4:ef6f with SMTP id d75a77b69052e-4b2aab2bd93mr164599481cf.82.1756214306564;
+        Tue, 26 Aug 2025 06:18:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756214306; cv=none;
+        d=google.com; s=arc-20240605;
+        b=fnOKEgxIrkDB15VlsX8aXkdTF3ATB3WwkmFjpFINvn1pitLo9ysj5f1oaipy7KE25E
+         9vhKWM5gMeAHVSpooaSB5K7fxVvqBXK/Vxo9NFeRxIRoNq8DM0n2AmQtfIeThEgYU8SX
+         4dI7r8qpUVURD6ayG53QMSLlgMlkoRTYiQ6U+Z4mFN1Z936SkAH5Xa40xrjTvA8yQ6Ij
+         cD01A7M/rr2eTMvi1Jf8SoRzIatcuxyINA+WpYO+/CkpbYIC6jfvyjNOHlcQTH1mAujz
+         tNO8v3sA/M7OP0fAxTKuUSztJVDeHplf8E3XXNmTvu8teFCfDhDqXpm2Ij+IPgIKh1ZF
+         8bnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:subject:message-id:to:reply-to:from:date
+         :dkim-signature:dkim-signature;
+        bh=WkId1i1/06Ww2BawgEvjCgW1irGYxNWEjW6iZmUXTGM=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=ZHTKDlUe0qA50gzffeCwKRkISKJc4pNKSlReeEMtT1mDf+5TSFFJqSKVUvzzuA7eGS
+         p8qH2YYABPVqF+Dw3AnClvfNuUNv/1rCErri1pC9yfN9q9mhFQ41jFT2i0gKqY8vddbD
+         YotEq2Svg6Pgz7rLvUkWGlPYVUu66omD0004aY/TPXQu0FBn8iwrWcVrZqLJAhI9p76W
+         zq2t/IL3htqoPdat9rxGiOCKZyLqyZQ8Y5PfX+cycDJssnMFSEtU9vw/NOnwNdPuCCx/
+         gtx+3zC8CujBH8TkZDJxD2/meyWdNwP8F7WCy/Y83XPwHMpYOeP1A/ufuNmAq4B6XNfm
+         SKDw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@21305817t.dealnews.com header.s=hs2 header.b=pUg1ehkN;
+       dkim=pass header.i=@dealnews.com header.s=hs1-21305817 header.b=oPpEcyfc;
+       spf=pass (google.com: domain of 1axb1quzg52rvuwycy55jho6z08cijt0gxfh5i@21305817t.dealnews.com designates 3.210.190.68 as permitted sender) smtp.mailfrom=1axb1quzg52rvuwycy55jho6z08cijt0gxfh5i@21305817t.dealnews.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=dealnews.com
+Return-Path: <1axb1quzg52rvuwycy55jho6z08cijt0gxfh5i@21305817t.dealnews.com>
+Received: from bcg29y.21305817t.dealnews.com (bcg29y.21305817t.dealnews.com. [3.210.190.68])
+        by mx.google.com with ESMTPS id d75a77b69052e-4b2b8dc409csi37618511cf.414.2025.08.26.06.18.26
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Aug 2025 06:18:26 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 1axb1quzg52rvuwycy55jho6z08cijt0gxfh5i@21305817t.dealnews.com designates 3.210.190.68 as permitted sender) client-ip=3.210.190.68;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@21305817t.dealnews.com header.s=hs2 header.b=pUg1ehkN;
+       dkim=pass header.i=@dealnews.com header.s=hs1-21305817 header.b=oPpEcyfc;
+       spf=pass (google.com: domain of 1axb1quzg52rvuwycy55jho6z08cijt0gxfh5i@21305817t.dealnews.com designates 3.210.190.68 as permitted sender) smtp.mailfrom=1axb1quzg52rvuwycy55jho6z08cijt0gxfh5i@21305817t.dealnews.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=dealnews.com
+Received: by 172.16.75.126 with SMTP id a0b9znrox27ui21rt47jl1najb7ndof76goyym9wr67;
+        Tue, 26 Aug 2025 13:18:26 GMT
+DKIM-Signature: v=1; s=hs2; d=21305817t.dealnews.com; 
+        i=@21305817t.dealnews.com; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=WkId1i1/06Ww2BawgEvjCgW1irGYxNWEjW6iZmUXTGM=; 
+        b=pUg1ehkN9Xj2grc3gve98+Q5qF/1Bs/nVyqkbzpuSc3+1432taApVt6OR1C+Qi
+         u9Tf9r75ukfsoQQxFPfOj8yDZSGw37A7QWhUgLjsxarPzTyMol3lMqgu7HAFw90
+         vSgNc4eoE83FkW9rZoPdZ4qT2Bthkmc2Wgb+iaedFj4HtCUvw6XGqxKpHjRxeEB
+         1qCH8eTvSTwanCvH51O6Gf0oYM4Y+P1NeMLIzeh5d5Z6bqs974jVje72XgeamW1
+         zUeOPYSKX69epKRbY7g1NGtk9/AwnRIDDfIKq/34hgkm/DYynHzmNeF+g/TEsOK
+         Iyg8IK6yVa3SXi7pOSStdmUJ0daQ==; q=dns/txt; t=1756214306; 
+        x=1756477106;
+DKIM-Signature: v=1; s=hs1-21305817; d=dealnews.com; 
+        i=@dealnews.com; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=WkId1i1/06Ww2BawgEvjCgW1irGYxNWEjW6iZmUXTGM=; 
+        b=oPpEcyfcQ2kMieSOkQTMFZF5f1DunwrxbJTDQDQ4fWtLFJhPKQ2TYv6P9MYoD5
+         cN0obyBzDRQtvVDW0uEwWM6WgoESeNdNZCoFbvcREizipWCfQxOMo+G5UYvKx8R
+         sJoCP3pr2qGkVDhbZ1OzrUhpGi0NfD0MvPCWcC1wt+4qWTtSrEG+XLUbWGIxaJz
+         3HASDpreomYSxs/dbu3ELvGdP7ti0YSAlqU3/0P3tHa8ovyfRrR3msHTi2FTsQe
+         deBLzR6UwjpeNHaVHilcQMzdpruJw/xkUxhCrZNUt+EaF03sFUtW+ZjBZlmGzij
+         +PDCFWIBCsbdT4RWYt8GBaz2G51g==; q=dns/txt; t=1756214306; 
+        x=1756477106;
+Return-Path: <1axb1quzg52rvuwycy55jho6z08cijt0gxfh5i@21305817t.dealnews.com>
+X-HS-Cid: 1axfu1nuvq8e3n34krd2w7ihznu8tnymxa7vk2
+Date: Tue, 26 Aug 2025 09:18:26 -0400
+From: Shauna Cortazzo <scortazzo@dealnews.com>
+Reply-To: scortazzo@dealnews.com
+To: rita@affiliate.bluefocus.com
+Message-ID: <1756214306059.d0de50ff-b29d-4ea8-80f0-4e8503ff3e6d@21305817t.dealnews.com>
+Subject: Meet Up at CJU & Unlock Special Deals with DealNews!
+Content-Type: multipart/alternative;
+	boundary="----=_Part_169499_1587650033.1756214306137"
+X-Report-Abuse-To: abuse@hubspot.com (see
+ https://policy.hubspot.com/abuse-complaints)
+MIME-Version: 1.0
+
+------=_Part_169499_1587650033.1756214306137
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Ending soon on September 5th - Back to School package 5 SOVs + 5 Email Plac=
+ements for $2000
+
+Hi there -=E2=80=8B
+
+I'm getting ready to fly out to CJU in Santa Barbara from September 8th to =
+11th. If you are going too, let me know so we can meet up (https://info.dea=
+lnews.com/e3t/Ctc/W+113/d2wjx904/VW-2kl9lwGH2W68tsqY4TskPzW3_3yVc5BH_C1MpKr=
+mj3prCCW8wLKSR6lZ3pfW45lJqP88Hfg2N42ywKq7YW4LW5wh41F38nvs4N76sm29xTdGlT3Ssv=
+7x1YPqN5wXncvTN3HnMXlDfX4J_BbVp2kT13lhSSlW4c9fXw4Hh_dmN18ngf4Dgk-DW7KvdKH6x=
+3rK1W3MB4fW8BYRHpW28xj6Z7WMCJ4W4mM17q4K3-RZW1_tH081xWgkRW5H-DJq8gHHzdW5Hp2k=
+-4XJhhVW7h9Srr8_yNspW9jC4LS8mqBNBW6ZpmYJ5qk5Z-W4_XMhT6Cq9cCVXfdLS2nprPjN33_=
+dNhPlFXjW1dlj9r8p6K7YW5-ysRC6fN07QW8lfgfz2hx0rXW92sTBh5GssNCW65K5Gz46xH-Wdb=
+mS4R04 ) while there! We're offering some special deals just for the event,=
+ and can discuss your Q4 and 2026 plans to keep your sales growth going wit=
+h DealNews.
+
+Also -- Ending Soon on September 5th! Grab our special package offer below:
+
+=E2=80=A2 5 SOVs (Share of Voice)
+
+=E2=80=A2 5 Email Placements
+
+All for $2000 (Regular Price $4750, Over 50% Off)
+
+Note: The placements must be used by October 15th
+
+For even more visibility with DealNews for your brand, check out our 2025 R=
+ate Card (https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW-2kl9lwGH2W68t=
+sqY4TskPzW3_3yVc5BH_C1MpKrkx5m_5PW50kH_H6lZ3n6W94BKR74FBr65W4wHFVX4DpN69W2_=
+_qMx44wJtnW4-Bnbn1ZYYMkMX9x0Qpc4kTW3__Trp6bnknGW2kl0Mm3h0_6YW6snr4Y8l6bs1W4=
+_G2bw4mt_rYN2mfrJhPDGt2W1HtRSt3rfK03W5ZR5Rb7WZh2rW4ZV3tq2mB0n1W6twx_D22KSFc=
+W1TJ7ss220mCmVjmVGY3RmK08W1FvkPp3JsXSDW4Zgt9q56twPlW4rkMw452vvRzN1twqxymVmy=
+yW8zD11143jGwWW8Yf2bt2FmYDBW5HLRvd6ZSl1QW7K50pV1s818mW41wpFX5nhLZnW80GkFv6h=
+-9htW1tspXg4rTt-DN6CrLccxV4zBW2zF6Nx26DyqJW7YCn_B8BvNhTN7V4MKBgvZtBW4pTTVV4=
+-S8Hff2cxtbj04 ) .
+
+Cheers!
+
+Shauna Cortazzo
+
+Account Executive
+
+Book a Meeting with Me (https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW=
+-2kl9lwGH2W68tsqY4TskPzW3_3yVc5BH_C1MpKrmj3prCCW8wLKSR6lZ3pfW45lJqP88Hfg2N4=
+2ywKq7YW4LW5wh41F38nvs4N76sm29xTdGlT3Ssv7x1YPqN5wXncvTN3HnMXlDfX4J_BbVp2kT1=
+3lhSSlW4c9fXw4Hh_dmN18ngf4Dgk-DW7KvdKH6x3rK1W3MB4fW8BYRHpW28xj6Z7WMCJ4W4mM1=
+7q4K3-RZW1_tH081xWgkRW5H-DJq8gHHzdW5Hp2k-4XJhhVW7h9Srr8_yNspW9jC4LS8mqBNBW6=
+ZpmYJ5qk5Z-W4_XMhT6Cq9cCVXfdLS2nprPjN33_dNhPlFXjW1dlj9r8p6K7YW5-ysRC6fN07QW=
+8lfgfz2hx0rXW92sTBh5GssNCW65K5Gz46xH-WdbmS4R04 )
+
+Instagram (https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW-2kl9lwGH2W68=
+tsqY4TskPzW3_3yVc5BH_C1MpKrm03prCCW7Y8-PT6lZ3m9W5B78Tf8vdKbCW8f82dl4pcM-jW4=
+LjBXM2ZrvXXW8LBVM37gfR1HW630PT32kMl2gN26hRzWJDJH6W9g-Bs76Mzft6VSKVKf46TbMmW=
+6kN4D23fJn94VXxHXP88JvvWW7ZXP-M5pCbS-W81WFkg7D8vvHMWPh1NHbp_WW4qsqVl4fdRzfW=
+60-mf55pbf9ZW5LCT3y6jfDGrW39FZT55S629wW345rCg2L_YfBW98mZnQ4_ryZFW831sVq3SD-=
+3lW85LDTk2s8nnfW8h-08K7g2zzyN2yxFkcTxXSBW4H6Kbt3HT_t6W3w3Dzx9bxZyDW3Dlh_f6p=
+jqsDf2p3dxj04 )
+
+Facebook (https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW-2kl9lwGH2W68t=
+sqY4TskPzW3_3yVc5BH_C1MpKrm03prCCW7Y8-PT6lZ3l9W3BCVBR2zT7XWW1c-Lbf87LPVFW8Y=
+9Vdp8FKPXqVm-Zmd5wmxJJW11NWVm4qpCT_W24R_4n5H9cgRN197szX-C4FfW8G2DK76K61PkVb=
+0WG01N3VXWW7wPjd_340qBnW7tw4my87VfJYW3f_5Lx7RDNMJW50dgzn5QxRTSW2lrwPR1g26hn=
+W7VhY7-6MbCr_N8pl7F1Yp7k0W6MCFdz6KnbcgW7FZLR06Lqc3qVKSqBj2VYmz6Vj3QWN3dZsZq=
+W7JVVxZ6jSqCJV8n4S5583n2HW2S8PNK7xqSBjW7RDC6s8lsbqqTfs9G8ZGdFfW3x8mNd3kkt7L=
+f18Ms4M04 )
+
+X (https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW-2kl9lwGH2W68tsqY4Tsk=
+PzW3_3yVc5BH_C1MpKrlK3prCCW7lCdLW6lZ3q6W8149CH7xggHPW6zRJNf3LC90yW4ntlR_5Pb=
+RRFN2ZN3X_KPXDMW2sY0P793xsLyVjvXg652BMxmW8MdF_b4LkDqkW5F0FQx4nznvBW778SVM1C=
+tSC6W8c6BBg1chVYFVbc_yF7BD0r6W2SGjfz5Kls81W4CF73J25WrpxW6vz8kY8FnyN7W5Yc0yr=
+1rxTDMVxpQZ97Kxv-yW58SSxR8JtC8zW208tCD7ynG7gW5TTwtC44Ljn_W3wdL0T2bTRllW5x6l=
+Dq5vZHfnW4K754t2ZR-v5N7MGyb-d0HFwW454G4q8kl3Kqf6RzgYR04 )
+
+TikTok (https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW-2kl9lwGH2W68tsq=
+Y4TskPzW3_3yVc5BH_C1MpKrm03prCCW7Y8-PT6lZ3pSN4x5F6Sp352NW41GByy2Dp2gcW5-Qc6=
+Q8mz6h1N4_Dv0WZR86yW6RbhpZ3zgW_kW6P_wqH7NkV5cW7z5VSV3LWBvmVH4brG3dDPVCW1yC0=
+JG7GpknQW6PDYFL1WpHp8W99g1cZ6MvdRFW8XVT6_2Pk3XNW7FZLvB67clNfW3_X5nK48dJTyW3=
+rVzM194vZjfW5tSfMs66NystN6_l785QfZRpW9c2zK-3Vh-q3W1_vmQb8fMrmLW36TYsq2Zmw37=
+W869dmw3218BpW2XYFmj1nG17fW1qBMFy1DLHHwW6073SF8qCkt-W5-F4QP2ZpTB0W32Hq6f1vz=
+sxgf4VtFx804 )
+
+DealNews Logo (https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW-2kl9lwGH=
+2W68tsqY4TskPzW3_3yVc5BH_C1MpKrlK3prCCW7lCdLW6lZ3kCW4lDm-j5-vJmjW3fryQ31hnV=
+dBW59KSBw9g3RmqW1DJjtT92SJhvW14qx_83HzTNgW99VW_Z8MDgGfVhZHt76Fk-XpW3hpfY-3K=
+qNpmW36ngZY4Fcj1VW4Q1TJg6dmFg6W5qhl2k3C22rKW8g_fnr1NM2vLV-Wz2K6Tvd_0W3FKlC_=
+8KCdSzN3D0Fyn2pSQVW8rc0B33GMSW2VSb35p3Y8t3gW6RQCnT2T9zfHN2xc0gCJVmv2W3c0nzY=
+3JvWc3VqxC2b639FHSVRLXMZ1pJ_vBW2JB8VQ5WBFpCW45rZ1j4Ll9D-f7-QjZq04 )
+
+DealNews, 501 Madison Street SE, Huntsville, AL 35801
+------=_Part_169499_1587650033.1756214306137
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www=
+.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3=
+.org/1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:=
+v=3D"urn:schemas-microsoft-com:vml" lang=3D"en"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><t=
+itle>Meet Up at CJU &amp; Unlock Special Deals with DealNews!</title>
+    <meta property=3D"og:title" content=3D"Meet Up at CJU &amp; Unlock Spec=
+ial Deals with DealNews!">
+    <meta name=3D"twitter:title" content=3D"Meet Up at CJU &amp; Unlock Spe=
+cial Deals with DealNews!">
+   =20
+   =20
+   =20
+<meta name=3D"x-apple-disable-message-reformatting">
+
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+    <!--[if gte mso 9]>
+  <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    <w:WordDocument xmlns:w=3D"urn:schemas-microsoft-com:office:word">
+      <w:DontUseAdvancedTypographyReadingMail/>
+    </w:WordDocument>
+  </xml>
+ =20
+  <style>
+    ul > li {
+      text-indent: -1em;
+    }
+  </style>
+<![endif]-->
+<!--[if mso]>
+<style type=3D"text/css">
+ body, td {font-family: Arial, Helvetica, sans-serif;}
+ .hse-body-wrapper-table {background-color: #ffffff;}
+</style>
+<![endif]-->
+<!--[if mso | IE]>
+  <style type=3D"text/css">
+    .hse-column-container { border: none !important; padding: 0 !important;=
+ }
+  </style>
+<![endif]-->
+   =20
+     =20
+ =20
+ =20
+   =20
+  <meta name=3D"generator" content=3D"HubSpot"><meta property=3D"og:url" co=
+ntent=3D"https://info.dealnews.com/-temporary-slug-d521c910-f6f2-4bf8-8ed8-=
+24018219833b"><meta name=3D"robots" content=3D"noindex,follow"><!--[if !((m=
+so)|(IE))]><!-- --><style type=3D"text/css">@media only screen and (max-wid=
+th:639px){img.stretch-on-mobile,.hs_rss_email_entries_table img,.hs-stretch=
+-cta .hs-cta-img{height:auto !important;width:100% !important}
+.display_block_on_small_screens{display:block}.hs_padded{padding-left:20px =
+!important;padding-right:20px !important}
+.hs-hm,table.hs-hm{display:none}.hs-hd{display:block !important}table.hs-hd=
+{display:table !important}
+}@media only screen and (max-width:639px){.hse-border-m{border-left:1px sol=
+id #ccc !important;border-right:1px solid #ccc !important;box-sizing:border=
+-box}
+.hse-border-bottom-m{border-bottom:1px solid #ccc !important}.hse-border-to=
+p-m{border-top:1px solid #ccc !important}
+.hse-border-top-hm{border-top:none !important}.hse-border-bottom-hm{border-=
+bottom:none !important}
+}@media screen and (max-width:639px){.social-network-cell{display:inline-bl=
+ock} }</style><!--<![endif]--><style type=3D"text/css">#hs_body #hs_cos_wra=
+pper_main a[x-apple-data-detectors]{color:inherit !important;text-decoratio=
+n:none !important;font-size:inherit !important;font-family:inherit !importa=
+nt;font-weight:inherit !important;line-height:inherit !important}
+a{text-decoration:underline}p{margin:0}body{-ms-text-size-adjust:100%;-webk=
+it-text-size-adjust:100%;-webkit-font-smoothing:antialiased;moz-osx-font-sm=
+oothing:grayscale}
+table{border-spacing:0;mso-table-lspace:0;mso-table-rspace:0}table,td{borde=
+r-collapse:collapse}
+img{-ms-interpolation-mode:bicubic}p,a,li,td,blockquote{mso-line-height-rul=
+e:exactly}</style></head>
+  <body id=3D"hs_body" bgcolor=3D"#ffffff" style=3D"margin:0 !important; pa=
+dding:0 !important; font-family:Arial, sans-serif; font-size:15px; color:#2=
+3496d; word-break:break-word">
+    <div id=3D"preview_text" style=3D"display:none;font-size:1px;color:#fff=
+fff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;=
+" lang=3D"en">Ending soon on September 5th - Back to School package 5 SOVs =
++ 5 Email Placements for $2000</div>
+   =20
+<!--[if gte mso 9]>
+<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+    <v:fill type=3D"tile" size=3D"100%,100%" color=3D"#ffffff"/>
+</v:background>
+<![endif]-->
+    <div class=3D"hse-body-background" lang=3D"en" style=3D"background-colo=
+r:#ffffff" bgcolor=3D"#ffffff">
+      <table role=3D"presentation" class=3D"hse-body-wrapper-table hse-full=
+-width-template" cellpadding=3D"0" cellspacing=3D"0" style=3D"margin:0; pad=
+ding:0; width:100% !important; min-width:320px !important; height:100% !imp=
+ortant" width=3D"100%" height=3D"100%">
+        <tbody><tr>
+          <td class=3D"hse-body-wrapper-td" valign=3D"top" style=3D"font-fa=
+mily:Arial, sans-serif; font-size:15px; color:#23496d; word-break:break-wor=
+d">
+            <div id=3D"hs_cos_wrapper_main" class=3D"hs_cos_wrapper hs_cos_=
+wrapper_widget hs_cos_wrapper_type_email_flex_area" style=3D"color: inherit=
+; font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"wi=
+dget" data-hs-cos-type=3D"email_flex_area">  <div id=3D"builtin_section-0" =
+class=3D"hse-section hse-section-full-width" style=3D"padding-left:10px; pa=
+dding-right:10px; padding:0; background-color:#ffffff" bgcolor=3D"#ffffff">
+   =20
+     =20
+      <!--[if gte mso 9]><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" style=3D"widt=
+h:100%" bgcolor=3D"#ffffff"><tbody><tr><td valign=3D"top"><![endif]-->
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:100%; margin:0">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:100%;" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation">
+      <tr>
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:100%;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:100%">
+<![endif]-->
+<div id=3D"builtin_column_0-0" class=3D"hse-column">
+  <div id=3D"hs_cos_wrapper_primary_rich_text_module" class=3D"hs_cos_wrapp=
+er hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inheri=
+t; font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"w=
+idget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_primary_rich_t=
+ext_module_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_t=
+ype_rich_text" style=3D"color: inherit; font-size: inherit; line-height: in=
+herit;" data-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"rich_text">=
+<div style=3D"font-size:13px; line-height:175%">
+<div style=3D"font-size:13px; line-height:175%"><span style=3D"color: #0000=
+00;"><span style=3D"font-size: 13px;">Hi there -=E2=80=8B</span></span></di=
+v>
+<div style=3D"font-size:13px; line-height:175%"><span style=3D"color: #0000=
+00;"><span style=3D"font-size: 13px;">I'm getting ready to fly out to CJU i=
+n Santa Barbara from September 8th to 11th. If you are going too, let me kn=
+ow so we can <a href=3D"https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW=
+-2kl9lwGH2W68tsqY4TskPzW3_3yVc5BH_C1MpKrmj3qgz0W8wLKSR6lZ3ptW8XrjhW9h1BB5VF=
+P1lP7yhJJSW7Dbbhs6Hy8K1W4yq8cC4nlZl6W86qrS76Qx38HW1kDN8d2-BKLjVYXhd57Bd94kW=
+5VBBxm1SXd_bW4zy1BZ5pm2nfVwNwzs6z3WzYW4zv8RR4gsQ5NW8Ph5gz4PZxkBW9jV1T7669fj=
+FW27gsVz4W7rXLW5j9GM08VKkd2N41zj7DNCy1_W9lLc_v1mNMk_W4Dc1nW7PNgdFN4Y7Hr7vND=
+N4W456csW6rWVVrV8WM4D6Ry5VKW5JJRTJ9j7V6FW8h29Qr4TBNBCVcPNSv2DwkFtW6pJ_z565l=
+t9JW1hHxN88gN06rW8l3dHf3HqGsfW5tsw8H6J1HmRf3P98R004" target=3D"_blank" rel=
+=3D"noopener" style=3D"color:#3d85c6" data-hs-link-id=3D"0" data-hs-link-id=
+-v2=3D"RhOJExFe">meet up</a> while there! We're offering some special deals=
+ just for the event, and can discuss your Q4 and 2026 plans to keep your sa=
+les growth going with DealNews.&nbsp;<br><br></span></span></div>
+<div style=3D"font-size:13px; line-height:175%"><span style=3D"color: #0000=
+00;">Also -- Ending Soon on <strong>September 5th</strong>! Grab our specia=
+l package offer below:</span><span style=3D"color: #000000;"><strong><br></=
+strong>=E2=80=A2 5 SOVs (Share of Voice) </span></div>
+<div style=3D"font-size:13px; line-height:175%"><span style=3D"color: #0000=
+00;">=E2=80=A2 5 Email Placements<br><strong>All for $2000 (Regular Price $=
+4750, Over 50% Off)</strong><br><strong>Note: </strong>The placements must =
+be used by October 15th</span></div>
+<div style=3D"font-size:13px; line-height:175%"><span style=3D"color: #0000=
+00;">&nbsp;</span></div>
+<div style=3D"font-size:13px; line-height:175%">
+<div style=3D"font-size:13px; line-height:175%" aria-live=3D"assertive"><sp=
+an style=3D"color: #000000;">For even more visibility with DealNews for you=
+r brand, check out our <a href=3D"https://info.dealnews.com/e3t/Ctc/W+113/d=
+2wjx904/VW-2kl9lwGH2W68tsqY4TskPzW3_3yVc5BH_C1MpKrkx5nR3bW50kH_H6lZ3mhW2H_g=
+zw5JC5Y9W5THQ4f14ppfYVDztr58cK4VHW8Jp23k7bRSQLN5gtfs-20HgFW3GdKX06QyflpW6wK=
+JBx3T_0mYW4t7lKP2_5qKSW5llGxm5xRJ16W9jmZV38LdXfTW2ZtmQG2szcz0W7TpvMw3tZyYSW=
+6y3rHT87WjzSW8w2JDH7sXNyyW5x2D8n1zqRZZVR8xvz5RyYCgW6C-t_28Xgr24W2hQ1lv5MJXj=
+PW3nZ17W60QjT5W7ry-Wb4Dp4nlW95x3m77GDTjKW3MPv5N92b778W6JvR1v35-p3WW5nhqkd3r=
+2x9FW4N_m1n1pDDK1W8sqBs_8VjSDSMq2Yr15yX6rW47qNch19Vy1tW9chVh95sQ5FqW5y7WYW9=
+gdBJ-W24hQ3w3nDYVJW2LZwCG601ZFcf7C6c7b04" style=3D"color:#000000" rel=3D"no=
+opener" data-hs-domain-rewrite=3D"true" data-hs-link-id=3D"0" data-hs-link-=
+id-v2=3D"QO/ft2vg" target=3D"_blank"><span style=3D"font-size: 13px;"><span=
+ style=3D"color: #2c65af;">2025 Rate Card</span></span></a><span style=3D"f=
+ont-size: 13px;">.</span></span></div>
+</div>
+</div></div></div>
+<div id=3D"hs_cos_wrapper_module_17194225508412" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_module_171942255084=
+12_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich=
+_text" style=3D"color: inherit; font-size: inherit; line-height: inherit;" =
+data-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"rich_text"><div sty=
+le=3D"line-height:175%">
+<div style=3D"font-size:12px; line-height:134%"><span style=3D"font-family:=
+ Arial, sans-serif;"><span style=3D"color: #000000;"><span style=3D"font-si=
+ze: 13px;">Cheers!</span><br><br></span></span></div>
+</div>
+<div style=3D"font-size:13px; line-height:125%"><span style=3D"background-i=
+mage: initial; background-position: initial; background-size: initial; back=
+ground-repeat: initial; background-attachment: initial; background-origin: =
+initial; background-clip: initial; border-width: 1px; border-image: initial=
+; color: #000000; font-family: Arial, sans-serif; width: 242px !important; =
+height: 28px !important; font-size: 14px;"><strong>Shauna Cortazzo</strong>=
+</span><br><span style=3D"color: #000000; font-family: Arial, sans-serif;">=
+<span style=3D"font-size: 14px;">Account Executive</span><br><br><span styl=
+e=3D"color: #72a1d5;"><span style=3D"color: #0c5394;"><a href=3D"https://in=
+fo.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW-2kl9lwGH2W68tsqY4TskPzW3_3yVc5BH_=
+C1MpKrmj3qgz0W8wLKSR6lZ3mnW6pb58d6s3jY5W4SvPPj5z3b1YVpMSFn63dh4bN7K7sjVLK4X=
+WW1f9ysF8z4rZ0N8Vgbh_8kgqZW6Z_WnD6LRGHGN8D0xt9WV0NsW7pVCBk7wLDsqN5xJ5vrqZ1m=
+mW6Brt0m6bF-5GW9b7ZN07-9txzN7Y3KXkYJ1KNW2HJSNF2L-prmV6_nFB7DxFMfW9jstlL4Ngz=
+0BW6-3mJ35DDwJ2W1Khr8m1wXGwhW4pcsbM4Rv8_XW6JwjQS6SyY8tN98CYw_bKcFqW5sGd4G1G=
+72VMW5H54Zm36Pq81W8dl-BD2cYr-fW7NGbD616JFS2W6Thq117j-t9XW7L1FqV8YC8TWVXqbJC=
+6NDSmZdfK6Fx04" target=3D"_blank" style=3D"color:#0c5394" rel=3D"noopener" =
+data-hs-link-id=3D"1" data-hs-link-id-v2=3D"VQ40fXeJ">Book a Meeting with M=
+e</a></span></span></span></div></div></div>
+<div id=3D"hs_cos_wrapper_module_17231425037442" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><table role=3D"presentation" align=3D"left" s=
+tyle=3D"width: auto; text-align: left; " class=3D"hs_cos_wrapper_type_socia=
+l_module">
+  <tbody>
+    <tr>
+      <td class=3D"social-network-cell" align=3D"center" style=3D"font-fami=
+ly:Arial, sans-serif; font-size:15px; color:#23496d; word-break:break-word"=
+>
+        <table role=3D"presentation" align=3D"left" style=3D"width: auto; t=
+ext-align: left; " class=3D"hs_cos_wrapper_type_social_module_single">
+          <tbody>
+            <tr>
+              <td class=3D"display_block_on_small_screens" align=3D"center"=
+ style=3D"font-family:Arial, sans-serif; font-size:15px; color:#23496d; wor=
+d-break:break-word; padding:8px 2px; line-height:1; vertical-align:middle" =
+valign=3D"middle">
+                <a href=3D"https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904=
+/VW-2kl9lwGH2W68tsqY4TskPzW3_3yVc5BH_C1MpKrm03qgz0W7Y8-PT6lZ3l9W5Y3qnm64474=
+BW517Ml11H60jWW66KWhS2jpBbQW7T1CZ_7CZZKsW3j4MSv8Gcn5yW3XKL6w36KjyJN94nccylg=
+cpbW8ZtYh94Fszf8Vth7m58MbGJpVmQ1B856_5VWW8WZQsQ3FY-q7W16KPpx8gL5h6W4HnXV_53=
+T69PW1QQ7-V23F-b9Vhxc__33RFtpW7Jh7Cl30LWLYW5xZ7BX9ljgZ6W8vprD46csRDBW57-H3D=
+5rz47RW2wqYw6457GTrW6x2Ndg91ffrDW5MDT_s1GHvSxW430YLj5dBgXGW3Dq06w8tHKbfW2MX=
+1dY309YFVW2vbVLy8sqJP2f23VRM804" style=3D"color:#00a4bd; text-decoration:no=
+ne !important" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"aWLGbydg" target=
+=3D"_blank"><img src=3D"https://info.dealnews.com/hs/hsstatic/TemplateAsset=
+s/static-1.262/img/hs_default_template_images/modules/Follow+Me+-+Email/ins=
+tagram_original_black.png" alt=3D"Instagram" height=3D"29" style=3D"outline=
+:none; text-decoration:none; border:none; width:auto!important; height:29px=
+!important; vertical-align:middle" valign=3D"middle" width=3D"auto">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td><td class=3D"social-network-cell" align=3D"center" style=3D"font=
+-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:break-=
+word">
+        <table role=3D"presentation" align=3D"left" style=3D"width: auto; t=
+ext-align: left; " class=3D"hs_cos_wrapper_type_social_module_single">
+          <tbody>
+            <tr>
+              <td class=3D"display_block_on_small_screens" align=3D"center"=
+ style=3D"font-family:Arial, sans-serif; font-size:15px; color:#23496d; wor=
+d-break:break-word; padding:8px 2px; line-height:1; vertical-align:middle" =
+valign=3D"middle">
+                <a href=3D"https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904=
+/VW-2kl9lwGH2W68tsqY4TskPzW3_3yVc5BH_C1MpKrm03qgz0W7Y8-PT6lZ3pHW3NCk9M7MCVD=
+sW7nSp8V8fbYVhW7PCxlL4WFv-cW27T4hQ77rqNzVvZTqG2ZlP0lW8gRW3t5Fpk-xW7CkcMk4tS=
+H9GVs4ZKz1JQ34FVlGtS821R19-W7TyKL32n37zjW2C6pjH8sz7TCW5lMvqH96_VkFW5FyWLP7r=
+nDsfW4-KKwG2lH-sRW7g0P258YJSQNW715Y_310NQLpW3V2ByC6Ltny1W6rqDsM4-5Z6PN7j6MZ=
+Ht9qR_VF89xq96TWYlN1qhnfHLm1LlN43Ynm6-Bf8RW6ftZht2SwnMdW2RKnQF5trKgMW7HDsTx=
+99CyqRMlMrQK9_frSf7Y32Wj04" style=3D"color:#00a4bd; text-decoration:none !i=
+mportant" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"GZ2tI9XP" target=3D"_=
+blank"><img src=3D"https://info.dealnews.com/hs/hsstatic/TemplateAssets/sta=
+tic-1.262/img/hs_default_template_images/modules/Follow+Me+-+Email/facebook=
+_original_black.png" alt=3D"Facebook" height=3D"29" style=3D"outline:none; =
+text-decoration:none; border:none; width:auto!important; height:29px!import=
+ant; vertical-align:middle" valign=3D"middle" width=3D"auto">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td><td class=3D"social-network-cell" align=3D"center" style=3D"font=
+-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:break-=
+word">
+        <table role=3D"presentation" align=3D"left" style=3D"width: auto; t=
+ext-align: left; " class=3D"hs_cos_wrapper_type_social_module_single">
+          <tbody>
+            <tr>
+              <td class=3D"display_block_on_small_screens" align=3D"center"=
+ style=3D"font-family:Arial, sans-serif; font-size:15px; color:#23496d; wor=
+d-break:break-word; padding:8px 2px; line-height:1; vertical-align:middle" =
+valign=3D"middle">
+                <a href=3D"https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904=
+/VW-2kl9lwGH2W68tsqY4TskPzW3_3yVc5BH_C1MpKrm03qgz0W7Y8-PT6lZ3nXW3QCSf61S2D_=
+qW94h_Q-1-Hhv8W1GtMfx480s4lW5-DTmR5j-YtWVY_yd-4ctlrFV1SvQR6HtZQRW20Qc851l13=
+kcW1kgp-x35DhltW1W_VXP48Xb73N6b8Hnf_P6XQW2zX2mp6n2QXXW726L8Q11PkyVW50cZ9t87=
+W4GjW8BYttm9lWfYCW3cFt_W1qwqZjN5cLL5yF7tZdW7rqrjR4F9BGkVmCmpQ7qxqwfN7g4xzLw=
+_YfsN3bW7mdTVDN3W6mQW3F3P53xnW2cPwVg2KmfcjW3s3JMy2Ff5HwW5WMGjk4yy_KXW22Rdzg=
+6GPkRTW70cT2m3t4qtDf5Cg9bW04" style=3D"color:#00a4bd; text-decoration:none =
+!important" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"DZOkrFwm" target=3D=
+"_blank"><img src=3D"https://info.dealnews.com/hs/hsstatic/TemplateAssets/s=
+tatic-1.262/img/hs_default_template_images/modules/Follow+Me+-+Email/twitte=
+r_original_black.png" alt=3D"X" height=3D"29" style=3D"outline:none; text-d=
+ecoration:none; border:none; width:auto!important; height:29px!important; v=
+ertical-align:middle" valign=3D"middle" width=3D"auto">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td><td class=3D"social-network-cell" align=3D"center" style=3D"font=
+-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:break-=
+word">
+        <table role=3D"presentation" align=3D"left" style=3D"width: auto; t=
+ext-align: left; " class=3D"hs_cos_wrapper_type_social_module_single">
+          <tbody>
+            <tr>
+              <td class=3D"display_block_on_small_screens" align=3D"center"=
+ style=3D"font-family:Arial, sans-serif; font-size:15px; color:#23496d; wor=
+d-break:break-word; padding:8px 2px; line-height:1; vertical-align:middle" =
+valign=3D"middle">
+                <a href=3D"https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904=
+/VW-2kl9lwGH2W68tsqY4TskPzW3_3yVc5BH_C1MpKrmj3qgz0W8wLKSR6lZ3pgW2cz0Cr9hCKx=
+2W7cvF9S27VlmxW4wBGmb7JcvqSW1r3bJd2P6QY7W52xRGN4D8VJwW1z2W2S7r7fPGW3BXpGz76=
+RnKzW6_npLf2y_nvgW1MFCSC5-t9MKW3rLmyz44pFdvTTRHX6TKxXPW6phB296_vJp1W8G2FQl8=
+rB9KcW1rs6js361HDDN7p_sN_HJ8fjW68lhdB6j7vqHN5kf-HdsG7kXW4wHvX38JGKtwW2HgXXN=
+41GlmZW20Z3jV83BqnfW2PGZZ48nQMJXW2QnZp96LGf3DW7gcGX019W8QYVbGl_81yqmNGW1bdM=
+vf85T35dMJlYjsyb-BPW3dq4MF3WnHbFW42RHNG98KdHkf31MDh204" style=3D"color:#00a=
+4bd; text-decoration:none !important" data-hs-link-id=3D"0" data-hs-link-id=
+-v2=3D"IlC797qQ" target=3D"_blank"><img src=3D"https://info.dealnews.com/hs=
+/hsstatic/TemplateAssets/static-1.262/img/hs_default_template_images/module=
+s/Follow+Me+-+Email/tiktok_original_black.png" alt=3D"TikTok" height=3D"29"=
+ style=3D"outline:none; text-decoration:none; border:none; width:auto!impor=
+tant; height:29px!important; vertical-align:middle" valign=3D"middle" width=
+=3D"auto">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div id=3D"hs_cos_wrapper_module_17395581742402" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"pr=
+esentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td align=3D"left" valign=3D"top" style=3D"font-family:Arial, sans-se=
+rif; color:#23496d; word-break:break-word; text-align:left; padding:0px; fo=
+nt-size:0px">
+        <a href=3D"https://info.dealnews.com/e3t/Ctc/W+113/d2wjx904/VW-2kl9=
+lwGH2W68tsqY4TskPzW3_3yVc5BH_C1MpKrm03qgz0W7Y8-PT6lZ3pkVQwqHp8vF3WVW433fTC6=
+SspG1W4FKy02421109W5zqGJ451bsjBV6xhs49bSCmcW7PB74q7GBRjwW6V4NWn7JXV6qW6wXY0=
+d3bVcHXW3X7n6q95ns5gW1tDR2k4QgXSDVdH4f6211Rh9W2zdthw4Vty_-VHvH5k1zltZBW8GCX=
+1y5c_8GbW64ddBm9gXnW2W3vWm-N6mVvhyW3shNzQ5192pmW6CpV2340YR25W2kf3r8600D4-N3=
+hbtZT-zBGtN8zrhYncM4N4N1cbQcfy3s0fMyDc9ysBqQfN1vlXzypJ5m0N7Hf7jW5Qm4XW6GxSP=
+Z8-6qHSf4MpV3b04" target=3D"_blank" style=3D"color:#00a4bd" data-hs-link-id=
+=3D"0" data-hs-link-id-v2=3D"ud4I2sZI">
+        <img alt=3D"DealNews Logo" src=3D"https://info.dealnews.com/hs-fs/h=
+ubfs/dealnews_logo1.png?width=3D400&amp;upscale=3Dtrue&amp;name=3Ddealnews_=
+logo1.png" style=3D"outline:none; text-decoration:none; border:none; max-wi=
+dth:100%; font-size:16px" width=3D"200" align=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+<div id=3D"hs_cos_wrapper_footer_module" class=3D"hs_cos_wrapper hs_cos_wra=
+pper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size:=
+ inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-h=
+s-cos-type=3D"module"><table role=3D"presentation" class=3D"hse-footer hse-=
+secondary" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" style=3D"font=
+-family:Arial, sans-serif; font-size:12px; line-height:135%; color:#23496d;=
+ margin-bottom:0; padding:0">
+  <tbody>
+    <tr>
+      <td align=3D"left" valign=3D"top" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#23496d; word-break:break-word; text-align:left;=
+ margin-bottom:0; line-height:135%; padding:10px 0px">
+        <p style=3D"font-family:Arial, sans-serif;font-size:12px;font-weigh=
+t:normal;text-decoration:none;font-style:normal;color:#303437">
+          DealNews, 501 Madison Street SE, Huntsville, AL 35801
+        </p>
+       =20
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+      <!--[if gte mso 9]></td></tr></table><![endif]-->
+  =20
+  </div></div>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+ =20
+<img src=3D"https://info.dealnews.com/e3t/Cto/W+113/d2wjx904/VW-2kl9lwGH2W6=
+8tsqY4TskPzW3_3yVc5BH_C1VpKr5w3D28561b2" alt=3D"" width=3D"1" height=3D"1" =
+border=3D"0" style=3D"display:none!important;min-height:1px!important;width=
+:1px!important;border-width:0!important;margin-top:0!important;margin-botto=
+m:0!important;margin-right:0!important;margin-left:0!important;padding-top:=
+0!important;padding-bottom:0!important;padding-right:0!important;padding-le=
+ft:0!important"></body></html>=
+
+------=_Part_169499_1587650033.1756214306137--

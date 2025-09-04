@@ -1,0 +1,284 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:541b:b0:1d03:27cf:8dbe with SMTP id d27csp1397354njk;
+        Mon, 1 Sep 2025 11:15:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFZJyFZqZ0t2bemFeCHbk5Adhu2S7SLBXWciYnLlWdmsb6E2O6B7FvB5Aldb2o72RJ/IROi
+X-Received: by 2002:a05:622a:1ba4:b0:4b3:1197:b93a with SMTP id d75a77b69052e-4b31dc8f67fmr126747141cf.34.1756750518724;
+        Mon, 01 Sep 2025 11:15:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756750518; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Ngb23/PSIyStG7i7YvooUd6jMVlNqHalVyD5TLjrUHMJGznVh0i/FHeT/LTMYNc0+o
+         LgWrIPzIB6PTCe9K9mnlMUn1iSwY/L1FxGkmwSOrjXCVrYWdHLtPxXA5tCApfhn9reVo
+         d8SfIwnBj+ZPCVlzSJG3GvP8g4Q89aDEkUsEeP9zqUKS61wbEKjx//ZbNrTpPA1+rxZ1
+         CDLB/YrzxFtDRs9J0O9nGXcQ6MxDboxG3v9/W6ZfW0t/xXrwlY7XYL5FQy7g6SeHbEaU
+         lEJFCS9GcMqUZbVqyBg5u6RzCmdcBGx2sfVWIJ8p0w+zZPBOTRWNCJs7B5rJFA431dvj
+         4mSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:date:message-id:references:in-reply-to
+         :cfbl-feedback-id:cfbl-address:subject:to:from:dkim-signature
+         :dkim-signature;
+        bh=d10azhIibDpe2wBfGBCceXWrV8fIr58uuB+Oy4BgdP0=;
+        fh=z1MbCQN7ZmJy1kdV6Fjt4GRE80TsQd9EasJ/8pjS0dI=;
+        b=PKH8anupph4DlAgoVkum4R/fNGcVjwJjEBYZ8QRSS0iRwGL7Xp+vX0gjznPOwQfw6i
+         WtAA6/VEvCMnODRxJYkDQavRpN63UGrdnFAMGL2e0MmGr3f9V5V26qxPcojISkzSdOPU
+         uDjN2fbO+Q7CG6GdSCR6I8I33ar9DiKD3ioLtxU3CFOMy+J/zuAev8WBULBpNKa+sSLe
+         8f8P7YTheWmXOFyutk6EkeOwpd25QamiUoMNev7G3g0cleReAVDZWldjQPlAtkmbaudQ
+         5OzFlVXwpxd3KEo9I8fxcomQCZKfkPg5PE6OjYNg7IseQT6UZZHQo9SoCnjTLUdW7M+4
+         3I+Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@joinhoney.com header.s=strong1 header.b=RslGXb1t;
+       dkim=pass header.i=@helpscout.net header.s=strong1 header.b=fVmz4i8J;
+       spf=pass (google.com: domain of zp9ddkd697.nxjk7z7lzy+v1@bounce.helpscout.net designates 54.174.116.32 as permitted sender) smtp.mailfrom=zp9ddkd697.nxjk7z7lzy+v1@bounce.helpscout.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=joinhoney.com
+Return-Path: <zp9ddkd697.nxjk7z7lzy+v1@bounce.helpscout.net>
+Received: from mail5.helpscout.net (mail5.helpscout.net. [54.174.116.32])
+        by mx.google.com with ESMTPS id d75a77b69052e-4b346371240si179051cf.997.2025.09.01.11.15.18
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Sep 2025 11:15:18 -0700 (PDT)
+Received-SPF: pass (google.com: domain of zp9ddkd697.nxjk7z7lzy+v1@bounce.helpscout.net designates 54.174.116.32 as permitted sender) client-ip=54.174.116.32;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@joinhoney.com header.s=strong1 header.b=RslGXb1t;
+       dkim=pass header.i=@helpscout.net header.s=strong1 header.b=fVmz4i8J;
+       spf=pass (google.com: domain of zp9ddkd697.nxjk7z7lzy+v1@bounce.helpscout.net designates 54.174.116.32 as permitted sender) smtp.mailfrom=zp9ddkd697.nxjk7z7lzy+v1@bounce.helpscout.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=joinhoney.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=strong1; d=joinhoney.com;
+ h=From:To:Subject:X-Msg-Context:CFBL-Address:CFBL-Feedback-ID:In-Reply-To:
+ References:Message-Id:Date:Content-Type:MIME-Version:from:to:subject:reply-to:
+ cc; i=deals@joinhoney.com;
+ bh=d10azhIibDpe2wBfGBCceXWrV8fIr58uuB+Oy4BgdP0=;
+ b=RslGXb1tGCplrUUK8Z2KcnD1AHgrnXUH+5iSXRbATqFCMggnUfEFSCUS5WmTiIKB5VgjBONzExAX
+   IEXxXayo+VemzXA6t8RWD53+mSJTG+aR+LCbT0AeOYMX34bRdC42Ci6KI6QCFnFjUeE7CGCjCdQy
+   cuAC43IoDX7F7qgqxDk=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=strong1; d=helpscout.net;
+ h=From:To:Subject:X-Msg-Context:CFBL-Address:CFBL-Feedback-ID:In-Reply-To:
+ References:Message-Id:Date:Content-Type:MIME-Version:from:to:subject:reply-to:
+ cc;
+ bh=d10azhIibDpe2wBfGBCceXWrV8fIr58uuB+Oy4BgdP0=;
+ b=fVmz4i8J9H2MqcRm/rzbrQwJ3FSqSHL5AHhGs7y51X/tNo2bsnBkL8djJdR6QzhjkiE8HSLdp+k+
+   mVnABMObM8oYmMgIdq7ZG/2l5IVXC6HV7nfLUpAzhU6v1I9PxQrJ7YDmsCGo4bS2WYUBOMybw6et
+   P5RTMfXNN8wrxBFBAPA=
+Received: by mail5.helpscout.net id hmnhbc35n8kb for <rita@affiliate.bluefocus.com>; Mon, 1 Sep 2025 18:15:18 +0000 (envelope-from <zp9ddkd697.nxjk7z7lzy+v1@bounce.helpscout.net>)
+From: Migs Guerra <deals@joinhoney.com>
+To: Rita Liu <rita@affiliate.bluefocus.com>
+Subject: Re: Silksilky X joinhoney Q3 Collab
+X-Hs-Format: 1
+X-Msg-Context: HS-1-150594-3047215690-9307538427
+CFBL-Address: fbl@helpscout.net; report=arf
+CFBL-Feedback-ID: HS-1-150594-3047215690-9307538427
+X-Hs-Cid: 47296
+X-Hs-Uid: 1xN3WZLkryE2D5GlYjXB
+X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@helpscout.net
+X-Hs-State: 3
+In-Reply-To: <CANCt8Ow-GOQZ+00NGvsWEOOJqqgF1QTLknyVDmkNtX5TEQM4vw@mail.gmail.com>
+References: <CANCt8Ow-GOQZ+00NGvsWEOOJqqgF1QTLknyVDmkNtX5TEQM4vw@mail.gmail.com>
+Message-Id: <reply-47296-3047215690-9307538427-1756750518-836593469@helpscout.net>
+X-Msg-Timestamp: 2025-09-01T18:15:18+00:00
+Date: Mon, 01 Sep 2025 18:15:18 +0000
+Content-Type: multipart/alternative;
+ boundary="=_386058939a57349237dd033dad66aac7"
+MIME-Version: 1.0
+
+--=_386058939a57349237dd033dad66aac7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+-- Please reply above this line --=0A-----------------------------------=
+------------------------=0A## Migs replied, on Sep 1 @ 11:14am (PDT):=0A=
+=0AHi there, =0A=0AThank you for sending this over! I hope you have a gr=
+eat rest of your=0Aday! =0A=0ABest, =0AMigs=0A=0A=0A--------------------=
+---------------------------------------=0A## Rita Liu sent a message, on=
+ Aug 24 @ 8:48pm (PDT):=0A=0AHi team,  =0A=0A=09Hope you're doing well.=
+ I'm Rita, affiliate marketing manager at=0ABlueFocus representing SilkS=
+ilky. =0A=0A =09* Category: Women's wear=0A =09* Commission: 10% =0A =09=
+* Impact ID: 22953 =0A=0A=09I set up an exclusive code for your team, pl=
+ease upload it to the=0Astore page. EXCLUSIVE CODE: SILKHONEY10 CAMPAIGN=
+ URL:=0AHTTPS://SILKSILKY.COM/COLLECTIONS/BEST-SELLER [1] DESCRIPTION: S=
+ILK=0AAPPAREL FROM SILKSILKY ENJOY EXTRA 10% OFF WITH EXCLUSIVE CODE ON=
+ ALL=0ATHE PRODUCTS  VALIDITY: 8/21-9/30  =0A The following are the late=
+set Campaign Details.=0A Coupon Code: SLS30=0A Campaign URL: https://sil=
+ksilky.com/collections/best-seller [2]=0A Description: Silk Apparel from=
+ Silksilky Save $30 on orders over $199=0A Validity: 8/21-8/31 =0A Campa=
+ign URL:=0Ahttps://silksilky.com/collections/silk-apparel-for-women [3]=
+=0A Description: Silk Apparel for Women=EF=BC=9Asave up to 64%=0A Validi=
+ty: 8/21-8/31  =0A=0A=09Looking forward to hearing from you. =0A=0A=09Re=
+gards,=0A Rita   =0A=0ALinks:=0A------=0A[1] /HTTPS://SILKSILKY.COM/COLL=
+ECTIONS/BEST-SELLER=0A[2] https://silksilky.com/collections/best-seller=
+=0A[3] https://silksilky.com/collections/silk-apparel-for-women=0A=0A=0A=
+-----------------------------------------------------------=0A
+
+--=_386058939a57349237dd033dad66aac7
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html lang=3D"en"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">=
+=0A=
+    <meta name=3D"viewport" content=3D"initial-scale=3D1.0">=0A=
+    <style>=0A=
+        p { margin:0 0 1.6em 0; }=0A=
+        pre { font-family: Menlo, Monaco, monospace, sans-serif; padding: 0=
+ 0 1.6em 0; color:#333333; line-height:15px; }=0A=
+        img { max-width:100%; }=0A=
+        a { color:#346CC4; text-decoration:none; }=0A=
+        @media only screen and (max-device-width: 660px) {=0A=
+            h3 span[class=3Dnote], h3 span[class=3Dfwd] { padding:0 !import=
+ant; background-color:#ffffff !important; }=0A=
+        }=0A=
+    </style>=0A=
+</head>=0A=
+<body style=3D"-webkit-text-size-adjust:none;">=0A=
+<table cellspacing=3D"0" border=3D"0" cellpadding=3D"0" width=3D"100%">=0A=
+    <tr>=0A=
+        <td>=0A=
+            <table id=3D"hsReplyAbove" class=3D"hsReplyAbove" width=3D"100%=
+" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=0A=
+                                                                           =
+ <tr>=0A=
+    <td>=0A=
+        <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D=
+"0" style=3D"margin:0;">=0A=
+            <tr>=0A=
+                <td style=3D"padding:8px 0 10px 0;">=0A=
+                    <h3 style=3D"font-family:Arial, 'Helvetica Neue', Helve=
+tica, Tahoma, sans-serif; color:#717171; font-size:16px; line-height:22px; =
+margin:0; font-weight:normal;"><strong style=3D"color:#000000;">Migs</stron=
+g> replied</h3>=0A=
+                                                        </td>=0A=
+                <td style=3D"padding:8px 0 10px 0;" valign=3D"top">=0A=
+                    <div style=3D"font-family:Arial, 'Helvetica Neue', Helv=
+etica, Tahoma, sans-serif; color:#9E9E9E; font-size:12px; line-height:18px;=
+ margin:0;" align=3D"right">Sep 1, 11:14am</div>=0A=
+                </td>=0A=
+            </tr>=0A=
+            <tr>=0A=
+                <td colspan=3D"2" style=3D"padding:8px 0 10px 0;">=0A=
+                    <div class=3D"kickstarter-compatible">=0A=
+                        <div style=3D"font-family:Arial, 'Helvetica Neue', =
+Helvetica, Tahoma, sans-serif; color:#222222; font-size:13px; line-height:1=
+9px; margin:0;">=0A=
+                                                        <div>Hi there, <br>=
+<br>Thank you for sending this over! I hope you have a great rest of your d=
+ay! <br><br>Best, <br>Migs<br></div><br>=0A=
+                            =0A=
+                                                    </div>=0A=
+                                            </div>=0A=
+                </td>=0A=
+            </tr>=0A=
+        </table>=0A=
+    </td>=0A=
+</tr>=0A=
+<tr>=0A=
+    <td height=3D"1"><div style=3D"border-bottom:1px solid #e6e6e6;"></div>=
+</td>=0A=
+</tr>=0A=
+<tr>=0A=
+    <td height=3D"20"></td>=0A=
+</tr>=0A=
+                                                                           =
+                         <tr>=0A=
+    <td>=0A=
+        <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D=
+"0" style=3D"margin:0;">=0A=
+            <tr>=0A=
+                <td style=3D"padding:8px 0 10px 0;">=0A=
+                    <h3 style=3D"font-family:Arial, 'Helvetica Neue', Helve=
+tica, Tahoma, sans-serif; color:#717171; font-size:16px; line-height:22px; =
+margin:0; font-weight:normal;"><strong style=3D"color:#000000;">Rita Liu</s=
+trong> sent a message</h3>=0A=
+                                                            <p style=3D"fon=
+t-family:Arial, 'Helvetica Neue', Helvetica, Tahoma, sans-serif; color:#9E9=
+E9E; font-size:12px; line-height:16px; margin:0;">=0A=
+                        Cc: merchantsupport@joinhoney.com<br>=0A=
+                    </p>=0A=
+                                    </td>=0A=
+                <td style=3D"padding:8px 0 10px 0;" valign=3D"top">=0A=
+                    <div style=3D"font-family:Arial, 'Helvetica Neue', Helv=
+etica, Tahoma, sans-serif; color:#9E9E9E; font-size:12px; line-height:18px;=
+ margin:0;" align=3D"right">Aug 24, 8:48pm</div>=0A=
+                </td>=0A=
+            </tr>=0A=
+            <tr>=0A=
+                <td colspan=3D"2" style=3D"padding:8px 0 10px 0;">=0A=
+                    <div class=3D"kickstarter-compatible">=0A=
+                        <div style=3D"font-family:Arial, 'Helvetica Neue', =
+Helvetica, Tahoma, sans-serif; color:#222222; font-size:13px; line-height:1=
+9px; margin:0;">=0A=
+                                                        <div><div dir=3D"lt=
+r">Hi team,=0A=
+<div>=0A=
+<p>Hope you're doing well. I'm Rita, affiliate marketing manager at BlueFoc=
+us representing SilkSilky.</p>=0A=
+<ul>=0A=
+<li style=3D"margin-left:15px;">Category: Women's wear</li>=0A=
+<li style=3D"margin-left:15px;">Commission: 10% </li>=0A=
+<li style=3D"margin-left:15px;"><span style=3D"font-family:arial, sans-seri=
+f;">Impact ID: 22953 </span></li>=0A=
+</ul>=0A=
+<p>I set up an exclusive code for your team, please upload it to the store =
+page.</p>=0A=
+<div><b><span style=3D"background-color:rgb(255,242,204);">exclusive code: =
+</span>Silkhoney10</b></div>=0A=
+<div><b><span style=3D"background-color:rgb(255,242,204);">Campaign URL: </=
+span></b><b style=3D"background-color:rgb(255,242,204);"><a href=3D"https:/=
+/silksilky.com/collections/best-seller">https://silksilky.com/collections/b=
+est-seller</a></b></div>=0A=
+<div><b style=3D"background-color:rgb(255,242,204);">Description: Silk Appa=
+rel from Silksilky enjoy extra 10% off with exclusive code on all the produ=
+cts </b></div>=0A=
+<div><b style=3D"background-color:rgb(255,242,204);">Validity: 8/21-9/30  <=
+/b></div>=0A=
+<div><b style=3D"background-color:rgb(255,242,204);"><br></b></div>=0A=
+<div>The following are the lateset Campaign Details.<br>=0A=
+<b style=3D"background-color:rgb(208,224,227);">Coupon Code: SLS30<br>=0A=
+Campaign URL: <a href=3D"https://silksilky.com/collections/best-seller">htt=
+ps://silksilky.com/collections/best-seller</a><br>=0A=
+Description: Silk Apparel from Silksilky Save $30 on orders over $199<br>=
+=0A=
+Validity: 8/21-8/31</b></div>=0A=
+<div><b style=3D"background-color:rgb(208,224,227);"><br>=0A=
+Campaign URL: <a href=3D"https://silksilky.com/collections/silk-apparel-for=
+-women">https://silksilky.com/collections/silk-apparel-for-women</a><br>=0A=
+Description: Silk Apparel for Women=EF=BC=9Asave up to 64%<br>=0A=
+Validity: 8/21-8/31</b></div>=0A=
+<div>=0A=
+<p><span style=3D"font-family:arial, helvetica, sans-serif;">Looking forwar=
+d to hearing from you.</span></p>=0A=
+<p>Regards,<br>=0A=
+Rita</p>=0A=
+</div>=0A=
+</div>=0A=
+</div></div>=0A=
+                                                    </div>=0A=
+                                            </div>=0A=
+                </td>=0A=
+            </tr>=0A=
+        </table>=0A=
+    </td>=0A=
+</tr>=0A=
+<tr>=0A=
+    <td height=3D"1"><div style=3D"border-bottom:1px solid #e6e6e6;"></div>=
+</td>=0A=
+</tr>=0A=
+<tr>=0A=
+    <td height=3D"20"></td>=0A=
+</tr>=0A=
+                                                                        <tr=
+>=0A=
+                    <td height=3D"0" style=3D"font-size: 0px; line-height: =
+0px; color:#ffffff;">=0A=
+                        <img src=3D"https://secure.helpscout.net/notificati=
+on/convo/read/3047215690/9307538427/" alt=3D"">                        <div=
+ height=3D"0" style=3D"font-size: 0px; height:0px; line-height: 0px; color:=
+#ffffff;" id=3D"hsContentRef">{#HS:3047215690-5758426#}</div>=0A=
+                    </td>=0A=
+                </tr>=0A=
+                                            </table>=0A=
+        </td>=0A=
+    </tr>=0A=
+</table>=0A=
+</body>=0A=
+</html>=0A=
+
+
+--=_386058939a57349237dd033dad66aac7--

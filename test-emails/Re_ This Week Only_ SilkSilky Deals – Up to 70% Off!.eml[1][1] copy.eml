@@ -1,0 +1,559 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5756836nji;
+        Mon, 25 Aug 2025 06:10:14 -0700 (PDT)
+X-Received: by 2002:a05:6122:a0e:b0:537:3faf:9b43 with SMTP id 71dfb90a1353d-53c8a432496mr3134918e0c.12.1756127414436;
+        Mon, 25 Aug 2025 06:10:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756127414; cv=none;
+        d=google.com; s=arc-20240605;
+        b=UlIXfL2OvXqI46BH/lu12rtq97fe7VZS+layvLORsq68yQGzevWumbfgL7+82LE3ra
+         eeMUerpmCKIe/zY2UGw1fOB5P1K48SN/6SE36vuD9QZBrvs0PHl8UY7XF9N34CNboX8+
+         3FSElnE44/YamXF6EprUJrzAVwBPyZBVuKYbEwf1LyBzxW3MecWtHxeZ6W+6UWCI5lLo
+         ivRFM2psbIQ+csBPTLTaKOAKXtiuHU5ARfSuKYTXEe7ymWGmoVehvNjtdaXAWMHCdivZ
+         uRRC7wDSMll9xfntFHp4U4A+H5xWApDpbikuVzPlQUVI6xNZWbs5j/6KDyVT/J/QeCWm
+         UGvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=jTpqWQjLXUlYJ5+jPbc+HrHR5YEriIeQVjcTxTbZEVM=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=QkZ2ThcXdrbiK8d5tts7cGCUcspOF5uCzvajZMdsacfr+jhbt8GmCOmpFMApqpyugW
+         wZPY+Z1GKkY7vjsQlIjRI1231CYBjCr3V3i4T96HbO4Hv6+nkfYJVh4KNlZnR6Eph2Uo
+         g6M/AcmrfGIvpS0hnPwnTaAl8CTk3nLz1QWspVQ4Y7QJUuEGmBgb9+A32PvCxkfggex6
+         5+wvfe07ZS1lNrmg13geQyHv6rUnSSVo1ZKp7Ebh0Tv2GC1NgMrMfRXnnMw0pUQSaQ/F
+         cUhD/sM998UUw0dF5XFFo1+46Q7dAe3voLOTfVCWpixMX3cFe2d1/Nv3R4s4Ly2y0z9u
+         1/3A==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@audienceserv.com header.s=google header.b=Sa6+KTP6;
+       spf=pass (google.com: domain of michael.roesener@audienceserv.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=michael.roesener@audienceserv.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=audienceserv.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <michael.roesener@audienceserv.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 71dfb90a1353d-54233cdde5esor177673e0c.0.2025.08.25.06.10.14
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Mon, 25 Aug 2025 06:10:14 -0700 (PDT)
+Received-SPF: pass (google.com: domain of michael.roesener@audienceserv.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@audienceserv.com header.s=google header.b=Sa6+KTP6;
+       spf=pass (google.com: domain of michael.roesener@audienceserv.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=michael.roesener@audienceserv.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=audienceserv.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=audienceserv.com; s=google; t=1756127414; x=1756732214; darn=affiliate.bluefocus.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jTpqWQjLXUlYJ5+jPbc+HrHR5YEriIeQVjcTxTbZEVM=;
+        b=Sa6+KTP6MeN5Y254RnXZjpFfKuFaqPSc7t2uL3Ja6/eox3cZDFsfHd9f5y1FPcAMuv
+         RUmYw9uouFn15JDPcPKKbdv5PTvu9a7GMyD1trDp7PpILZIOpqK3nmQnixW3B3gCGNGh
+         Po/Jh7OQXAeSmtQDSx8kri9rna7cJ5hIpEpTbtDiA1Xke6hlhAxVhx3xEngNjEkljQ2k
+         ZP3rLLhIgEqSp4XgA8xcIlDKerfHVxUworjVohlHYkJktyXdEVv6zND+kpJCIy4vPfq1
+         13Fb8RZmYJ2vQ72QxwyGe8qDNjshDGBkNtw0kA4B+djsZocSbJ1rgUryHYnBtI6wF64t
+         6gWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756127414; x=1756732214;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jTpqWQjLXUlYJ5+jPbc+HrHR5YEriIeQVjcTxTbZEVM=;
+        b=JZcmIiNQP7J1TEwJuNFGUFp3geoFC40ZOYoUnrVJ31VUvSyvPhLXQoe1P76zovHYp8
+         Y9/mpUMs+2dC4WsM/WQQlF5LwZX3PxolAcqC0T0T1T85GUdWe3SUa71xj/62jo4xnkds
+         +rGN/gJn1/zq1ShXrimgwr/DPe8lQKiPJQCjq/VSB2zoz8WW88mBUXLsXEwgfkTlmxAz
+         BMNe7RQo4aYYlrGJV2bilCknLQQLr8WdexYCmM6YPsVX0Q1ripLQnc1BqeJugikIbAql
+         S5f/abYaT6xVRgdCCInGVQqkfWKhAnmao9LPaXfmmBQdUZ0pI3B3TEt7ZBAJiJbiXMMw
+         HLyw==
+X-Gm-Message-State: AOJu0YxhyLeBLQkRoIhuzTvWYDZCiWHGwrTLsT5Xf1FxyuwTKccMEOpA
+	fMgiCDBghlQPgy5AUiQEYQQt1Wg81ZMT09u0JaJuPUQjoK+/lyW1EiFAwAaoGnlSLDCzhT5XQoG
+	cQpdVQhrSOipC0TIsk4lj3sZxuUd5PIV5XnydQGoMXDVti1uMl143
+X-Gm-Gg: ASbGnctBFKUtnx9ArjkciN6KE2WZyFn+S+J95PZac0RyQQ37CNZ2Bmh1yGlR4cpLFTt
+	IWquvajtYt+hQyre4r9dgafQDzW8PAar/AC682zp4ocULo8oVQM68tydMKOWJ8GvOLh52y0kltj
+	Thn/PATx8QZ8s3pLgPbQKTgcFFgKv69PZaHGjLWTJfn9lgGhMstUdC7hhWFWj31Eu5VksoITTIV
+	zcV46JrNY+sjkiQJCRXtOxu9cuRvfq96XfaWqv7rByD4w/Vmw==
+X-Google-Smtp-Source: AGHT+IHjibSkoGNuISg1oxulAlklaf6CRrhJVTx/ia2tuLksD7MZnXR1j9qJNq6FNAyhCNS4C8jyahxeieIppB2sY9k=
+X-Received: by 2002:a05:6122:1313:b0:539:5d6e:71fc with SMTP id
+ 71dfb90a1353d-53c8a2edfb9mr2939074e0c.5.1756127413053; Mon, 25 Aug 2025
+ 06:10:13 -0700 (PDT)
+References: <WMZ4BBnORRi8bbZLbljnHw@geopod-ismtpd-21>
+In-Reply-To: <WMZ4BBnORRi8bbZLbljnHw@geopod-ismtpd-21>
+From: Michael Roesener <michael.roesener@audienceserv.com>
+Date: Mon, 25 Aug 2025 15:09:47 +0200
+X-Gm-Features: Ac12FXz5z8j3se6mSEIUgrFe2HLK8K43tlmg8lU6yv4Mg1t8yCfkxZVSH9Va7cI
+Message-ID: <CA+RWZNxceOyzA1axh7TQ2j0sJB_XqFaQF3XwvyLq3Y4Cs5xbwQ@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_This_Week_Only=3A_SilkSilky_Deals_=E2=80=93_Up_to_70=25_Of?=
+	=?UTF-8?Q?f=21?=
+To: rita@affiliate.bluefocus.com
+Content-Type: multipart/alternative; boundary="000000000000a2cab9063d3046d9"
+MIME-Version: 1.0
+
+--000000000000a2cab9063d3046d9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Rita,
+
+Thanks for reaching out. I'd like to prompt the campaign in the UK with
+email traffic. Would that be possible? Maybe we can set up a coll to
+discuss details.
+
+Best regards,
+Michael
+
+Am Mo., 25. Aug. 2025 um 14:13 Uhr schrieb rita@affiliate.bluefocus.com <
+notifications@outreach.impact.com>:
+
+>
+>
+> Hi team,
+>
+>
+> Hope you're doing well. I'm Rita, affiliate marketing manager at BlueFocu=
+s
+> representing SilkSilky
+>
+>
+> Category: Women's wear
+>
+> Commission:10%-20%
+>
+> Impact ID: 22953
+>
+> Website: https://silksilky.com/
+>
+>
+> We=E2=80=99re excited to share our latest campaigns with you, which are *=
+only
+> available this week* and would be a perfect fit for your audience.
+>
+> *Campaign Details*
+>
+> *Discount Code: SLS10*
+>
+> *Description: Silksilky Save $10 on orders over $109*
+>
+> *URL: **https://silksilky.com/collections/best-seller*
+> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2B=
+K2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-=
+3D-3DDC_L_p4A4YQt8epDIK9HlKea9sURGNK-2FR8cxbbNlj7JOBv4jojkq-2F-2FXDNFtevrG1=
+DJ6-2BhlcuWztUUq7EkrZ7EZ5V7ztV-2Fi6B0dx-2Be6hMbMAb7nsiPviryd2B4PNOfmlesVgeE=
+y2-2B5w2pzdtT-2FgTaFAsFPe-2BpHFLJGcXPTABN26boBzHRNeayaeGTCVxSUvvSnXy8xBKrI8=
+7zqiwNVIkgIMSDIodORCqyMlxn-2BRDnI1fC8-2Fl45JwMKBJZAYTZUhuYdD92rwoTMg-2F5-2B=
+aUi3qU77KQ9SVmpoTJT9kbAqKjGodOXLQjrEXKhZ4-2F-2BLsGYrk4ysrN9q6OMb2wjh6vzeYss=
+DLkpMH3TNzK-2BU7FV7JX1JLcUoNm-2BvXNCvwF0mzPq5a3ZhQXTarIKkaZ0rvV4bC3iVJGA0Lu=
+LZvVZ5ZC08S-2Bb1HOfjqdH-2BUT7arYwnWW6b799JP0syIQT9a3CUkWTDFqIfzGJ4ajpAJjyN-=
+2FMx1hJD7nnwG2gZpZZLvplXSPBHgh0bzMQ-2BA6VPO0-2FkADPHiAQ0i4JxU-2F6-2Fr7v8xuX=
+MszRjZ52ZA0STwhMNa8w15Xz6GFr-2BtCc89Y0t2sdQUu5dJRIIIWwelbgEM8vYdHAwQTsT7Ldh=
+qzRcMmyAJSm8CyjdXPklR6OAUN2S0JH3SYaNsOdjfMYts8TMt-2Bsmq1wbWs-2F2JGB8-2FV5GY=
+xCe-2FM6fraKV2xI9wjSUz4SQ4TReL1v9SElw-2BVOjCe0LzvAWht4mrbvWJucipxnTMW6D7wZ2=
+ZKW6RLLCqYSuhJkiEEaR36PrcX759qoEEpQIuy7AQkS20rmdHiGjmV9MuAwABJkLMPOkGotOZFQ=
+Eg2nT7sCA-2Fqw9EcyBIniuknmXQN0fOrq72AWIOI1q6W7v3ATs5SplYi43Oh-2FN7GY0289k0I=
+3Uc4IBkZUTKUZ-2BTWxARiBne4gIt7h-2FVkDCOXK5IN71tyAyn-2FWuUQ0il3H4CleGMat9lby=
+AK6v84G1kFPHuBvPI0jp6DDSwwPCZBnRIC2GcCWgPLHswXU8z5FXO93mpGqh49mig89Wr-2Fdu5=
+C4UwriWpBnV2mNEUtZd9WcLSOl94dMTLQlgix9E2SjQ8-2B>
+>
+> *Validity: 8/20-8/31*
+>
+>
+> *Discount Code: SLS30*
+>
+> *Description: Silksilky Save $30 on orders over $199*
+>
+> *URL: **https://silksilky.com/collections/best-seller*
+> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2B=
+K2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-=
+3D-3DSHJC_p4A4YQt8epDIK9HlKea9sURGNK-2FR8cxbbNlj7JOBv4jojkq-2F-2FXDNFtevrG1=
+DJ6-2BhlcuWztUUq7EkrZ7EZ5V7ztV-2Fi6B0dx-2Be6hMbMAb7nsiPviryd2B4PNOfmlesVgeE=
+y2-2B5w2pzdtT-2FgTaFAsFPe-2BpHFLJGcXPTABN26boBzHRNeayaeGTCVxSUvvSnXy8xBKrI8=
+7zqiwNVIkgIMSDIodORCqyMlxn-2BRDnI1fC8-2Fl45JwMKBJZAYTZUhuYdD92rwoTMg-2F5-2B=
+aUi3qU77KQ9SVmpoTJT9kbAqKjGodOXLQjrEXKhZ4-2F-2BLsGYrk4ysrN9q6OMb2wjh6vzeYss=
+DLkpMH3TNzK-2BU7FV7JX1JLcUoNm-2BvXNCvwF0mzPq5a3ZhQXTarIKkaZ0rvV4bC3iVJGA0Lu=
+LZvVZ5ZC08S-2Bb1HOfjqdH-2BUT7arYwnWW6b799JP0syIQT9a3CUkWTDFqIfzGJ4ajpAJjyN-=
+2FMx1hJD7nnwG2gZpZZLvplXSPBHgh0bzMQ-2BA6VPO0-2FkADPHiAQ0i4JxU-2F6-2Fr7v8xuX=
+MszRjZ52ZA0STwhMNa8w15Xz6GFr-2BtCc89Y0t2sdQUu5dJRIIIWwelbgEM8vYdHAwQTsT7Ldh=
+qzRcMmyAJSm8CyjdXPklR6OAUN2S0JH3SYaNsOdjfMYts8TMt-2Bsmq1wbWs-2F2JGB8-2FV5GY=
+xCe-2FM6fraKV2xI9wjSUz4SQ4TReL1v9SElw-2BVOjCe0LzvAWht4mrbvWJucipxnTMW6D7wZ2=
+ZKW6RLLCqYSuhJkiEEaR36PrcX759qoEEpQIuy7AQkS20rmdHiGjmV9MuAwABJkLMPOkGotOZFQ=
+Eg2nT7sCA-2Fqw9EcyBIniuknmXQN0fOrq72AWIOI1q6W7v3ATs5SplYi43Oh-2FN7GY0289k0I=
+3Uc4IBkZUTKUZ-2BTWxARiBne4gIt7h-2FVkDCOXK5IN71tyAyn-2FWuUQ0il3H4C4Q9yFeICxo=
+Yna3Aj2b0x7O7tMuNq0iCqGgKO0uruoTiBchAh0swenvaH7nbNvhy6roLYXeKexpZVx59eIUC0N=
+PZx7i3w3ISUEuYihQbsCqsHczSpwDQwx7bwYRMPU6-2Bv>
+>
+> *Validity: 8/20-8/31*
+>
+>
+> *Campaign Name**=EF=BC=9A**Silk Apparel for Women*
+> *Description: Silk Apparel for Women**=EF=BC=9A**save up to 70%**=EF=BC=
+=81*
+>
+> *URL: **https://silksilky.com/collections/silk-apparel-for-women*
+> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2B=
+K2XdT48tQmztTqvWNg5JdkTQOr-2FPlS5dgVM8Y7eBHcWWjSSLQxRfBQyhyLjHagwC1lUr0s5BY=
+rArQhMy9kwuP5MeAlc-3DepWl_p4A4YQt8epDIK9HlKea9sURGNK-2FR8cxbbNlj7JOBv4jojkq=
+-2F-2FXDNFtevrG1DJ6-2BhlcuWztUUq7EkrZ7EZ5V7ztV-2Fi6B0dx-2Be6hMbMAb7nsiPviry=
+d2B4PNOfmlesVgeEy2-2B5w2pzdtT-2FgTaFAsFPe-2BpHFLJGcXPTABN26boBzHRNeayaeGTCV=
+xSUvvSnXy8xBKrI87zqiwNVIkgIMSDIodORCqyMlxn-2BRDnI1fC8-2Fl45JwMKBJZAYTZUhuYd=
+D92rwoTMg-2F5-2BaUi3qU77KQ9SVmpoTJT9kbAqKjGodOXLQjrEXKhZ4-2F-2BLsGYrk4ysrN9=
+q6OMb2wjh6vzeYssDLkpMH3TNzK-2BU7FV7JX1JLcUoNm-2BvXNCvwF0mzPq5a3ZhQXTarIKkaZ=
+0rvV4bC3iVJGA0LuLZvVZ5ZC08S-2Bb1HOfjqdH-2BUT7arYwnWW6b799JP0syIQT9a3CUkWTDF=
+qIfzGJ4ajpAJjyN-2FMx1hJD7nnwG2gZpZZLvplXSPBHgh0bzMQ-2BA6VPO0-2FkADPHiAQ0i4J=
+xU-2F6-2Fr7v8xuXMszRjZ52ZA0STwhMNa8w15Xz6GFr-2BtCc89Y0t2sdQUu5dJRIIIWwelbgE=
+M8vYdHAwQTsT7LdhqzRcMmyAJSm8CyjdXPklR6OAUN2S0JH3SYaNsOdjfMYts8TMt-2Bsmq1wbW=
+s-2F2JGB8-2FV5GYxCe-2FM6fraKV2xI9wjSUz4SQ4TReL1v9SElw-2BVOjCe0LzvAWht4mrbvW=
+JucipxnTMW6D7wZ2ZKW6RLLCqYSuhJkiEEaR36PrcX759qoEEpQIuy7AQkS20rmdHiGjmV9MuAw=
+ABJkLMPOkGotOZFQEg2nT7sCA-2Fqw9EcyBIniuknmXQN0fOrq72AWIOI1q6W7v3ATs5SplYi43=
+Oh-2FN7GY0289k0I3Uc4IBkZUTKUZ-2BTWxARiBne4gIt7h-2FVkDCOXK5IN71tyAyn-2FWuUQ0=
+il3H4CuJoYivQUyvbZWD7lYZidRXiz4Mm6slBH4gbHwfju6pYVZZCrHABzDxoTARUnnll8AwP4I=
+hoQLOb5eNHgJ0lzWFgy63OBysNdspEueCTLy2RwVbtqSBamVjfITLUfadHS>
+>
+> *Validity: 8/20-8/31*
+>
+>
+> If you need any support, feel free to reach out. Please also send over
+> your latest media kit*, rate card*, and details regarding *available
+> placements or exposure opportunities.*
+>
+>
+> We're open to the following types of partnerships:
+>
+>    - paid placement for additional exposure
+>    - CPAi for additional exposure
+>    - exclusive code for additional exposure
+>
+>
+> Best regards,
+>
+> Rita
+>
+> Unsubscribe
+> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2B=
+K2XdTxbxD4UJGmtW8DAxp3YXsDa7MPMCTETs3WSo52RM6Q9Hs8pDVfvfmNT63AenKOog8JaiDnd=
+XVwiwAsDekYhF4jjIEHA3F5Obko5mY5QyrozYHw1lgddd9ngEP12SZbD7vdaWuPHoUv7pvOy2Du=
+TwtJscqI9KYCn73pICWH2pk6geY44Qzrlirk1qDSw8LA8sERJ7Xy7vxjWW7GYA3CEY-2BdPwe9F=
+t9O2mXw-2FVct-2F2Tvf3L5aezuZxf20cVv3QnErKKQmuHSlvc1wvj0BGS49dW8EdlbV-2BEO4W=
+VGW-2FBkyxkeH8IL2qiskXRnQx-2FKqaib5tNXz0aCpQtyZiFyXkvDbDa-2BA-3DiVbY_p4A4YQ=
+t8epDIK9HlKea9sURGNK-2FR8cxbbNlj7JOBv4jojkq-2F-2FXDNFtevrG1DJ6-2BhlcuWztUUq=
+7EkrZ7EZ5V7ztV-2Fi6B0dx-2Be6hMbMAb7nsiPviryd2B4PNOfmlesVgeEy2-2B5w2pzdtT-2F=
+gTaFAsFPe-2BpHFLJGcXPTABN26boBzHRNeayaeGTCVxSUvvSnXy8xBKrI87zqiwNVIkgIMSDIo=
+dORCqyMlxn-2BRDnI1fC8-2Fl45JwMKBJZAYTZUhuYdD92rwoTMg-2F5-2BaUi3qU77KQ9SVmpo=
+TJT9kbAqKjGodOXLQjrEXKhZ4-2F-2BLsGYrk4ysrN9q6OMb2wjh6vzeYssDLkpMH3TNzK-2BU7=
+FV7JX1JLcUoNm-2BvXNCvwF0mzPq5a3ZhQXTarIKkaZ0rvV4bC3iVJGA0LuLZvVZ5ZC08S-2Bb1=
+HOfjqdH-2BUT7arYwnWW6b799JP0syIQT9a3CUkWTDFqIfzGJ4ajpAJjyN-2FMx1hJD7nnwG2gZ=
+pZZLvplXSPBHgh0bzMQ-2BA6VPO0-2FkADPHiAQ0i4JxU-2F6-2Fr7v8xuXMszRjZ52ZA0STwhM=
+Na8w15Xz6GFr-2BtCc89Y0t2sdQUu5dJRIIIWwelbgEM8vYdHAwQTsT7LdhqzRcMmyAJSm8Cyjd=
+XPklR6OAUN2S0JH3SYaNsOdjfMYts8TMt-2Bsmq1wbWs-2F2JGB8-2FV5GYxCe-2FM6fraKV2xI=
+9wjSUz4SQ4TReL1v9SElw-2BVOjCe0LzvAWht4mrbvWJucipxnTMW6D7wZ2ZKW6RLLCqYSuhJki=
+EEaR36PrcX759qoEEpQIuy7AQkS20rmdHiGjmV9MuAwABJkLMPOkGotOZFQEg2nT7sCA-2Fqw9E=
+cyBIniuknmXQN0fOrq72AWIOI1q6W7v3ATs5SplYi43Oh-2FN7GY0289k0I3Uc4IBkZUTKUZ-2B=
+TWxARiBne4gIt7h-2FVkDCOXK5IN71tyAyn-2FWuUQ0il3H4CnVCGHeqhvdjlfrRSDH1RpN-2Bs=
+XXouzY4ds5qyURkFDh-2By6ob65sHL4gtpU1vV1qlwAkjxq6RBwPoTyC24Ocxt-2Fztdha0wt1Y=
+dXZLF-2F1l3zFf6cPoXZh-2FVPXnrI5EayUb8>
+>
+
+
+--=20
+*Michael R=C3=B6sener*
+Senior Sales Manager
+
+
+
+*M* +49 (0) 172 574 2291
+E michael.roesener@audienceserv.com
+*Termin* https://calendly.com/Michael-roesener
+<https://app-frankfurt.salesforceiq.com/r?target=3D5f8d80b24cedfd007ad7fae4=
+&t=3DABb3-AexJ3EqajlSZDCp5XZl5oxnmsg5KSECIZSkPhzgbvCRDMt-192WCm7it69yCtMJf6=
+sIJT2lOWGu0C4jWcCUIE4uY4c3LC-SRIbSuIdcz9C9szS0pwFrYBnKEtkEdCdy2Bd8SLSW&url=
+=3Dhttps%3A%2F%2Fcalendly.com%2FMichael-roesener>
+
+Berlin | Barcelona I Singapore | Hanoi
+www.audienceserv.com
+<https://audienceserv.com/?utm_source=3Demail&utm_medium=3Demail_signature&=
+utm_campaign=3Demail_signature>
+
+<https://www.facebook.com/AudienceServ/>
+<https://www.linkedin.com/company/audienceserv/>
+<https://www.youtube.com/channel/UCWwFJ5TYMu8-zLuKYD17P7g>
+<https://www.instagram.com/audience_serv/>
+
+<https://audienceserv.com/meet-us/dmexco2022/?utm_source=3Demail&utm_medium=
+=3Demail_signature&utm_campaign=3Demail_signature>
+
+
+Audience Serv GmbH, Knesebeckstra=C3=9Fe 59-61, 10719 Berlin
+Managing Director: David Pikart
+VAT-ID: DE270445604, Amtsgericht Charlottenburg, HRB 123799 B
+
+--000000000000a2cab9063d3046d9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><d=
+iv dir=3D"ltr">Hi Rita,&nbsp;<div><br></div><div>Thanks for reaching out. I=
+'d like to prompt&nbsp;the campaign in the UK with email traffic. Would tha=
+t be possible? Maybe we can set up a coll to discuss details.&nbsp;</div><d=
+iv><br></div><div>Best regards,&nbsp;</div><div>Michael</div></div><br><div=
+ class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmai=
+l_attr">Am Mo., 25. Aug. 2025 um 14:13&nbsp;Uhr schrieb <a href=3D"mailto:r=
+ita@affiliate.bluefocus.com">rita@affiliate.bluefocus.com</a> &lt;<a href=
+=3D"mailto:notifications@outreach.impact.com">notifications@outreach.impact=
+.com</a>&gt;:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><d=
+iv>
+
+
+<p><img src=3D"https://storage.googleapis.com/outreach-files/cadd1487-d7e5-=
+49ec-a7b5-dcde19546668" style=3D"width: 717px; display: inline-block; verti=
+cal-align: bottom; margin-right: 5px; margin-left: 5px; text-align: center;=
+"><br><br><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,=
+helvetica,sans-serif">Hi team,&nbsp;<br></span></p><p><span style=3D"color:=
+rgb(0,0,0);font-family:arial,helvetica,sans-serif"><br></span><span style=
+=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"=
+>Hope you're doing well. I'm Rita, affiliate marketing manager at BlueFocus=
+ representing SilkSilky</span></p><p><span style=3D"color:rgb(0,0,0);font-f=
+amily:arial,helvetica,sans-serif"><br></span><span style=3D"font-size:18px;=
+color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">Category: Women's =
+wear</span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-famil=
+y:arial,helvetica,sans-serif">Commission:10%-20%</span></p><p><span style=
+=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"=
+>Impact ID: 22953</span><span style=3D"font-size:18px;color:rgb(0,0,0);font=
+-family:arial,helvetica,sans-serif">&nbsp;</span></p><p><span style=3D"font=
+-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">Website=
+: <a href=3D"https://silksilky.com/" target=3D"_blank">https://silksilky.co=
+m/</a></span><span style=3D"font-family:arial,helvetica,sans-serif"><br></s=
+pan></p><p><span style=3D"color:rgb(0,0,0);font-family:arial,helvetica,sans=
+-serif"></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-f=
+amily:arial,helvetica,sans-serif"><br></span></p><p><span style=3D"font-siz=
+e:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">We=E2=80=99=
+re excited to share our latest campaigns with you, which are&nbsp;<strong><=
+span style=3D"background-color:rgb(247,218,100)">only available this week</=
+span></strong> and would be a perfect fit for your audience.<br><br><strong=
+>Campaign Details</strong></span><br><br></p><p><span style=3D"font-size:18=
+px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"><strong>Discoun=
+t Code: <span style=3D"background-color:rgb(247,218,100)">SLS10</span></str=
+ong></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-famil=
+y:arial,helvetica,sans-serif"><strong>Description: Silksilky Save $10 on or=
+ders over $109</strong></span></p><p><span style=3D"font-size:18px;color:rg=
+b(0,0,0);font-family:arial,helvetica,sans-serif"><strong>URL:&nbsp;</strong=
+><a href=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzx=
+R7RPOX-2BK2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eK=
+H25Qiugg-3D-3DDC_L_p4A4YQt8epDIK9HlKea9sURGNK-2FR8cxbbNlj7JOBv4jojkq-2F-2FX=
+DNFtevrG1DJ6-2BhlcuWztUUq7EkrZ7EZ5V7ztV-2Fi6B0dx-2Be6hMbMAb7nsiPviryd2B4PNO=
+fmlesVgeEy2-2B5w2pzdtT-2FgTaFAsFPe-2BpHFLJGcXPTABN26boBzHRNeayaeGTCVxSUvvSn=
+Xy8xBKrI87zqiwNVIkgIMSDIodORCqyMlxn-2BRDnI1fC8-2Fl45JwMKBJZAYTZUhuYdD92rwoT=
+Mg-2F5-2BaUi3qU77KQ9SVmpoTJT9kbAqKjGodOXLQjrEXKhZ4-2F-2BLsGYrk4ysrN9q6OMb2w=
+jh6vzeYssDLkpMH3TNzK-2BU7FV7JX1JLcUoNm-2BvXNCvwF0mzPq5a3ZhQXTarIKkaZ0rvV4bC=
+3iVJGA0LuLZvVZ5ZC08S-2Bb1HOfjqdH-2BUT7arYwnWW6b799JP0syIQT9a3CUkWTDFqIfzGJ4=
+ajpAJjyN-2FMx1hJD7nnwG2gZpZZLvplXSPBHgh0bzMQ-2BA6VPO0-2FkADPHiAQ0i4JxU-2F6-=
+2Fr7v8xuXMszRjZ52ZA0STwhMNa8w15Xz6GFr-2BtCc89Y0t2sdQUu5dJRIIIWwelbgEM8vYdHA=
+wQTsT7LdhqzRcMmyAJSm8CyjdXPklR6OAUN2S0JH3SYaNsOdjfMYts8TMt-2Bsmq1wbWs-2F2JG=
+B8-2FV5GYxCe-2FM6fraKV2xI9wjSUz4SQ4TReL1v9SElw-2BVOjCe0LzvAWht4mrbvWJucipxn=
+TMW6D7wZ2ZKW6RLLCqYSuhJkiEEaR36PrcX759qoEEpQIuy7AQkS20rmdHiGjmV9MuAwABJkLMP=
+OkGotOZFQEg2nT7sCA-2Fqw9EcyBIniuknmXQN0fOrq72AWIOI1q6W7v3ATs5SplYi43Oh-2FN7=
+GY0289k0I3Uc4IBkZUTKUZ-2BTWxARiBne4gIt7h-2FVkDCOXK5IN71tyAyn-2FWuUQ0il3H4Cl=
+eGMat9lbyAK6v84G1kFPHuBvPI0jp6DDSwwPCZBnRIC2GcCWgPLHswXU8z5FXO93mpGqh49mig8=
+9Wr-2Fdu5C4UwriWpBnV2mNEUtZd9WcLSOl94dMTLQlgix9E2SjQ8-2B" target=3D"_blank"=
+><span><strong>https://silksilky.com/collections/best-seller</strong></span=
+></a></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-fami=
+ly:arial,helvetica,sans-serif"><strong>Validity: 8/20-8/31</strong></span><=
+/p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helv=
+etica,sans-serif"><br></span></p><p><span style=3D"font-size:18px;color:rgb=
+(0,0,0);font-family:arial,helvetica,sans-serif"><strong>Discount Code: <spa=
+n style=3D"background-color:rgb(247,218,100)">SLS30</span></strong></span><=
+/p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helv=
+etica,sans-serif"><strong>Description: Silksilky Save $30 on orders over $1=
+99</strong></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);fon=
+t-family:arial,helvetica,sans-serif"><strong>URL:&nbsp;</strong><a href=3D"=
+https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK2X=
+dT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-3D-=
+3DSHJC_p4A4YQt8epDIK9HlKea9sURGNK-2FR8cxbbNlj7JOBv4jojkq-2F-2FXDNFtevrG1DJ6=
+-2BhlcuWztUUq7EkrZ7EZ5V7ztV-2Fi6B0dx-2Be6hMbMAb7nsiPviryd2B4PNOfmlesVgeEy2-=
+2B5w2pzdtT-2FgTaFAsFPe-2BpHFLJGcXPTABN26boBzHRNeayaeGTCVxSUvvSnXy8xBKrI87zq=
+iwNVIkgIMSDIodORCqyMlxn-2BRDnI1fC8-2Fl45JwMKBJZAYTZUhuYdD92rwoTMg-2F5-2BaUi=
+3qU77KQ9SVmpoTJT9kbAqKjGodOXLQjrEXKhZ4-2F-2BLsGYrk4ysrN9q6OMb2wjh6vzeYssDLk=
+pMH3TNzK-2BU7FV7JX1JLcUoNm-2BvXNCvwF0mzPq5a3ZhQXTarIKkaZ0rvV4bC3iVJGA0LuLZv=
+VZ5ZC08S-2Bb1HOfjqdH-2BUT7arYwnWW6b799JP0syIQT9a3CUkWTDFqIfzGJ4ajpAJjyN-2FM=
+x1hJD7nnwG2gZpZZLvplXSPBHgh0bzMQ-2BA6VPO0-2FkADPHiAQ0i4JxU-2F6-2Fr7v8xuXMsz=
+RjZ52ZA0STwhMNa8w15Xz6GFr-2BtCc89Y0t2sdQUu5dJRIIIWwelbgEM8vYdHAwQTsT7LdhqzR=
+cMmyAJSm8CyjdXPklR6OAUN2S0JH3SYaNsOdjfMYts8TMt-2Bsmq1wbWs-2F2JGB8-2FV5GYxCe=
+-2FM6fraKV2xI9wjSUz4SQ4TReL1v9SElw-2BVOjCe0LzvAWht4mrbvWJucipxnTMW6D7wZ2ZKW=
+6RLLCqYSuhJkiEEaR36PrcX759qoEEpQIuy7AQkS20rmdHiGjmV9MuAwABJkLMPOkGotOZFQEg2=
+nT7sCA-2Fqw9EcyBIniuknmXQN0fOrq72AWIOI1q6W7v3ATs5SplYi43Oh-2FN7GY0289k0I3Uc=
+4IBkZUTKUZ-2BTWxARiBne4gIt7h-2FVkDCOXK5IN71tyAyn-2FWuUQ0il3H4C4Q9yFeICxoYna=
+3Aj2b0x7O7tMuNq0iCqGgKO0uruoTiBchAh0swenvaH7nbNvhy6roLYXeKexpZVx59eIUC0NPZx=
+7i3w3ISUEuYihQbsCqsHczSpwDQwx7bwYRMPU6-2Bv" target=3D"_blank"><span><strong=
+>https://silksilky.com/collections/best-seller</strong></span></a></span></=
+p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helve=
+tica,sans-serif"><strong>Validity: 8/20-8/31</strong></span></p><p><span st=
+yle=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-ser=
+if"><br><strong>Campaign Name</strong></span><span style=3D"font-size:18px;=
+color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"><strong>=EF=BC=9A<=
+/strong></span><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:a=
+rial,helvetica,sans-serif"><strong><span style=3D"background-color:rgb(247,=
+218,100)">Silk Apparel for Women</span></strong><br><strong>Description: Si=
+lk Apparel for Women</strong></span><span style=3D"font-size:18px;color:rgb=
+(0,0,0);font-family:arial,helvetica,sans-serif"><strong>=EF=BC=9A</strong><=
+/span><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helv=
+etica,sans-serif"><strong><span style=3D"background-color:rgb(247,218,100)"=
+>save up to 70%</span></strong></span><span style=3D"font-size:18px;color:r=
+gb(0,0,0);font-family:arial,helvetica,sans-serif"><strong><span style=3D"ba=
+ckground-color:rgb(247,218,100)">=EF=BC=81</span></strong></span></p><p><sp=
+an style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,san=
+s-serif"><strong>URL:&nbsp;</strong><a href=3D"https://u29708799.ct.sendgri=
+d.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK2XdT48tQmztTqvWNg5JdkTQOr-2FPl=
+S5dgVM8Y7eBHcWWjSSLQxRfBQyhyLjHagwC1lUr0s5BYrArQhMy9kwuP5MeAlc-3DepWl_p4A4Y=
+Qt8epDIK9HlKea9sURGNK-2FR8cxbbNlj7JOBv4jojkq-2F-2FXDNFtevrG1DJ6-2BhlcuWztUU=
+q7EkrZ7EZ5V7ztV-2Fi6B0dx-2Be6hMbMAb7nsiPviryd2B4PNOfmlesVgeEy2-2B5w2pzdtT-2=
+FgTaFAsFPe-2BpHFLJGcXPTABN26boBzHRNeayaeGTCVxSUvvSnXy8xBKrI87zqiwNVIkgIMSDI=
+odORCqyMlxn-2BRDnI1fC8-2Fl45JwMKBJZAYTZUhuYdD92rwoTMg-2F5-2BaUi3qU77KQ9SVmp=
+oTJT9kbAqKjGodOXLQjrEXKhZ4-2F-2BLsGYrk4ysrN9q6OMb2wjh6vzeYssDLkpMH3TNzK-2BU=
+7FV7JX1JLcUoNm-2BvXNCvwF0mzPq5a3ZhQXTarIKkaZ0rvV4bC3iVJGA0LuLZvVZ5ZC08S-2Bb=
+1HOfjqdH-2BUT7arYwnWW6b799JP0syIQT9a3CUkWTDFqIfzGJ4ajpAJjyN-2FMx1hJD7nnwG2g=
+ZpZZLvplXSPBHgh0bzMQ-2BA6VPO0-2FkADPHiAQ0i4JxU-2F6-2Fr7v8xuXMszRjZ52ZA0STwh=
+MNa8w15Xz6GFr-2BtCc89Y0t2sdQUu5dJRIIIWwelbgEM8vYdHAwQTsT7LdhqzRcMmyAJSm8Cyj=
+dXPklR6OAUN2S0JH3SYaNsOdjfMYts8TMt-2Bsmq1wbWs-2F2JGB8-2FV5GYxCe-2FM6fraKV2x=
+I9wjSUz4SQ4TReL1v9SElw-2BVOjCe0LzvAWht4mrbvWJucipxnTMW6D7wZ2ZKW6RLLCqYSuhJk=
+iEEaR36PrcX759qoEEpQIuy7AQkS20rmdHiGjmV9MuAwABJkLMPOkGotOZFQEg2nT7sCA-2Fqw9=
+EcyBIniuknmXQN0fOrq72AWIOI1q6W7v3ATs5SplYi43Oh-2FN7GY0289k0I3Uc4IBkZUTKUZ-2=
+BTWxARiBne4gIt7h-2FVkDCOXK5IN71tyAyn-2FWuUQ0il3H4CuJoYivQUyvbZWD7lYZidRXiz4=
+Mm6slBH4gbHwfju6pYVZZCrHABzDxoTARUnnll8AwP4IhoQLOb5eNHgJ0lzWFgy63OBysNdspEu=
+eCTLy2RwVbtqSBamVjfITLUfadHS" target=3D"_blank"><span><strong>https://silks=
+ilky.com/collections/silk-apparel-for-women</strong></span></a></span></p><=
+p><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetic=
+a,sans-serif"><strong>Validity: 8/20-8/31</strong></span></p><p><span style=
+=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"=
+><br></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-fami=
+ly:arial,helvetica,sans-serif">If you need any support, feel free to reach =
+out. Please also send over your latest media kit<strong>, rate card</strong=
+>, and details regarding <strong>available placements or exposure opportuni=
+ties.</strong></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);=
+font-family:arial,helvetica,sans-serif"><br></span></p><p><span style=3D"fo=
+nt-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">We're=
+ open to the following types of partnerships:</span></p><ul><li style=3D"fo=
+nt-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">paid =
+placement for additional exposure</li><li style=3D"font-size:18px;color:rgb=
+(0,0,0);font-family:arial,helvetica,sans-serif">CPAi for additional exposur=
+e</li><li style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvet=
+ica,sans-serif">exclusive code for additional exposure</li></ul><p><span st=
+yle=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-ser=
+if"><br></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-f=
+amily:arial,helvetica,sans-serif">Best regards,</span></p><p><span style=3D=
+"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">Ri=
+ta</span></p><div><br><a href=3D"https://u29708799.ct.sendgrid.net/ls/click=
+?upn=3Du001.B8VMPMOzxR7RPOX-2BK2XdTxbxD4UJGmtW8DAxp3YXsDa7MPMCTETs3WSo52RM6=
+Q9Hs8pDVfvfmNT63AenKOog8JaiDndXVwiwAsDekYhF4jjIEHA3F5Obko5mY5QyrozYHw1lgddd=
+9ngEP12SZbD7vdaWuPHoUv7pvOy2DuTwtJscqI9KYCn73pICWH2pk6geY44Qzrlirk1qDSw8LA8=
+sERJ7Xy7vxjWW7GYA3CEY-2BdPwe9Ft9O2mXw-2FVct-2F2Tvf3L5aezuZxf20cVv3QnErKKQmu=
+HSlvc1wvj0BGS49dW8EdlbV-2BEO4WVGW-2FBkyxkeH8IL2qiskXRnQx-2FKqaib5tNXz0aCpQt=
+yZiFyXkvDbDa-2BA-3DiVbY_p4A4YQt8epDIK9HlKea9sURGNK-2FR8cxbbNlj7JOBv4jojkq-2=
+F-2FXDNFtevrG1DJ6-2BhlcuWztUUq7EkrZ7EZ5V7ztV-2Fi6B0dx-2Be6hMbMAb7nsiPviryd2=
+B4PNOfmlesVgeEy2-2B5w2pzdtT-2FgTaFAsFPe-2BpHFLJGcXPTABN26boBzHRNeayaeGTCVxS=
+UvvSnXy8xBKrI87zqiwNVIkgIMSDIodORCqyMlxn-2BRDnI1fC8-2Fl45JwMKBJZAYTZUhuYdD9=
+2rwoTMg-2F5-2BaUi3qU77KQ9SVmpoTJT9kbAqKjGodOXLQjrEXKhZ4-2F-2BLsGYrk4ysrN9q6=
+OMb2wjh6vzeYssDLkpMH3TNzK-2BU7FV7JX1JLcUoNm-2BvXNCvwF0mzPq5a3ZhQXTarIKkaZ0r=
+vV4bC3iVJGA0LuLZvVZ5ZC08S-2Bb1HOfjqdH-2BUT7arYwnWW6b799JP0syIQT9a3CUkWTDFqI=
+fzGJ4ajpAJjyN-2FMx1hJD7nnwG2gZpZZLvplXSPBHgh0bzMQ-2BA6VPO0-2FkADPHiAQ0i4JxU=
+-2F6-2Fr7v8xuXMszRjZ52ZA0STwhMNa8w15Xz6GFr-2BtCc89Y0t2sdQUu5dJRIIIWwelbgEM8=
+vYdHAwQTsT7LdhqzRcMmyAJSm8CyjdXPklR6OAUN2S0JH3SYaNsOdjfMYts8TMt-2Bsmq1wbWs-=
+2F2JGB8-2FV5GYxCe-2FM6fraKV2xI9wjSUz4SQ4TReL1v9SElw-2BVOjCe0LzvAWht4mrbvWJu=
+cipxnTMW6D7wZ2ZKW6RLLCqYSuhJkiEEaR36PrcX759qoEEpQIuy7AQkS20rmdHiGjmV9MuAwAB=
+JkLMPOkGotOZFQEg2nT7sCA-2Fqw9EcyBIniuknmXQN0fOrq72AWIOI1q6W7v3ATs5SplYi43Oh=
+-2FN7GY0289k0I3Uc4IBkZUTKUZ-2BTWxARiBne4gIt7h-2FVkDCOXK5IN71tyAyn-2FWuUQ0il=
+3H4CnVCGHeqhvdjlfrRSDH1RpN-2BsXXouzY4ds5qyURkFDh-2By6ob65sHL4gtpU1vV1qlwAkj=
+xq6RBwPoTyC24Ocxt-2Fztdha0wt1YdXZLF-2F1l3zFf6cPoXZh-2FVPXnrI5EayUb8" target=
+=3D"_blank"> Unsubscribe</a></div><img src=3D"https://u29708799.ct.sendgrid=
+.net/wf/open?upn=3Du001.eVSRYURf9gtb7owcEAZtPxlrE-2BXELJ8jOU8IhVDgQU8esSTNi=
+e39olVDFa1tNMW44mEYQ0d87lk7LaWFq7OOZzWZ5XhPuw2rRDdGUn04fF-2F0tx0ClEmDqRufRo=
+ee2LMm-2Fh-2BJ5JNITcakxRgv34Gdtvo2aRpIlg9CexpPbIJCfgstHI284wSdY2QIL63d0AAr1=
+2U-2BwuUmPaH9z7QPvDRlc-2FMZ5Uqhosey11FIwmV7dv9TDOUADpzeHhh3y1HhvcBr1-2BaIk9=
+iGxUnvoWjZDI8-2FDcJI-2BGz-2BDuBgHCoVCGLxg48MNg99N8TTGVPkbybbSp2biWkV44b7Oa2=
+cuwa5wDzzMu76fpguK-2FzgqrU3ArxBWzPkABtfyD7CAIQzkVwthtx7qg5r4tNPL36BcSKGBxEh=
+va4pIVZwEqzxVyqePmo257RB6cUMM1giT0YZaQcRQ00iwok-2Fo9MyErdSDiEJuSJrLuj909tra=
+Mvs9TXmLxIGMEE4IWTTM-2F5fm4auJVxoGogFf4nIo361T-2FnUbbLGqsJwzsEpcT7wBh5AA-2B=
+bFxUou6WvPZUduocCZRVzCK5xjG907cVeF1-2FoPLe1GnsdcRzNO0XnPgrufRQBFFKFtKuvpax-=
+2BM93iTmisRdPQIsvx1OAMY-2Fx96KJ34mf27kPhhmhqngIBgdcSph-2F-2FEDXNc99f6lk8QVx=
+-2BCWsnRn6lwZHDUWpG4NFnctc9orF9SeiIL2FHux1WJUlQ7k56QveJ8tTevK635YMgKNCvpRBL=
+MpCaHYPTCIaGoDEMUlp9ZZj67W10BEOqxBe42LW3qxDpwsH2Hg01tz1yBT3orVXwWFwaAxBLmSg=
+ed6KC0khjdITeZjjqjoJtnCBp1CVhGYf0nJu3-2B6bdpVusQkhJhqzTGyd83YKXPqS3SBcuP9pn=
+fmDHfdJpymGdnibMRa1u2qzW5wClsfN37gm7Vf8BZg6L6rOOFxbKinmKE0UKhhPXPhyvK8Wv6MZ=
+tENjGjB8QlqJjCwaW4oym9VuvsASUJgVNxPXESxGWFK2az-2FBap8xz1-2FxC5dG7hQoEW1DQRB=
+2VJJWsHyfZttwbhRY-2FKYS3IWyqkIh3AvB2pz2ldJZWviDyVZvQ-2F927PSg-3D-3D" alt=3D=
+"" width=3D"1" height=3D"1" border=3D"0" style=3D"height: 1px; width: 1px; =
+border-width: 0px; margin: 0px; padding: 0px;"></div>
+</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
+=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
+ignature"><div dir=3D"ltr"><div dir=3D"ltr"><div><font color=3D"#282f35" fa=
+ce=3D"lato, Helvetica, Arial"><span style=3D"font-size:14px"><b>Michael R=
+=C3=B6sener</b></span></font></div><div><font color=3D"#40e0d0" face=3D"Ope=
+n Sans, Helvetica, Arial, sans-serif"><span style=3D"font-size:14px">Senior=
+ Sales Manager</span></font></div><div style=3D"color:rgb(34,34,34);font-si=
+ze:12.8px"><br></div><img src=3D"https://audienceserv.com/signature/signatu=
+re_big.gif" width=3D"200" height=3D"29"><br></div><div dir=3D"ltr" style=3D=
+"color:rgb(34,34,34);font-size:12.8px"><br></div><div dir=3D"ltr" style=3D"=
+color:rgb(34,34,34)"><div><div style=3D"font-size:12.8px"><span style=3D"co=
+lor:rgb(40,47,53);font-family:&quot;Open Sans&quot;,Helvetica,Arial,sans-se=
+rif;font-size:12px"><b>M</b> +49 (0) 172 574 2291</span></div><div><span st=
+yle=3D"font-size:12.8px"><span style=3D"color:rgb(40,47,53);font-family:&qu=
+ot;Open Sans&quot;,Helvetica,Arial,sans-serif;font-size:12px;font-weight:70=
+0">E</span>&nbsp;</span><a href=3D"mailto:michael.roesener@audienceserv.com=
+" style=3D"color:rgb(64,224,208);font-family:&quot;Open Sans&quot;,Helvetic=
+a,Arial,sans-serif;font-size:12px" target=3D"_blank">michael.roesener@audie=
+nceserv.com</a></div><div><b style=3D"color:rgb(0,0,0);font-size:12.8px"><f=
+ont face=3D"arial, sans-serif">Termin</font></b><font face=3D"-webkit-stand=
+ard" style=3D"color:rgb(0,0,0);font-size:12.8px">&nbsp;</font><a href=3D"ht=
+tps://app-frankfurt.salesforceiq.com/r?target=3D5f8d80b24cedfd007ad7fae4&am=
+p;t=3DABb3-AexJ3EqajlSZDCp5XZl5oxnmsg5KSECIZSkPhzgbvCRDMt-192WCm7it69yCtMJf=
+6sIJT2lOWGu0C4jWcCUIE4uY4c3LC-SRIbSuIdcz9C9szS0pwFrYBnKEtkEdCdy2Bd8SLSW&amp=
+;url=3Dhttps%3A%2F%2Fcalendly.com%2FMichael-roesener" title=3D"https://cale=
+ndly.com/Michael-roesener" style=3D"color:rgb(17,85,204);font-size:12.8px" =
+target=3D"_blank"><font face=3D"arial, sans-serif">https://calendly.com/Mic=
+hael-roesener</font></a><br></div><div><font face=3D"arial, helvetica, sans=
+-serif" style=3D"font-size:12.8px"><font color=3D"#a2c4c9"><br></font></fon=
+t><span style=3D"font-size:14px;font-family:&quot;Open Sans&quot;,Helvetica=
+,Arial,sans-serif"><font color=3D"#40e0d0">Berlin</font></span><span style=
+=3D"font-size:12px;color:rgb(40,47,53);font-family:&quot;Open Sans&quot;,He=
+lvetica,Arial,sans-serif">&nbsp;</span><span style=3D"color:rgb(40,47,53);f=
+ont-family:&quot;Open Sans&quot;,Helvetica,Arial,sans-serif;font-size:12px"=
+>| Barcelona</span><span style=3D"color:rgb(40,47,53);font-family:&quot;Ope=
+n Sans&quot;,Helvetica,Arial,sans-serif;font-size:12px">&nbsp;I&nbsp;</span=
+><span style=3D"font-size:12px;color:rgb(40,47,53);font-family:&quot;Open S=
+ans&quot;,Helvetica,Arial,sans-serif">Singapore | Hanoi</span></div><div st=
+yle=3D"font-size:12.8px"><a href=3D"https://audienceserv.com/?utm_source=3D=
+email&amp;utm_medium=3Demail_signature&amp;utm_campaign=3Demail_signature" =
+style=3D"color:rgb(64,224,208);font-size:12px;font-family:&quot;Open Sans&q=
+uot;,Helvetica,Arial,sans-serif" target=3D"_blank">www.audienceserv.com</a>=
+</div><div style=3D"font-size:12.8px"><br></div><div><div style=3D"font-siz=
+e:12.8px"><font face=3D"arial, helvetica, sans-serif" size=3D"2" style=3D"f=
+ont-size:small;color:rgb(68,68,68)"><a href=3D"https://www.facebook.com/Aud=
+ienceServ/" style=3D"color:rgb(17,85,204)" target=3D"_blank"><img src=3D"ht=
+tps://docs.google.com/uc?export=3Ddownload&amp;id=3D1n7sdQP2XaKrI4ZWdUfTkeF=
+5gC9Kq1JTc&amp;revid=3D0B6Nvbkm5LjZ1Wm5DMXlVUnJvVDNIa2RlVzNKM0FRdnJSMCtJPQ"=
+ alt=3D""></a>&nbsp;&nbsp;<a href=3D"https://www.linkedin.com/company/audie=
+nceserv/" style=3D"color:rgb(17,85,204)" target=3D"_blank"><img src=3D"http=
+s://drive.google.com/a/audienceserv.com/uc?id=3D1TqhaQPIEle9wSQB8hABE1Teewp=
+hIEmzI&amp;export=3Ddownload"></a>&nbsp;&nbsp;</font><a href=3D"https://www=
+.youtube.com/channel/UCWwFJ5TYMu8-zLuKYD17P7g" style=3D"color:rgb(17,85,204=
+);font-size:small" target=3D"_blank"><img src=3D"https://docs.google.com/uc=
+?export=3Ddownload&amp;id=3D1h224orvFRLxLrj6CwIO2W5NlNJzLFQDq&amp;revid=3D0=
+B6Nvbkm5LjZ1dTJWa1czdUxveVJjcnhRMmpsMDdwMk9JRFdvPQ"></a>&nbsp;&nbsp;<a href=
+=3D"https://www.instagram.com/audience_serv/" style=3D"color:rgb(17,85,204)=
+;font-size:small" target=3D"_blank"><img src=3D"https://www.audienceserv.co=
+m/signature/insta.png"></a></div><div style=3D"font-size:12.8px"><a href=3D=
+"https://audienceserv.com/meet-us/dmexco2022/?utm_source=3Demail&amp;utm_me=
+dium=3Demail_signature&amp;utm_campaign=3Demail_signature" target=3D"_blank=
+"><br></a></div><div style=3D"font-size:12.8px"><img src=3D"https://audienc=
+eserv.com/signature/signature_deloitte_2022.jpg"><br></div><div style=3D"fo=
+nt-size:12.8px"><br></div><div><font color=3D"#282f35" face=3D"Open Sans, H=
+elvetica, Arial, sans-serif" style=3D"font-size:12.8px"><span style=3D"font=
+-size:10px">Audience Serv GmbH,&nbsp;</span></font><span style=3D"font-fami=
+ly:Arial"><font size=3D"1">Knesebeckstra=C3=9Fe 59-61,</font></span><span s=
+tyle=3D"font-size:10px;color:rgb(40,47,53);font-family:&quot;Open Sans&quot=
+;,Helvetica,Arial,sans-serif">&nbsp;10719 Berlin</span></div><div style=3D"=
+font-size:12.8px"><font color=3D"#282f35" face=3D"Open Sans, Helvetica, Ari=
+al, sans-serif"><span style=3D"font-size:10px">Managing Director: David Pik=
+art</span></font><br></div><div style=3D"font-size:12.8px"><span style=3D"c=
+olor:rgb(40,47,53);font-family:&quot;Open Sans&quot;,Helvetica,Arial,sans-s=
+erif;font-size:10px">VAT-ID: DE270445604,&nbsp;</span><span style=3D"color:=
+rgb(40,47,53);font-family:&quot;Open Sans&quot;,Helvetica,Arial,sans-serif;=
+font-size:10px">Amtsgericht Charlottenburg, HRB 123799 B</span></div></div>=
+</div><div style=3D"font-size:12.8px"><div></div><div><br></div></div><div =
+style=3D"font-size:12.8px"><br></div></div></div></div>
+
+--000000000000a2cab9063d3046d9--

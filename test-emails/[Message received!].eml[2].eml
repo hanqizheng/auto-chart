@@ -1,0 +1,172 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5722215nji;
+        Mon, 25 Aug 2025 05:15:06 -0700 (PDT)
+X-Received: by 2002:a05:6214:4002:b0:704:7b9a:8515 with SMTP id 6a1803df08f44-70d971e846dmr121713646d6.38.1756124106226;
+        Mon, 25 Aug 2025 05:15:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756124106; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WeReDXGktRpKucdH4IKutENduMjy29jq9R6sgKMj7FB6ocy6K3S3ycdtGgIfcpoUXx
+         WyEI1apueEgAbK0szRD6MBbeoOALGfpJmHa4ubvL/80vMIOicmfjEQJDuL56pyyJE+rr
+         Eftv/+W+fY5Cz8ZAM7/eviB5VXXagGzSS65VAVfQ/h8Lz1nMPGg1na4CyfvAt2tVdNwv
+         N0s/Y2c/Gm6/O114t0vHTPNI++SfCi9YQblKOrW3w20XC0Z8FY5SkTPg6qZ0WM2D2DjC
+         h8Eb6tthpLilJxn8Anl8DvoAi4jcfWZe/ARDPl5dvgkkwlXUE332+wdhPHo9vB1v5pXu
+         GFLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:auto-submitted:mime-version:references
+         :in-reply-to:reply-to:from:dkim-signature;
+        bh=rGrMEg78vQXCWLuON8G3B5ZP90y0iIpANOVvyjTvdwE=;
+        fh=ne4HxneCBH7B/C+YCRnI6yD7FswApjCaNzglkT25IKQ=;
+        b=AME4+T6yhOarOZxO1JrHDGZJSqY9gOhld+Kt63uRTa2u4zWVTLBFp4mfeJza4JQIAo
+         7ZeLCzPRdJVELsJuLCXPGpHbxsIfxNCedZCIfTyZmcaylW3z3Gc+zAAaAFzM0fO5wtHB
+         WjKVaUmmT5YyqlQ8lTtJrbnrmkk2plhLh236QcXVWZaVkStAqXNQvXOw4Sna+h3c0f8R
+         OUrckStvdrpKLOdIDjinpAgNJy4PuLyyAuDYJvwBOUaGGgIlPYki8HJ95qKK6iF4OQQ+
+         TWZBYOrFf9fK084bZ/p8rk7lfV3s4aGC0XX8T/gjhmN86edgstUiax8iaHF8w1lSg6LQ
+         OQ3A==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@doubleblindmag.com header.s=google header.b=g9HIOoNU;
+       spf=pass (google.com: domain of sales@doubleblindmag.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=sales@doubleblindmag.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=doubleblindmag.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <sales@doubleblindmag.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 6a1803df08f44-70da71c1d3asor30400076d6.6.2025.08.25.05.15.05
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Mon, 25 Aug 2025 05:15:06 -0700 (PDT)
+Received-SPF: pass (google.com: domain of sales@doubleblindmag.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@doubleblindmag.com header.s=google header.b=g9HIOoNU;
+       spf=pass (google.com: domain of sales@doubleblindmag.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=sales@doubleblindmag.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=doubleblindmag.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=doubleblindmag.com; s=google; t=1756124105; x=1756728905; darn=affiliate.bluefocus.com;
+        h=to:subject:message-id:date:auto-submitted:mime-version:references
+         :in-reply-to:reply-to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rGrMEg78vQXCWLuON8G3B5ZP90y0iIpANOVvyjTvdwE=;
+        b=g9HIOoNUDhdnvPYw6+eMrFk+wPJKJGptqUjhU5wo7Kl0H0Weq4iFyIcg2RG7PXNW1E
+         6tnWQU8+jIAoCWssvlX9ju8rH0D3TXYbLZ0XSFR0yq6TTELWOx+r4iVhiqc9m5Tr6wY8
+         h3Q+jBeYv2jxpmXu7cnkffeyFcbREQcS84ri9JdR4KhsmyZYAlWHak3c200g9RwSN9bC
+         PihT4qJoEHJ4UqPMe36ibBbuWzuPIS3AgXH+8r+yW9L2UUbUtih55WZnKnCKNK5TTQV5
+         64kMmx7NPjQ6nWRjzCXmh7ZDgCGl1Ogf9z1t/Y1Gqq5Obx9nuRY4TmeyYHhjhTYQ8zrd
+         qK2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756124105; x=1756728905;
+        h=to:subject:message-id:date:auto-submitted:mime-version:references
+         :in-reply-to:reply-to:from:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rGrMEg78vQXCWLuON8G3B5ZP90y0iIpANOVvyjTvdwE=;
+        b=Mn+c17Piy5hzaH7D0y7E30+XI0rrzKPo1RifiG7AsPDWZAKCls0k7b1wtebLjFQCUf
+         7EJUs1QKjtDKw6RT8boFhaBPswLEEteYanW5Olir32pLcm1HYEwSXl836momlOwiVGnB
+         wfeDpswKsT0a+UwYsmZeTkhfrblii4n8PQ/zFn9TTjrXLFVutX2hXj/UUyq3dsWEjZY9
+         m75f8W1rtSIY5kUdv6N6WJ5EESlsIobdBji1sS2KeaFUyxqfRuyS7VvLWr56ESVXht18
+         LCb017Frl9Al+Ec2GnjxBxRtb971xSBBlPXAB5dJTo5hFl/jxEkYp+JHo320iJZh1/Yy
+         Q9fQ==
+X-Gm-Message-State: AOJu0Yzd+2o2HcIkQC0NtWA8zLxiO/25LhZuBCHxkjptjdexEq2N2kxb
+	EAYY9Fm3FvWOP16P6OJEK9k241lkN0v27qYM/rB7Fy600JkhDHI8EWwGNUfkbmPS7PiVWtQv0eJ
+	nj0c8DLN+nKM73my34ppiyV33/pl1oMZfXHJBGFgEodasu79h/fTa
+X-Gm-Gg: ASbGnctdrzc3Qv7lwOnspgSDGea4lUCYwi0IT4fijOBYEEiW7KUvNmkCI/Y0Mc9bm24
+	JBiMdi7olPxbecqqpTfLnz6u52T1EEvxuTDvE26uILsXEesRaDyNecI9M/bhtDKIOKGw6f/uqzY
+	Zyfzo7im8Oshebl+nIkAThyWh6prcFyuuqXN1tXs/AMwQCaZjJWBCl4GhZgXv4gFKpTNyBs4XbE
+	jZqv+Bn
+X-Google-Smtp-Source: AGHT+IHphk+tYw8gAWQZMTvdRvuDPaiDiV4RtGgwPvudURfcRDwJOQHONxmyT1C67fADPtDBaUOr6AjlhtPboCE/1d0=
+X-Received: by 2002:a17:902:ebcd:b0:246:7d12:fd44 with SMTP id
+ d9443c01a7336-2467d12fe36mr100675775ad.26.1756123752608; Mon, 25 Aug 2025
+ 05:09:12 -0700 (PDT)
+Received: from 382830561574 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 25 Aug 2025 05:09:11 -0700
+Received: from 382830561574 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 25 Aug 2025 05:09:11 -0700
+From: DoubleBlind Mag <sales@doubleblindmag.com>
+Reply-To: DoubleBlind Mag <sales@doubleblindmag.com>
+In-Reply-To: <-nw86BAlT4eL9Mx49n4EWg@geopod-ismtpd-29>
+References: <7ZX9X7EYY54@zendesk.com> <-nw86BAlT4eL9Mx49n4EWg@geopod-ismtpd-29>
+X-Delivery-Context: event-id-13590407550991
+Auto-Submitted: auto-generated
+X-Auto-Response-Suppress: All
+X-Mailer: Zendesk Mailer
+X-Zendesk-From-Account-Id: 89ceccf
+X-Zendesk-Email-Id: 01K3GJ3Q4DKBKQ7PZ10MNYN31P
+Date: Mon, 25 Aug 2025 05:09:11 -0700
+X-Gm-Features: Ac12FXxzG-W0PMBbTJ2zUWyWfqpSvjRqTuCi-rCkrqSwjLp04HDuEJWXJlFme1U
+Message-ID: <CANwbP4Y265SzrWhqQukgKoYyLbr_23rv9eP8a59x869XxjwFpw@mail.gmail.com>
+Subject: [Message received!]
+To: Rita <rita@affiliate.bluefocus.com>
+Content-Type: multipart/alternative; boundary="000000000000752727063d2f6cae"
+MIME-Version: 1.0
+
+--000000000000752727063d2f6cae
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Your request (1443) has been received and is being reviewed by us.
+
+To add additional comments, reply to this email.
+
+We respond to emails weekly.
+
+=E2=9C=A8 The DoubleBlind Intention Setting Guide:
+https://drive.google.com/file/d/1O7B9tDTLGHWCwGWUzio6b5qfyvr75D6M/view
+
+This email is a service from DoubleBlind Mag. Delivered by Zendesk
+<https://www.zendesk.com/support/?utm_campaign=3Dtext&utm_content=3DDoubleB=
+lind+Mag&utm_medium=3Dpoweredbyzendesk&utm_source=3Demail-notification>
+
+[7ZX9X7-EYY54]
+
+--000000000000752727063d2f6cae
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html dir=3D"auto" lang=3D"en-US-x-1"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+  <style type=3D"text/css">
+    table td {
+      border-collapse: collapse;
+    }
+    body[dir=3Drtl] .directional_text_wrapper { direction: rtl; unicode-bid=
+i: embed; }
+
+  </style>
+
+          <style type=3D"text/css">
+            @media only screen and (max-width: 768px) {
+              .simplified-email-footer .namecard {
+                display: block;
+                min-width: 100%;
+                padding: 0 0 16px 0; }
+
+              .simplified-email-footer .content {
+                padding: 16px; }
+            }
+          </style>
+        </head>
+<body lang=3D"en-us" style=3D"width:100%!important;margin:0;padding:0">
+  <div style=3D"font-family:'system-ui','-apple-system','BlinkMacSystemFont=
+','Segoe UI','Roboto','Oxygen-Sans','Ubuntu','Cantarell','Helvetica Neue','=
+Arial','sans-serif';font-size:14px;line-height:1.5;color:#444444">
+    <p dir=3D"ltr">Your request (1443) has been received and is being revie=
+wed by us.<br><br>To add additional comments, reply to this email. </p><p d=
+ir=3D"ltr">We respond to emails weekly.</p><p dir=3D"ltr">=E2=9C=A8 The Dou=
+bleBlind Intention Setting Guide: <a href=3D"https://drive.google.com/file/=
+d/1O7B9tDTLGHWCwGWUzio6b5qfyvr75D6M/view" rel=3D"noreferrer">https://drive.=
+google.com/file/d/1O7B9tDTLGHWCwGWUzio6b5qfyvr75D6M/view</a></p>
+  </div><br>
+  <div style=3D"font-family:'system-ui','-apple-system','BlinkMacSystemFont=
+','Segoe UI','Roboto','Oxygen-Sans','Ubuntu','Cantarell','Helvetica Neue','=
+Arial','sans-serif';font-size:12px;line-height:1.5;color:#49545c;margin:10p=
+x 0 14px 0;padding-top:10px">
+    This email is a service from DoubleBlind Mag. Delivered by <a href=3D"h=
+ttps://www.zendesk.com/support/?utm_campaign=3Dtext&amp;utm_content=3DDoubl=
+eBlind+Mag&amp;utm_medium=3Dpoweredbyzendesk&amp;utm_source=3Demail-notific=
+ation" style=3D"color:black" target=3D"_blank">Zendesk</a>
+  </div><br>
+ =20
+<span style=3D"color:#ffffff" aria-hidden=3D"true" class=3D"zd_encoded_id">=
+[7ZX9X7-EYY54]</span>
+
+</body></html>
+
+--000000000000752727063d2f6cae--

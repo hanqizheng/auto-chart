@@ -1,0 +1,223 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:505:e90:b0:1d03:27cf:8dbe with SMTP id w16csp42650njz;
+        Wed, 27 Aug 2025 01:51:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9x38H52INfy8oymMNBhXMZPN2bcREpXGPPC5jZp5q1iQsse0cyKU31mRRV3rxYNeTNfuk
+X-Received: by 2002:a17:906:4795:b0:afe:8af3:2ad6 with SMTP id a640c23a62f3a-afe8af332c4mr895806066b.38.1756284704401;
+        Wed, 27 Aug 2025 01:51:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756284704; cv=none;
+        d=google.com; s=arc-20240605;
+        b=j6XfEN7REy76M7sO69dS9yBu9bArIv+oVeff/b1RgU6+UNci6swdyoowglb6a4CO3/
+         r1XTWOObqV5qzPBSQL5aflyHoUcam1PnxhB7ICVjxUcfuaLbDndL76C8qKkiF+u/DHu2
+         PGrmey915kwBaq+SLCJgFo2SDBCgvALOydi/U/EIZxP8sVUuON2VjWAY9B5XIgLLe/Dl
+         fkMPwrDM4HCFfyVR+lcNRqmYr6emHh9099gK66DzN0xuqE9jpHkz1AbCXXynuA8Jm0nB
+         OPhzotV49QWqIFVr+bTO3/JhQiR9RZdpmpmrmiOkwgAeNsnwrZy/xfNhtFx/gXmFzBDs
+         cBIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:subject:date:message-id:to:from:feedback-id:reply-to
+         :sender:dkim-signature;
+        bh=W8xYn8LbeIahjw8AKwkukMvpsXTCJV5cGN8Yr94QQzE=;
+        fh=BkP4k74KD1DqDvKQXGmvSfu6yR0hRnHkG8YmQiPc754=;
+        b=T2VpAQ2TNahVwBX92yG0HKrX9q5uUSrnRrovvGcZZ6p8qVp34gd9VG7qG3ZLXeF7RF
+         HPoexM67awWhnM6ORIEy4bRr9cWCPqapkNu4Qyej5DaKkR9eJc3pbnq3rOWOj2KHYPsj
+         7B/cAKuToICyv2465d8LkjzjRd4fvmfYpPrbOgU7Rw0l/NL09pnvDRp2DQ1Kq2VzEHtR
+         lMyXh41qyl34/ilJDtvaSoD1dYS0iqL6ZXx2/w5smLuCb/rxb+NwDwqUCyhrAZYoP2vX
+         mRA79hrXulS0u/dBreJKC1OcSLVhQ/aI9yT0yVNc+TFwkiDYTd8S0kds4nE9qGofA3oA
+         i9Sg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@eumail.docusign.net header.s=mail1 header.b=LBMmYEhN;
+       spf=pass (google.com: domain of dse@eumail.docusign.net designates 192.103.123.71 as permitted sender) smtp.mailfrom=dse@eumail.docusign.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=docusign.net
+Return-Path: <dse@eumail.docusign.net>
+Received: from mailam.eumail.docusign.net (mailam.eumail.docusign.net. [192.103.123.71])
+        by mx.google.com with ESMTPS id a640c23a62f3a-afe8e213336si317890766b.116.2025.08.27.01.51.44
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Aug 2025 01:51:44 -0700 (PDT)
+Received-SPF: pass (google.com: domain of dse@eumail.docusign.net designates 192.103.123.71 as permitted sender) client-ip=192.103.123.71;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@eumail.docusign.net header.s=mail1 header.b=LBMmYEhN;
+       spf=pass (google.com: domain of dse@eumail.docusign.net designates 192.103.123.71 as permitted sender) smtp.mailfrom=dse@eumail.docusign.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=docusign.net
+Received: from FR3FE27.euad.docusign.net (unknown [10.111.81.73])
+	by mailam.eumail.docusign.net (Postfix) with ESMTP id 8199A200A5F0
+	for <rita@affiliate.bluefocus.com>; Wed, 27 Aug 2025 08:51:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eumail.docusign.net;
+	s=mail1; t=1756284703;
+	bh=W8xYn8LbeIahjw8AKwkukMvpsXTCJV5cGN8Yr94QQzE=;
+	h=Reply-To:Feedback-ID:From:To:Date:Subject;
+	b=LBMmYEhNTNftygHfGUg4QdHQRslbr27MaQVwt5iIubPABk2SMK78XJV2tGz1OMpUS
+	 7bjyZry331/2GHnLQ1rLwhW47Wxl52Jovzcf9IlYHB/4FQ6aYe4k6nVLH2jVa0CIbw
+	 x0W8k+S0kyq4VNZ3bDxgBPW/7s6Mu7O+A3AYII0QWTKNfn7VCD95tq1X3m6449iJvw
+	 J5ja33RUi9U4xmqVm8KBoYJiOHS5cJX8vaJxnMxm1fxt+Qic0B0cRBVzEdDn9ZPjNQ
+	 9MsDwA7+DL8HZlEVK8O/E/P8YC7r9heNWFfJemoZpZP8DlXpanVj3xuSpldir/9tQc
+	 /gAg/XPEtQxsw==
+Received: from eumail.docusign.net ([127.0.0.1]) by FR3FE27.euad.docusign.net with Microsoft SMTPSVC(10.0.17763.1697);
+	 Wed, 27 Aug 2025 01:51:43 -0700
+Sender: DocuSign EU System  <dse@eumail.docusign.net>
+Reply-To: "Benedikt B?cker"  <benedikt.buecker@atolls.com>
+Feedback-ID: 0:f1edd46c-691d-48c9-a117-b605915e8837:EnvelopeVoided:Docusign_Prod
+X-DS-Score: 0
+From: "=?utf-8?B?QmVuZWRpa3QgQsO8Y2tlciDDvGJlciBEb2N1c2lnbg==?=" <dse@eumail.docusign.net>
+To: "Rita" <rita@affiliate.bluefocus.com>
+Message-ID: <6d8f0dfb99d8422bb000f145c119fa4d@eumail.docusign.net>
+Date: Wed, 27 Aug 2025 01:51:43 -0700
+Subject: Storniert: Documents for your DocuSign Signature
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_E811CA4F_33E6_452A_A0CF_D63918483DC2"
+X-OriginalArrivalTime: 27 Aug 2025 08:51:43.0479 (UTC) FILETIME=[CFFF5070:01DC172F]
+MIME-Version: 1.0
+
+------=_NextPart_E811CA4F_33E6_452A_A0CF_D63918483DC2
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Guten Tag, Rita!
+
+=E2=80=9EDocuments for your DocuSign Signature=E2=80=9D wurde aus folge=
+ndem Grund storniert:=20
+Der Umschlag wurde gel=C3=B6scht und wurde daher automatisch storniert=2E
+
+Umschlag-ID
+9b413ee6-5a91-475f-8e6e-2ce631276e48
+
+Diese Nachricht wurde Ihnen von Benedikt B=C3=BCcker gesendet=2E Dieser=
+ Absender nutzt den Docusign-Service f=C3=BCr elektronische Signaturen=2E=
+ Wenn Sie keine E-Mail von diesem Absender erhalten m=C3=B6chten, teile=
+n Sie ihm dies bitte mit=2E
+
+Diese E-Mail nicht an andere weiterleiten
+Diese E-Mail enth=C3=A4lt einen sicheren Link zu Docusign=2E Geben Sie =
+die E-Mail, den Link oder den Zugriffscode nicht an Dritte weiter=2E
+
+Sie haben Fragen zum Dokument?
+Sie m=C3=B6chten das Dokument bearbeiten oder haben Fragen zu bestimmte=
+n Details im Dokument? Wenden Sie sich bitte per E-Mail direkt an den A=
+bsender=2E
+
+Diese E-Mail nicht l=C3=A4nger erhalten
+E-Mail melden https://protect=2Edocusign=2Enet/report-abuse?e=3DAUtomjp=
+Fak9GlbPL0zFFi13vkwE0_J70wC-GQHw8kcnhIG_Z3bnVuP64YxCA6kFLY_qlS3LvfucL0b=
+Q7Fo1j32lkjwverZxZ76K4snSCJloJ0_FDJ2rPzsUWffvFqVk45bGpWN6dlNw2ziJWSJX8z=
+D-yjxs2ADp9H1dQWTr_M6pFu_t2RNyhZuhhivDtSVcvP0Xz5ec_rFYsVVSac9b-BYtfRGf9=
+FsLoLbYwBm8q_cBVtpI47pUHPAJDtVcB6HnYPd19ZraHu9FITGmBWfoZa1GjWD_488UJRnE=
+KOVg59hflBVliknPOGm9iIJmqn5gdyreYtjyerTvy_9uX1RaK_bY78AiwBC_lhYuFfpPQRt=
+rUyrqFtUVq7oUS_q88c_jiudA4HDr3PrO3aD2XkHD_OTRNHMjP8Ki0JT6CJIDI2s1QpjGql=
+e4rvIeW8BN-cHkq-dbB9l2X9kfp71T8RDTxzg0&lang=3Dde
+Signieren ablehnen=20
+Benachrichtigungen verwalten=20
+
+Wenn Sie Probleme beim Signieren haben, besuchen Sie =E2=80=9ESo signie=
+ren Sie ein Dokument=E2=80=9C auf unserer Docusign-Supportcenter oder w=
+erden Sie Teil der Docusign-Community, um Tipps und Ratschl=C3=A4ge von=
+ Kollegen zu erhalten=2E
+https://support=2Edocusign=2Ecom/s/articles/How-do-I-sign-a-DocuSign-do=
+cument-Basic-Signing?language=3Dde&#38;utm_campaign=3DGBL_XX_DBU_UPS_22=
+11_SignNotificationEmailFooter&#38;utm_medium=3Dproduct&#38;utm_source=3D=
+postsend
+------=_NextPart_E811CA4F_33E6_452A_A0CF_D63918483DC2
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html lang=3D"en"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><m=
+eta name=3D"viewport" content=3D"initial-scale=3D1.0"><meta name=3D"format-=
+detection" content=3D"telephone=3Dno"><title>EnvelopeVoided</title></head><=
+body style=3D"background-color:#EAEAEA;padding:2%;font-family:Helvetica,Ari=
+al,Sans Serif;"><table role=3D"presentation" border=3D"0" cellspacing=3D"0"=
+ cellpadding=3D"0" align=3D"center" width=3D"100%" dir=3D""><tr><td></td><t=
+d width=3D"640"><table role=3D"presentation" style=3D"mso-table-lspace:0pt;=
+mso-table-rspace:0pt;border-collapse:collapse;background-color:#ffffff;max-=
+width:640px;"><tr><td style=3D"padding:10px 24px;"><img style=3D"border:non=
+e;" width=3D"116" src=3D"https://docucdn-a.akamaihd.net/olive/images/2.62.0=
+/global-assets/email-templates/email-logo.png" alt=3D"DocuSign"></td></tr><=
+tr><td style=3D"padding:0px 24px 30px 24px;"><table role=3D"presentation" b=
+order=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" align=3D"cen=
+ter" style=3D"background-color:#260559;color:#FFFFFF;"><tr><td style=3D"pad=
+ding:28px 36px 36px 36px;border-radius:2px;background-color:#260559;color:#=
+FFFFFF;font-size:16px;font-family:Helvetica,Arial,Sans Serif;width:100%;tex=
+t-align:center;" align=3D"center"><img width=3D"75" height=3D"75" src=3D"ht=
+tps://docucdn-a.akamaihd.net/olive/images/2.76.0/email/iconFileWithXWhite.p=
+ng" style=3D"width:75px;height:75px;"><table role=3D"presentation" border=
+=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%"><tr><td style=3D"=
+padding-top:24px;font-size:16px;font-family:Helvetica,Arial,Sans Serif;bord=
+er:none;text-align:center;color:#FFFFFF" align=3D"center"> Benedikt B=C3=BC=
+cker hat =E2=80=9EDocuments for your DocuSign Signature=E2=80=9D storniert.=
+ </td></tr></table></td></tr></table></td></tr><tr><td style=3D"padding:0px=
+ 24px 24px 24px;color:#000000;font-size:16px;font-family:Helvetica,Arial,Sa=
+ns Serif;background-color:white;"><table role=3D"presentation" border=3D"0"=
+ cellspacing=3D"0" cellpadding=3D"0"><tr><td style=3D"padding-bottom:20px;"=
+><div style=3D"font-family:Helvetica,Arial,Sans Serif;font-weight:bold;line=
+-height:18px;font-size:15px;color:#333333;"> Benedikt B=C3=BCcker </div><di=
+v style=3D"font-family:Helvetica,Arial,Sans Serif;line-height:18px;font-siz=
+e:15px;color:#666666;">benedikt.buecker@atolls.com</div></td></tr></table><=
+p style=3D"font-size:15px;color:#333333;font-family:Helvetica,Arial,Sans Se=
+rif;line-height:20px;"> =E2=80=9EDocuments for your DocuSign Signature=E2=
+=80=9D wurde aus folgendem Grund storniert:<br> Der Umschlag wurde gel=C3=
+=B6scht und wurde daher automatisch storniert. </p></td></tr><tr><td style=
+=3D"padding:0px 24px 12px 24px;background-color:#ffffff;font-family:Helveti=
+ca,Arial,Sans Serif;font-size:11px;color:#666666;"></td></tr><tr><td style=
+=3D"padding:30px 24px 45px 24px;background-color:#EAEAEA;"><p style=3D"marg=
+in-bottom:1em;font-family:Helvetica,Arial,Sans Serif;font-size:13px;color:#=
+666666;line-height:18px;"><strong>Umschlag-ID</strong><br> 9b413ee6-5a91-47=
+5f-8e6e-2ce631276e48 </p><p style=3D"margin-bottom:1em;font-family:Helvetic=
+a,Arial,Sans Serif;font-size:13px;color:#666666;line-height:18px;"><b aria-=
+level=3D"3" role=3D"heading">Diese E-Mail nicht an andere weiterleiten</b><=
+br> Diese E-Mail enth=C3=A4lt einen sicheren Link zu Docusign. Geben Sie di=
+e E-Mail, den Link oder den Zugriffscode nicht an Dritte weiter.<br></p><p =
+style=3D"margin-bottom:1em;font-family:Helvetica,Arial,Sans Serif;font-size=
+:13px;color:#666666;line-height:18px;"><b aria-level=3D"3" role=3D"heading"=
+>Informationen zu Docusign</b><br> Dokumente elektronisch in Minutenschnell=
+e signieren. Docusign-Signaturen sind sicher und rechtsg=C3=BCltig. Ganz gl=
+eich, ob Sie im B=C3=BCro, zu Hause oder unterwegs sind =E2=80=93 Docusign =
+bietet Ihnen eine weltweit einsetzbare professionelle und vertrauensw=C3=BC=
+rdige L=C3=B6sung f=C3=BCr das Digital Transaction Management (digitale Tra=
+nsaktionsverwaltung). </p><p style=3D"margin-bottom:1em;font-family:Helveti=
+ca,Arial,Sans Serif;font-size:13px;color:#666666;line-height:18px;"><b aria=
+-level=3D"3" role=3D"heading">Sie haben Fragen zum Dokument?</b><br> Sie m=
+=C3=B6chten das Dokument bearbeiten oder haben Fragen zu bestimmten Details=
+ im Dokument? Wenden Sie sich bitte per E-Mail direkt an den Absender.<br><=
+br><b aria-level=3D"3" role=3D"heading">Diese E-Mail nicht l=C3=A4nger erha=
+lten</b><br> Missbrauch melden Sie unter <a href=3D"https://protect.docusig=
+n.net/report-abuse?e=3DAUtomjpFak9GlbPL0zFFi13vkwE0_J70wC-GQHw8kcnhIG_Z3bnV=
+uP64YxCA6kFLY_qlS3LvfucL0bQ7Fo1j32lkjwverZxZ76K4snSCJloJ0_FDJ2rPzsUWffvFqVk=
+45bGpWN6dlNw2ziJWSJX8zD-yjxs2ADp9H1dQWTr_M6pFu_t2RNyhZuhhivDtSVcvP0Xz5ec_rF=
+YsVVSac9b-BYtfRGf9FsLoLbYwBm8q_cBVtpI47pUHPAJDtVcB6HnYPd19ZraHu9FITGmBWfoZa=
+1GjWD_488UJRnEKOVg59hflBVliknPOGm9iIJmqn5gdyreYtjyerTvy_9uX1RaK_bY78AiwBC_l=
+hYuFfpPQRtrUyrqFtUVq7oUS_q88c_jiudA4HDr3PrO3aD2XkHD_OTRNHMjP8Ki0JT6CJIDI2s1=
+QpjGqle4rvIeW8BN-cHkq-dbB9l2X9kfp71T8RDTxzg0&amp;lang=3Dde" style=3D"color:=
+#2463d1;">E-Mail melden</a>. Weitere Informationen erhalten Sie unter <a hr=
+ef=3D"https://support.docusign.com/de/guides/Declining-to-sign-DocuSign-Sig=
+ner-Guide" style=3D"color:#2463d1;">Signieren ablehnen</a> und <a href=3D"h=
+ttps://support.docusign.com/de/articles/How-do-I-manage-my-email-notificati=
+ons" style=3D"color:#2463d1;">Benachrichtigungen verwalten</a>.<br><br> Wen=
+n Sie Probleme beim Signieren haben, besuchen Sie =E2=80=9E<a href=3D"https=
+://support.docusign.com/s/articles/How-do-I-sign-a-DocuSign-document-Basic-=
+Signing?language=3Dde&amp;utm_campaign=3DGBL_XX_DBU_UPS_2211_SignNotificati=
+onEmailFooter&amp;utm_medium=3Dproduct&amp;utm_source=3Dpostsend" style=3D"=
+color:#2463d1;">So signieren Sie ein Dokument</a>=E2=80=9C auf unserer <a h=
+ref=3D"https://support.docusign.com/s/?language=3Dde" style=3D"color:#2463d=
+1;">Docusign-Supportcenter</a> oder werden Sie Teil der <a href=3D"https://=
+community.docusign.com/new-member-guide-142?utm_campaign=3DGBL_US_PRD_AWA_2=
+405_CommunityCTA&amp;utm_medium=3Demail&amp;utm_source=3Dpostsend" style=3D=
+"color:#2463d1;">Docusign-Community</a>, um Tipps und Ratschl=C3=A4ge von K=
+ollegen zu erhalten.<br><br></p><p style=3D"margin-bottom:1em;font-family:H=
+elvetica,Arial,Sans Serif;font-size:13px;color:#666666;line-height:18px;"><=
+a href=3D"https://www.docusign.de/produkte/mobile-app?utm_campaign=3DGBL_XX=
+_DBU_UPS_2211_SignNotificationEmailFooter&amp;utm_medium=3Dproduct&amp;utm_=
+source=3Dpostsend" style=3D"color:#2463d1;"><img style=3D"margin-right:7px;=
+border:none;vertical-align:middle;" width=3D"18" height=3D"18" src=3D"https=
+://docucdn-a.akamaihd.net/olive/images/2.62.0/global-assets/email-templates=
+/icon-download-app.png" alt=3D"">Docusign-App herunterladen </a></p><p styl=
+e=3D"margin-bottom:1em;font-family:Helvetica,Arial,Sans Serif;font-size:13p=
+x;color:#666666;line-height:18px;font-size:10px;line-height:14px;">Diese Na=
+chricht wurde Ihnen von Benedikt B=C3=BCcker gesendet. Dieser Absender nutz=
+t den Docusign-Service f=C3=BCr elektronische Signaturen. Wenn Sie keine E-=
+Mail von diesem Absender erhalten m=C3=B6chten, teilen Sie ihm dies bitte m=
+it.</p></td></tr></table></td><td></td></tr></table><span itemscope=3D"" it=
+emtype=3D"http://schema.org/EmailMessage"><meta itemprop=3D"text" content=
+=3D"Benedikt B=C3=BCcker hat Ihnen ein Dokument zum Einsehen und Signieren =
+gesendet."><span itemscope=3D"" itemprop=3D"about" itemtype=3D"http://schem=
+a.org/CreativeWork"></span></span></body></html>=
+
+------=_NextPart_E811CA4F_33E6_452A_A0CF_D63918483DC2--

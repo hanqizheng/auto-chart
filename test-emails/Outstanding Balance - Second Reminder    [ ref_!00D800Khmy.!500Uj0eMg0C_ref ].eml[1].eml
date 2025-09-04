@@ -1,0 +1,293 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:2f06:b0:1d03:27cf:8dbe with SMTP id qp6csp286079njb;
+        Fri, 29 Aug 2025 04:09:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9X+gv19zkDfqW4WxmhesPRga1f5Z+PLYguL7lajWsCR3AKSFhCWApMW0VhUOt25EWMb7b
+X-Received: by 2002:a05:6a00:3313:b0:772:260f:d7b1 with SMTP id d2e1a72fcca58-772260fe4b1mr5034274b3a.16.1756465771014;
+        Fri, 29 Aug 2025 04:09:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756465771; cv=none;
+        d=google.com; s=arc-20240605;
+        b=cLjQx2j5xKdM/waKn4VoVSUqBCbBP9cZYEO9GftGudU6FxUViDGoWlAytfy5ZQ4Mzp
+         KyVJ8of+7SXYFesHOVWZeUOqFfZojbZB83Y0Rac8huUxub10G9NcFb4NE8SqNeICEV/v
+         T4cmAZAEuoKQh73PAl0RZ2EN3VFIdODuBRUQKLadkbyNWbsCyB/gj4ij1BvRC16O9Oi1
+         aluk+DaC5OGwT0y8nAWdkuRiCbSI6a26PxgnQBOW6jgyIAIO/hiQxX6qjrOUkUitjWgN
+         eF0jX+Fb8zBPsZ5UaL8re8WJy/AC5gOjpm6o3rn/b74k2C+/f08p8KZOr3cHWwf6CEyd
+         L9Vg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:subject:references:in-reply-to:message-id:cc:to:from
+         :date:dkim-signature;
+        bh=2JV+fsMMur8dOSMcErS6d+mFr9C/MxMz6gczhZvZ9kk=;
+        fh=8TNV5Jn8djmYO11hVAd0lI7oYwzYWbmOzLiY0r9UrSw=;
+        b=OFIJE1qecRZrTpF2AUfTz7g/sfeO2WZ0/UdWqn48fJ/o0ObYmeJvctEisVJhyN1aXK
+         G3czgYHqN4EeawIWeIaWt0xf1nCYWZ2MOpyjru3tsWMayGjSO0ovz17t8SIgCwzscqnF
+         TQ3nTFDw3uQjTkaq+SvW575FHZmFxGKpafgfopsxHLmxTHI1ALG+VPP0SspROy15/xeS
+         H/dY8tFrDJEvYbkPwxr2Fo29DAJJyDitUvD7pz75KQfkqOx43n5Mw1/T/C4t3FLi5X/v
+         EP6pnmtGP46sObVPRQfaGMUGmGZ3KznSKTme7SNP2pn68odSumn68bA255wEfuZ3+S01
+         a0ZQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@groupon.com header.s=salesforce1024 header.b=G8hpmLNu;
+       spf=pass (google.com: domain of recoveries@groupon.com designates 35.80.163.243 as permitted sender) smtp.mailfrom=recoveries@groupon.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=groupon.com
+Return-Path: <recoveries@groupon.com>
+Received: from smtp-069df56e618e8a34e.core2.sfdc-lywfpd.mta.salesforce.com (smtp-069df56e618e8a34e.core2.sfdc-lywfpd.mta.salesforce.com. [35.80.163.243])
+        by mx.google.com with ESMTPS id d2e1a72fcca58-772311a6d81si661108b3a.519.2025.08.29.04.09.30
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Aug 2025 04:09:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of recoveries@groupon.com designates 35.80.163.243 as permitted sender) client-ip=35.80.163.243;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@groupon.com header.s=salesforce1024 header.b=G8hpmLNu;
+       spf=pass (google.com: domain of recoveries@groupon.com designates 35.80.163.243 as permitted sender) smtp.mailfrom=recoveries@groupon.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=groupon.com
+Return-Path: <recoveries@groupon.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=groupon.com;
+	s=salesforce1024; t=1756465764;
+	bh=adWbLQe3tzsWPDi8BUvCvMP4lX4DThsBDXUTLXkz9zM=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type;
+	b=G8hpmLNuf12vaZziZOnY+tEQ7GMRxphDaTG3UL49JCJlzhabgm+h71AYRbf/ED1cq
+	 HSr0raQW56k52n7NBK8mmdpilpLLlLgECYA7+jRt2+89fKQ3HYHTr6/npuv7aTC9g8
+	 PbqAHzGGhwAHFMEWaSuBDqfwgVNZUd5lkkuEneuw=
+Received: from [127.0.0.1] ([127.0.0.1:48564] helo=eaas-16.eaas.emailinfra.svc.cluster.local)
+	by mx1.core2.sfdc-lywfpd.mta.salesforce.com (envelope-from <recoveries@groupon.com>)
+	(ecelerity 4.7.0.20111 r(msys-ecelerity:tags/4.7.0-ga^0)) with ESMTP
+	id 57/74-00742-46A81B86; Fri, 29 Aug 2025 11:09:24 +0000
+Received: from 127.0.0.1 (localhost. [127.0.0.1]) by eaas-16 (EaaS) id
+  <nXGeL000000000000000000000000000000000000000000000T1R5NM00VxWXXpRrTomZWFXEA_6AMQ@sfdc.net>
+  for <"rita@affiliate.bluefocus.com" <rita@affiliate.bluefocus.com>> Fri,
+ 29  Aug 2025 11:09:24 GMT (GMT)
+Date: Fri, 29 Aug 2025 11:09:24 +0000 (GMT)
+From: Groupon Recoveries <recoveries@groupon.com>
+To: "rita@affiliate.bluefocus.com" <rita@affiliate.bluefocus.com>
+CC: "edouglassmith@groupon.com" <edouglassmith@groupon.com>
+Message-ID: <nXGeL000000000000000000000000000000000000000000000T1R5NM00VxWXXpRrTomZWFXEA_6AMQ@sfdc.net>
+In-Reply-To: <Csc2r000000000000000000000000000000000000000000000T0NX6E00vFJ62DRXSLaEl2xGHsJSaQ@sfdc.net>
+References: <CAMH77ZxoTCOXCMSac92z7MFDYu-6drpqNy7b=Mfwrotka9hDdg@mail.gmail.com>
+ <Csc2r000000000000000000000000000000000000000000000T0NX6E00vFJ62DRXSLaEl2xGHsJSaQ@sfdc.net>
+Subject: Outstanding Balance - Second Reminder    [
+ ref:!00D800Khmy.!500Uj0eMg0C:ref ]
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_23006_1275488283.1756465764013"
+X-SFDC-LK: 00D80000000Khmy
+X-SFDC-User: 0053c00000CMezp
+X-Sender: postmaster@salesforce.com
+X-mail_abuse_inquiries: http://www.salesforce.com/company/abuse.jsp
+X-SFDC-TLS-NoRelay: 1
+X-SFDC-CORRELATION-ID: 0003m7rs5zvo5wbo
+X-SFDC-Binding: 1WrIRBV94myi25uB
+X-SFDC-App: coreapp
+X-SFDC-EmailCategory: emailAuthorEmail
+X-SFDC-EntityId: 500Uj00000eMg0C
+X-SFDC-Interface: internal
+MIME-Version: 1.0
+
+------=_Part_23006_1275488283.1756465764013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Dear Sir/Madam,
+I recently contacted you from Groupon=E2=80=99s Risk department.=20
+Can you provide us with an update regarding this IO? Insertion Order =3D ON=
+-10979 - Jackery (CPN GB 163225).=20
+For any questions or concerns, please reply to this message.
+
+Kind regards,Monika G=C5=82owalaGroupon Recoveries Team
+GROUPON=C2=A0
+
+___________________________________________
+
+recoveries@groupon.com 08.08.2025 rita@affiliate.bluefocus.com edouglassmit=
+h@groupon.com Outstanding Balance - Overdue Notice [ ] Dear Sir/Madam,
+I am contacting you from Groupon=E2=80=99s Risk department. Our records ind=
+icate that there is an outstanding balance on your account related to a fix=
+ed fee placement.=20
+ON-10979 - Jackery (CPN GB 163225)Total Outstanding =3D GBP 1=C2=A0200,00
+If you pay through an affiliate AND have already processed payment, please =
+respond with the corresponding remittance advice so that we can verify that=
+ the payment was allocated correctly. Otherwise, please remit payment using=
+ the IO reference via affiliate network portal.=C2=A0
+If you do NOT pay through an affiliate, please remit payment as soon as pos=
+sible and reference your invoice number.
+If you have any questions, please reply directly to this email and a member=
+ of our team will follow up accordingly.=C2=A0
+Kind regards,Monika G=C5=82owalaGroupon Recoveries Team
+GROUPON=C2=A0
+
+___________________________________________
+
+
+
+c_mglowala@groupon.com 16.07.2025 rita@affiliate.bluefocus.com recoveries@g=
+roupon.com Subject: Groupon Self Bill - IO Upload Reminder [ ] Dear Sir/Mad=
+am,
+
+I am contacting you from Groupon's Risk Management department. This is a
+follow up email to notify you that there still appears to be an outstanding
+issue in relation to a fixed fee placement.
+
+Insertion Order =3D ON-10979 - Jackery (CPN GB 163225)
+
+The insertion order (IO, bonus, tenancy) still appears to be missing from
+the affiliate portal. Please could you ensure to upload this IO using the
+correct IO reference.
+
+We would really appreciate it if you could reply to this email once it has
+been completed. This will enable us to accurately allocate any subsequent
+payments and avoid us having to potentially reach out to you again.
+
+If you have any questions, please reply directly to this email and a member
+of our team will follow up accordingly.
+
+Kind regards,
+Groupon Recoveries
+
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to recoveries+unsubscribe@groupon.com.
+
+ref:!00D800Khmy.!500Uj0eMg0C:ref
+
+
+------=_Part_23006_1275488283.1756465764013
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"></=
+head>
+<style>p{margin-top:0px; margin-bottom:0px;}</style><body style=3D" backgro=
+und-color:#FFFFFF; bEditID:b1st1; bLabel:body;"><center><table cellpadding=
+=3D"0" width=3D"500" cellspacing=3D"0" id=3D"topTable" height=3D"450"><tr v=
+align=3D"top"><td style=3D" background-color:#FFFFFF; bEditID:r1st1; bLabel=
+:header; vertical-align:middle; height:75; text-align:center;"><img border=
+=3D"0" bEditID=3D"r1sp1" bLabel=3D"headerImage" id=3D"r1sp1" src=3D"https:/=
+/groupon-dev.my.salesforce.com/servlet/servlet.ImageServer?id=3D015C0000001=
+4unj&amp;oid=3D00D80000000Khmy"><!-- </img> --></td></tr><tr valign=3D"top"=
+><td style=3D" background-color:#749f43; bEditID:r2st1; bLabel:accent1; hei=
+ght:1;"></td></tr><tr valign=3D"top"><td styleInsert=3D"1" height=3D"300" s=
+tyle=3D" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:mai=
+n; font-size:12pt; font-family:arial;"><table border=3D"0" cellpadding=3D"5=
+" width=3D"550" cellspacing=3D"5" height=3D"400"><tr valign=3D"top" height=
+=3D"400"><td tEditID=3D"c1r1" style=3D" background-color:#FFFFFF; color:#00=
+0000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEdit=
+ID=3D"c1r1" locked=3D"0"><span id=3D"docs-internal-guid-4c4b05ea-7fff-6b77-=
+dc15-379189661247" style=3D""><p dir=3D"ltr" style=3D"color: rgb(0, 0, 0); =
+font-family: arial; font-size: 12pt; line-height: 1.38; margin-top: 0pt; ma=
+rgin-bottom: 0pt;"><span style=3D"font-variant-numeric: normal; font-varian=
+t-east-asian: normal; vertical-align: baseline; white-space: pre-wrap;"><fo=
+nt face=3D"Arial, sans-serif">Dear Sir/Madam,</font></span></p><font face=
+=3D"Arial, sans-serif" style=3D"color: rgb(0, 0, 0); font-family: arial; fo=
+nt-size: 12pt;"><br></font><p dir=3D"ltr" style=3D"color: rgb(0, 0, 0); fon=
+t-family: arial; font-size: 12pt; line-height: 1.38; margin-top: 0pt; margi=
+n-bottom: 0pt;"><span style=3D"font-variant-numeric: normal; font-variant-e=
+ast-asian: normal; vertical-align: baseline; white-space: pre-wrap;"><font =
+face=3D"Arial, sans-serif">I recently contacted you from Groupon=E2=80=99s =
+Risk department. </font></span></p><p dir=3D"ltr" style=3D"color: rgb(0, 0,=
+ 0); font-family: arial; font-size: 12pt; line-height: 1.38; margin-top: 0p=
+t; margin-bottom: 0pt;"><span style=3D"font-family: Arial, sans-serif; whit=
+e-space: pre-wrap;"><br></span></p><p dir=3D"ltr" style=3D"color: rgb(0, 0,=
+ 0); font-family: arial; font-size: 12pt; line-height: 1.38; margin-top: 0p=
+t; margin-bottom: 0pt;"><span style=3D"font-family: Arial, sans-serif; whit=
+e-space: pre-wrap;">Can you provide us with an update regarding this IO? In=
+sertion Order =3D </span><span style=3D"color: rgb(51, 51, 51); font-family=
+: Arial, sans-serif; font-size: small; background-color: rgb(255, 255, 255)=
+;">ON-10979 - Jackery (CPN GB 163225)</span><span style=3D"font-family: Ari=
+al, sans-serif; white-space: pre-wrap;">. </span></p><p dir=3D"ltr" style=
+=3D"color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; line-height: =
+1.38; margin-top: 0pt; margin-bottom: 0pt;"><span style=3D"font-family: Ari=
+al, sans-serif; white-space: pre-wrap;"><br></span></p><p dir=3D"ltr" style=
+=3D"color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; line-height: =
+1.38; margin-top: 0pt; margin-bottom: 0pt;"><span style=3D"font-family: Ari=
+al, sans-serif; white-space: pre-wrap;">For any questions or concerns, plea=
+se reply to this message.</span></p><p dir=3D"ltr" style=3D"color: rgb(0, 0=
+, 0); font-family: arial; font-size: 12pt; line-height: 1.38; margin-top: 0=
+pt; margin-bottom: 0pt;"><br></p><p dir=3D"ltr" style=3D"color: rgb(0, 0, 0=
+); font-family: arial; font-size: 12pt; line-height: 1.38; margin-top: 0pt;=
+ margin-bottom: 0pt;"><br></p><table cellpadding=3D"0" width=3D"500" cellsp=
+acing=3D"0" id=3D"topTable" height=3D"450" style=3D"color: rgb(0, 0, 0); fo=
+nt-family: &quot;Times New Roman&quot;; font-size: 12pt; background-color: =
+rgb(255, 255, 255);"><tbody><tr valign=3D"top"><td styleinsert=3D"1" height=
+=3D"300" style=3D"font-size: 12pt; font-family: arial;"><table border=3D"0"=
+ cellpadding=3D"5" width=3D"550" cellspacing=3D"5" height=3D"400"><tbody><t=
+r valign=3D"top" height=3D"400"><td teditid=3D"c1r1" aeditid=3D"c1r1" locke=
+d=3D"0" style=3D"font-size: 12pt;"><span id=3D"docs-internal-guid-4c4b05ea-=
+7fff-6b77-dc15-379189661247"><p dir=3D"ltr" style=3D"margin-top: 0pt; margi=
+n-bottom: 0pt; font-size: 12pt; line-height: 1.38;"><span style=3D"font-var=
+iant-numeric: normal; font-variant-east-asian: normal; vertical-align: base=
+line; white-space: pre-wrap;"><font face=3D"Arial, sans-serif">Kind regards=
+,</font></span></p><p dir=3D"ltr" style=3D"margin-top: 0pt; margin-bottom: =
+0pt; font-size: 12pt; line-height: 1.38;"><font face=3D"Arial, sans-serif" =
+color=3D"#33cc00"><b>Monika G=C5=82owala</b></font></p><p dir=3D"ltr" style=
+=3D"margin-top: 0pt; margin-bottom: 0pt; line-height: 1.38;"><b style=3D"fo=
+nt-size: 12pt; white-space-collapse: preserve; font-family: Roboto, RobotoD=
+raft, Helvetica, Arial, sans-serif;">Groupon Recoveries Team</b></p><p dir=
+=3D"ltr" style=3D"color: rgb(34, 34, 34); font-family: Arial, Helvetica, sa=
+ns-serif; font-size: 12.8px; line-height: 1.38; margin-top: 0pt; margin-bot=
+tom: 0pt;"><br></p><p dir=3D"ltr" style=3D"color: rgb(34, 34, 34); font-fam=
+ily: Arial, Helvetica, sans-serif; font-size: 12.8px; line-height: 1.38; ma=
+rgin-top: 4pt; margin-bottom: 10pt;"><span style=3D"font-size: large; font-=
+weight: 700; color: rgb(102, 102, 102); font-family: &quot;Open Sans&quot;,=
+ Helvetica, Arial, sans-serif;"><span style=3D"color: rgb(83, 163, 24);">GR=
+OUPON</span></span><span style=3D"font-size: large; color: rgb(102, 102, 10=
+2); font-family: &quot;Open Sans&quot;, Helvetica, Arial, sans-serif;">&nbs=
+p;</span></p><p dir=3D"ltr" style=3D"margin-top: 0pt; margin-bottom: 0pt; f=
+ont-size: 12pt; line-height: 1.38;"><br></p><p dir=3D"ltr" style=3D"margin-=
+top: 0pt; margin-bottom: 0pt; font-size: 12pt; line-height: 1.38;"><br></p>=
+<p dir=3D"ltr" style=3D"margin-top: 0pt; margin-bottom: 0pt; font-size: 12p=
+t; line-height: 1.38;"><span data-sheets-formula-bar-text-style=3D"font-siz=
+e:13px;color:#000000;font-weight:normal;text-decoration:none;font-family:'d=
+ocs-Calibri';font-style:normal;text-decoration-skip-ink:none;" style=3D"fon=
+t-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif; font-size: 13p=
+x; white-space: pre-wrap;">___________________________________________
+
+</span></p><p dir=3D"ltr" style=3D"margin-top: 0pt; margin-bottom: 0pt; fon=
+t-size: 12pt; line-height: 1.38;"><span data-sheets-formula-bar-text-style=
+=3D"font-size:13px;color:#000000;font-weight:normal;text-decoration:none;fo=
+nt-family:'docs-Calibri';font-style:normal;text-decoration-skip-ink:none;" =
+style=3D"font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif; fo=
+nt-size: 13px; white-space: pre-wrap;"><span style=3D"color: rgb(51, 51, 51=
+); font-family: Arial, sans-serif; font-size: small; white-space: normal;">=
+recoveries@groupon.com 08.08.2025 rita@affiliate.bluefocus.com edouglassmit=
+h@groupon.com Outstanding Balance - Overdue Notice    [  ] Dear Sir/Madam,<=
+br>I am contacting you from Groupon=E2=80=99s Risk department. Our records =
+indicate that there is an outstanding balance on your account related to a =
+fixed fee placement. <br>ON-10979 - Jackery (CPN GB 163225)Total Outstandin=
+g =3D GBP 1&nbsp;200,00<br>If you pay through an affiliate AND have already=
+ processed payment, please respond with the corresponding remittance advice=
+ so that we can verify that the payment was allocated correctly. Otherwise,=
+ please remit payment using the IO reference via affiliate network portal.&=
+nbsp;<br>If you do NOT pay through an affiliate, please remit payment as so=
+on as possible and reference your invoice number.<br>If you have any questi=
+ons, please reply directly to this email and a member of our team will foll=
+ow up accordingly.&nbsp;<br>Kind regards,Monika G=C5=82owalaGroupon Recover=
+ies Team<br>GROUPON&nbsp;<br><br>__________________________________________=
+_
+<br>
+<br>c_mglowala@groupon.com 16.07.2025 rita@affiliate.bluefocus.com recoveri=
+es@groupon.com Subject: Groupon Self Bill - IO Upload Reminder [ ] Dear Sir=
+/Madam,<br><br>I am contacting you from Groupon's Risk Management departmen=
+t. This is a<br>follow up email to notify you that there still appears to b=
+e an outstanding<br>issue in relation to a fixed fee placement.<br><br>Inse=
+rtion Order =3D ON-10979 - Jackery (CPN GB 163225)<br><br>The insertion ord=
+er (IO, bonus, tenancy) still appears to be missing from<br>the affiliate p=
+ortal. Please could you ensure to upload this IO using the<br>correct IO re=
+ference.<br><br>We would really appreciate it if you could reply to this em=
+ail once it has<br>been completed. This will enable us to accurately alloca=
+te any subsequent<br>payments and avoid us having to potentially reach out =
+to you again.<br><br>If you have any questions, please reply directly to th=
+is email and a member<br>of our team will follow up accordingly.<br><br>Kin=
+d regards,<br>Groupon Recoveries<br><br>To unsubscribe from this group and =
+stop receiving emails from it, send an email to recoveries+unsubscribe@grou=
+pon.com.</span></span></p></span></td></tr></tbody></table></td></tr><tr va=
+lign=3D"top"><td style=3D"background-color: rgb(116, 159, 67); height: 1px;=
+"></td></tr><tr valign=3D"top"></tr></tbody></table><br></span></td></tr></=
+table></td></tr><tr valign=3D"top"><td style=3D" background-color:#749f43; =
+bEditID:r4st1; bLabel:accent2; height:1;"></td></tr><tr valign=3D"top"><td =
+style=3D" background-color:#FFFFFF; bEditID:r5st1; bLabel:footer; vertical-=
+align:top; height:100; text-align:left;"></td></tr><tr valign=3D"top"><td s=
+tyle=3D" background-color:#ffffff; bEditID:r6st1; bLabel:accent3; height:1;=
+"></td></tr></table></center><img alt=3D"" src=3D"https://groupon-dev.my.sa=
+lesforce.com/servlet/servlet.ImageServer?oid=3D00D80000000Khmy&amp;esid=3D0=
+18Uj00000dhAAX&amp;from=3Dext"><br><br>ref:!00D800Khmy.!500Uj0eMg0C:ref</bo=
+dy></html>=
+
+------=_Part_23006_1275488283.1756465764013--

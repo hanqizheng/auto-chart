@@ -1,0 +1,222 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:4f8c:b0:1d03:27cf:8dbe with SMTP id he12csp964514njb;
+        Tue, 26 Aug 2025 23:39:57 -0700 (PDT)
+X-Received: by 2002:a05:6102:5682:b0:519:534a:6c5e with SMTP id ada2fe7eead31-51d0fa216ebmr4789627137.33.1756276796867;
+        Tue, 26 Aug 2025 23:39:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756276796; cv=none;
+        d=google.com; s=arc-20240605;
+        b=huhS8dFoA2my9+vjHkMMuAstyNG+DXK980rPLARD457ryrVV+9uXSK+XSxQVqu9vdL
+         ruWndHw3bc2fGMVgybI+rpuAi+84McDjAE+l+f3rTNFZaVNNhunLgRGSG27pSzEbfc+7
+         0aJYPvOtMLsu0SETL7ywbXm6knfMD3Lxbo11gIaCi71+jTZfeAhvBEqT/77rYhUriryg
+         /DvcSVlpwPzGqDIcnqWa9TFYbFjFe65a9+ah9eW7bQM9LsE1BhNvCcFhYR6pXCwefdoZ
+         U9aZCoNbKBVg9Ys8mjLL+o8pESyAseVGEAW8PLAglnA2zJiyKvcos6dC4r9b0ZaFSN0u
+         QsBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:to:subject:date:from:references:in-reply-to:mime-version
+         :dkim-signature;
+        bh=yjIiL8++QkS0uTcRAiHjkn3kqddDTmKMcJHO4cg2mmI=;
+        fh=T0bDjpbD7OIL2l4jHOHpXwvpWLVwEwYnziv+s3J6D84=;
+        b=kYXyBCR9+jJqFRzrtR4mqoqlJoTyymDGoo2Xy/7oizAHuUj/iQQW/U8RnnP/QaKtvG
+         IXBbiI/pgSCOPTMAr/gSwELGgMf2E5mUfZI31ePpEQdJAG+6aqCZcMnT8rplKpQPsaQp
+         eGpe6aMaxo1ks00BpjPzrAoCwe3zqLaXY0CS144Vdg+cmjRyelpKTeKznaAP2DJy/Mct
+         LFobhqv6HzJZJq8PZAy4JIQbN1liXjkP97MxnsyVmIAAA0/XKDZmkCzQOJeOkDS+5cJe
+         mRnTdaEhpy2OnOYdGzvpd0r9G+KPsOB8PSCbDbinvvc+pVMIbLJIurpGbuN8zeCvKyW8
+         1zmA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@alittlesparkofjoy-com.20230601.gappssmtp.com header.s=20230601 header.b=EC3ql2ey;
+       spf=softfail (google.com: domain of transitioning info@alittlesparkofjoy.com does not designate 209.85.220.41 as permitted sender) smtp.mailfrom=info@alittlesparkofjoy.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=alittlesparkofjoy.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <info@alittlesparkofjoy.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id a1e0cc1a2514c-89237448d24sor1137188241.3.2025.08.26.23.39.56
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Tue, 26 Aug 2025 23:39:56 -0700 (PDT)
+Received-SPF: softfail (google.com: domain of transitioning info@alittlesparkofjoy.com does not designate 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@alittlesparkofjoy-com.20230601.gappssmtp.com header.s=20230601 header.b=EC3ql2ey;
+       spf=softfail (google.com: domain of transitioning info@alittlesparkofjoy.com does not designate 209.85.220.41 as permitted sender) smtp.mailfrom=info@alittlesparkofjoy.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=alittlesparkofjoy.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=alittlesparkofjoy-com.20230601.gappssmtp.com; s=20230601; t=1756276796; x=1756881596; darn=affiliate.bluefocus.com;
+        h=message-id:to:subject:date:from:references:in-reply-to:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yjIiL8++QkS0uTcRAiHjkn3kqddDTmKMcJHO4cg2mmI=;
+        b=EC3ql2eyF71xmY3q/U1u3NobNzq6zZmIbJrimOBFuX7wojwNyyGtLcpWzMy5Mku0QD
+         cPngZGJHjbU2GNZ+wZKrpj3bJFXz7zTLQjtESugYGwwXN04z8yB2HSVS2QivcQ8FF62M
+         7PtVPxRLh9610oKSwkibfG9ahSX13My7nYxaanyJAfsPRIV5Ju+n1m8qwlWnao7oafdg
+         r/KOT0rX7R4Eekyt+7yIANB3/AEoNsA98RY4yJ85iE3FaAGHBCQ/jvQNU5msl3MgHAn+
+         VJ+5U6M0zIZUGFn/T9kjv8HfU3gbpQcEi/nMxf+8sfRJbq7PFOqREeTiym6eD5hHmcwu
+         KB8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756276796; x=1756881596;
+        h=message-id:to:subject:date:from:references:in-reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yjIiL8++QkS0uTcRAiHjkn3kqddDTmKMcJHO4cg2mmI=;
+        b=ptezA8ixseRcfNH7Q7IXdBpm08derjZ5dYHWyllqIs/FbzdtF4rgaiMDaMqbPu0ws6
+         bpLc522X0VQWpN/BpNuScu1MAz7jZVFdgisDqT/aaR+BQPvMJVI3mzf/4Sily1PuFQ1H
+         Ktf62/FyY1xH8CqyZkkGo7US0m+b5kqo1s2lJBWnEtXYu7Ks5QNboQ4qo3DifmRLysBn
+         lOpYK/QeVmAlaREqTm6nUdf5oEOxJnucbVqu+pXcGo46y/Makt8dmFBbq1uOEdP0YHNs
+         6M7HOCJsMg/uphsLlNbE5n8+ByWSCKdVJmMvaYex7Cj3LVuynDohjX0ZhiirsyGzJtk1
+         2luw==
+X-Gm-Message-State: AOJu0YwNGwbxvCcN6zdpDABAENzue3K7BALel2N0YDu8HJRIlDpH4orq
+	FghS9ablzVUTlxIWVVgT7v4T87WVBoFh6l6VxjACttJv/HMw2By/bejzki1IFUDbVMFRlfWKfOY
+	mbEcg
+X-Gm-Gg: ASbGnct98yb0cZwcyFmTAfdjNyfQ1r35GUHKMP9eyCrS5ZO0uz1uCOIF9iHmZcecfUi
+	HRVZWVx4MMGrlpnMpeV4JWnQ0yhiYoyHYdg5mSirFdT8lRnsJjDBw5/v8zQVeUfGvAk8QfeWYcx
+	LnZAhoxNV/OsPkLmmntjiXS5ud9NhSXYeyfm1B3Dl0dH2O1lCu7T4bgpaffnLLgVry354CrFJoQ
+	0OtylJKVXmLcdB6yBELpSGQiXqru+iEjWhjURy2MI30EnOobIluoaV8LXjyhxOwwY3kCKld/Mcj
+	lVLVXYLb1HhnQXvG0fb8Esbp8jAxvXsmcx16IH9trrwU/iBZRtiLUSBi2/ZGX4adw3+5y7BFp40
+	rPnpzB4ijEp3PnePvdBGoSpf9sxzUbnz7lYiE5lua9zEdajEpQMsW8gd67AU8I/Otk+2ZChv1Aw
+	==
+X-Google-Smtp-Source: AGHT+IHzw7u34zOyqdzzBQB3B3UfwoWtRpZE2iX+6YDQFcVoyFqGFQITYdFUyAFRqTk1PpQEhDYwHQ==
+X-Received: by 2002:a05:6102:3306:b0:4fd:35ca:6df5 with SMTP id ada2fe7eead31-51d0cbe884fmr5141426137.7.1756276795854;
+        Tue, 26 Aug 2025 23:39:55 -0700 (PDT)
+Return-Path: <info@alittlesparkofjoy.com>
+Received: from localhost (0.92.231.35.bc.googleusercontent.com. [35.231.92.0])
+        by smtp.gmail.com with UTF8SMTPSA id a1e0cc1a2514c-89419b4b2e7sm601553241.10.2025.08.26.23.39.55
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Aug 2025 23:39:55 -0700 (PDT)
+In-Reply-To: <CANCt8Ox7ZAOK2eOeeCdRSbrzNsnu3Z7huMzmgyK_LzeQ+GjFuw@mail.gmail.com>
+References: <meli5jv0.d17726ab-2fcd-4240-a8b7-8e56b5bdd4d1@we.are.superhuman.com> <mers4rxz.b25638e7-c6c2-45d1-b3f4-ca60dffc79c1@we.are.superhuman.com>
+ <CANCt8OyZFPMWBEpURnprhGYkFvG4d0pFZs2BWOrcrzt1t0=1_Q@mail.gmail.com>
+ <mese9s0c.92140d27-9773-4298-812c-f4fb97d2e4c0@we.are.superhuman.com>
+ <CANCt8Ox7ZAOK2eOeeCdRSbrzNsnu3Z7huMzmgyK_LzeQ+GjFuw@mail.gmail.com>
+From: "Tomas" <info@alittlesparkofjoy.com>
+Date: Wed, 27 Aug 2025 06:39:54 +0000
+Subject: Re: SilkSilky Limited-Time Deals: Save Up to 64% Off!
+To: "Rita Liu" <rita@affiliate.bluefocus.com>
+X-Superhuman-ID: metlufqz.4ca4858d-3117-4c11-a901-5c84fef3c637
+X-Superhuman-Draft-ID: draft0047715c821c91b8
+X-Mailer: Superhuman Web (2025-08-22T19:09:09.838Z)
+Message-ID: <metlcugm.527ecd65-b7d0-4de3-845b-620b02191d40@we.are.superhuman.com>
+Content-Type: multipart/alternative;
+	boundary="d07110ef89d9b045078c27b75812f592799e6a6938d63493e80ffc943b82"
+MIME-Version: 1.0
+
+--d07110ef89d9b045078c27b75812f592799e6a6938d63493e80ffc943b82
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Rita,
+
+Thank you for your continued interest.
+
+The price point you mentioned would, unfortunately, fall below our sustaina=
+ble operating costs for the quality and comprehensive service we provide.
+
+That said, I can offer you a special partnership rate of $600 per guest pos=
+t (a 20% discount from our standard pricing) in recognition of the potentia=
+l for a long-term collaboration with SilkSilky.
+
+With brands like yours, we primarily collaborate through paid sponsorships,=
+ which provide exclusivity. Unlike standard affiliate campaigns, a paid spo=
+nsorship ensures your brand receives dedicated placements on our website, g=
+iving you direct visibility to our engaged audience without competing with =
+other brands for attention.
+
+This includes:
+
+* Premium, in-house content creation by our experienced writing team
+
+* SEO-optimized articles targeting your ideal customer demographic
+
+* Permanent, do-follow links for maximum search engine value
+
+* Content crafted to resonate with our engaged female audience
+
+* Full editorial control =E2=80=93 drafts sent for your approval before pub=
+lishin
+
+Please let me know if this works for you, and I=E2=80=99ll send over the In=
+sertion Order (IO) along with the proposed timeline.
+
+Looking forward to working together!
+
+Best=C2=A0,
+
+Tomas
+--d07110ef89d9b045078c27b75812f592799e6a6938d63493e80ffc943b82
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="UTF-8"
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"></=
+head><body><div><div><div class=3D""><div class=3D""><div class=3D""></div>=
+</div></div><div>Hi Rita,<br></div><div><br></div><div>Thank you for your c=
+ontinued interest.<br></div><div><br></div><div>The price point you mention=
+ed would, unfortunately, fall below our sustainable operating costs for the=
+ quality and comprehensive service we provide.<br></div><div><br></div><div=
+>That said, I can offer you a special partnership rate of $600 per guest po=
+st (a 20% discount from our standard pricing) in recognition of the potenti=
+al for a long-term collaboration with SilkSilky.<br></div><div><br></div><d=
+iv>With brands like yours, we primarily collaborate through paid sponsorshi=
+ps, which provide exclusivity. Unlike standard affiliate campaigns, a paid =
+sponsorship ensures your brand receives dedicated placements on our website=
+, giving you direct visibility to our engaged audience without competing wi=
+th other brands for attention.<br></div><div><br></div><div>This includes:<=
+br></div><ul><li>Premium, in-house content creation by our experienced writ=
+ing team<br></li><li>SEO-optimized articles targeting your ideal customer d=
+emographic<br></li><li>Permanent, do-follow links for maximum search engine=
+ value<br></li><li>Content crafted to resonate with our engaged female audi=
+ence<br></li><li>Full editorial control =E2=80=93 drafts sent for your appr=
+oval before publishin<br></li></ul><div>Please let me know if this works fo=
+r you, and I=E2=80=99ll send over the Insertion Order (IO) along with the p=
+roposed timeline.<br></div><div><br></div><div>Looking forward to working t=
+ogether!<br></div><div><br></div><div>Best&nbsp;,<br></div><div>Tomas<br></=
+div></div><div><div style=3D"display: none; border: 0px; width: 0px; height=
+: 0px; overflow: hidden; visibility: hidden;"><img src=3D"https://r.superhu=
+man.com/O3DJg0JN7FZta0YLr62_U0L0r9CYORp-ja_CrlrzxyMUESRsTiErxgN1boK7n4Dbfhb=
+ViRfIV374JNvxqKoRHrCuE9tEZydyf7dYC9a5xO5xdDMfi3rgpw8043YUJduKkoIFq7z8ZbodCm=
+hMQzbRbK3sxVdBXuxH3JDccXrd7xztH-6rADPOJURe149Dn_78.gif" alt=3D" " width=3D"=
+1" height=3D"0" style=3D"display: none; border: 0px; width: 0px; height: 0p=
+x; overflow: hidden; visibility: hidden;"><!--                             =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                                                                           =
+                     --></div></div></div></body></html>=
+
+--d07110ef89d9b045078c27b75812f592799e6a6938d63493e80ffc943b82--

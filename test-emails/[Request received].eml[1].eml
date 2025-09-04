@@ -1,0 +1,173 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp3319386nji;
+        Thu, 21 Aug 2025 03:56:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMNARA6doUVa30HGG2ZGNZiXgqjJa3jRYqimS6rG5n/Te7CP1vZYGQbA+W2LwKFLjFw9+E
+X-Received: by 2002:a05:6a20:a122:b0:243:78a:82bf with SMTP id adf61e73a8af0-24330b1656dmr2883263637.57.1755773794811;
+        Thu, 21 Aug 2025 03:56:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1755773794; cv=none;
+        d=google.com; s=arc-20240605;
+        b=H2abBvBDXeyO+rMiaRO79o3UTj8sV6bPcrAKDtubVRa5iuh58QgDBZabd6iwpXTfgk
+         PGMVkFZZLspJt9h6F5KksldQa0IAHBUe2Tj+Vn210GSrrNL3iVvS0FydjZfzIFEHXgQ/
+         XfO2SVmzEPfU09EykJYSH+Y7zFraE4k01IppSoW1ehrNnfTgtIyvxznkNoRqVEs0eGuq
+         BjbUQ00E8ppTUHjJXipQtZw8JKZsQq9SeyIGuvrGVXQg45tm4cmiMRUKy4gO7e6Edps1
+         ik4yP5WE172lYXh0xsgyMFROVARmxdYocBFRAhpqaeqHFJ/7ovOYrVEEcZ/M8qILoWU0
+         gdNw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=dkim-signature:auto-submitted:content-transfer-encoding
+         :mime-version:subject:references:in-reply-to:message-id:to:reply-to
+         :from:date;
+        bh=flJyLUKnzY2szXbiYY+LCN+lttJWQJkpVtIPVI35dSM=;
+        fh=ne4HxneCBH7B/C+YCRnI6yD7FswApjCaNzglkT25IKQ=;
+        b=fI5/SxClJmoa7vzMBbrtBdOIE5uvMQhko/GDowgij1myNWua7kr8knw9O8c6YXlBu7
+         u9elGZVcd0HZRgmHeBMx9qN8MM901kkHOZpyCh+2LUPOnl/A2HrHsLogqUPUJc4+nAc7
+         ci9a3YYVZB9dCQBWzkKTMfItIXjo91ogn37QKy7VfD/jlQICd/MBIYNhHk+09Cd2g1Ub
+         F9w/BNvGUwYBm/QoaJ5yOE+LdnnqBmeirx0igVU/UCAdq+nlhWK1BfQgleBOXgMfD2Mm
+         ruvyPkPxAnhUz9QA4QkAakJXMX+O70+BijiZuLl/spNOrhwCTG2Ki9iFeonOkuQWwYvH
+         5t9w==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@zendesk.com header.s=zendesk1 header.b="4/npFYVY";
+       spf=pass (google.com: domain of support@propeller7096.zendesk.com designates 192.161.151.32 as permitted sender) smtp.mailfrom=support@propeller7096.zendesk.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=propeller.la
+Return-Path: <support@propeller7096.zendesk.com>
+Received: from mta-out2.pod20.usw2.zdsys.com (mta-out2.pod20.usw2.zdsys.com. [192.161.151.32])
+        by mx.google.com with ESMTPS id 41be03b00d2f7-b48df12ca96si416713a12.582.2025.08.21.03.56.34
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 03:56:34 -0700 (PDT)
+Received-SPF: pass (google.com: domain of support@propeller7096.zendesk.com designates 192.161.151.32 as permitted sender) client-ip=192.161.151.32;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@zendesk.com header.s=zendesk1 header.b="4/npFYVY";
+       spf=pass (google.com: domain of support@propeller7096.zendesk.com designates 192.161.151.32 as permitted sender) smtp.mailfrom=support@propeller7096.zendesk.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=propeller.la
+Received: from zendesk.com (unknown [127.0.0.6])
+	by mta-out15.pod20.usw2.zdsys.com (Zendesk) with ESMTP
+	id 230e2cf1-b0aa-4a13-9160-1083bbd70a59
+	for <rita@affiliate.bluefocus.com>;
+	Thu, 21 Aug 2025 10:56:34 +0000 (UTC)
+Date: Thu, 21 Aug 2025 10:56:34 +0000
+From: Propeller <hello@propeller.la>
+Reply-To: Propeller <hello@propeller.la>
+To: Rita <rita@affiliate.bluefocus.com>
+Message-ID: <1R1V3791X5D_68a6fb6224f93_8815785456_sprut@zendesk.com>
+In-Reply-To: <qLpsbwRDT3GXdB1ByqhjIw@geopod-ismtpd-17>
+References: <1R1V3791X5D@zendesk.com>
+ <qLpsbwRDT3GXdB1ByqhjIw@geopod-ismtpd-17>
+Subject: [Request received]
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_68a6fb6234c52_881578546bc";
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Delivery-Context: event-id-40466384400532
+Auto-Submitted: auto-generated
+X-Auto-Response-Suppress: All
+X-Mailer: Zendesk Mailer
+X-Zendesk-From-Account-Id: e86c655
+X-Zendesk-Email-Id: 01K364BXPKHQQVBMVDQ9D1410K
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zendesk.com;
+ q=dns/txt; s=zendesk1; t=1755773794;
+ bh=flJyLUKnzY2szXbiYY+LCN+lttJWQJkpVtIPVI35dSM=;
+ h=date:from:reply-to:to:message-id:in-reply-to:references:subject:mime-version:content-type:content-transfer-encoding;
+ b=4/npFYVYH6nvN6VQaPwqrdADVc2XVw08NpYfZgUhlA9sNAl4pPmYlG7px/aHZNYSylDAIHyHqmZk7e+QMXtiO38UxLyLsPvOy/8TWEn+2IsmkMjDSViJRlQ6k/kVVeXZOxy5A5aRkp5HCAh7SLbT6qYwy4BI9on2CgPgqm1QaCgB0/SHCrEQT7JG8n864rny5jNqVRKAgGzkhbHo/4TYq0XoZmYcQwmQ8Nf7PDUHoVM0rpyor2kCdCWeaBD5wIM6CuOotUy2BEcTgxb2iyKx7RDEyAOeGeTk8ajgxywewf5WPaVSJ9KVyk4Tks2NI5LJTpEnK+t+DV9tOOo2QpQAow==
+MIME-Version: 1.0
+
+----==_mimepart_68a6fb6234c52_881578546bc
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi there!<br><br>Thank you for contacting Propeller =E2=80=94 we're happy=
+ you reached out.<br><br>We've received your message and someone from our=
+ team will be getting back to you as soon as possible.&nbsp;<br><br>Our c=
+urrent response time is within 3 business days.<br><br><br>Please note:<b=
+r><br>=E2=80=94 If you're waiting for points to be credited, please allow=
+ 3 business days to see these on your account.<br><br>=E2=80=94 If you're=
+ inquiring about a reward item, double-check the item's description to se=
+e when the item is expected to be sent. Our rewards can take longer than =
+an average online order.<br><br>=E2=80=94 If you're waiting for ticket in=
+formation, please note that you will receive fulfillment and ticket detai=
+ls no later than the day before the show.<br><br>Do good, propel on.<br><=
+br>Team Propeller<br><br>www.propeller.la<br></p>
+
+--------------------------------
+This email is a service from Propeller.
+
+
+
+
+
+
+
+
+
+
+
+[1R1V37-91X5D]=
+
+----==_mimepart_68a6fb6234c52_881578546bc
+Content-Type: text/html;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html dir=3D"auto" lang=3D"en-US-x-1"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+  <style type=3D"text/css">
+    table td {
+      border-collapse: collapse;
+    }
+    body[dir=3Drtl] .directional_text_wrapper { direction: rtl; unicode-bid=
+i: embed; }
+
+  </style>
+
+          <style type=3D"text/css">
+            @media only screen and (max-width: 768px) {
+              .simplified-email-footer .namecard {
+                display: block;
+                min-width: 100%;
+                padding: 0 0 16px 0; }
+
+              .simplified-email-footer .content {
+                padding: 16px; }
+            }
+          </style>
+        </head>
+<body lang=3D"en-us" style=3D"width: 100%!important; margin: 0; padding: 0;=
+">
+  <div style=3D"font-family: 'system-ui','-apple-system','BlinkMacSystemFon=
+t','Segoe UI','Roboto','Oxygen-Sans','Ubuntu','Cantarell','Helvetica Neue',=
+'Arial','sans-serif'; font-size: 14px; line-height: 1.5; color:#444444;">
+    Hi there!<br><br>Thank you for contacting Propeller =E2=80=94 we're hap=
+py you reached out.<br><br>We've received your message and someone from our=
+ team will be getting back to you as soon as possible.&nbsp;<br><br>Our cur=
+rent response time is within 3 business days.<br><br><br>Please note:<br><b=
+r>=E2=80=94 If you're waiting for points to be credited, please allow 3 bus=
+iness days to see these on your account.<br><br>=E2=80=94 If you're inquiri=
+ng about a reward item, double-check the item's description to see when the=
+ item is expected to be sent. Our rewards can take longer than an average o=
+nline order.<br><br>=E2=80=94 If you're waiting for ticket information, ple=
+ase note that you will receive fulfillment and ticket details no later than=
+ the day before the show.<br><br>Do good, propel on.<br><br>Team Propeller<=
+br><br><a href=3D"http://www.propeller.la" rel=3D"noreferrer">www.propeller=
+.la</a><br>
+  </div><br>
+  <div style=3D"font-family: 'system-ui','-apple-system','BlinkMacSystemFon=
+t','Segoe UI','Roboto','Oxygen-Sans','Ubuntu','Cantarell','Helvetica Neue',=
+'Arial','sans-serif'; font-size: 12px; line-height: 1.5; color: #49545c; ma=
+rgin: 10px 0 14px 0; padding-top: 10px;">
+    This email is a service from Propeller. Delivered by <a href=3D"https:/=
+/www.zendesk.com/support/?utm_campaign=3Dtext&amp;utm_content=3DPropeller&a=
+mp;utm_medium=3Dpoweredbyzendesk&amp;utm_source=3Demail-notification" style=
+=3D"color:black;" target=3D"_blank">Zendesk</a>
+  </div><br>
+ =20
+<span style=3D"color:#FFFFFF" aria-hidden=3D"true" class=3D"zd_encoded_id">=
+[1R1V37-91X5D]</span>
+
+<div itemscope=3D"" itemtype=3D"http://schema.org/EmailMessage" style=3D"di=
+splay:none">  <div itemprop=3D"action" itemscope=3D"" itemtype=3D"http://sc=
+hema.org/ViewAction">    <link itemprop=3D"url" href=3D"https://propeller70=
+96.zendesk.com/hc/requests/13897">    <meta itemprop=3D"name" content=3D"Vi=
+ew ticket">  </div></div></body></html>=
+
+----==_mimepart_68a6fb6234c52_881578546bc--

@@ -1,0 +1,155 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp3322392nji;
+        Thu, 21 Aug 2025 04:01:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMQKWvogLEFBTjowfFGLcXk7FBtWvP6SGxur/EkTSfVeFvQJySVqBp4adN/xq1rtNBNF/H
+X-Received: by 2002:a17:903:f8c:b0:234:f580:a11 with SMTP id d9443c01a7336-245fec0693emr31965825ad.19.1755774117879;
+        Thu, 21 Aug 2025 04:01:57 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1755774117; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=XyKfqx1vRjRu0gbnJQKYFUXKrLSfHkI7nUMZhyVX6J5X2Q2juP5WTyvz8a6+gtNmTA
+         yOwSz+Zw9gNnflNOhT5nZA0r1pgRSFgsSPONQNFrFtlzSuVFVp3ZAb8xyu+m+vPVfz1e
+         bGizieSyyzpIrmDjWj2zJTwMCDmb92dthUyM7kGyNjKxOqjpO3N0RymFPXQESTBBmT3F
+         77hxSxs+wbHVezcgNRAP7+zrHs0YF17NmwaG1N5pEPddoifPdbuKkSg9BLyvuFS1hvx8
+         xJ5SwIFSaVR3lZ4hwV8aSBwVqmQ/laQOQ2mjm2frLoqfiI1QbIStNTHxAE3RNGIJBHLc
+         LMDw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=sender:content-transfer-encoding:mime-version:to:subject:precedence
+         :message-id:from:date:dkim-signature;
+        bh=sJL8kp7vXl5ryYCA2wpH3UHdEpulN7xxtQEZ1R+k5JM=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=IQbL8QRdVIze7Ux3uD7a+g809QKKLzK8WG3P2ugL0CjkJ+Q5aWjulhZXcjlKWx11DX
+         u6YqnVhKhL8b1YhFYsi4T3Ddw68WYtb0lwZorRQSdQ9K5ot0zpNLUez6T4QwNbKJlfmR
+         tIWV4jSof3MToOWxi/sNKXoQ4Pb+F0wgPlYRipVX5z8nCZamp1unbyI4JPXYzzKdVyEm
+         Hf4K0HIfbdj3c024wTpnWGuAKV4b0etcQXZAY5Qhx8holIPi0VnJeRJAaZDpuxQgwTff
+         sAAGLs7R0wzChOvIFgitplzMR6FkFHHyaGl7/nF9WFsyjGa5VdS9Gm2yD6jHNYMQgoGk
+         2soQ==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@fidelitix.ca header.s=default header.b=kK9B1eAM;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of cynthia.belanger@fidelitix.ca designates 23.83.222.41 as permitted sender) smtp.mailfrom=cynthia.belanger@fidelitix.ca;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=fidelitix.ca
+Return-Path: <cynthia.belanger@fidelitix.ca>
+Received: from cow.ash.relay.mailchannels.net (cow.ash.relay.mailchannels.net. [23.83.222.41])
+        by mx.google.com with ESMTPS id 98e67ed59e1d1-324f286580esi979371a91.93.2025.08.21.04.01.57
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 04:01:57 -0700 (PDT)
+Received-SPF: pass (google.com: domain of cynthia.belanger@fidelitix.ca designates 23.83.222.41 as permitted sender) client-ip=23.83.222.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@fidelitix.ca header.s=default header.b=kK9B1eAM;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of cynthia.belanger@fidelitix.ca designates 23.83.222.41 as permitted sender) smtp.mailfrom=cynthia.belanger@fidelitix.ca;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=fidelitix.ca
+X-Sender-Id: funio|x-authuser|fideliti@s023.panelbox.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id DF06A1653EC
+	for <rita@affiliate.bluefocus.com>; Thu, 21 Aug 2025 11:01:55 +0000 (UTC)
+Received: from s023.panelbox.net (trex-blue-6.trex.outbound.svc.cluster.local [100.96.17.224])
+	(Authenticated sender: funio)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 5854716503A
+	for <rita@affiliate.bluefocus.com>; Thu, 21 Aug 2025 11:01:55 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1755774115; a=rsa-sha256;
+	cv=none;
+	b=I89sZbzLonRVL2aHqwyYmdKkMyRTny3K8YOfVO40AHVouyQNCysF2TI/eJnKkJ8otYzfbn
+	IO7MGL0apQShcqeriFpb7ebv2jp5y/DQYR8QF9ac1u8QIHibMD4nmuCp/PmmbOwmTwrfJ6
+	M+Q5y4q5KnLcnI1TJdaqAZ7EAzqROcx7tHLtp8vwL0YvbzU+qlVXYyArrR7c2G6DoSU+Y8
+	F1SIwpnpX+H5oWPD7Gsd0iGpCTawbZXOb7CafvM1q53taSHfX+Vw/Vo80hzX8DtmoOimZ0
+	dKQtz1a/oekrsspgZiVT+339CVq+ocNtiBSCS6vQCkTkyjl6aWlw6xM5rlld1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1755774115;
+	h=from:from:sender:sender:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
+	bh=sJL8kp7vXl5ryYCA2wpH3UHdEpulN7xxtQEZ1R+k5JM=;
+	b=HX6oEDcDDpbHCa4jc4EJcIvY2RHWO7XcsEk0/QHb2HQqkz7xded1/SHHVkw26hWfCAOAeP
+	pE5drr12BhbFyxAJLXiDZxJgjfeB39VxzJ10uMXoXoS6Ud+zFMaOwVM3ujxyv/9HbzUgk8
+	OUq6/tu42ITPBsbZCZgKonBqbyuM8HL2sE1ZTr5dfuJBkAQ+OGN3PwMFuRYYahB8ej2jwV
+	P4bT2PKp0348rC+wUDrECfeRR5IMXFcZmzu7pZF51kKddWqccKeQnqG3wKCjop4WKS85Bl
+	OLGRT2S9Wxh/IzL8XwA6CutOw6Hg8S8aANwLWL3QLdqEMLUGy3CwITa6l+/8tA==
+ARC-Authentication-Results: i=1;
+	rspamd-75798d6c54-xpn4g;
+	auth=pass smtp.auth=funio smtp.mailfrom=cynthia.belanger@fidelitix.ca
+X-Sender-Id: funio|x-authuser|fideliti@s023.panelbox.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: funio|x-authuser|fideliti@s023.panelbox.net
+X-MailChannels-Auth-Id: funio
+X-Belong-Inform: 54108cd70862d3ec_1755774115719_1632511710
+X-MC-Loop-Signature: 1755774115719:3929466684
+X-MC-Ingress-Time: 1755774115719
+Received: from s023.panelbox.net (s023.panelbox.net [184.107.112.25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.96.17.224 (trex/7.1.3);
+	Thu, 21 Aug 2025 11:01:55 +0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=fidelitix.ca; s=default; h=Sender:Content-Transfer-Encoding:Content-Type:
+	Mime-Version:To:Subject:Message-Id:From:Date:Reply-To:Cc:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=sJL8kp7vXl5ryYCA2wpH3UHdEpulN7xxtQEZ1R+k5JM=; b=kK9B1eAMkFNEa7yrZJB8tpFrnY
+	QKBv7lVKKt79BrVjk21KWAzHik/YtDjw0PslsPyjdHgwn4db3NjEORI44a8+sbJqbvGIgOzooUtwX
+	Gf06jsnLKLbr2CI2okPJ6F4VcGsRa4nE6IU/4G9P0ipbgaIe3kRzpwZUqUC/tByItn3gDhWmsha9m
+	u6yn6d4oEV9Jim3XqjOjTiWZF0XZ5yoL9ASxOmtma4/lY2MiBiYUEy3eIUWOn6D+6faDETR3HGC/b
+	vrE9BviuPYej3dK2T7hh818iAnUT27RE/aJpvDDSMBvJK1T0WHaxb5jThj/ziaVZQOci6+KAR4TO1
+	1CHPmxhw==;
+Received: from fideliti by s023.panelbox.net with local (Exim 4.98.2)
+	(envelope-from <cynthia.belanger@fidelitix.ca>)
+	id 1up33H-000000053Nk-3sqb
+	for rita@affiliate.bluefocus.com;
+	Thu, 21 Aug 2025 07:01:54 -0400
+Date: Thu, 21 Aug 2025 11:01:51 GMT
+From: "cynthia.belanger@fidelitix.ca" <cynthia.belanger@fidelitix.ca>
+Message-Id: <1755774111.Bn3U38mdG_dJbNxy@s023.panelbox.net>
+Precedence: auto_reply
+Subject: Absence - Out Of Office
+To: rita@affiliate.bluefocus.com
+X-Autorespond: SilkSilky Limited-Time Deals: Save Up to 64% Off!
+X-Loop: rita@affiliate.bluefocus.com
+X-Precedence: auto_reply
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Sender: <fideliti@s023.panelbox.net>
+X-AuthUser: fideliti@s023.panelbox.net
+MIME-Version: 1.0
+
+Bonjour,=0D
+=0D
+Veuillez noter que je suis pr=C3=A9sentement en vacances, sans acc=C3=A8s =
+=C3=A0 mes courriels. Je serai de retour au bureau mardi le 2 septembre 202=
+5.=0D
+=0D
+Pour les demandes concernant la facturation: =C3=A9crire =C3=A0 payables@fi=
+delitix.ca=0D
+=0D
+Pour les demandes concernant les comptes CA360 : =C3=A9crire =C3=A0 360@fid=
+elitix.ca=0D
+=0D
+Pour toute autre demande ou urgence: =C3=A9crire =C3=A0 info@fidelitix.ca=
+=0D
+=0D
+=C3=80 bient=C3=B4t!=0D
+=0D
+Cynthia=0D
+=0D
+_________________=0D
+=0D
+Hello!=0D
+=0D
+I am currently on vacation without access to email and will be back in the =
+office on Tuesday, september 2nd 2025.=0D
+=0D
+For matters regarding invoicing: please contact payables@fidelitix.ca=0D
+=0D
+For matters regarding CA360 accounts : please contact 360@fidelitix.ca=0D
+=0D
+For any other questions or urgent matters, please contact info@fidelitix.ca=
+ =0D
+=0D
+Thank you!=0D
+=0D
+Cynthia=0D
+=0D
+=0D

@@ -1,0 +1,188 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5672549nji;
+        Mon, 25 Aug 2025 03:45:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHStD2HLB0iWRe4iN/aU70X64AkfF6Fx/qPepYeCo6lECq+pcoZAY11WN/PmoTl9xUAcNoO
+X-Received: by 2002:a17:902:c94c:b0:245:f0d8:6ee2 with SMTP id d9443c01a7336-2462efade2amr148495625ad.52.1756118729034;
+        Mon, 25 Aug 2025 03:45:29 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1756118729; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=O7Npx8HqUXlJNCcfBu7fTQwSvuVuR39Bj/EVNy1nfAzfqoEWO13b7+/aZtOPFmLDri
+         UguxV7zquFNCqDU8JZG4dQWzmlxfLs3gAQh+rMgDp9RT0Blibo7FBzEMzhPXVtAEe4OE
+         U27/uodUCSj8h8MKG1zFmt2o9V2Zli+arSHzps1mNzVEv0jk0FbvL043TEE22BU5l4dG
+         wtLFyVQ8KA3bQZr1x44ZOhO3VtxK1S8ewUst7s/MlNsXSBCy8LoGCx1RdQlNfOmxnnl8
+         IMdlJj3gePaCSccc3qm8P2kotT/D0eGn0wXQu2fmIXIQYeihMkxn0CU6p4ZzCvedVm7t
+         wWag==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:auto-submitted:in-reply-to:references:message-id:date
+         :thread-index:thread-topic:subject:to:from:dkim-signature;
+        bh=SfOIu66Z+5G85zmcKdkY/Pus+rZbMh+3E7BbpT2SQKw=;
+        fh=z1MbCQN7ZmJy1kdV6Fjt4GRE80TsQd9EasJ/8pjS0dI=;
+        b=T7qtcEgxF85a29KDDhVrmuhu2j7a5SqVTtEkLER4O7tlHqYjBxzNUJnObetZpd22+B
+         9ltd3WYMRlEfnJqWwuMocj9HcDhhcsoaS/ukqpo43i7X/hhEnPMDWJs01QfpThZeVz3i
+         5aSxMOrMsgy8oQOMpfVF4ejqmY0n7XrxiVUx8bOO+E7fVuDFBacIkfGWu6NflROTvQB4
+         RVMJ9k9EvwZsTes09pauP4NGZU0oa/GxVZVyVSFsNPliGTU5YTdN1KXes3YGRAFTvC/z
+         2EiY+uwYFQXA/aBaGHn6pdhC6WRVVcpV+3JvhBrtWtrEJCHHC9fZS3/FcrSdRplXofcW
+         BycQ==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@burda.onmicrosoft.com header.s=selector2-burda-onmicrosoft-com header.b=n2GHgA3l;
+       arc=pass (i=1 dkim=pass dkdomain=burda-forward.de dmarc=pass fromdomain=burda-forward.de);
+       spf=pass (google.com: domain of postmaster@beup281cu002.outbound.protection.outlook.com designates 2a01:111:f403:da0b:: as permitted sender) smtp.helo=BEUP281CU002.outbound.protection.outlook.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=burda-forward.de
+Return-Path: <>
+Received: from BEUP281CU002.outbound.protection.outlook.com (mail-germanynorthazhn150100000.outbound.protection.outlook.com. [2a01:111:f403:da0b::])
+        by mx.google.com with ESMTPS id d9443c01a7336-246688802bcsi42407235ad.194.2025.08.25.03.45.28
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Aug 2025 03:45:29 -0700 (PDT)
+Received-SPF: pass (google.com: domain of postmaster@beup281cu002.outbound.protection.outlook.com designates 2a01:111:f403:da0b:: as permitted sender) client-ip=2a01:111:f403:da0b::;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@burda.onmicrosoft.com header.s=selector2-burda-onmicrosoft-com header.b=n2GHgA3l;
+       arc=pass (i=1 dkim=pass dkdomain=burda-forward.de dmarc=pass fromdomain=burda-forward.de);
+       spf=pass (google.com: domain of postmaster@beup281cu002.outbound.protection.outlook.com designates 2a01:111:f403:da0b:: as permitted sender) smtp.helo=BEUP281CU002.outbound.protection.outlook.com;
+       dmarc=fail (p=NONE sp=NONE dis=NONE) header.from=burda-forward.de
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qiShArSgPVFUftT+hJyy1ScV2zQtXfPigOyCp4FBixOmVKFVIDLLSwB9sCx0THqPZWPzVOOp1f96auT9NTSXiYq9cPr3bAU934BoEy+Py9pyVP9GVqzOGHw0BHQAvcZ+d8I8zAG0LHFa9KorSyxJZheJTVojxWcDriAtLTts92OC/4iCLzLcVPCq+01Z+JbcoihYIwQ3Hnj/giZSmO2l/YzBrXl5lptS+r/6MTrRauRUC2SIZSakLICfaGHyBXCbEdU22LHCqAH6G7X4PGOIK3AnnGCAD0zPQh/FZf3Qd/E2jy3Xe1kGtxzuJPSxDYvQYVwcoRbVNKmosjZ1Ij1CpA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SfOIu66Z+5G85zmcKdkY/Pus+rZbMh+3E7BbpT2SQKw=;
+ b=Kdl1bC2Rlbz5c+N2I5myF4BxVBuMzON6YlzrzR9VgDW6HGcpITkpKX5p1M/tnl0Xik53Iq3DA1u4d/QJzsvduOqsj2evTxRi3sftyYfC4SVWEGSXfVDsq2hwqHtU521nMPW9e+BsOOmQhjqjK13jRlc4yGaUqOATAASjwsKIBkZTR0O34iKyBK9kOcl7/AMhkdebcbobKrKNRJjcIZsM/54YS0JRJu88SyOaEC6w+bOaKHDWdr5rvB2gdY5qBoDzL/3435d0vZRejhSPdruLLTsQs9nO6MuvzTTs0Z2hjmKXXfCA/iPi/K8t5L0r2zLNwcaFlDie5B5Vpp4gALmu0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=pass
+ action=none header.from=burda-forward.de; dkim=pass
+ header.d=burda-forward.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=burda.onmicrosoft.com;
+ s=selector2-burda-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SfOIu66Z+5G85zmcKdkY/Pus+rZbMh+3E7BbpT2SQKw=;
+ b=n2GHgA3lOOM/YXb2GLif+ZqayZrZdSmNJSGp1d0awqgS85oU2yUglHYlqrqPwyFxa+blzEvs5WdTphFtWv0CvxDhf4SNcxNzPpnDwaiZel/qBpWnqPuVGsLa/dkbZ9Imz3V9LMdctO0hr+yjP75k8IN9Sn7rTTiY/aYr1ps04/A=
+Received: from FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d18:2::173)
+ by BEZP281MB3122.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b10:75::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.21; Mon, 25 Aug
+ 2025 10:45:25 +0000
+Received: from FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM ([::1]) by
+ FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM ([fe80::6678:4cd3:dd5f:3fe8%7]) with
+ Microsoft SMTP Server id 15.20.9052.019; Mon, 25 Aug 2025 10:45:25 +0000
+From: Scherr Stephanie <Stephanie.Scherr@burda-forward.de>
+To: Rita Liu <rita@affiliate.bluefocus.com>
+Subject: Automatische Antwort: Jackery DE x Chip.de Q3 collab
+Thread-Topic: Jackery DE x Chip.de Q3 collab
+Thread-Index: AQHcAGHNIBpltNYclUiJz4YjdIb9fbRIxF/CgAAHyoCAAxaaAoAAKcsAgAY2irWAAYGrAIAAF4NUgAACUNOAAZ7sgIAAHv6ogAE5ksyAABwngIAADwQ8gAYudQCAAYQZgIAAAvWcgAMyhICACyjTgIAABTMqgAZChwCAAAAl0Q==
+Date: Mon, 25 Aug 2025 10:45:25 +0000
+Message-ID: <8fa4eccb26dd4c82860a0908846a303a@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+References: <CANCt8OxTUCkN01EsjeK-M9LDtYHJxLeyE7USq5Q_GiwoFgwxPA@mail.gmail.com>
+ <FR3PPFA27483119A2932CFDE835A7404181A925A@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+ <CANCt8OzQJTQAFE_CKvG_xUneKO13bZ6LZNZOavWuo_ZPy3Um0g@mail.gmail.com>
+ <FR3PPFA27483119698D81CD00C481DCF984A927A@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+ <CANCt8OzfEwyUPhzOmOtj5cqKbPmSM4=QtMQwO9Laz-vY-wE1eA@mail.gmail.com>
+ <FR3PPFA274831196F6947A37E3D8902DC18A923A@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+ <CANCt8OykqHAVmwxvVLda0u7ULnqmb1v4vGc97eo0FnMahfMdGA@mail.gmail.com>
+ <FR3PPFA27483119F7AE9158E0BB6131C0C7A922A@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+ <FR3PPFA27483119E2E2B71A8CE8A8F77873A922A@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+ <CANCt8Ox7DGqDe=i61WewCREUzSLwR5P9MgGdO1a=PRO0XqEnvg@mail.gmail.com>
+ <BE1PPF7F583608076FBF666A5419C8CED3EA92DA@BE1PPF7F5836080.DEUP281.PROD.OUTLOOK.COM>
+ <FR3PPFA274831194A58D3BC098F47F11A7FA92CA@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+ <CANCt8OzFtwnsOm2ZvEtNxhbqj7Vg0STDQ0uTXp2Z5z6FWUC5sQ@mail.gmail.com>
+ <FR3PPFA2748311946BA8069B4B0954B57FBA92CA@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+ <CANCt8OxdOvNCrHsa5_GS-VsXbc+E94AmQ1JTBvhQPJ0_-MUFOQ@mail.gmail.com>
+ <CANCt8Ow1kKRWv2U0j-ciYU0m0HCLzSc2HiUo2CTbW-yjdrH=VA@mail.gmail.com>
+ <FR3PPFA27483119B555383648DDB20E2C1BA92BA@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+ <CANCt8OzZ0s-hVaZuSoZ+UaaNg7bCVLp3Lh1VMwJ-seRgw1dNrg@mail.gmail.com>
+ <CANCt8OzzJm5Uc8J+8XcV9vJHiagknQMWJvMkCpi5FzkyCWeEqg@mail.gmail.com>
+ <FR3PPFA274831193BAEBC2B1CE782000C69A932A@FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM>
+ <CANCt8OzT_=tEsZtFrhz+FeGRw8K+Tg5JaaijBV7d-JQ+ACiKOg@mail.gmail.com>
+In-Reply-To: <CANCt8OzT_=tEsZtFrhz+FeGRw8K+Tg5JaaijBV7d-JQ+ACiKOg@mail.gmail.com>
+X-MS-Has-Attach:
+X-Auto-Response-Suppress: All
+X-MS-Exchange-Inbox-Rules-Loop: Stephanie.Scherr@burda-forward.de
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=burda-forward.de;
+x-ms-exchange-parent-message-id: <CANCt8OzT_=tEsZtFrhz+FeGRw8K+Tg5JaaijBV7d-JQ+ACiKOg@mail.gmail.com>
+auto-submitted: auto-generated
+x-ms-exchange-generated-message-source: Mailbox Rules Agent
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: FR3PPFA27483119:EE_|BEZP281MB3122:EE_
+x-ms-office365-filtering-correlation-id: a51d622d-85f7-428a-e7c7-08dde3c47fab
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|10070799003|1800799024|376014|366016|8096899003|80100003;
+x-microsoft-antispam-message-info: =?utf-8?B?ZHQzNVNsU1lUZ0I2Z3lWTmRlQ3hvbkF3dW5aQmtDRCszTGhMY3A4VmlqdGxD?=
+ =?utf-8?B?UXRJK3FveFMzWHlJUzRCSUFsVTFIRitWdWlPNjdqR1YrSFBIOVhCUkwvclE0?=
+ =?utf-8?B?TFRFcldXZE1sNDBCd0pWVlRJQzNCVUNpK0ZETlhPWTJVaVV5Y3daM2RxY254?=
+ =?utf-8?B?UXUrMUQ4YkJuRXA2SVFYVmlQVmliQ2tGNFV1MHlUZnBRU3QyamlVaHpMSVk2?=
+ =?utf-8?B?WWRiWWZGL3BpQU1nQmRGYXA4eGc0R3VDSnVRTWZSVk5yYmZHSTF1NVBsZGJu?=
+ =?utf-8?B?NVpkdXo3R1MvajMzZGIyQVE3Yk5zY2Z6d2M2SHVxWFQ3ZkwrWi9NOTZnaERj?=
+ =?utf-8?B?MmlLSUZvK2lOM0g2bXZ1Zk9uaktLOStQb1hGVjJZQjFlY0poZGx5K2g0OC9y?=
+ =?utf-8?B?Q2pQa2k4ZDRvRnFsMzFzdzFuMW9BOU5xeFJRUHZLell3SWFCcFZxUkhXL0Nt?=
+ =?utf-8?B?djFKSU53VHBpWVRvQUMyZ1duWGJOeGRFaUU2aVdBOExwRDJzUmFxbVV0cFJD?=
+ =?utf-8?B?VXhTRDIvUEEycWtpa1lRNFJmR1ArbE8wSHFuV3VEOTRHQXhaSHdYaDZlanR5?=
+ =?utf-8?B?TnZjaHRIdXE3OU9HWGF3Qit4bWpRbmZVMDErUjV4TTBhZUdETFJtcGY0eTNO?=
+ =?utf-8?B?bm4yRWZpWkZZRldkZFlHdUJReDRPWk93YzdsWThuUEU0SFA3YnpLcEY3MnNF?=
+ =?utf-8?B?MUE1R0xGbDZ1aThhS293ZTkzcHdPM25VOHhIREd2Qy9uS2xZcTNjTjRFUlZl?=
+ =?utf-8?B?bmFHa1BHSnRwL294QXErN3ltYUdHclU2NE1wMTBuSitQTVFjZW10NlM1NXMx?=
+ =?utf-8?B?Sk94UEJzSllNOEZsUlkwSXNyTWwrNmR6bHU1dXp0QTEwVHdETHRLTW1paDZi?=
+ =?utf-8?B?bnZKWnpvNFVLTTVJK2JTelM1VjlVTFdyQ1RlYkpIWkdmVGZLZnZFbno2L0hM?=
+ =?utf-8?B?dGFHS3JLaTZrSUVaM2pjczJEOFkxOFBUL2NjWlRjbktudE1IS2ZWVnRRQmtW?=
+ =?utf-8?B?ZSt4OC9sWllvOFBHMzNneE5oSzBpczFsc0hCZ0NVQ1FhdU9OUHk5b1pycDhz?=
+ =?utf-8?B?Y1RKdUFSNlFzcnpZM2JvS3dhczlOOEptRVU4aDE4djZ4bG5YdSs0OXlOZkJE?=
+ =?utf-8?B?MGNiNXAydXVtVlh1cEh3Z2dodmIxYWFDemlaRUpPZnZLV2ZWeWtIc0t3dk9O?=
+ =?utf-8?B?NmYva0xEdlpveFhaMFZyQWxxNVBwaE1hRUtsQ2VOR3UzOXAyemdBVWEveDYx?=
+ =?utf-8?B?Nlk2QW53dW1OOEVndjd3TzB6QWs0R0FkbE10eTNxTXh1TC9SQnRFVk8zVy90?=
+ =?utf-8?B?WjZseUVHYS9HR2JDcEx3Z2d3WVBrS2JhaDQvVmM2dFN3UWFVMm53djY0Uk5X?=
+ =?utf-8?B?UmIyaXBNZzdrTFhmdkM2YVFoTWUzb0o5cmZuc1JtNGZOT1YwMXpaWXE3a2lq?=
+ =?utf-8?B?dFRiRmZhZFlIQ0s1NDF1RGNSeU5Fc3lhelBBZ3orb2lxZmplbzNXelcyUXRM?=
+ =?utf-8?B?WHJEZ2MwNjQxcDVIMTZHMUtWQ0FJdGlCSHJMam1KOHBSb2VmN0U0YVVjSTVJ?=
+ =?utf-8?B?K2pGS3lTeWpBZ3dSRXNiZjgzQTlOTGVld1h5WWJqVDlKYityRFRrUmUzbjVa?=
+ =?utf-8?B?M3pNL2xPVHB0cFErOTBXWE1EczB0TkR3aHFsQ2NIOGdUVHhzUnZNSHMyekVo?=
+ =?utf-8?B?SEV3TENvZC9TK3BhaW5MdTNFOWlmMFlCWmlpSEw0d3RzeTB4SGVwUEt1NGxR?=
+ =?utf-8?B?MzgxQ014dWIvNnFoWEsycTdWbS9ZQThJUDVCcFEybHdPTUJuQ29JYTdDN3Ft?=
+ =?utf-8?B?RXlSZGlNYnNQc3R6UU5LTGVLcXNMYmRQa1JDYzN4SW5OOW9TRFZJdjYvK0NY?=
+ =?utf-8?B?akVPVXVHVTlCMVZkMlFmckUvdXQ2ZXhxZno4cUdLMmVKeVE9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:de;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(376014)(366016)(8096899003)(80100003);DIR:OUT;SFP:1501;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: BJ3hpugbNYM7eBDQXRG9sKmXP2rv+JnG54oiucL+N3UCLmABnJouw/+q0zMZmFAStN1YuLyDvvHWi6FbV4mTkskj0PHxNsas7U8f+WOruHALfxESY3b0NeiamBNljWX6goU/a5C1JfnyGOirNX1RPwys71QrAwzjRDsuD+RYzRYdTvNNBbFkKkfNgnBmQnGCF84EeVoGoDe87i8SmcFYLkJ2wz2V+A9r96YhA22Whi8z1XBh14+uxEimVH0HVvJgmoHwSJF2yJZVL+n9bp02B7FdUkxLKtipOJV3PhV8N4fhoOfpehpqgxop4TVVqxED
+Content-Type: multipart/alternative;
+	boundary="_000_8fa4eccb26dd4c82860a0908846a303aFR3PPFA27483119DEUP281P_"
+X-OriginatorOrg: burda-forward.de
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: FR3PPFA27483119.DEUP281.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: a51d622d-85f7-428a-e7c7-08dde3c47fab
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Aug 2025 10:45:25.1334
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 0a3106bb-aab1-42df-9639-39f349ecd2a0
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BEZP281MB3122
+MIME-Version: 1.0
+
+--_000_8fa4eccb26dd4c82860a0908846a303aFR3PPFA27483119DEUP281P_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+77u/DQpTZWhyIGdlZWhydGUgRGFtZW4gdW5kIEhlcnJlbiwNCg0KdmllbGVuIERhbmsgZsO8ciBJ
+aHJlIE5hY2hyaWNodCEgSWNoIGJpbiBhYiBNaXR0d29jaCwgMjcuMDguLCB3aWVkZXIgZXJyZWlj
+aGJhci4NCg0KSW4gZHJpbmdlbmRlbiBGw6RsbGVuIGvDtm5uZW4gU2llIHNpY2ggYW4gY29udGVu
+dC1jb21tZXJjZUBidXJkYS1mb3J3YXJkLmRlIHdlbmRlbi4NCg0KSGVyemxpY2hlIEdyw7zDn2UN
+ClN0ZXBoYW5pZSBTY2hlcnINCg==
+
+--_000_8fa4eccb26dd4c82860a0908846a303aFR3PPFA27483119DEUP281P_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+PGh0bWw+PGhlYWQ+DQo8bWV0YSBodHRwLWVxdWl2PSJDb250ZW50LVR5cGUiIGNvbnRlbnQ9InRl
+eHQvaHRtbDsgY2hhcnNldD11dGYtOCI+DQo8L2hlYWQ+DQo8Ym9keT4NCu+7vw0KPG1ldGEgbmFt
+ZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQgbWVkaXVt
+KSIgc3R5bGU9ImNvbG9yOmluaGVyaXQ7IGJhY2tncm91bmQtY29sb3I6aW5oZXJpdCI+DQogPHAg
+Y2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1hcmdpbjowY207IGZvbnQtZmFtaWx5OkFwdG9zLHNh
+bnMtc2VyaWY7IGZvbnQtc2l6ZToxMXB0Ij4NClNlaHIgZ2VlaHJ0ZSBEYW1lbiB1bmQgSGVycmVu
+LDxicj4NCjxicj4NCnZpZWxlbiBEYW5rIGbDvHIgSWhyZSBOYWNocmljaHQhIEljaCBiaW4gYWIg
+TWl0dHdvY2gsIDI3LjA4Liwgd2llZGVyIGVycmVpY2hiYXIuPC9wPg0KPHAgY2xhc3M9Ik1zb05v
+cm1hbCIgc3R5bGU9Im1hcmdpbjowY207IGZvbnQtZmFtaWx5OkFwdG9zLHNhbnMtc2VyaWY7IGZv
+bnQtc2l6ZToxMXB0Ij4NCiZuYnNwOzwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJt
+YXJnaW46MGNtOyBmb250LWZhbWlseTpBcHRvcyxzYW5zLXNlcmlmOyBmb250LXNpemU6MTFwdCI+
+DQpJbiBkcmluZ2VuZGVuIEbDpGxsZW4ga8O2bm5lbiBTaWUgc2ljaCBhbiBjb250ZW50LWNvbW1l
+cmNlQGJ1cmRhLWZvcndhcmQuZGUgd2VuZGVuLjxicj4NCjxicj4NCkhlcnpsaWNoZSBHcsO8w59l
+PGJyPg0KU3RlcGhhbmllIFNjaGVycjwvcD4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+
+--_000_8fa4eccb26dd4c82860a0908846a303aFR3PPFA27483119DEUP281P_--

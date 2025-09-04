@@ -1,0 +1,237 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp3320428nji;
+        Thu, 21 Aug 2025 03:59:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFp7Iyg2iB45dP47Hn8mMSZmMXn4mijlmyHXzKZYAhqJQoDw1MliZUkDu4mW/bydL/3xKTD
+X-Received: by 2002:a05:620a:1a22:b0:7e8:141a:9473 with SMTP id af79cd13be357-7ea08e6e690mr168046585a.46.1755773953138;
+        Thu, 21 Aug 2025 03:59:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1755773953; cv=none;
+        d=google.com; s=arc-20240605;
+        b=fGFKXI+tDRIV+HM2WPmJoObSkoSNLozZdCZw1HBd3sx31mknVb6U2rLf3wS3EUlt2D
+         TIS22ta6M1BMRIZ4XppPdyJKs7D2xaGyWYL1+0Rmeu7zKG/qu3x00VIKY457I4f+7Dso
+         pXbtx10uu6dPtt5mI021I8iTODSx2AN5TNzXsVK962uV2DFWkm/JMe1PsXD5ZgzrUW1e
+         P6xs0PQFSzSsMY7B0e5DbKhQu47xJCwB6h1BXGvSXrZXimXCwvoNC0tsQcMkRtRUBfE2
+         gJT5LuzZHs4GXnTPEC46VpOOxo12ZlIRehqGUxBK2bQfVYM8jkC7gQrOFlnGLs1BASCx
+         xFSA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:in-reply-to:auto-submitted:message-id:to:reply-to:from
+         :cc:subject:date:mime-version:dkim-signature:dkim-signature;
+        bh=N1baimDoVmKNN7VzF87MhqHSVQbauAkfJVX2AKUAw9g=;
+        fh=81FwXxppaBTFNbETdqRk9qFJN2x2wGvA8rhhi6UWVjs=;
+        b=I1qw+IUg+MCTq+P2WLGXQGiimFU0hhNPtZ0KbTWmVXGD0g0YwHjUVMAsuNsN3riKF7
+         22/6DEvjzVRn4vjOD9iGAjtB4o/TvNah76+bZS0xYgu4YcJoXsq/XOIi7WNOyQu3slAh
+         MmB52tH8+HDIyTTv3QdIbMPm8JHoY0ilIO+cO/3lV7eMbPYoj/xEm8GrGFnwaaa/EgQ9
+         4vtmaqka9ukX5PQE0rpPOotpknEbW44KxiInbcoDBxgQw1mgu2vmnW+wt7AvRARp1X6V
+         075VaLu3TdruxWJqK6oExL7Gx0OqiM99nmiVVPUFrRV2LMuNfKwpVUwZ7Ds0/j1NNXpT
+         EUgg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@igive.com header.s=a6tixxk7wjh6pr7x7sgxxjou7smjelof header.b=Ea2t4sxJ;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=sSQsjBSj;
+       spf=pass (google.com: domain of 01000198cc48606b-49a318ea-e99c-4c4d-94fc-37da33aeb917-000000@amazonses.igive.com designates 54.240.10.27 as permitted sender) smtp.mailfrom=01000198cc48606b-49a318ea-e99c-4c4d-94fc-37da33aeb917-000000@amazonses.igive.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=igive.com
+Return-Path: <01000198cc48606b-49a318ea-e99c-4c4d-94fc-37da33aeb917-000000@amazonses.igive.com>
+Received: from a10-27.smtp-out.amazonses.com (a10-27.smtp-out.amazonses.com. [54.240.10.27])
+        by mx.google.com with ESMTPS id af79cd13be357-7e87e18356fsi567226185a.521.2025.08.21.03.59.12
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Aug 2025 03:59:13 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 01000198cc48606b-49a318ea-e99c-4c4d-94fc-37da33aeb917-000000@amazonses.igive.com designates 54.240.10.27 as permitted sender) client-ip=54.240.10.27;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@igive.com header.s=a6tixxk7wjh6pr7x7sgxxjou7smjelof header.b=Ea2t4sxJ;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=sSQsjBSj;
+       spf=pass (google.com: domain of 01000198cc48606b-49a318ea-e99c-4c4d-94fc-37da33aeb917-000000@amazonses.igive.com designates 54.240.10.27 as permitted sender) smtp.mailfrom=01000198cc48606b-49a318ea-e99c-4c4d-94fc-37da33aeb917-000000@amazonses.igive.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=igive.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=a6tixxk7wjh6pr7x7sgxxjou7smjelof; d=igive.com; t=1755773952;
+	h=MIME-Version:Date:Subject:CC:From:Reply-To:To:Message-ID:In-Reply-To:Content-Type;
+	bh=CM1wQLBtnFNE6LCu1JZ4RcP/aZ9ikVWXosDS0XMeV/0=;
+	b=Ea2t4sxJdyVGDxarHofVu+QMzVdW3M4VZjkUDwtPxw/CiLITO5y/jeaQUrPk7Lxn
+	IMtaQ8nXdfs2O4LMjYfdy52+V+ILsqBrYYf/voeXskfdYcSmlBolRX+wFd/L8hmOguG
+	u8u65iKGVjz0ocQ4iGoybtaljwCYbEl1BVqdnS89H0b09GAw7tCwfuNoo/8wh5jXmmB
+	bQfr6WbGPDHQiX6hnA5Nlxq6S+TcvV+AzmAr0H3D/UYn2eff2tOXkRQ2xnIx0ejW1V4
+	7cJUpU3gkHgt5w2G7xdl4bKW2lsndICF/UaE8WFJY0P8i6wqfDptS+8qmbDpZ708E5C
+	T6TOtsW/AA==
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1755773952;
+	h=MIME-Version:Date:Subject:CC:From:Reply-To:To:Message-ID:In-Reply-To:Content-Type:Feedback-ID;
+	bh=CM1wQLBtnFNE6LCu1JZ4RcP/aZ9ikVWXosDS0XMeV/0=;
+	b=sSQsjBSjNPkemplau7CyvCql/NMfHb00WUlGmjxkJNgkSBHQeOaDIRE+qURndlit
+	uAum0WsUt3iPnfVuEUgd4DauuegLizgNmj2qnN0imxes4W/VdIBsxRz2j+35IYHRgxi
+	nFYiQ2rY1wIkzpvYGmx5VnezGSqu4oADK/ZOhpMw=
+Date: Thu, 21 Aug 2025 10:59:12 +0000
+Subject: re: [2C4-3039B840-00AD] SilkSilky Limited-Time Deals: Save Up to 64%
+ Off!
+CC:
+From: Merchant Support <merchantnewsletters@igive.com>
+Reply-To: Merchant Support <merchantnewsletters@igive.com>
+To: rita@affiliate.bluefocus.com
+Message-ID: <01000198cc48606b-49a318ea-e99c-4c4d-94fc-37da33aeb917-000000@email.amazonses.com>
+Auto-Submitted: auto-replied
+X-Auto-Response-Suppress: All
+In-Reply-To: <XFxlnKk_SMuOVMsP1cLDzA@geopod-ismtpd-6>
+x-st-department: 8
+x-st-recipients: rita@affiliate.bluefocus.com
+Content-Type: multipart/alternative;
+	boundary=----_SmarterMail_NextPart_1006225176554184
+Feedback-ID: ::1.us-east-1.jlAh2pScx7pMQ4nZ2+t0RIshAKJNkQZs49qYbI8mPOg=:AmazonSES
+X-SES-Outgoing: 2025.08.21-54.240.10.27
+MIME-Version: 1.0
+
+------_SmarterMail_NextPart_1006225176554184
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+Your ticket has been received and has been assigned a ticket number of [2C4=
+-3039B840-00AD].  Please keep this ticket number for your records and inclu=
+de it in the subject (including brackets) of all future emails regarding th=
+is issue.=0D=0A=0D=0AAn agent will respond to your ticket as soon as possib=
+le. In the meanwhile, the following may be helpful to you:=0D=0A=0D=0A- Mer=
+chant Requirements & Details  - https://igive.smartertrack.com/kb/a31/merch=
+ant-requirements-details.aspx=0D=0A- iGive Newsletters 2023  - https://igiv=
+e.smartertrack.com/kb/a281/igive-newsletters-2023.aspx=0D=0A- Commission In=
+crease Campaigns  - https://igive.smartertrack.com/kb/a150/commission-incre=
+ase-campaigns.aspx=0D=0A- Sample - Weekly Layout Newsletter  - https://igiv=
+e.smartertrack.com/kb/a284/sample-weekly-layout-newsletter.aspx=0D=0A- Info=
+rmation for Merchants and Advertisers  - https://igive.smartertrack.com/kb/=
+a32/information-for-merchants-and-advertisers.aspx=0D=0A=0D=0AThank you,=0D=
+=0AMerchant Support=0D=0AView this Ticket Online  - https://igive.smartertr=
+ack.com/Main/frmTicket.aspx?ticketnumber=3D2C4-3039B840-00AD&email=3Drita%4=
+0affiliate.bluefocus.com&h=3D44C364E9ABAA4E204E194830C527C462 =0D=0A=0D=0A-=
+---------------------------------------=0D=0AFrom: rita@affiliate.bluefocus=
+.com=0D=0ASent: Thursday, August 21, 2025 3:58 AM=0D=0ATo: merchantnewslett=
+ers@igive.com=0D=0ASubject: SilkSilky Limited-Time Deals: Save Up to 64% Of=
+f!=0D=0A=0D=0AHi team,  Hope you're doing well. I'm Rita, affiliate marketi=
+ng manager at BlueFocus representing SilkSilky Category: Women's wear Commi=
+ssion: 5%~25% Impact ID: 22953  website:https://silksilky.com/ We're excite=
+d to share our latest campaigns with you and believe they would be a great =
+fit for your audience. Featuring these promotions on your platform could he=
+lp drive engagement and maximize conversions for both sides. Please see the=
+ full promotion details below and feel free to share with your audience: Ca=
+mpaign Details Coupon Code: SLS10 Description: Silksilky Save $10 on orders=
+ over $109 URL: https://silksilky.com/collections/best-seller Validity: 8/2=
+0-8/31 Coupon Code: SLS30 Description: Silksilky Save $30 on orders over $1=
+99 URL: https://silksilky.com/collections/best-seller Validity: 8/20-8/31 D=
+escription: Silk Apparel for Women:save up to 64% URL: https://silksilky.co=
+m/collections/silk-apparel-for-women Validity: 8/20-8/31 All the codes are =
+ready.  Let's work together to bring these deals to more users. Looking for=
+ward to your active participation! Feel free to reach out if you need any a=
+dditional materials or assistance. Best regards, Rita Unsubscribe
+
+------_SmarterMail_NextPart_1006225176554184
+Content-Type: text/html; charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1"><table cellpadding=3D" style=3Dackground-color: #fff; border: solid 1px =
+#064266; border-collapse: collapse; border-radius: 4px; display: block; fon=
+t-family: Helvetica, Arial, sans-serif; font-size: 10pt; line-height: 1.4em=
+; margin: 0 auto; max-width: 600px;">
+    <tr>
+        <td style=3D"ackground-color:" #064266;=3D"" color:=3D"" #fff;=3D""=
+ padding:=3D"" 10px=3D"" 15px;=3D"" vertical-align:=3D"" middle;?=3D"">iGiv=
+e.com</td>
+    </tr>
+    <tr>
+        <td style=3D"ackground-color:" #fff;=3D"" padding:=3D"" 30px;?=3D""=
+>
+            <p>Your ticket has been received and has been assigned a ticket=
+ number of [2C4-3039B840-00AD].&nbsp; Please keep this ticket number for yo=
+ur records and include it in the subject (including brackets) of all future=
+ emails regarding this issue.</p>=0A=
+=0A=
+<p>An agent will respond to your ticket as soon as possible. In the meanwhi=
+le, the following may be helpful to you:<br>=0A=
+<br>=0A=
+<ol><li><a href=3D"https://igive.smartertrack.com/kb/a31/merchant-requireme=
+nts-details.aspx" target=3D"_blank">Merchant Requirements &amp; Details</a>=
+</li>=20
+<li><a href=3D"https://igive.smartertrack.com/kb/a281/igive-newsletters-202=
+3.aspx" target=3D"_blank">iGive Newsletters 2023</a></li>=20
+<li><a href=3D"https://igive.smartertrack.com/kb/a150/commission-increase-c=
+ampaigns.aspx" target=3D"_blank">Commission Increase Campaigns</a></li>=20
+<li><a href=3D"https://igive.smartertrack.com/kb/a284/sample-weekly-layout-=
+newsletter.aspx" target=3D"_blank">Sample - Weekly Layout Newsletter</a></l=
+i>=20
+<li><a href=3D"https://igive.smartertrack.com/kb/a32/information-for-mercha=
+nts-and-advertisers.aspx" target=3D"_blank">Information for Merchants and A=
+dvertisers</a></li>=20
+</ol><br>=0A=
+<br>=0A=
+Thank you,<br>=0A=
+Merchant Support<br>=0A=
+<a href=3D"https://igive.smartertrack.com/Main/frmTicket.aspx?ticketnumber=
+=3D2C4-3039B840-00AD&amp;email=3Drita%40affiliate.bluefocus.com&amp;h=3D44C=
+364E9ABAA4E204E194830C527C462" target=3D"_blank">View this Ticket Online</a=
+><br>=0A=
+<br>=0A=
+<hr><b>From:</b> rita@affiliate.bluefocus.com<br><b>Sent:</b> Thursday, Aug=
+ust 21, 2025 3:58 AM<br><b>To:</b> merchantnewsletters@igive.com<br><b>Subj=
+ect:</b> SilkSilky Limited-Time Deals: Save Up to 64% Off!<br><br>Hi team,=
+=20
+
+Hope you're doing well. I'm Rita, affiliate marketing manager at BlueFocus =
+representing SilkSilky
+
+Category: Women's wear
+
+Commission: 5%~25%
+
+Impact ID: 22953=20
+
+website:https://silksilky.com/
+
+We're excited to share our latest campaigns with you and believe they would=
+ be a great fit for your audience. Featuring these promotions on your platf=
+orm could help drive engagement and maximize conversions for both sides.
+Please see the full promotion details below and feel free to share with you=
+r audience:
+
+Campaign Details
+
+Coupon Code: SLS10
+
+Description: Silksilky Save $10 on orders over $109
+
+URL: https://silksilky.com/collections/best-seller
+
+Validity: 8/20-8/31
+
+Coupon Code: SLS30
+
+Description: Silksilky Save $30 on orders over $199
+
+URL: https://silksilky.com/collections/best-seller
+
+Validity: 8/20-8/31
+
+Description: Silk Apparel for Women:save up to 64%
+
+URL: https://silksilky.com/collections/silk-apparel-for-women
+
+Validity: 8/20-8/31
+
+All the codes are ready.  Let's work together to bring these deals to more =
+users. Looking forward to your active participation!
+Feel free to reach out if you need any additional materials or assistance.
+
+Best regards,
+
+Rita
+
+Unsubscribe</p>
+        </td>
+    </tr>
+    <tr>
+        <td style=3D"ackground-color:" #064266;=3D"" color:=3D"" #fff;=3D""=
+ font-size:=3D"" 0.85em;=3D"" line-height:=3D"" 1.35em;=3D"" padding:=3D"" =
+15px;=3D"" vertical-align:=3D"" middle;?=3D"">
+            You're receiving this because you are a registered user of iGiv=
+e.com.<br>
+            You may change email notifications in <a href=3D"ttps://igive.s=
+martertrack.com/Main/frmMySettings.aspx&quot;" target=3D"blank'" style=3D"o=
+lor:" white;=3D"" text-decoration:=3D"" underline;?=3D"">My Settings</a>.
+        </td>
+    </tr>
+</table>
+
+------_SmarterMail_NextPart_1006225176554184--

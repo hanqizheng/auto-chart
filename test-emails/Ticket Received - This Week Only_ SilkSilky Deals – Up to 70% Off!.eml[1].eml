@@ -1,0 +1,117 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5725958nji;
+        Mon, 25 Aug 2025 05:21:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFuynP9k1V1ekNZJYLsMylOGMm7/DHe12+YfGPbKcPtFUGqQPz4mMHjR9tJ3NERFtLkT6+/
+X-Received: by 2002:a05:6214:e87:b0:70d:c60a:92aa with SMTP id 6a1803df08f44-70dc60a9460mr14482416d6.46.1756124474514;
+        Mon, 25 Aug 2025 05:21:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756124474; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bQuFpXVaYgwW6z6Zp88NjFpuHS0onUD2Yv0p9ZisJkGfRsOeUgtQfFXZA9ueLQa+5L
+         hx8A1ZCHy8gR9nypbz6seKA081aSpOMYM5SqFKH2bbXQcKMIUDgNAV9gcqNkpftJw5Vj
+         Jvfg+NKgx23+ygx4nnH7d2APq2/byHt6z9a0XgRabUj9jf5mLlQWIR2Jtx4crzkqx+mf
+         9EhQa6zt3HWwh0Q6qGohdHXqnT/1upt2awQa5NpN2t6IJjXImt+kf9DCb0z72dUQt4xF
+         OlM2KUUAKeGuWqK9CcRBlXzIjoIwa6yeUJhQ8LLaxqrHcDO5wsqvQjoccVdkAyMirMcw
+         KLIw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=auto-submitted:sent-on:content-transfer-encoding:subject:references
+         :in-reply-to:message-id:to:reply-to:from:date:mime-version
+         :dkim-signature;
+        bh=qURCE1ArfG6cgrlOXuFblZsPL9tFmGeWsFrFltaukQU=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=S/RVNxUyQR1VRGOSbzFjWB1YVfEk29TreQbAY9BOia0LCwfNwcmJa5pnUNyht51G1I
+         QBe8lrljlz90UKQw7INzv260+VjmADg68RKGS6YF+yvOZXI6H5e7xPhgs8kcT7cxRg6x
+         z69lh7SKqDCqHCae3FphNVBdD+RcKy4JdQAm84UxOnmkHJQCqjXbt/zmWu7S5SwvQAxE
+         2S8TNnKWMZbT9g6GQYWE9C4kAj9PaezGUrhjL4P8WhzuuMuMDIrMdem3JI4kMmWw+xED
+         D+TNamr6hOW6wAqQ9+lzyClh4Jcp0uuKy3FCIslGX7f5D0vPaSS4Ej3FmxSftvPtz51H
+         VxXw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@starterstory.com header.s=oiz8f header.b=jrgUwkhT;
+       spf=pass (google.com: domain of bounces+us.1.4093918.1829-support=starterstory.com@fwdkim1.starterstory.com designates 44.192.35.123 as permitted sender) smtp.mailfrom="bounces+us.1.4093918.1829-support=starterstory.com@fwdkim1.starterstory.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=starterstory.com
+Return-Path: <bounces+us.1.4093918.1829-support=starterstory.com@fwdkim1.starterstory.com>
+Received: from mail-usn124.freshemail.io (mail-usn124.freshemail.io. [44.192.35.123])
+        by mx.google.com with ESMTPS id 6a1803df08f44-70db501c023si13827986d6.870.2025.08.25.05.21.14
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Aug 2025 05:21:14 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounces+us.1.4093918.1829-support=starterstory.com@fwdkim1.starterstory.com designates 44.192.35.123 as permitted sender) client-ip=44.192.35.123;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@starterstory.com header.s=oiz8f header.b=jrgUwkhT;
+       spf=pass (google.com: domain of bounces+us.1.4093918.1829-support=starterstory.com@fwdkim1.starterstory.com designates 44.192.35.123 as permitted sender) smtp.mailfrom="bounces+us.1.4093918.1829-support=starterstory.com@fwdkim1.starterstory.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=starterstory.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1756124474;
+	s=oiz8f; d=starterstory.com;
+	h=MIME-Version:Date:From:Reply-To:To:Message-ID:In-Reply-To:References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=qURCE1ArfG6cgrlOXuFblZsPL9tFmGeWsFrFltaukQU=;
+	b=jrgUwkhTFX+yzlyNlSsqKn1xeuuCvBoqPZJ6CkhvLEQOyh7zTj6dhH6eTsjZK4i/
+	gQ4P9UZqzAn/fet6lRQSls463AxzNTlwKcOgGHUkZD7EVbrS+vlqF+BGrYTiZCSOPRY
+	tKsydPYoLaFdolQsc9wUh58r3Fe4/MrVpbVJHoUMW0lHrMD67WUhYQR1+ebUD2Wj0AO
+	4OnrD6I5uhBXn2lTpw/pTwJpXscMHC1sVLmvXU8hHDrGZXeK5xXl4YxomVOtG341hxT
+	bXOZuR4rKmf0Ltc8I9rftjCK5duRdwjzmX3S3rHP0N2CIwoDuvs/TvYplzOgCVXTuhF
+	7FFpZYnh7Q==
+Return-Path: bounces+us.1.4093918.1829-support=starterstory.com@fwdkim1.starterstory.com
+X-Received: from ip-172-16-158-248.ec2.internal (EHLO freshdesk.com) ([172.16.158.248])
+          by smtpout.freshdesk.com (Freshworks SMTP Server) with ESMTPA ID 1cb6accd.6
+          for <rita@affiliate.bluefocus.com>;
+          Mon, 25 Aug 2025 12:21:13 +0000 (UTC)
+Date: Mon, 25 Aug 2025 12:21:13 +0000
+From: Starter Story Support <support@starterstory.com>
+Reply-To: Starter Story Support <support@starterstory.com>
+To: rita@affiliate.bluefocus.com
+Message-ID: <68ac55393b2a5_23a3faa3e5aff8c1055361.sidekiq-frequent-fd-poduseast1-main-blue-75c8657b89-4kdhr@notification.freshdesk.com>
+In-Reply-To: <ddoQnNGUQZ65LOAI9SZ2cA@geopod-ismtpd-14>
+References: <ddoQnNGUQZ65LOAI9SZ2cA@geopod-ismtpd-14>
+Subject: =?UTF-8?Q?Ticket_Received_-_This_Week_Only:_SilkSilky_Deals?=
+ =?UTF-8?Q?_=E2=80=93_Up_to_70%_Off!?=
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_68ac553940032_23a3faa3e5aff8c1055430";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+sent-on: 2025-08-25 12:21:13 +0000
+Auto-Submitted: auto-generated
+X-Auto-Response-Suppress: DR, RN, OOF, AutoReply
+X-FUP-PRIORITY: 1
+X-SDS-INFO: kE06nUVAspqZHU9Z0PlCC6lttU1BisESv34BJvKl2sR0skLQV2sStLPUvvkkTZ0U6XnY41B1_-69lN3r6Wzo2ragA6wew09ggDLGKd_bkvw5FpzQyHg6mfQ-7i72xnnMdDYTCjzd1WbEPyvrRUk0--7pJZBpThPx2c0DNSlvepwQRZjoYd8Dmi2hNzOQdhTV
+X-MESSAGEID: IxM+TdUxaVmZIgsgBIOyQlCztyi4iCNPB88YKVYKoDoVmipdCuuesTrEcXsoYfT1/A4ghdgouS9mAq8pGQV1u2TYg3+4hB0/AQxHjsSA4NlaAS3FG86KwLhEpNZhdt5pgSq8GdeS48tcZ2lFmciw5vhMSGSwcQlcyxolRKiVVg0=
+MIME-Version: 1.0
+
+----==_mimepart_68ac553940032_23a3faa3e5aff8c1055430
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+  Hey there=C2=A0=F0=9F=91=8B     Thanks for reaching out -- we got your =
+message!     Someone from our team will get back to you as soon as possib=
+le.     Best,  The Starter Story Team  =
+
+ =
+
+
+
+
+
+----==_mimepart_68ac553940032_23a3faa3e5aff8c1055430
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div style="font-family:-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif; font-size:14px;">
+	
+<div dir="ltr"><p>Hey there&nbsp;&#128075;</p><p><span style="text-align: initial;"><br></span></p><p><span style="text-align: initial;">Thanks for reaching out -- we got your message!</span></p><p><span style="text-align: initial;"><br></span></p><p><span style="text-align: initial;">Someone from our team will get back to you as soon as possible.</span></p><p><br></p><p>Best,</p><p>The Starter Story Team</p><p></p>
+</div>
+
+
+
+
+
+	
+	<br>
+
+
+
+
+<span title="fd_tkt_identifier" style="font-size:0px; font-family:&quot;fdtktid&quot;; min-height:0px; height:0px; opacity:0; max-height:0px; line-height:0px; color:#ffffff">1829:4093918</span>
+
+</div>
+----==_mimepart_68ac553940032_23a3faa3e5aff8c1055430--

@@ -1,0 +1,810 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:4f8c:b0:1d03:27cf:8dbe with SMTP id he12csp612514njb;
+        Tue, 26 Aug 2025 10:09:58 -0700 (PDT)
+X-Received: by 2002:a05:6902:1021:b0:e95:3ccb:1af8 with SMTP id 3f1490d57ef6-e953ccb1c60mr9142046276.50.1756228198671;
+        Tue, 26 Aug 2025 10:09:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756228198; cv=none;
+        d=google.com; s=arc-20240605;
+        b=K1x2gpL8FNFDth8JHkH/EZQxn4PDTCFI2MR4mlcxXpQvRtVNB5Uhc+LlPb10XA4FfX
+         ThpFrRzmtwMK6xbuEOz/Ndd0ptdxeg6NZwqjkr602X7+KqpesMWzEr3frYskyrGEZoO4
+         +d8gzjHGNN56kmfyFBs7AXm+GYXH7qBqZVXn4OiWN+AAFx4gcEwjiKqlRncZN3bdIL14
+         aK1Sl3d7c9s40wIAsBBl2y2ZZtthlPbHv06eSNLfv2h1/27cWpkruklZE2VAnRubzyBW
+         /ZHOmx+nOk7IzZz3bTviBkrTegdJQ9H/lZfNzQWmW3HyzR4vPPH4rkeQdDCQCMCt8PfE
+         hchw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:in-reply-to:to:references:date:subject:mime-version:from
+         :dkim-signature;
+        bh=m2S9rG1VHNsBZhCyVdAPM2nYOlAeMpuNTVdkXVSEN7A=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=kzcK+75kZldsJjuwwBfu4M3spfL4VAxEUeckXoWl+wTlqduyfa86TmdeXiIxjRlQC4
+         jGGvPVprt72wgoEh5L46B55E6m91qlTuraUuil1FfUdJe08Uh90phxBSq5qGLZPJbY/L
+         JBvHy+nAGCIuDMe6OGTTQWiki+lXlD0apAXzvDDoJNKfcDk3eq7+ZANgeIirRX4OC1WZ
+         Wz+qB0O3NPjTSXyVPM6jpA0Ngpz2nQbvXfIjpv6fWVWF8WdmawcW/BnD9RCPwoi8+WiE
+         rBfULZJSSa1rLk9huGYE7y7k2OQotxnX8UeB23w3ird5Ws+5oRDsNC4+kWjAlzPtCg+k
+         FpRw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@silkwormsocial.com header.s=google header.b=CM5nhHGd;
+       spf=neutral (google.com: 209.85.220.41 is neither permitted nor denied by domain of jen@silkwormsocial.com) smtp.mailfrom=jen@silkwormsocial.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <jen@silkwormsocial.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 3f1490d57ef6-e952c2990e4sor6019757276.5.2025.08.26.10.09.58
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Tue, 26 Aug 2025 10:09:58 -0700 (PDT)
+Received-SPF: neutral (google.com: 209.85.220.41 is neither permitted nor denied by domain of jen@silkwormsocial.com) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@silkwormsocial.com header.s=google header.b=CM5nhHGd;
+       spf=neutral (google.com: 209.85.220.41 is neither permitted nor denied by domain of jen@silkwormsocial.com) smtp.mailfrom=jen@silkwormsocial.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=silkwormsocial.com; s=google; t=1756228198; x=1756832998; darn=affiliate.bluefocus.com;
+        h=message-id:in-reply-to:to:references:date:subject:mime-version:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=m2S9rG1VHNsBZhCyVdAPM2nYOlAeMpuNTVdkXVSEN7A=;
+        b=CM5nhHGdqJ8ZJkf+Q3mKC75ykZvE29uqoGb//iiPBDXcjsUf5fXL/9FVTQOHPEqj84
+         sxt98PwT7nalkYd6OrgtIydK1hMuNx5QCxfJkEqwC6joH1OLQ5Eac7j3oTp0oEJj85qU
+         QM6W1xsrCRrDoUOo0Hzmy2MPkCAzyXiZiLFEDI6bDesLHGDf+k8HShDbgPLNTZvzL/hg
+         QNHQ/Rac3XbL33sHJyzQzosaKKd3DufxCR/eLmHrAsaThmIxRkOBv1eIrbjH5XMJnbfa
+         1hXLNb/UcvSE6CdN9sIgpkGIfBppuW2WiDjfJp3H5+VGmGqslD2uV//TYWAGARd1Y9/C
+         DCNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756228198; x=1756832998;
+        h=message-id:in-reply-to:to:references:date:subject:mime-version:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=m2S9rG1VHNsBZhCyVdAPM2nYOlAeMpuNTVdkXVSEN7A=;
+        b=C2u78yKj8atkYZgv0orYAIOBebt3KehhjznJ9CDY6mpQ1yHDXxFssBMtKszbaaRMXZ
+         pwhqA1EbZj0k1INazDX/g2yfMTeYVUWedKpxuEbEx5qPSSJACc3rq3Wg5Qp5S03m2XEX
+         q75xjrXlLmvu1rx8G3lp/1OAYdE0Y2ZbZv7Rsd2xr+TyM5K5xslLTQ2olBMqvIP0dw26
+         vfSfWiEzvYSupZvd9BNBfH2opNAzP/DeuLl26ePQCONF9VgnyR0aN3Gi43sTXxbCDk6Z
+         iQF1hmvEG57M3628oG75nxDJA5y8piwg3K6flO/TuUCw6+d2T41T1V1/x728VjmuQdhg
+         bCLw==
+X-Gm-Message-State: AOJu0Yy6cvWjTWpJx88qy6Ge03EM+2UmwQ3848OJa76rX6Gb8ZLlL0b+
+	APUyRJBGtCjQY1Kf0OynZ0qmn/ZzKmr1fviu5eSlj+Mesn7bLX/jGV9ZYW3tkuH1u8OiQT1tx8d
+	mAO2D
+X-Gm-Gg: ASbGncvfW5P4JPjqC7rtgB86j6i2ae2+UeFqkKCgeq3XehOD9IgFl10ZhrsrtXSGK93
+	YpT+nxCFdzwUj8AfXGxYehqiOml9c/DOaAskUlHJv32aDG8Yl+VlSngfOVrPqokppSSrHtV3NfS
+	7TiTilTvaxPin/e4yzMOeUoWmM3fsKBquYJJuaAkBtoJdLbg/iNzeRt6P83WPlJ/d/vhaqAYd8X
+	YhY7FMEYw5b2swW/kACu8pYwrT8KRNGSrCfSxNjP2dZwV4O8QV1WBeCpCiwHIa6Yq4VXw9RuX4g
+	rpvjfVS5Vn2k8mxTKG2zcBy0QqQ7mDiWwl7lM+msl3udapRTDDIpP4sfOVQAo/MpdKRguLBeZbq
+	70dXA4XjxFsjdZTlU2m7vdbrD7inOa3Pni8mAbxN5vCRywzM7rFbEMST9Ys0Lz5M6VY3GyWM9Ge
+	55YlsTDm0tUaTsYhIB5A==
+X-Google-Smtp-Source: AGHT+IETWkG9a3yBmtxk4F7LKtiz/97fPrUXKyzEZTL1/DJA3C6SJTgLDpjhh14FyTFJyK4ev0G7SQ==
+X-Received: by 2002:a05:6902:1881:b0:e96:dc9a:37eb with SMTP id 3f1490d57ef6-e96dc9a69camr4431847276.34.1756228197322;
+        Tue, 26 Aug 2025 10:09:57 -0700 (PDT)
+Return-Path: <jen@silkwormsocial.com>
+Received: from smtpclient.apple (108-193-64-64.lightspeed.austtx.sbcglobal.net. [108.193.64.64])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e952c27b8d0sm3411404276.12.2025.08.26.10.09.56
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Aug 2025 10:09:56 -0700 (PDT)
+From: Jen Wiggins <jen@silkwormsocial.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_1A41E336-48CA-4FD0-8264-233CEE921DE9"
+Subject: =?utf-8?Q?Re=3A_This_Week_Only=3A_SilkSilky_Deals_=E2=80=93_Up_to?=
+ =?utf-8?Q?_70=25_Off!?=
+Date: Tue, 26 Aug 2025 12:09:45 -0500
+References: <pZBAvLnkS6yrhPFPNl46JQ@geopod-ismtpd-9>
+To: rita@affiliate.bluefocus.com
+In-Reply-To: <pZBAvLnkS6yrhPFPNl46JQ@geopod-ismtpd-9>
+Message-Id: <471CCA60-7BD7-4D71-B137-A75B56B95380@silkwormsocial.com>
+X-Mailer: Apple Mail (2.3826.700.81)
+MIME-Version: 1.0
+
+--Apple-Mail=_1A41E336-48CA-4FD0-8264-233CEE921DE9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+HI Rita - Thanks for reaching out. Apologize if I=E2=80=99ve overlooked =
+it, but could you let me know who you were hoping to collaborate with? =
+We represent a pool of talent and want to be sure I=E2=80=99m connecting =
+you with the right influencer. =46rom there we can discuss a few ideas =
+on how we might approach from an editorial perspective and discuss =
+rates. Also curious if SilkSilky is on Amazon or if we would be lining =
+directly to the website?=20
+
+Best,
+Jen
+
+JENNIFER WIGGINS
+Co-Founder | Silkworm Social <http://www.silkwormsocial.com/> - an =
+influencer talent agency
+email | jen@silkwormsocial.com=C2=A0 <mailto:jen@silkwormsocial.com>
+cell | 970-988-1310=20
+linkedIN <https://www.linkedin.com/in/jenwiggins/> | instagram =
+<https://www.instagram.com/silkworm_social/>
+
+This email and any files transmitted are confidential and intended =
+solely for the use of the individual or entity to which they are =
+addressed. If you have received this email by error, please notify us =
+immediately and permanently delete it from your computer.
+
+
+
+
+
+> On Aug 25, 2025, at 7:20=E2=80=AFAM, rita@affiliate.bluefocus.com =
+<notifications@outreach.impact.com> wrote:
+>=20
+>=20
+>=20
+> Hi team,=20
+>=20
+> Hope you're doing well. I'm Rita, affiliate marketing manager at =
+BlueFocus representing SilkSilky
+>=20
+> Category: Women's wear
+> Commission:10%-20%
+> Impact ID: 22953=20
+> Website: https://silksilky.com/
+>=20
+>=20
+> We=E2=80=99re excited to share our latest campaigns with you, which =
+are only available this week and would be a perfect fit for your =
+audience.
+>=20
+> Campaign Details
+>=20
+> Discount Code: SLS10
+> Description: Silksilky Save $10 on orders over $109
+> URL: https://silksilky.com/collections/best-seller =
+<https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK=
+2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-=
+3D-3DvUaP_O1SaTz7DkxW-2BJxzkEghdNsyG8ye13R7yRcw5a3MSSfYyqKV8iFi4S-2BBZgnRO=
+6-2BXNkLcaQgt75uCtqrjoy8coLPaT-2BsWK-2F0hkwSWEZtIplmcgW56E9mf6vrCgCxOSYyEZ=
+HrRpGxR2n0tk-2BNAbn6KEr-2BWrqnRH5UoFNUXpgc1a0nOwb1przIoSuLIOQ6pj7xiX-2F-2B=
+M1F78LI4SwBN-2ByUZjr-2BZlvO6hZ2cv6yY-2F7jKeDjJVsvASmAMy60AQW0ZaMEgIQd0u5dR=
+bDTSU66vDU7d16bkD750zigK7HPx60Mq6ckGLIYbplHqGcpiIbZbp3hwQ-2FRj6ygW5MegcqDd=
+Qbf53RcWzP39CO0-2BGNG0usUt3xxdhIJbqZJm29ES3Fr6aHuwK8G6-2FjBpPjXtJEfY3kjABA=
+-2BwInK-2BDtrbEKHEBPkZ70S3BKAkC57PUheRc-2FtTVLP07rePAPeyg8yXmh-2F5CdA81bJc=
+iRkc0VAiHY-2BG-2BjPlElUtTAmObfd88nfyaUKNh-2F4QUeOPzP3iiuFWm9wtiCjuaRS3ojBX=
+PReZI3zw4r8lIR1uYmZckoRoOLIWGS25zhWThHdgh8EN9nk2KTh9kbwTQ7oxaGYIqymvUw6EzH=
+5YWlJHrAd5y1dvIlCZeNdqMJT50XbuRad4icSPdItWdteSygbwiCI-2FTNnNM3hlwrUBsyFirV=
+BBr66uwE9yNhMxuIiQUwwlxbMMaEFph6V7qHv1pnkpRRX0pKVSaqZ-2B40frfoc-2BAAd2AWar=
+uy-2FLrmUc840j5id-2FAwmuNAHSZ0uzI2YjhNyDZe20up3w4nlciNdzyVqttUP1GECUsJG5Qs=
+S0V3C3T7BIzQP3zq0fZ2cfIQGBzXDLUYI5taldFYTN0UwSoD8RlsFr2AeXTvSdLrRDXp1R-2Ff=
+zR3ZvbjmjpQvspujO7VkssCm6v2-2BYtwPEiUNF-2B230YOUgeBCAwMk8zj8yRY3Sqmt4sG3-2=
+Fr2J03Qkw24zCIf0-2F0HgZMYTjsEXCV7TNs92ZJzZna3QEJOJ1u8sRkXZslUlkPqZeLxPNtBN=
+6NOTpXkxHA-3D-3D>
+> Validity: 8/20-8/31
+>=20
+> Discount Code: SLS30
+> Description: Silksilky Save $30 on orders over $199
+> URL: https://silksilky.com/collections/best-seller =
+<https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK=
+2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-=
+3D-3DPiuh_O1SaTz7DkxW-2BJxzkEghdNsyG8ye13R7yRcw5a3MSSfYyqKV8iFi4S-2BBZgnRO=
+6-2BXNkLcaQgt75uCtqrjoy8coLPaT-2BsWK-2F0hkwSWEZtIplmcgW56E9mf6vrCgCxOSYyEZ=
+HrRpGxR2n0tk-2BNAbn6KEr-2BWrqnRH5UoFNUXpgc1a0nOwb1przIoSuLIOQ6pj7xiX-2F-2B=
+M1F78LI4SwBN-2ByUZjr-2BZlvO6hZ2cv6yY-2F7jKeDjJVsvASmAMy60AQW0ZaMEgIQd0u5dR=
+bDTSU66vDU7d16bkD750zigK7HPx60Mq6ckGLIYbplHqGcpiIbZbp3hwQ-2FRj6ygW5MegcqDd=
+Qbf53RcWzP39CO0-2BGNG0usUt3xxdhIJbqZJm29ES3Fr6aHuwK8G6-2FjBpPjXtJEfY3kjABA=
+-2BwInK-2BDtrbEKHEBPkZ70S3BKAkC57PUheRc-2FtTVLP07rePAPeyg8yXmh-2F5CdA81bJc=
+iRkc0VAiHY-2BG-2BjPlElUtTAmObfd88nfyaUKNh-2F4QUeOPzP3iiuFWm9wtiCjuaRS3ojBX=
+PReZI3zw4r8lIR1uYmZckoRoOLIWGS25zhWThHdgh8EN9nk2KTh9kbwTQ7oxaGYIqymvUw6EzH=
+5YWlJHrAd5y1dvIlCZeNdqMJT50XbuRad4icSPdItWdteSygbwiCI-2FTNnNM3hlwrUBsyFirV=
+BBr66uwE9yNhMxuIiQUwwlxbMMaEFph6V7qHv1pnkpRRX0pKVSaqZ-2B40frfoc-2BAAd2AWar=
+uy-2FLrmUc840j5id-2FAwmuNAHSZ0uzI2YjhNyDZe20up3w4nlciNdzyVqttUP1GECUsJG5Qs=
+S0V3C3T7BIzQP3zq0fZ2cfIQGBzXDLUYI5taldFYTN0UwSoD8RlsFr2AeXTvSdLrRDXp1R-2Ff=
+zR3ZvbjmjpQvspujO7Vkss9UgEZ-2Fp84BkExXovkIW9saOrBRXOV4vjlnKZcUicCtXT8dzl-2=
+Fag5p9KoyAEQ4WGdLNbcFDKzKnxSIOy4JUnd16-2By7swVeCWLuDnHtyoKG-2BueCiVxnfLniH=
+dPdrvt70VQ-3D-3D>
+> Validity: 8/20-8/31
+>=20
+> Campaign Name=EF=BC=9ASilk Apparel for Women
+> Description: Silk Apparel for Women=EF=BC=9Asave up to 70%=EF=BC=81
+> URL: https://silksilky.com/collections/silk-apparel-for-women =
+<https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK=
+2XdT48tQmztTqvWNg5JdkTQOr-2FPlS5dgVM8Y7eBHcWWjSSLQxRfBQyhyLjHagwC1lUr0s5BY=
+rArQhMy9kwuP5MeAlc-3D1S2i_O1SaTz7DkxW-2BJxzkEghdNsyG8ye13R7yRcw5a3MSSfYyqK=
+V8iFi4S-2BBZgnRO6-2BXNkLcaQgt75uCtqrjoy8coLPaT-2BsWK-2F0hkwSWEZtIplmcgW56E=
+9mf6vrCgCxOSYyEZHrRpGxR2n0tk-2BNAbn6KEr-2BWrqnRH5UoFNUXpgc1a0nOwb1przIoSuL=
+IOQ6pj7xiX-2F-2BM1F78LI4SwBN-2ByUZjr-2BZlvO6hZ2cv6yY-2F7jKeDjJVsvASmAMy60A=
+QW0ZaMEgIQd0u5dRbDTSU66vDU7d16bkD750zigK7HPx60Mq6ckGLIYbplHqGcpiIbZbp3hwQ-=
+2FRj6ygW5MegcqDdQbf53RcWzP39CO0-2BGNG0usUt3xxdhIJbqZJm29ES3Fr6aHuwK8G6-2Fj=
+BpPjXtJEfY3kjABA-2BwInK-2BDtrbEKHEBPkZ70S3BKAkC57PUheRc-2FtTVLP07rePAPeyg8=
+yXmh-2F5CdA81bJciRkc0VAiHY-2BG-2BjPlElUtTAmObfd88nfyaUKNh-2F4QUeOPzP3iiuFW=
+m9wtiCjuaRS3ojBXPReZI3zw4r8lIR1uYmZckoRoOLIWGS25zhWThHdgh8EN9nk2KTh9kbwTQ7=
+oxaGYIqymvUw6EzH5YWlJHrAd5y1dvIlCZeNdqMJT50XbuRad4icSPdItWdteSygbwiCI-2FTN=
+nNM3hlwrUBsyFirVBBr66uwE9yNhMxuIiQUwwlxbMMaEFph6V7qHv1pnkpRRX0pKVSaqZ-2B40=
+frfoc-2BAAd2AWaruy-2FLrmUc840j5id-2FAwmuNAHSZ0uzI2YjhNyDZe20up3w4nlciNdzyV=
+qttUP1GECUsJG5QsS0V3C3T7BIzQP3zq0fZ2cfIQGBzXDLUYI5taldFYTN0UwSoD8RlsFr2AeX=
+TvSdLrRDXp1R-2FfzR3ZvbjmjpQvspujO7Vksrc7AuvryFB4Dj9Ms9HcR0ZmFDkadppy0YRrxf=
+9KMpz-2BXo1ksEJOQCgqja60curP169VehBWIHf4iqmeTlFyf7p6oyrMMzMCzW1MlvGc5j5a6M=
+s3q6cumnY4uNQ8nj3z3A-3D-3D>
+> Validity: 8/20-8/31
+>=20
+> If you need any support, feel free to reach out. Please also send over =
+your latest media kit, rate card, and details regarding available =
+placements or exposure opportunities.
+>=20
+> We're open to the following types of partnerships:
+> paid placement for additional exposure
+> CPAi for additional exposure
+> exclusive code for additional exposure
+>=20
+> Best regards,
+> Rita
+>=20
+> Unsubscribe =
+<https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK=
+2XdTxbxD4UJGmtW8DAxp3YXsDa7MPMCTETs3WSo52RM6Q9Hs8pDVfvfmNT63AenKOog8JaiDnd=
+XVwiwAsDekYhF4jiZMWKpTigSZB-2FmPN9E4ocNYXXL712JxcEVGQQQ6TM6Vc-2F82DLpIJNIZ=
+1Rlps-2FfN1BeAwjynunPRa7WVJeSvDG6bf6QS6pFsKAOih871GQqDIR4mqXKb6k9RT-2B6QnP=
+wHJn-2FvYlcrPEsL1RS-2F2llc-2FZ1cpeXelE5GDt3dm1h0uqxmNKHWX68SnbxDkUWc0OPyT-=
+2Bvy9s1c-2F2Z6FBJSrjs8pxpcpSkbOr8D3XEbRumojm6Zw-3D-3Dag9R_O1SaTz7DkxW-2BJx=
+zkEghdNsyG8ye13R7yRcw5a3MSSfYyqKV8iFi4S-2BBZgnRO6-2BXNkLcaQgt75uCtqrjoy8co=
+LPaT-2BsWK-2F0hkwSWEZtIplmcgW56E9mf6vrCgCxOSYyEZHrRpGxR2n0tk-2BNAbn6KEr-2B=
+WrqnRH5UoFNUXpgc1a0nOwb1przIoSuLIOQ6pj7xiX-2F-2BM1F78LI4SwBN-2ByUZjr-2BZlv=
+O6hZ2cv6yY-2F7jKeDjJVsvASmAMy60AQW0ZaMEgIQd0u5dRbDTSU66vDU7d16bkD750zigK7H=
+Px60Mq6ckGLIYbplHqGcpiIbZbp3hwQ-2FRj6ygW5MegcqDdQbf53RcWzP39CO0-2BGNG0usUt=
+3xxdhIJbqZJm29ES3Fr6aHuwK8G6-2FjBpPjXtJEfY3kjABA-2BwInK-2BDtrbEKHEBPkZ70S3=
+BKAkC57PUheRc-2FtTVLP07rePAPeyg8yXmh-2F5CdA81bJciRkc0VAiHY-2BG-2BjPlElUtTA=
+mObfd88nfyaUKNh-2F4QUeOPzP3iiuFWm9wtiCjuaRS3ojBXPReZI3zw4r8lIR1uYmZckoRoOL=
+IWGS25zhWThHdgh8EN9nk2KTh9kbwTQ7oxaGYIqymvUw6EzH5YWlJHrAd5y1dvIlCZeNdqMJT5=
+0XbuRad4icSPdItWdteSygbwiCI-2FTNnNM3hlwrUBsyFirVBBr66uwE9yNhMxuIiQUwwlxbMM=
+aEFph6V7qHv1pnkpRRX0pKVSaqZ-2B40frfoc-2BAAd2AWaruy-2FLrmUc840j5id-2FAwmuNA=
+HSZ0uzI2YjhNyDZe20up3w4nlciNdzyVqttUP1GECUsJG5QsS0V3C3T7BIzQP3zq0fZ2cfIQGB=
+zXDLUYI5taldFYTN0UwSoD8RlsFr2AeXTvSdLrRDXp1R-2FfzR3ZvbjmjpQvspujO7VksleV1P=
+817ubVgllkOeNW-2BofPj0UImKVTzv-2BXC69dFBb4KeelJXZAYpTZVd05fGUNyn1rOMQ7wtE9=
+UfOfX1SNzSrlVqQfWEj7dRrOR9s1HaK4H-2FfDPTkWKXbqmTEqDtL9Lw-3D-3D>
+
+--Apple-Mail=_1A41E336-48CA-4FD0-8264-233CEE921DE9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="utf-8"
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"></=
+head><body style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; li=
+ne-break: after-white-space;">HI Rita -&nbsp;Thanks for reaching out. Apolo=
+gize if I=E2=80=99ve overlooked it, but could you let me know who you were =
+hoping to collaborate with? We represent a pool of talent and want to be su=
+re I=E2=80=99m connecting you with the right influencer. From there we can =
+discuss a few ideas on how we might approach from an editorial perspective =
+and discuss rates. Also curious if SilkSilky is on Amazon or if we would be=
+ lining directly to the website?&nbsp;<div><br><div><div>
+<div dir=3D"auto" style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); =
+letter-spacing: normal; text-align: start; text-indent: 0px; text-transform=
+: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: =
+0px; text-decoration: none; overflow-wrap: break-word; -webkit-nbsp-mode: s=
+pace; line-break: after-white-space;"><div dir=3D"auto" style=3D"caret-colo=
+r: rgb(0, 0, 0); color: rgb(0, 0, 0); letter-spacing: normal; text-align: s=
+tart; text-indent: 0px; text-transform: none; white-space: normal; word-spa=
+cing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; overflow-=
+wrap: break-word; -webkit-nbsp-mode: space; line-break: after-white-space;"=
+><div dir=3D"auto" style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);=
+ letter-spacing: normal; text-align: start; text-indent: 0px; text-transfor=
+m: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width:=
+ 0px; text-decoration: none; overflow-wrap: break-word; -webkit-nbsp-mode: =
+space; line-break: after-white-space;"><div dir=3D"auto" style=3D"caret-col=
+or: rgb(0, 0, 0); color: rgb(0, 0, 0); letter-spacing: normal; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; word-sp=
+acing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; overflow=
+-wrap: break-word; -webkit-nbsp-mode: space; line-break: after-white-space;=
+"><div dir=3D"auto" style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0)=
+; letter-spacing: normal; text-align: start; text-indent: 0px; text-transfo=
+rm: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width=
+: 0px; text-decoration: none; overflow-wrap: break-word; -webkit-nbsp-mode:=
+ space; line-break: after-white-space;"><div dir=3D"auto" style=3D"caret-co=
+lor: rgb(0, 0, 0); color: rgb(0, 0, 0); letter-spacing: normal; text-align:=
+ start; text-indent: 0px; text-transform: none; white-space: normal; word-s=
+pacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; overflo=
+w-wrap: break-word; -webkit-nbsp-mode: space; line-break: after-white-space=
+;"><div dir=3D"auto" style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0=
+); letter-spacing: normal; text-align: start; text-indent: 0px; text-transf=
+orm: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-widt=
+h: 0px; text-decoration: none; overflow-wrap: break-word; -webkit-nbsp-mode=
+: space; line-break: after-white-space;"><div><div style=3D"margin: 0px; fo=
+nt-stretch: normal; line-height: normal;"><span style=3D"font-kerning: none=
+;">Best,</span></div><div style=3D"margin: 0px; font-stretch: normal; line-=
+height: normal;"><span style=3D"font-kerning: none;">Jen</span></div><div s=
+tyle=3D"margin: 0px; font-stretch: normal; line-height: normal; min-height:=
+ 14px;"><span style=3D"font-kerning: none;"></span><br></div><div style=3D"=
+margin: 0px; font-stretch: normal; line-height: normal;"><span style=3D"fon=
+t-kerning: none;">JENNIFER WIGGINS</span></div><div style=3D"margin: 0px; f=
+ont-stretch: normal; font-size: 11px; line-height: normal;"><span style=3D"=
+font-kerning: none;">Co-Founder |<span class=3D"Apple-converted-space">&nbs=
+p;</span><a href=3D"http://www.silkwormsocial.com/"><span style=3D"font-str=
+etch: normal; line-height: normal; font-kerning: none; color: rgb(9, 79, 20=
+9);">Silkworm Social</span></a><span class=3D"Apple-converted-space">&nbsp;=
+</span>- an influencer talent agency</span></div><div style=3D"margin: 0px;=
+ font-stretch: normal; font-size: 11px; line-height: normal; color: rgb(9, =
+79, 209);"><span style=3D"font-kerning: none; color: rgb(0, 0, 0);">email |=
+<span class=3D"Apple-converted-space">&nbsp;</span><a href=3D"mailto:jen@si=
+lkwormsocial.com"><span style=3D"font-kerning: none;">jen@silkwormsocial.co=
+m&nbsp;</span></a></span></div><div style=3D"margin: 0px; font-stretch: nor=
+mal; font-size: 11px; line-height: normal;"><span style=3D"font-kerning: no=
+ne;">cell | 970-988-1310&nbsp;</span></div><div style=3D"margin: 0px; font-=
+stretch: normal; font-size: 11px; line-height: normal; color: rgb(9, 79, 20=
+9);"><span style=3D"text-decoration: underline; font-kerning: none;"><a hre=
+f=3D"https://www.linkedin.com/in/jenwiggins/">linkedIN</a></span><span styl=
+e=3D"font-kerning: none; color: rgb(0, 0, 0);"><span class=3D"Apple-convert=
+ed-space">&nbsp;</span>|<span class=3D"Apple-converted-space">&nbsp;</span>=
+<a href=3D"https://www.instagram.com/silkworm_social/"><span style=3D"font-=
+kerning: none;">instagram</span></a></span></div><div style=3D"margin: 0px;=
+ font-stretch: normal; line-height: normal; color: rgb(252, 39, 18); min-he=
+ight: 14px;"><span style=3D"font-kerning: none;"></span><br></div><div styl=
+e=3D"margin: 0px; font-stretch: normal; font-size: 9px; line-height: normal=
+; font-family: Arial; color: rgb(122, 126, 124);"><span style=3D"font-kerni=
+ng: none;">This email and any files transmitted are confidential and intend=
+ed solely for the use of the individual or entity to which they are address=
+ed. If you have received this email by error, please notify us immediately =
+and permanently delete it from your computer.</span></div><div style=3D"mar=
+gin: 0px; font-stretch: normal; font-size: 9px; line-height: normal; font-f=
+amily: Arial; color: rgb(122, 126, 124);"><br></div></div></div></div></div=
+></div></div></div><br class=3D"Apple-interchange-newline"></div><br class=
+=3D"Apple-interchange-newline"><br class=3D"Apple-interchange-newline">
+</div>
+
+<div><br><blockquote type=3D"cite"><div>On Aug 25, 2025, at 7:20=E2=80=AFAM=
+, rita@affiliate.bluefocus.com &lt;notifications@outreach.impact.com&gt; wr=
+ote:</div><br class=3D"Apple-interchange-newline"><div><div style=3D"margin=
+: 0px; font-style: normal; font-variant-caps: normal; font-weight: 400; fon=
+t-width: normal; font-size: 13px; line-height: normal; font-family: Helveti=
+ca; font-size-adjust: none; font-kerning: auto; font-variant-alternates: no=
+rmal; font-variant-ligatures: normal; font-variant-numeric: normal; font-va=
+riant-east-asian: normal; font-variant-position: normal; font-feature-setti=
+ngs: normal; font-optical-sizing: auto; font-variation-settings: normal; co=
+lor: rgb(0, 0, 233); background-color: rgb(255, 255, 255); letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; white-sp=
+ace: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decora=
+tion: none;"><img src=3D"https://storage.googleapis.com/outreach-files/cadd=
+1487-d7e5-49ec-a7b5-dcde19546668" style=3D"width: 717px; display: inline-bl=
+ock; vertical-align: bottom; margin-right: 5px; margin-left: 5px; text-alig=
+n: center;"><br><br><span style=3D"font-size: 18px; font-family: arial, hel=
+vetica, sans-serif;">Hi team,&nbsp;<br></span></div><div style=3D"margin: 0=
+px; font-style: normal; font-variant-caps: normal; font-weight: 400; font-w=
+idth: normal; font-size: 13px; line-height: normal; font-family: Helvetica;=
+ font-size-adjust: none; font-kerning: auto; font-variant-alternates: norma=
+l; font-variant-ligatures: normal; font-variant-numeric: normal; font-varia=
+nt-east-asian: normal; font-variant-position: normal; font-feature-settings=
+: normal; font-optical-sizing: auto; font-variation-settings: normal; lette=
+r-spacing: normal; text-align: start; text-indent: 0px; text-transform: non=
+e; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><span style=3D"font-family: arial, helvetica, sans-=
+serif;"><br></span><span style=3D"font-size: 18px; font-family: arial, helv=
+etica, sans-serif;">Hope you're doing well. I'm Rita, affiliate marketing m=
+anager at BlueFocus representing SilkSilky</span></div><div style=3D"margin=
+: 0px; font-style: normal; font-variant-caps: normal; font-weight: 400; fon=
+t-width: normal; font-size: 13px; line-height: normal; font-family: Helveti=
+ca; font-size-adjust: none; font-kerning: auto; font-variant-alternates: no=
+rmal; font-variant-ligatures: normal; font-variant-numeric: normal; font-va=
+riant-east-asian: normal; font-variant-position: normal; font-feature-setti=
+ngs: normal; font-optical-sizing: auto; font-variation-settings: normal; le=
+tter-spacing: normal; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0p=
+x; text-decoration: none;"><span style=3D"font-family: arial, helvetica, sa=
+ns-serif;"><br></span><span style=3D"font-size: 18px; font-family: arial, h=
+elvetica, sans-serif;">Category: Women's wear</span></div><div style=3D"mar=
+gin: 0px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+font-width: normal; font-size: 13px; line-height: normal; font-family: Helv=
+etica; font-size-adjust: none; font-kerning: auto; font-variant-alternates:=
+ normal; font-variant-ligatures: normal; font-variant-numeric: normal; font=
+-variant-east-asian: normal; font-variant-position: normal; font-feature-se=
+ttings: normal; font-optical-sizing: auto; font-variation-settings: normal;=
+ letter-spacing: normal; text-align: start; text-indent: 0px; text-transfor=
+m: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width:=
+ 0px; text-decoration: none;"><span style=3D"font-size: 18px; font-family: =
+arial, helvetica, sans-serif;">Commission:10%-20%</span></div><div style=3D=
+"margin: 0px; font-style: normal; font-variant-caps: normal; font-weight: 4=
+00; font-width: normal; font-size: 13px; line-height: normal; font-family: =
+Helvetica; font-size-adjust: none; font-kerning: auto; font-variant-alterna=
+tes: normal; font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; font-featur=
+e-settings: normal; font-optical-sizing: auto; font-variation-settings: nor=
+mal; letter-spacing: normal; text-align: start; text-indent: 0px; text-tran=
+sform: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-wi=
+dth: 0px; text-decoration: none;"><span style=3D"font-size: 18px; font-fami=
+ly: arial, helvetica, sans-serif;">Impact ID: 22953</span><span class=3D"Ap=
+ple-converted-space" style=3D"font-size: 18px; font-family: arial, helvetic=
+a, sans-serif;">&nbsp;</span></div><div style=3D"margin: 0px; font-style: n=
+ormal; font-variant-caps: normal; font-weight: 400; font-width: normal; fon=
+t-size: 13px; line-height: normal; font-family: Helvetica; font-size-adjust=
+: none; font-kerning: auto; font-variant-alternates: normal; font-variant-l=
+igatures: normal; font-variant-numeric: normal; font-variant-east-asian: no=
+rmal; font-variant-position: normal; font-feature-settings: normal; font-op=
+tical-sizing: auto; font-variation-settings: normal; letter-spacing: normal=
+; text-align: start; text-indent: 0px; text-transform: none; white-space: n=
+ormal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><span class=3D"Apple-converted-space" style=3D"font-size: 18px; font=
+-family: arial, helvetica, sans-serif;">Website:<span class=3D"Apple-conver=
+ted-space">&nbsp;</span><a href=3D"https://silksilky.com/">https://silksilk=
+y.com/</a></span><span style=3D"font-family: arial, helvetica, sans-serif;"=
+><br></span></div><div style=3D"caret-color: rgb(0, 0, 0); font-family: Hel=
+veticaNeue; font-size: 12px; font-style: normal; font-variant-caps: normal;=
+ font-weight: 400; letter-spacing: normal; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; word-spacing: 0px; -webkit-=
+text-stroke-width: 0px; text-decoration: none;"><span style=3D"font-family:=
+ arial, helvetica, sans-serif;"></span><br class=3D"webkit-block-placeholde=
+r"></div><div style=3D"margin: 0px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; font-width: normal; font-size: 13px; line-height:=
+ normal; font-family: Helvetica; font-size-adjust: none; font-kerning: auto=
+; font-variant-alternates: normal; font-variant-ligatures: normal; font-var=
+iant-numeric: normal; font-variant-east-asian: normal; font-variant-positio=
+n: normal; font-feature-settings: normal; font-optical-sizing: auto; font-v=
+ariation-settings: normal; min-height: 16px; letter-spacing: normal; text-a=
+lign: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+ord-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none;"><=
+span style=3D"font-size: 18px; font-family: arial, helvetica, sans-serif;">=
+<br></span></div><div style=3D"margin: 0px; font-style: normal; font-varian=
+t-caps: normal; font-weight: 400; font-width: normal; font-size: 13px; line=
+-height: normal; font-family: Helvetica; font-size-adjust: none; font-kerni=
+ng: auto; font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; font-variant=
+-position: normal; font-feature-settings: normal; font-optical-sizing: auto=
+; font-variation-settings: normal; letter-spacing: normal; text-align: star=
+t; text-indent: 0px; text-transform: none; white-space: normal; word-spacin=
+g: 0px; -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=
+=3D"font-size: 18px; font-family: arial, helvetica, sans-serif;">We=E2=80=
+=99re excited to share our latest campaigns with you, which are&nbsp;<stron=
+g><span style=3D"background-color: rgb(247, 218, 100);">only available this=
+ week</span></strong><span class=3D"Apple-converted-space">&nbsp;</span>and=
+ would be a perfect fit for your audience.<br><br><strong>Campaign Details<=
+/strong></span><br><br></div><div style=3D"margin: 0px; font-style: normal;=
+ font-variant-caps: normal; font-weight: 400; font-width: normal; font-size=
+: 13px; line-height: normal; font-family: Helvetica; font-size-adjust: none=
+; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatur=
+es: normal; font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; font-optical-=
+sizing: auto; font-variation-settings: normal; letter-spacing: normal; text=
+-align: start; text-indent: 0px; text-transform: none; white-space: normal;=
+ word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none;"=
+><span style=3D"font-size: 18px; font-family: arial, helvetica, sans-serif;=
+"><strong>Discount Code:<span class=3D"Apple-converted-space">&nbsp;</span>=
+<span style=3D"background-color: rgb(247, 218, 100);">SLS10</span></strong>=
+</span></div><div style=3D"margin: 0px; font-style: normal; font-variant-ca=
+ps: normal; font-weight: 400; font-width: normal; font-size: 13px; line-hei=
+ght: normal; font-family: Helvetica; font-size-adjust: none; font-kerning: =
+auto; font-variant-alternates: normal; font-variant-ligatures: normal; font=
+-variant-numeric: normal; font-variant-east-asian: normal; font-variant-pos=
+ition: normal; font-feature-settings: normal; font-optical-sizing: auto; fo=
+nt-variation-settings: normal; letter-spacing: normal; text-align: start; t=
+ext-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0=
+px; -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=3D"=
+font-size: 18px; font-family: arial, helvetica, sans-serif;"><strong>Descri=
+ption: Silksilky Save $10 on orders over $109</strong></span></div><div sty=
+le=3D"margin: 0px; font-style: normal; font-variant-caps: normal; font-weig=
+ht: 400; font-width: normal; font-size: 13px; line-height: normal; font-fam=
+ily: Helvetica; font-size-adjust: none; font-kerning: auto; font-variant-al=
+ternates: normal; font-variant-ligatures: normal; font-variant-numeric: nor=
+mal; font-variant-east-asian: normal; font-variant-position: normal; font-f=
+eature-settings: normal; font-optical-sizing: auto; font-variation-settings=
+: normal; color: rgb(0, 0, 233); letter-spacing: normal; text-align: start;=
+ text-indent: 0px; text-transform: none; white-space: normal; word-spacing:=
+ 0px; -webkit-text-stroke-width: 0px; text-decoration: none;"><span class=
+=3D"s1" style=3D"text-decoration: underline; font-size: 18px; font-family: =
+arial, helvetica, sans-serif;"><strong>URL:&nbsp;</strong><a href=3D"https:=
+//u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK2XdT48tQ=
+mztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-3D-3DvUaP=
+_O1SaTz7DkxW-2BJxzkEghdNsyG8ye13R7yRcw5a3MSSfYyqKV8iFi4S-2BBZgnRO6-2BXNkLca=
+Qgt75uCtqrjoy8coLPaT-2BsWK-2F0hkwSWEZtIplmcgW56E9mf6vrCgCxOSYyEZHrRpGxR2n0t=
+k-2BNAbn6KEr-2BWrqnRH5UoFNUXpgc1a0nOwb1przIoSuLIOQ6pj7xiX-2F-2BM1F78LI4SwBN=
+-2ByUZjr-2BZlvO6hZ2cv6yY-2F7jKeDjJVsvASmAMy60AQW0ZaMEgIQd0u5dRbDTSU66vDU7d1=
+6bkD750zigK7HPx60Mq6ckGLIYbplHqGcpiIbZbp3hwQ-2FRj6ygW5MegcqDdQbf53RcWzP39CO=
+0-2BGNG0usUt3xxdhIJbqZJm29ES3Fr6aHuwK8G6-2FjBpPjXtJEfY3kjABA-2BwInK-2BDtrbE=
+KHEBPkZ70S3BKAkC57PUheRc-2FtTVLP07rePAPeyg8yXmh-2F5CdA81bJciRkc0VAiHY-2BG-2=
+BjPlElUtTAmObfd88nfyaUKNh-2F4QUeOPzP3iiuFWm9wtiCjuaRS3ojBXPReZI3zw4r8lIR1uY=
+mZckoRoOLIWGS25zhWThHdgh8EN9nk2KTh9kbwTQ7oxaGYIqymvUw6EzH5YWlJHrAd5y1dvIlCZ=
+eNdqMJT50XbuRad4icSPdItWdteSygbwiCI-2FTNnNM3hlwrUBsyFirVBBr66uwE9yNhMxuIiQU=
+wwlxbMMaEFph6V7qHv1pnkpRRX0pKVSaqZ-2B40frfoc-2BAAd2AWaruy-2FLrmUc840j5id-2F=
+AwmuNAHSZ0uzI2YjhNyDZe20up3w4nlciNdzyVqttUP1GECUsJG5QsS0V3C3T7BIzQP3zq0fZ2c=
+fIQGBzXDLUYI5taldFYTN0UwSoD8RlsFr2AeXTvSdLrRDXp1R-2FfzR3ZvbjmjpQvspujO7Vkss=
+Cm6v2-2BYtwPEiUNF-2B230YOUgeBCAwMk8zj8yRY3Sqmt4sG3-2Fr2J03Qkw24zCIf0-2F0HgZ=
+MYTjsEXCV7TNs92ZJzZna3QEJOJ1u8sRkXZslUlkPqZeLxPNtBN6NOTpXkxHA-3D-3D"><span =
+class=3D"s4" style=3D"text-decoration: underline; color: rgb(0, 0, 233);"><=
+strong>https://silksilky.com/collections/best-seller</strong></span></a></s=
+pan></div><div style=3D"margin: 0px; font-style: normal; font-variant-caps:=
+ normal; font-weight: 400; font-width: normal; font-size: 13px; line-height=
+: normal; font-family: Helvetica; font-size-adjust: none; font-kerning: aut=
+o; font-variant-alternates: normal; font-variant-ligatures: normal; font-va=
+riant-numeric: normal; font-variant-east-asian: normal; font-variant-positi=
+on: normal; font-feature-settings: normal; font-optical-sizing: auto; font-=
+variation-settings: normal; letter-spacing: normal; text-align: start; text=
+-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px;=
+ -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=3D"fon=
+t-size: 18px; font-family: arial, helvetica, sans-serif;"><strong>Validity:=
+ 8/20-8/31</strong></span></div><div style=3D"margin: 0px; font-style: norm=
+al; font-variant-caps: normal; font-weight: 400; font-width: normal; font-s=
+ize: 13px; line-height: normal; font-family: Helvetica; font-size-adjust: n=
+one; font-kerning: auto; font-variant-alternates: normal; font-variant-liga=
+tures: normal; font-variant-numeric: normal; font-variant-east-asian: norma=
+l; font-variant-position: normal; font-feature-settings: normal; font-optic=
+al-sizing: auto; font-variation-settings: normal; min-height: 16px; letter-=
+spacing: normal; text-align: start; text-indent: 0px; text-transform: none;=
+ white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; te=
+xt-decoration: none;"><span style=3D"font-size: 18px; font-family: arial, h=
+elvetica, sans-serif;"><br></span></div><div style=3D"margin: 0px; font-sty=
+le: normal; font-variant-caps: normal; font-weight: 400; font-width: normal=
+; font-size: 13px; line-height: normal; font-family: Helvetica; font-size-a=
+djust: none; font-kerning: auto; font-variant-alternates: normal; font-vari=
+ant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asia=
+n: normal; font-variant-position: normal; font-feature-settings: normal; fo=
+nt-optical-sizing: auto; font-variation-settings: normal; letter-spacing: n=
+ormal; text-align: start; text-indent: 0px; text-transform: none; white-spa=
+ce: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decorat=
+ion: none;"><span style=3D"font-size: 18px; font-family: arial, helvetica, =
+sans-serif;"><strong>Discount Code:<span class=3D"Apple-converted-space">&n=
+bsp;</span><span style=3D"background-color: rgb(247, 218, 100);">SLS30</spa=
+n></strong></span></div><div style=3D"margin: 0px; font-style: normal; font=
+-variant-caps: normal; font-weight: 400; font-width: normal; font-size: 13p=
+x; line-height: normal; font-family: Helvetica; font-size-adjust: none; fon=
+t-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: n=
+ormal; font-variant-numeric: normal; font-variant-east-asian: normal; font-=
+variant-position: normal; font-feature-settings: normal; font-optical-sizin=
+g: auto; font-variation-settings: normal; letter-spacing: normal; text-alig=
+n: start; text-indent: 0px; text-transform: none; white-space: normal; word=
+-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none;"><spa=
+n style=3D"font-size: 18px; font-family: arial, helvetica, sans-serif;"><st=
+rong>Description: Silksilky Save $30 on orders over $199</strong></span></d=
+iv><div style=3D"margin: 0px; font-style: normal; font-variant-caps: normal=
+; font-weight: 400; font-width: normal; font-size: 13px; line-height: norma=
+l; font-family: Helvetica; font-size-adjust: none; font-kerning: auto; font=
+-variant-alternates: normal; font-variant-ligatures: normal; font-variant-n=
+umeric: normal; font-variant-east-asian: normal; font-variant-position: nor=
+mal; font-feature-settings: normal; font-optical-sizing: auto; font-variati=
+on-settings: normal; color: rgb(0, 0, 233); letter-spacing: normal; text-al=
+ign: start; text-indent: 0px; text-transform: none; white-space: normal; wo=
+rd-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none;"><s=
+pan class=3D"s1" style=3D"text-decoration: underline; font-size: 18px; font=
+-family: arial, helvetica, sans-serif;"><strong>URL:&nbsp;</strong><a href=
+=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2=
+BK2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg=
+-3D-3DPiuh_O1SaTz7DkxW-2BJxzkEghdNsyG8ye13R7yRcw5a3MSSfYyqKV8iFi4S-2BBZgnRO=
+6-2BXNkLcaQgt75uCtqrjoy8coLPaT-2BsWK-2F0hkwSWEZtIplmcgW56E9mf6vrCgCxOSYyEZH=
+rRpGxR2n0tk-2BNAbn6KEr-2BWrqnRH5UoFNUXpgc1a0nOwb1przIoSuLIOQ6pj7xiX-2F-2BM1=
+F78LI4SwBN-2ByUZjr-2BZlvO6hZ2cv6yY-2F7jKeDjJVsvASmAMy60AQW0ZaMEgIQd0u5dRbDT=
+SU66vDU7d16bkD750zigK7HPx60Mq6ckGLIYbplHqGcpiIbZbp3hwQ-2FRj6ygW5MegcqDdQbf5=
+3RcWzP39CO0-2BGNG0usUt3xxdhIJbqZJm29ES3Fr6aHuwK8G6-2FjBpPjXtJEfY3kjABA-2BwI=
+nK-2BDtrbEKHEBPkZ70S3BKAkC57PUheRc-2FtTVLP07rePAPeyg8yXmh-2F5CdA81bJciRkc0V=
+AiHY-2BG-2BjPlElUtTAmObfd88nfyaUKNh-2F4QUeOPzP3iiuFWm9wtiCjuaRS3ojBXPReZI3z=
+w4r8lIR1uYmZckoRoOLIWGS25zhWThHdgh8EN9nk2KTh9kbwTQ7oxaGYIqymvUw6EzH5YWlJHrA=
+d5y1dvIlCZeNdqMJT50XbuRad4icSPdItWdteSygbwiCI-2FTNnNM3hlwrUBsyFirVBBr66uwE9=
+yNhMxuIiQUwwlxbMMaEFph6V7qHv1pnkpRRX0pKVSaqZ-2B40frfoc-2BAAd2AWaruy-2FLrmUc=
+840j5id-2FAwmuNAHSZ0uzI2YjhNyDZe20up3w4nlciNdzyVqttUP1GECUsJG5QsS0V3C3T7BIz=
+QP3zq0fZ2cfIQGBzXDLUYI5taldFYTN0UwSoD8RlsFr2AeXTvSdLrRDXp1R-2FfzR3ZvbjmjpQv=
+spujO7Vkss9UgEZ-2Fp84BkExXovkIW9saOrBRXOV4vjlnKZcUicCtXT8dzl-2Fag5p9KoyAEQ4=
+WGdLNbcFDKzKnxSIOy4JUnd16-2By7swVeCWLuDnHtyoKG-2BueCiVxnfLniHdPdrvt70VQ-3D-=
+3D"><span class=3D"s4" style=3D"text-decoration: underline; color: rgb(0, 0=
+, 233);"><strong>https://silksilky.com/collections/best-seller</strong></sp=
+an></a></span></div><div style=3D"margin: 0px; font-style: normal; font-var=
+iant-caps: normal; font-weight: 400; font-width: normal; font-size: 13px; l=
+ine-height: normal; font-family: Helvetica; font-size-adjust: none; font-ke=
+rning: auto; font-variant-alternates: normal; font-variant-ligatures: norma=
+l; font-variant-numeric: normal; font-variant-east-asian: normal; font-vari=
+ant-position: normal; font-feature-settings: normal; font-optical-sizing: a=
+uto; font-variation-settings: normal; letter-spacing: normal; text-align: s=
+tart; text-indent: 0px; text-transform: none; white-space: normal; word-spa=
+cing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none;"><span st=
+yle=3D"font-size: 18px; font-family: arial, helvetica, sans-serif;"><strong=
+>Validity: 8/20-8/31</strong></span></div><div style=3D"margin: 0px; font-s=
+tyle: normal; font-variant-caps: normal; font-weight: 400; font-width: norm=
+al; font-size: 13px; line-height: normal; font-family: Helvetica; font-size=
+-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-va=
+riant-ligatures: normal; font-variant-numeric: normal; font-variant-east-as=
+ian: normal; font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal; letter-spacing:=
+ normal; text-align: start; text-indent: 0px; text-transform: none; white-s=
+pace: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decor=
+ation: none;"><span style=3D"font-size: 18px; font-family: arial, helvetica=
+, sans-serif;"><br><strong>Campaign Name</strong></span><span class=3D"s5" =
+style=3D"font-style: normal; font-variant-caps: normal; font-weight: normal=
+; font-width: normal; font-size: 18px; line-height: normal; font-family: ar=
+ial, helvetica, sans-serif; font-size-adjust: none; font-kerning: auto; fon=
+t-variant-alternates: normal; font-variant-ligatures: normal; font-variant-=
+numeric: normal; font-variant-east-asian: normal; font-variant-position: no=
+rmal; font-feature-settings: normal; font-optical-sizing: auto; font-variat=
+ion-settings: normal;"><strong>=EF=BC=9A</strong></span><span style=3D"font=
+-size: 18px; font-family: arial, helvetica, sans-serif;"><strong><span styl=
+e=3D"background-color: rgb(247, 218, 100);">Silk Apparel for Women</span></=
+strong><br><strong>Description: Silk Apparel for Women</strong></span><span=
+ class=3D"s5" style=3D"font-style: normal; font-variant-caps: normal; font-=
+weight: normal; font-width: normal; font-size: 18px; line-height: normal; f=
+ont-family: arial, helvetica, sans-serif; font-size-adjust: none; font-kern=
+ing: auto; font-variant-alternates: normal; font-variant-ligatures: normal;=
+ font-variant-numeric: normal; font-variant-east-asian: normal; font-varian=
+t-position: normal; font-feature-settings: normal; font-optical-sizing: aut=
+o; font-variation-settings: normal;"><strong>=EF=BC=9A</strong></span><span=
+ style=3D"font-size: 18px; font-family: arial, helvetica, sans-serif;"><str=
+ong><span style=3D"background-color: rgb(247, 218, 100);">save up to 70%</s=
+pan></strong></span><span class=3D"s5" style=3D"font-style: normal; font-va=
+riant-caps: normal; font-weight: normal; font-width: normal; font-size: 18p=
+x; line-height: normal; font-family: arial, helvetica, sans-serif; font-siz=
+e-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-v=
+ariant-ligatures: normal; font-variant-numeric: normal; font-variant-east-a=
+sian: normal; font-variant-position: normal; font-feature-settings: normal;=
+ font-optical-sizing: auto; font-variation-settings: normal;"><strong><span=
+ style=3D"background-color: rgb(247, 218, 100);">=EF=BC=81</span></strong><=
+/span></div><div style=3D"margin: 0px; font-style: normal; font-variant-cap=
+s: normal; font-weight: 400; font-width: normal; font-size: 13px; line-heig=
+ht: normal; font-family: Helvetica; font-size-adjust: none; font-kerning: a=
+uto; font-variant-alternates: normal; font-variant-ligatures: normal; font-=
+variant-numeric: normal; font-variant-east-asian: normal; font-variant-posi=
+tion: normal; font-feature-settings: normal; font-optical-sizing: auto; fon=
+t-variation-settings: normal; color: rgb(0, 0, 233); letter-spacing: normal=
+; text-align: start; text-indent: 0px; text-transform: none; white-space: n=
+ormal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;"><span class=3D"s1" style=3D"text-decoration: underline; font-size: 1=
+8px; font-family: arial, helvetica, sans-serif;"><strong>URL:&nbsp;</strong=
+><a href=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzx=
+R7RPOX-2BK2XdT48tQmztTqvWNg5JdkTQOr-2FPlS5dgVM8Y7eBHcWWjSSLQxRfBQyhyLjHagwC=
+1lUr0s5BYrArQhMy9kwuP5MeAlc-3D1S2i_O1SaTz7DkxW-2BJxzkEghdNsyG8ye13R7yRcw5a3=
+MSSfYyqKV8iFi4S-2BBZgnRO6-2BXNkLcaQgt75uCtqrjoy8coLPaT-2BsWK-2F0hkwSWEZtIpl=
+mcgW56E9mf6vrCgCxOSYyEZHrRpGxR2n0tk-2BNAbn6KEr-2BWrqnRH5UoFNUXpgc1a0nOwb1pr=
+zIoSuLIOQ6pj7xiX-2F-2BM1F78LI4SwBN-2ByUZjr-2BZlvO6hZ2cv6yY-2F7jKeDjJVsvASmA=
+My60AQW0ZaMEgIQd0u5dRbDTSU66vDU7d16bkD750zigK7HPx60Mq6ckGLIYbplHqGcpiIbZbp3=
+hwQ-2FRj6ygW5MegcqDdQbf53RcWzP39CO0-2BGNG0usUt3xxdhIJbqZJm29ES3Fr6aHuwK8G6-=
+2FjBpPjXtJEfY3kjABA-2BwInK-2BDtrbEKHEBPkZ70S3BKAkC57PUheRc-2FtTVLP07rePAPey=
+g8yXmh-2F5CdA81bJciRkc0VAiHY-2BG-2BjPlElUtTAmObfd88nfyaUKNh-2F4QUeOPzP3iiuF=
+Wm9wtiCjuaRS3ojBXPReZI3zw4r8lIR1uYmZckoRoOLIWGS25zhWThHdgh8EN9nk2KTh9kbwTQ7=
+oxaGYIqymvUw6EzH5YWlJHrAd5y1dvIlCZeNdqMJT50XbuRad4icSPdItWdteSygbwiCI-2FTNn=
+NM3hlwrUBsyFirVBBr66uwE9yNhMxuIiQUwwlxbMMaEFph6V7qHv1pnkpRRX0pKVSaqZ-2B40fr=
+foc-2BAAd2AWaruy-2FLrmUc840j5id-2FAwmuNAHSZ0uzI2YjhNyDZe20up3w4nlciNdzyVqtt=
+UP1GECUsJG5QsS0V3C3T7BIzQP3zq0fZ2cfIQGBzXDLUYI5taldFYTN0UwSoD8RlsFr2AeXTvSd=
+LrRDXp1R-2FfzR3ZvbjmjpQvspujO7Vksrc7AuvryFB4Dj9Ms9HcR0ZmFDkadppy0YRrxf9KMpz=
+-2BXo1ksEJOQCgqja60curP169VehBWIHf4iqmeTlFyf7p6oyrMMzMCzW1MlvGc5j5a6Ms3q6cu=
+mnY4uNQ8nj3z3A-3D-3D"><span class=3D"s4" style=3D"text-decoration: underlin=
+e; color: rgb(0, 0, 233);"><strong>https://silksilky.com/collections/silk-a=
+pparel-for-women</strong></span></a></span></div><div style=3D"margin: 0px;=
+ font-style: normal; font-variant-caps: normal; font-weight: 400; font-widt=
+h: normal; font-size: 13px; line-height: normal; font-family: Helvetica; fo=
+nt-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; =
+font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-=
+east-asian: normal; font-variant-position: normal; font-feature-settings: n=
+ormal; font-optical-sizing: auto; font-variation-settings: normal; letter-s=
+pacing: normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; tex=
+t-decoration: none;"><span style=3D"font-size: 18px; font-family: arial, he=
+lvetica, sans-serif;"><strong>Validity: 8/20-8/31</strong></span></div><div=
+ style=3D"margin: 0px; font-style: normal; font-variant-caps: normal; font-=
+weight: 400; font-width: normal; font-size: 13px; line-height: normal; font=
+-family: Helvetica; font-size-adjust: none; font-kerning: auto; font-varian=
+t-alternates: normal; font-variant-ligatures: normal; font-variant-numeric:=
+ normal; font-variant-east-asian: normal; font-variant-position: normal; fo=
+nt-feature-settings: normal; font-optical-sizing: auto; font-variation-sett=
+ings: normal; min-height: 16px; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; word-spacing: =
+0px; -webkit-text-stroke-width: 0px; text-decoration: none;"><span style=3D=
+"font-size: 18px; font-family: arial, helvetica, sans-serif;"><br></span></=
+div><div style=3D"margin: 0px; font-style: normal; font-variant-caps: norma=
+l; font-weight: 400; font-width: normal; font-size: 13px; line-height: norm=
+al; font-family: Helvetica; font-size-adjust: none; font-kerning: auto; fon=
+t-variant-alternates: normal; font-variant-ligatures: normal; font-variant-=
+numeric: normal; font-variant-east-asian: normal; font-variant-position: no=
+rmal; font-feature-settings: normal; font-optical-sizing: auto; font-variat=
+ion-settings: normal; letter-spacing: normal; text-align: start; text-inden=
+t: 0px; text-transform: none; white-space: normal; word-spacing: 0px; -webk=
+it-text-stroke-width: 0px; text-decoration: none;"><span style=3D"font-size=
+: 18px; font-family: arial, helvetica, sans-serif;">If you need any support=
+, feel free to reach out. Please also send over your latest media kit<stron=
+g>, rate card</strong>, and details regarding<span class=3D"Apple-converted=
+-space">&nbsp;</span><strong>available placements or exposure opportunities=
+.</strong></span></div><div style=3D"margin: 0px; font-style: normal; font-=
+variant-caps: normal; font-weight: 400; font-width: normal; font-size: 13px=
+; line-height: normal; font-family: Helvetica; font-size-adjust: none; font=
+-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: no=
+rmal; font-variant-numeric: normal; font-variant-east-asian: normal; font-v=
+ariant-position: normal; font-feature-settings: normal; font-optical-sizing=
+: auto; font-variation-settings: normal; min-height: 16px; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; white-sp=
+ace: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decora=
+tion: none;"><span style=3D"font-size: 18px; font-family: arial, helvetica,=
+ sans-serif;"><br></span></div><div style=3D"margin: 0px; font-style: norma=
+l; font-variant-caps: normal; font-weight: 400; font-width: normal; font-si=
+ze: 13px; line-height: normal; font-family: Helvetica; font-size-adjust: no=
+ne; font-kerning: auto; font-variant-alternates: normal; font-variant-ligat=
+ures: normal; font-variant-numeric: normal; font-variant-east-asian: normal=
+; font-variant-position: normal; font-feature-settings: normal; font-optica=
+l-sizing: auto; font-variation-settings: normal; letter-spacing: normal; te=
+xt-align: start; text-indent: 0px; text-transform: none; white-space: norma=
+l; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none=
+;"><span style=3D"font-size: 18px; font-family: arial, helvetica, sans-seri=
+f;">We're open to the following types of partnerships:</span></div><ul clas=
+s=3D"ul1" style=3D"list-style-type: disc; caret-color: rgb(0, 0, 0); font-f=
+amily: HelveticaNeue; font-size: 12px; font-style: normal; font-variant-cap=
+s: normal; font-weight: 400; letter-spacing: normal; text-align: start; tex=
+t-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px=
+; -webkit-text-stroke-width: 0px; text-decoration: none;"><li class=3D"li2"=
+ style=3D"margin: 0px; font-style: normal; font-variant-caps: normal; font-=
+weight: normal; font-width: normal; font-size: 18px; line-height: normal; f=
+ont-family: arial, helvetica, sans-serif; font-size-adjust: none; font-kern=
+ing: auto; font-variant-alternates: normal; font-variant-ligatures: normal;=
+ font-variant-numeric: normal; font-variant-east-asian: normal; font-varian=
+t-position: normal; font-feature-settings: normal; font-optical-sizing: aut=
+o; font-variation-settings: normal;">paid placement for additional exposure=
+</li><li class=3D"li2" style=3D"margin: 0px; font-style: normal; font-varia=
+nt-caps: normal; font-weight: normal; font-width: normal; font-size: 18px; =
+line-height: normal; font-family: arial, helvetica, sans-serif; font-size-a=
+djust: none; font-kerning: auto; font-variant-alternates: normal; font-vari=
+ant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asia=
+n: normal; font-variant-position: normal; font-feature-settings: normal; fo=
+nt-optical-sizing: auto; font-variation-settings: normal;">CPAi for additio=
+nal exposure</li><li class=3D"li2" style=3D"margin: 0px; font-style: normal=
+; font-variant-caps: normal; font-weight: normal; font-width: normal; font-=
+size: 18px; line-height: normal; font-family: arial, helvetica, sans-serif;=
+ font-size-adjust: none; font-kerning: auto; font-variant-alternates: norma=
+l; font-variant-ligatures: normal; font-variant-numeric: normal; font-varia=
+nt-east-asian: normal; font-variant-position: normal; font-feature-settings=
+: normal; font-optical-sizing: auto; font-variation-settings: normal;">excl=
+usive code for additional exposure</li></ul><div style=3D"margin: 0px; font=
+-style: normal; font-variant-caps: normal; font-weight: 400; font-width: no=
+rmal; font-size: 13px; line-height: normal; font-family: Helvetica; font-si=
+ze-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-=
+variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-=
+asian: normal; font-variant-position: normal; font-feature-settings: normal=
+; font-optical-sizing: auto; font-variation-settings: normal; min-height: 1=
+6px; letter-spacing: normal; text-align: start; text-indent: 0px; text-tran=
+sform: none; white-space: normal; word-spacing: 0px; -webkit-text-stroke-wi=
+dth: 0px; text-decoration: none;"><span style=3D"font-size: 18px; font-fami=
+ly: arial, helvetica, sans-serif;"><br></span></div><div style=3D"margin: 0=
+px; font-style: normal; font-variant-caps: normal; font-weight: 400; font-w=
+idth: normal; font-size: 13px; line-height: normal; font-family: Helvetica;=
+ font-size-adjust: none; font-kerning: auto; font-variant-alternates: norma=
+l; font-variant-ligatures: normal; font-variant-numeric: normal; font-varia=
+nt-east-asian: normal; font-variant-position: normal; font-feature-settings=
+: normal; font-optical-sizing: auto; font-variation-settings: normal; lette=
+r-spacing: normal; text-align: start; text-indent: 0px; text-transform: non=
+e; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><span style=3D"font-size: 18px; font-family: arial,=
+ helvetica, sans-serif;">Best regards,</span></div><div style=3D"margin: 0p=
+x; font-style: normal; font-variant-caps: normal; font-weight: 400; font-wi=
+dth: normal; font-size: 13px; line-height: normal; font-family: Helvetica; =
+font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal=
+; font-variant-ligatures: normal; font-variant-numeric: normal; font-varian=
+t-east-asian: normal; font-variant-position: normal; font-feature-settings:=
+ normal; font-optical-sizing: auto; font-variation-settings: normal; letter=
+-spacing: normal; text-align: start; text-indent: 0px; text-transform: none=
+; white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; t=
+ext-decoration: none;"><span style=3D"font-size: 18px; font-family: arial, =
+helvetica, sans-serif;">Rita</span></div><div style=3D"caret-color: rgb(0, =
+0, 0); font-family: HelveticaNeue; font-size: 12px; font-style: normal; fon=
+t-variant-caps: normal; font-weight: 400; letter-spacing: normal; text-alig=
+n: start; text-indent: 0px; text-transform: none; white-space: normal; word=
+-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none;"><br>=
+<a href=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR=
+7RPOX-2BK2XdTxbxD4UJGmtW8DAxp3YXsDa7MPMCTETs3WSo52RM6Q9Hs8pDVfvfmNT63AenKOo=
+g8JaiDndXVwiwAsDekYhF4jiZMWKpTigSZB-2FmPN9E4ocNYXXL712JxcEVGQQQ6TM6Vc-2F82D=
+LpIJNIZ1Rlps-2FfN1BeAwjynunPRa7WVJeSvDG6bf6QS6pFsKAOih871GQqDIR4mqXKb6k9RT-=
+2B6QnPwHJn-2FvYlcrPEsL1RS-2F2llc-2FZ1cpeXelE5GDt3dm1h0uqxmNKHWX68SnbxDkUWc0=
+OPyT-2Bvy9s1c-2F2Z6FBJSrjs8pxpcpSkbOr8D3XEbRumojm6Zw-3D-3Dag9R_O1SaTz7DkxW-=
+2BJxzkEghdNsyG8ye13R7yRcw5a3MSSfYyqKV8iFi4S-2BBZgnRO6-2BXNkLcaQgt75uCtqrjoy=
+8coLPaT-2BsWK-2F0hkwSWEZtIplmcgW56E9mf6vrCgCxOSYyEZHrRpGxR2n0tk-2BNAbn6KEr-=
+2BWrqnRH5UoFNUXpgc1a0nOwb1przIoSuLIOQ6pj7xiX-2F-2BM1F78LI4SwBN-2ByUZjr-2BZl=
+vO6hZ2cv6yY-2F7jKeDjJVsvASmAMy60AQW0ZaMEgIQd0u5dRbDTSU66vDU7d16bkD750zigK7H=
+Px60Mq6ckGLIYbplHqGcpiIbZbp3hwQ-2FRj6ygW5MegcqDdQbf53RcWzP39CO0-2BGNG0usUt3=
+xxdhIJbqZJm29ES3Fr6aHuwK8G6-2FjBpPjXtJEfY3kjABA-2BwInK-2BDtrbEKHEBPkZ70S3BK=
+AkC57PUheRc-2FtTVLP07rePAPeyg8yXmh-2F5CdA81bJciRkc0VAiHY-2BG-2BjPlElUtTAmOb=
+fd88nfyaUKNh-2F4QUeOPzP3iiuFWm9wtiCjuaRS3ojBXPReZI3zw4r8lIR1uYmZckoRoOLIWGS=
+25zhWThHdgh8EN9nk2KTh9kbwTQ7oxaGYIqymvUw6EzH5YWlJHrAd5y1dvIlCZeNdqMJT50XbuR=
+ad4icSPdItWdteSygbwiCI-2FTNnNM3hlwrUBsyFirVBBr66uwE9yNhMxuIiQUwwlxbMMaEFph6=
+V7qHv1pnkpRRX0pKVSaqZ-2B40frfoc-2BAAd2AWaruy-2FLrmUc840j5id-2FAwmuNAHSZ0uzI=
+2YjhNyDZe20up3w4nlciNdzyVqttUP1GECUsJG5QsS0V3C3T7BIzQP3zq0fZ2cfIQGBzXDLUYI5=
+taldFYTN0UwSoD8RlsFr2AeXTvSdLrRDXp1R-2FfzR3ZvbjmjpQvspujO7VksleV1P817ubVgll=
+kOeNW-2BofPj0UImKVTzv-2BXC69dFBb4KeelJXZAYpTZVd05fGUNyn1rOMQ7wtE9UfOfX1SNzS=
+rlVqQfWEj7dRrOR9s1HaK4H-2FfDPTkWKXbqmTEqDtL9Lw-3D-3D">Unsubscribe</a></div>=
+<img src=3D"https://u29708799.ct.sendgrid.net/wf/open?upn=3Du001.uosBM1Vxa4=
+RFbdDVqSaiFoV-2FYnvn8u0ztvXaSnlNH-2FZ3I221R-2Ft56UBW8bI2ybMhXNuSCg05SX-2FfQ=
+mK-2FVeppv0RPVVhmsKcuh629lACyy6UOZ0jv0Nue2oH7N8fZr-2B1fDEQj5pcCj40MfTCz0J6A=
+sQBtvgOCnXiMpZdJ1FpTOq3WrslrCzNFUehb-2BdTJAv4-2FBQffvUB7JtZz89OGI9FdQJ-2Fjk=
+Ea-2FFCwsDfiOiYSGf1TZodj2mX0ElCgVq7oqzUWICalUhYFVv4Bd9hKg97aIk-2F4pmtOxgcuH=
+iPRE1soOz9L8ADDQjW6SiK14INDvjOBfn19F1B-2Fe1foYsY-2B2KLY40LxF-2BZVF7ZVeM2m4e=
+cKelYJJURrMWCJ4ZdhElP6hmuU9CbhUJUw92-2B5PQCZjJSQ2a-2F6OMuffRXx5oHqjr2LSNNe2=
+Jy27nJzswykeaI1k3jAnDpHswqgUXf56-2FhcIR1pt3Pzhwq4bsuRios3Y-2B3u3-2FLhSqm5vj=
+JvSy3gSPA0bhR6eHlLnQG-2FtYN47-2FCvd0x2vYo2-2BsiFLxJztJBMFoDdKere1SvWvHZ8kIx=
+f3P8nspCR020BZHd-2B3Y-2B7l6Mo0vAT76VipMOOoZYIRx-2FtfF8FObab3kLbRTRdV71GM3wY=
+m-2BYP0stCM6mq9rfjPdIdwE8kvaB7mKYCLATZc3yEo5JBbazce3LwN6sZEePplcFgAj27rNzSQ=
+u-2B3tB1VNK3n4s6KyjapMYpaL-2BHYLqxGCNGmMt6RNxK46ZSeuvjb8UmIE-2B8SQOH1vIaWUU=
+oTgiDEQH2hhzOSVwJ8OkiTZuHQ9XumiPYCrwIFPZ-2FDFQe77k76peETK6erzaLfz23DWsooWlP=
+UDyLlK1LvDquy4q14oXHdz59wvJy2Z2J18r7oW-2BukQWHYCoY0SDRLsa8qJJEKit3MMyZ7sMBb=
+yUX2zh8-2FHSufawgldYzo7AUCP6wyhmEpJA5ImgJHDA-2BY5Mc6IRLOBOhHb4ZN5cGg5InwqM6=
+paSOyXhOWEf9ElU40cFMAVKcppA-2BabVAfU6jmEqsh8IKRU95h-2FMA0-2FlrG-2B8bAet18QP=
+pKSQsg-3D" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"caret-co=
+lor: rgb(0, 0, 0); font-family: HelveticaNeue; font-size: 12px; font-style:=
+ normal; font-variant-caps: normal; font-weight: 400; letter-spacing: norma=
+l; text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration:=
+ none; height: 1px !important; width: 1px !important; border-width: 0px !im=
+portant; margin: 0px !important; padding: 0px !important;"></div></blockquo=
+te></div><br></div></div></body></html>=
+
+--Apple-Mail=_1A41E336-48CA-4FD0-8264-233CEE921DE9--

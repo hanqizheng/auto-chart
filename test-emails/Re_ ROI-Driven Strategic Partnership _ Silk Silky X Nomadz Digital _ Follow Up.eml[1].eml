@@ -1,0 +1,324 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp4264246nji;
+        Fri, 22 Aug 2025 11:12:29 -0700 (PDT)
+X-Received: by 2002:a17:902:e888:b0:240:640a:c560 with SMTP id d9443c01a7336-2462ee54507mr57949375ad.24.1755886349485;
+        Fri, 22 Aug 2025 11:12:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1755886349; cv=none;
+        d=google.com; s=arc-20240605;
+        b=PAVYIEz9osZQiBuYUjH91jcBkXNgqkDY2SleNmn5Vb4sDRsiI1a2Bc1pSJiM1OGrlG
+         MjUz75f2wy+szGv2Y6rJn4Sw1TlgBqMfybIC4keVUuDxHlJqy8u4v8g1vpWzdjjlO5xp
+         9xzS0GoT+JqDnXtzqIgoE2ar0mc1DMH9g41zrsN8zeO20oBTF543ul0f+ZQtwb7/GbRS
+         OTF4WBq0cPNE8Jel+bNPounoqNTD+I1Zkohk1s+ox2inbBlR+6aJLHx5ex5UzR95sKgP
+         iB2PCln+DHsUlcghyxzpm1wnpVfouv0Bjc2i2pfLoRest8rHqCKoUo0qGYOytHs2/vuS
+         RIDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=5eOpi4ImPjhWM7x3PlHFDqNCf+9gZ1qiBbz0EYoCMpo=;
+        fh=PZkkLbHNKtPzz4j/wQWR8zzU40d4K94mVcqBqUQqbSQ=;
+        b=j+54i7OYg626l1Vyf/2kvY47QP1at6qMKksTJuYUeipyU9ve26a1Fm0TVv31oNsnWJ
+         wXyF85cJ00QV2hjNz5PnvQguKfxO1stQGwe/UQ6xkkfUNfbt3FGOc21UrYi515o3LF7N
+         GXxzbyn6RkKJwUkTZL1+sH/1g6GEpFA9GoZUiIju3XfsxQ7FkGpD17CZcOiS925YWePo
+         NCzfMNvhf0oTy9mAyZhAgZcGLFY1Qh9GLG5dBYfDHWOkwk9K5d6uKpYxEXLnjodcclan
+         kR2tucsnSV9s5NIAFtz7C2QCjw49PqNcb7+e+szfxApql9YpJ7loEtZRSQg3DeVJaCbX
+         lA4Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=neutral (invalid public key) header.i=@nomadzdigital.com header.s=google header.b=XLWztJA2;
+       spf=pass (google.com: domain of sahejdeep.choudhary@nomadzdigital.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=sahejdeep.choudhary@nomadzdigital.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=nomadzdigital.com;
+       dara=fail header.i=@affiliate.bluefocus.com
+Return-Path: <sahejdeep.choudhary@nomadzdigital.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id d9443c01a7336-2466866f8adsor2344045ad.0.2025.08.22.11.12.29
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Fri, 22 Aug 2025 11:12:29 -0700 (PDT)
+Received-SPF: pass (google.com: domain of sahejdeep.choudhary@nomadzdigital.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=neutral (invalid public key) header.i=@nomadzdigital.com header.s=google header.b=XLWztJA2;
+       spf=pass (google.com: domain of sahejdeep.choudhary@nomadzdigital.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=sahejdeep.choudhary@nomadzdigital.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=nomadzdigital.com;
+       dara=fail header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nomadzdigital.com; s=google; t=1755886348; x=1756491148; darn=affiliate.bluefocus.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5eOpi4ImPjhWM7x3PlHFDqNCf+9gZ1qiBbz0EYoCMpo=;
+        b=XLWztJA2n8vgAt/8CuCozQ2WAfRGABPQcSV4V5nuU+nrgDY1TTZeoDLNEFDR32EPkF
+         iNrkketRJng5wFivWJRUDRNpCukXyqfN0gCFhsS+5hg+wd/QBBFBJFVthY3El5SxQNka
+         uMbMplBCdMIHbG5Uqb7WpokkCnAcBaJQWjLBIK2GVFmmI0Y6RwuthK3olqNh5Pi+zKUz
+         9vYrpcclK6dvE5iYTHRQ7nNvZPU7Zz4+K+MZNM4zP0v9478WYAAg5CbZVwng263oO8Jl
+         4PicuCmh7EYlozMwb2T9b0H10DL7aDgwuuHaJvcmuf4eBj6cGr9YqyPGEoun239a9XfT
+         yMmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755886348; x=1756491148;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5eOpi4ImPjhWM7x3PlHFDqNCf+9gZ1qiBbz0EYoCMpo=;
+        b=ibZT7kdmnBPKAKWJvl/yHdweZg8dv0fGsMmvstL/ADIjbWd/T3lQRiR2DwSjrd4h3V
+         TWmLIfYTYNNa/w2f4QW4lOND/wRj2UxZPaAvTOaByNS4kujKMP6/UHxEJqC67oM94V0t
+         yQrHr8/1Ursecbod6rBKUGNJpUb801Mjl0jYWfCn7WuerCp68bBwNkrXvUdBG937lQL+
+         mIsZQ+qst4fgqZjJgydWAQE+L/FzoIridJso+Vf1GsCUgDrt3qfXjqwZS6mBwVwPJevH
+         z6rDk2Imu3zTCgECffsPLNdzJJbfV4+byJerqzcBMMvHwj8QdmIusMAQ/Ko6vAi0tfXx
+         sWaw==
+X-Gm-Message-State: AOJu0YyOjOqVOtaEyizpBseRRFUo4ZbvhYsE6QnckOE5QiB8fyDnzlAX
+	3eHvHHHT2sQXwQFUqpuevbyxUueeClQrQM8F7ZnsNUzg4y831/1R5+5vDTkj5wjcDTNbthPESU5
+	cFtmIpjOL4kOU5eyNBJUVvWjOOetv6SkQcIwIb6D8+eIRM80AwUYAh4E=
+X-Gm-Gg: ASbGncvAZCpdjPky+n+2AZWTDWn/MRxOhuIY2Da+Fg1RFRS63Js5ct7fsfBuBwihHTs
+	x2hIYTd/4FXS/2v/Sol8lg5LMwjugCp+qe9hBiH7aoGKHVtRTi7XwOH+coUmF68J1saO5FxowZO
+	Jpz3Neg8mBWGsG0zDu9AUU5AXJet322POGgkGLu0nT/4D4UiL35c/dFAI0wWTF5c2zmHC8u6EYp
+	xn/b1xs
+X-Google-Smtp-Source: AGHT+IE8RqX+NCZdetQroLwPqOVW3BNyLnW6ryEQ4umuXYY5PoPmhDNj4qYItSWuXtHn1sGN49sOP71LmGvG4fnoVa8=
+X-Received: by 2002:a17:902:f68b:b0:245:f8e6:c1c1 with SMTP id
+ d9443c01a7336-2462ee5084emr67940305ad.21.1755886348423; Fri, 22 Aug 2025
+ 11:12:28 -0700 (PDT)
+References: <CACA5E-4bxnnFAytCGnHVjHtf44QPO_9kRcBB8vKiSHoP+4ES0Q@mail.gmail.com>
+In-Reply-To: <CACA5E-4bxnnFAytCGnHVjHtf44QPO_9kRcBB8vKiSHoP+4ES0Q@mail.gmail.com>
+From: Sahejdeep Choudhary <sahejdeep.choudhary@nomadzdigital.com>
+Date: Fri, 22 Aug 2025 14:12:16 -0400
+X-Gm-Features: Ac12FXz8unfKHFcumA-jLnHVBYhCH3MrVcfA5eYzBbS1cVmRG6fLF88fzfZsF2E
+Message-ID: <CACA5E-4Nn9+u=70uMu-hccqyOhVQ8EwcT+WeZ7Q-z92aK4w2qA@mail.gmail.com>
+Subject: Re: ROI-Driven Strategic Partnership | Silk Silky X Nomadz Digital |
+ Follow Up
+To: rita@affiliate.bluefocus.com
+Cc: Ajay Choudhary <ajay.choudhary@nomadzdigital.com>, 
+	Rishab Agarwal <rishab.agarwal@nomadzdigital.com>
+Content-Type: multipart/alternative; boundary="00000000000010652e063cf82697"
+MIME-Version: 1.0
+
+--00000000000010652e063cf82697
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Rita,
+
+Hope this email finds you well.
+
+Following up on our previous email to explore a performance-based
+collaboration with* Silk Silky.*
+
+We=E2=80=99re confident that our high-intent traffic sources, combined with
+re-engagement strategies via push, pop-ups, and other engaging methods
+(like SMS & Email marketing), can help significantly improve conversion
+rates and drive meaningful results.
+
+We operate on a CPA based risk-free model with cost tied to real
+acquisitions only.
+
+Would love to hear your thoughts whenever you get a chance. Happy to
+provide additional details or hop on a quick call to discuss further.
+
+Looking forward to your thoughts!
+
+Best Regards,
+
+
+
+On Thu, Aug 21, 2025 at 3:07=E2=80=AFPM Sahejdeep Choudhary <
+sahejdeep.choudhary@nomadzdigital.com> wrote:
+
+> Hi Rita,
+>
+> Hope this email finds you well.
+>
+> I'm Sahej (SJ), Business Development Specialist at *Nomadz Digital and
+> Innovation Inc., Toronto, Canada.*
+>
+> We=E2=80=99re keen to explore a potential partnership with* Silk Silky,* =
+given
+> our work and proven success with top-tier global brands.
+>
+> *Nomadz Digital and Innovation Inc.*, a full-service 360=C2=B0 performanc=
+e
+> marketing agency with offices in Canada, India and soon expanding to the
+> UAE. Over the years, we've had the privilege of partnering with more than=
+ *500
+> global brands* including *Amazon, Walmart, eBay, Costco*, *IKEA*, *Square=
+space,
+> Mondelez International, Michael Kors, New Balance, Decathlon, Guess,
+> Hostinger, Expedia, Booking.com, Shein, H&M, Adidas, New Balance, Carwow,
+> Lingoda and Victoria=E2=80=99s Secret *to name a few, helping them scale =
+their
+> performance marketing efforts efficiently through:
+>
+>    - *User Acquisition:* Conversions & Lead Generation
+>    - *Mobile Marketing:* App Installs, Registrations, & Engagement
+>
+> *Traffic Sources include - *Content, Coupon, Cashback, Social Media,
+> Comparison, Programmatic Media Buying, Rewards/ Loyalty, OEMs, In-app and
+> Emailers.
+>
+> *ROI Limitations Faced by Emerging Brands:*
+> With emerging brands, over *90%* of traffic driven through premium
+> performance channels does not convert on the first visit, resulting in
+> abandoned carts, wishlist, or other conversion points. This is often due =
+to
+> lower brand awareness, limited credibility, and reduced trust across *Top
+> (TOFU), Middle (MOFU), *and* Bottom (BOFU)* when compared to established
+> market leaders.
+>
+> As a result, conversion rates tend to remain around *0.1-0.2%*, which
+> falls below industry benchmarks and often fails to deliver the expected
+> ROI, making it challenging to sustain traffic volumes and overall campaig=
+n
+> performance.
+>
+> *Solution:*
+> Recognizing this recurring disconnect between emerging brands and premium
+> publishers, we designed a proprietary in-house re-engagement strategy to
+> drive stronger performance outcomes.
+>
+> *Step 1: *We=E2=80=99ll drive a *fresh pool of high-intent visitors* to t=
+he Silk
+> Silky website through ads promotion on trusted and approved performance
+> traffic channels, approximately* 2,000 daily visitors (around 60,000 per
+> month).*
+>
+> *Step 2: *To ensure profitability and maximize the value of this traffic,
+> we=E2=80=99ll re-engage the non-converted visitors by analyzing their web=
+site visit
+> intent, behavior, and geo-location, and seamlessly targeting them with *p=
+ush
+> notifications, pop-ups, and other engaging methods (like SMS, email
+> marketing, etc).*
+>
+> Below is an example for your reference.
+>  Roborock.mp4
+> <https://drive.google.com/file/d/1-6uDBsrqoDDsVE3Tnx-S15pnHkNolRr2/view?u=
+sp=3Ddrive_web>
+>
+> *Step 3*: Seamless, cost-free re-engagement pixel integration on the
+> brand's GTM (Google Tag Manager), and we=E2=80=99re set to execute a *hig=
+h-impact
+> user acquisition strategy to maximize ROAS.*
+>
+> We=E2=80=99re excited to collaborate on a CPA (Cost Per Acquisition) mode=
+l,
+> leveraging both in-house and our extensive publisher partnerships to
+> deliver qualified, scalable acquisitions and surpass your performance
+> marketing objectives.
+>
+> Our publisher list is available for your review upon request and
+> partnership consideration.
+>
+> Attached is our *agency overview, re-engagement media deck *and* sample
+> case study* for your kind review.
+>  Samsung_Deck.pdf
+> <https://drive.google.com/file/d/1f9aRvEBu1xMLvyAc8d_n0FN0mij3-0lE/view?u=
+sp=3Ddrive_web>
+>
+> Look forward to hearing from you soon.
+>
+> Best Regards,
+>
+>
+
+--00000000000010652e063cf82697
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><d=
+iv dir=3D"ltr"><div dir=3D"ltr"><div><div>Hi Rita,</div><div><br></div><div=
+>Hope this email finds you well.<br><br>Following up&nbsp;on&nbsp;our previ=
+ous email to explore a performance-based collaboration with<b>&nbsp;Silk Si=
+lky.</b><br><br>We=E2=80=99re confident that our high-intent traffic source=
+s, combined with re-engagement strategies via push, pop-ups, and other enga=
+ging methods (like SMS &amp; Email marketing), can help significantly impro=
+ve conversion rates and drive meaningful results.&nbsp;</div><div><br></div=
+><div>We operate&nbsp;on&nbsp;a CPA based risk-free model with cost tied to=
+ real acquisitions only.<br><br>Would love to hear your thoughts whenever y=
+ou get a chance. Happy to provide additional details or hop&nbsp;on&nbsp;a =
+quick call to discuss further.<br><br>Looking forward to your thoughts!<br>=
+<br>Best Regards,</div></div><div><div dir=3D"ltr" class=3D"gmail_signature=
+"><div dir=3D"ltr"><img src=3D"https://ci3.googleusercontent.com/mail-sig/A=
+IorK4zmPJ85ZJKKJBy0TBtINz2chVsjONo0EQWmDiJFIGO81j6O5eX83dPCR-qJJsvLwIeWyQPw=
+i3UrTvl4" width=3D"420" height=3D"178"><br></div></div></div><br></div><br>=
+<div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"=
+gmail_attr">On Thu, Aug 21, 2025 at 3:07=E2=80=AFPM Sahejdeep Choudhary &lt=
+;<a href=3D"mailto:sahejdeep.choudhary@nomadzdigital.com">sahejdeep.choudha=
+ry@nomadzdigital.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex"><div dir=3D"ltr"><div><div>Hi Rita,</div><div><br>Hope =
+this&nbsp;email finds you well.<div><br></div><div><div>I'm Sahej (SJ), Bus=
+iness Development Specialist at&nbsp;<b>Nomadz Digital and Innovation Inc.,=
+ Toronto, Canada.</b><br><br>We=E2=80=99re keen to explore a potential part=
+nership with<b>&nbsp;Silk Silky,</b><b>&nbsp;</b>given our work and proven =
+success with top-tier global brands.<br><br><b>Nomadz Digital and Innovatio=
+n Inc.</b>, a full-service 360=C2=B0 performance marketing agency with offi=
+ces in Canada, India and soon expanding to the UAE. Over the years, we've h=
+ad the privilege of partnering with more than&nbsp;<b>500 global brands</b>=
+&nbsp;including<b>&nbsp;</b><b>Amazon, Walmart, eBay, Costco</b>,&nbsp;<b>I=
+KEA</b>,&nbsp;<b>Squarespace, Mondelez International, Michael Kors, New Bal=
+ance, Decathlon, Guess, Hostinger, Expedia, Booking.com, Shein, H&amp;M, Ad=
+idas, New Balance, Carwow, Lingoda and Victoria=E2=80=99s Secret&nbsp;</b>t=
+o name a few, helping them scale their performance marketing efforts effici=
+ently through:</div><ul><li style=3D"margin-left:15px"><b>User Acquisition:=
+</b>&nbsp;Conversions &amp; Lead Generation</li><li style=3D"margin-left:15=
+px"><b>Mobile Marketing:</b>&nbsp;App Installs, Registrations, &amp; Engage=
+ment</li></ul><div><b>Traffic Sources include -&nbsp;</b>Content, Coupon, C=
+ashback, Social Media, Comparison, Programmatic Media Buying, Rewards/ Loya=
+lty, OEMs, In-app and Emailers.</div></div></div><div><br></div><div><b>ROI=
+ Limitations Faced by Emerging Brands:</b></div><div>With emerging brands, =
+over&nbsp;<b>90%</b>&nbsp;of traffic driven through premium performance cha=
+nnels does not convert on the first visit, resulting in abandoned carts, wi=
+shlist, or other conversion points. This is often due to lower brand awaren=
+ess, limited credibility, and reduced trust across&nbsp;<b>Top (TOFU), Midd=
+le (MOFU),&nbsp;</b>and<b>&nbsp;Bottom (BOFU)</b>&nbsp;when compared to est=
+ablished market leaders.<br><br>As a result, conversion rates tend to remai=
+n around&nbsp;<b>0.1-0.2%</b>, which falls below industry benchmarks and of=
+ten fails to deliver the expected ROI, making it challenging to sustain tra=
+ffic volumes and overall campaign performance.</div><div><br></div><b>Solut=
+ion:</b><br>Recognizing this recurring disconnect between emerging brands a=
+nd premium publishers, we designed a proprietary in-house re-engagement str=
+ategy to drive stronger performance outcomes.<br><br><b>Step 1:&nbsp;</b>We=
+=E2=80=99ll drive a&nbsp;<b>fresh pool of high-intent visitors</b>&nbsp;to =
+the Silk Silky website through ads promotion on trusted and approved perfor=
+mance traffic channels, approximately<b>&nbsp;2,000 daily visitors (around =
+60,000 per month).</b><br><br><b>Step 2:&nbsp;</b>To ensure profitability a=
+nd maximize the value of this traffic, we=E2=80=99ll re-engage the non-conv=
+erted visitors by analyzing their website visit intent, behavior, and geo-l=
+ocation, and seamlessly targeting them with&nbsp;<b>push notifications, pop=
+-ups, and other engaging methods (like SMS, email marketing, etc).</b><div>=
+<p>Below is an example for your&nbsp;reference.</p><div class=3D"gmail_chip=
+ gmail_drive_chip" style=3D"width:386px;height:20px;max-height:20px;backgro=
+und-color:rgb(245,245,245);margin:6px 0px;padding:10px;font-variant-numeric=
+:normal;font-variant-east-asian:normal;font-variant-alternates:normal;font-=
+size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-weight=
+:400;font-stretch:normal;font-size:14px;line-height:20px;font-family:&quot;=
+Google Sans&quot;,sans-serif;border:1px solid rgb(221,221,221)"><a href=3D"=
+https://drive.google.com/file/d/1-6uDBsrqoDDsVE3Tnx-S15pnHkNolRr2/view?usp=
+=3Ddrive_web" aria-label=3D"Roborock.mp4" style=3D"color:rgb(32,33,36);disp=
+lay:inline-block;max-width:356px;overflow:hidden;text-overflow:ellipsis;tex=
+t-decoration-line:none;border:none" target=3D"_blank"><img alt=3D"" src=3D"=
+https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.png" style=
+=3D"vertical-align: text-bottom; border: none; padding-right: 10px; height:=
+ 20px;">&nbsp;<span dir=3D"ltr" style=3D"vertical-align:bottom;text-decorat=
+ion:none">Roborock.mp4</span></a></div><p><b>Step 3</b>: Seamless, cost-fre=
+e re-engagement pixel integration on the brand's GTM (Google Tag Manager), =
+and we=E2=80=99re set to execute a&nbsp;<b>high-impact user acquisition str=
+ategy to maximize ROAS.</b><br><br>We=E2=80=99re excited to collaborate on =
+a CPA (Cost Per Acquisition) model, leveraging both in-house and our extens=
+ive publisher partnerships to deliver qualified, scalable acquisitions and =
+surpass your performance marketing objectives.<br><br>Our publisher list is=
+ available for your review upon request and partnership consideration.<br><=
+br>Attached is our&nbsp;<b>agency overview, re-engagement media deck&nbsp;<=
+/b>and<b>&nbsp;sample case study</b>&nbsp;for your kind review.</p><div><di=
+v><div><div><div><div><a href=3D"https://drive.google.com/file/d/1f9aRvEBu1=
+xMLvyAc8d_n0FN0mij3-0lE/view?usp=3Ddrive_web" aria-label=3D"Samsung_Deck.pd=
+f" style=3D"font-family:&quot;Google Sans&quot;,sans-serif;font-size:14px;d=
+isplay:inline-block;max-width:356px;overflow:hidden;text-overflow:ellipsis;=
+border:none" target=3D"_blank"><font color=3D"#0000ff"><img alt=3D"" src=3D=
+"https://ssl.gstatic.com/docs/doclist/images/icon_10_generic_list.png" styl=
+e=3D"vertical-align: text-bottom; border: none; padding-right: 10px; height=
+: 20px;">&nbsp;<span dir=3D"ltr" style=3D"vertical-align:bottom">Samsung_De=
+ck.pdf</span></font></a><br><div><br></div>Look forward to hearing from you=
+ soon.<br><br>Best Regards,</div></div></div></div></div></div></div></div>=
+<div><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><img src=
+=3D"https://ci3.googleusercontent.com/mail-sig/AIorK4zmPJ85ZJKKJBy0TBtINz2c=
+hVsjONo0EQWmDiJFIGO81j6O5eX83dPCR-qJJsvLwIeWyQPwi3UrTvl4" width=3D"420" hei=
+ght=3D"178"><br></div></div></div></div>
+</blockquote></div></div>
+
+--00000000000010652e063cf82697--

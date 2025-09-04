@@ -1,0 +1,436 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:541b:b0:1d03:27cf:8dbe with SMTP id d27csp1082166njk;
+        Mon, 1 Sep 2025 02:15:31 -0700 (PDT)
+X-Received: by 2002:a05:6000:2083:b0:3c9:d1b0:809f with SMTP id ffacd0b85a97d-3d1b26d36d3mr6797557f8f.29.1756718131105;
+        Mon, 01 Sep 2025 02:15:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756718131; cv=none;
+        d=google.com; s=arc-20240605;
+        b=boT/TmekqDcVj4Ibd/NIdPS8kqapBm9clAUwIOx5+PCD4DFjgHW6x9l3DidnQSQm+X
+         qA4N/EpUkXuQ7VxJXNwwWjLmYb/OUZu7EezxLAXCnBL/KCgSSXgQBMqf82PTAN+hgtZl
+         rh2HwZuFftjPo5nH45c/lQFHx6DVJqUtxkSmteuhvTyeR8MnVGK3G97LGjKahN0s3bAl
+         yqyscTYJ1Z9GHauksNd6+VE3xcW7S8gCfAF37TMfgcGRou75EQzgREa3woB4mjcxf662
+         SjNpwqYPRfaBlTwGyvf7iYaJkdzZ5aQc4Mzn+QuYFG9kHICEpMWjOR0N79RVvtUHv7Wh
+         kSnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :dkim-signature;
+        bh=NCHw3gkERszcAS4NaX0u2GcITYxhsB1oFnfSr4klvqY=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=QYaJPaMXaDTZ9w6l2XnpJxlyUb755YQTF4XGuNSYw+lBacoUIKmuwLponZouSizxEi
+         DHvrz/WiW3qFJD6AXN5AYDK9oBAm4JoLK09Dho0yNliXz1k+DRYjeYZDLobzGD9hB5lC
+         s+G7ViWNHCs3TUJ2yWzdwwoZyLMCTubHRd23s7pBbXeziJckwaJXj1af0pfGum2Hdrwf
+         5XED8zg+N6ilsLFNTLCIIg5LehlJ3ZE2sJfjjMRUTApz+gBWUrh6mo5phYAATMEK4nVM
+         3U72HgQlHbh3tbg85R+OPs4a5HBHRi/emywJetslVsIK43i0/DW6ruUmCSY1Z1+nAL1p
+         IVDA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20230601 header.b=NOhvU0vx;
+       spf=pass (google.com: domain of markfromthespark@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=markfromthespark@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <markfromthespark@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id ffacd0b85a97d-3d4d205bd5bsor396977f8f.6.2025.09.01.02.15.30
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Mon, 01 Sep 2025 02:15:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of markfromthespark@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20230601 header.b=NOhvU0vx;
+       spf=pass (google.com: domain of markfromthespark@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=markfromthespark@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756718130; x=1757322930; darn=affiliate.bluefocus.com;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NCHw3gkERszcAS4NaX0u2GcITYxhsB1oFnfSr4klvqY=;
+        b=NOhvU0vxYeUNHFv1zAMC9ksLySlSDBkRVY3h7USvSptzxlcjLbSv9vOgg4ZbrT/X0r
+         /vg7eXoex07krClXqKznkuzKIprqlYKZu1UD5cB7plnFVew/dChMEruDSZQJJPRcIvrC
+         Qq3dhqII504dvbyyqjU/lZiX8ITniIuyTZoPlVwrGdNnlVTb1vC8WHY8ep8KW3tB3D+b
+         BlxH65zZl7mjU4UaPmQZi6/oDhnPqPnDfG14/U/tHl2aYbGGRPDC6U0pE/6x3BxlwzOY
+         G2j4jHwlE1Sgq6nn7+mgu0JUOdFi4T9AFXd42JYSekkDBokFQ5idy8qV7VGqR9EpNCmP
+         oYsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756718130; x=1757322930;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NCHw3gkERszcAS4NaX0u2GcITYxhsB1oFnfSr4klvqY=;
+        b=f7JMsGMHAh/iJqWPxHHElqJRIT8hwcU0HHoma837wsGthOsGAU5F4jfJfl6/kyezsG
+         uiNF4A4hv6Z/KomQW1jJ8D2pYuCuCyPS4+TZhjOUo76h3xB/mmCYwaJ1FvqIJZPbaMCs
+         FZSKVuu3RHu8stmQtGX7RubkyQqZiSC9CMv/QlVgJEj8orvAF5kn5pKk5IjTrg8N5/QX
+         uH6AmApFUx2NNIhwx12IpAJzqezStgF/vzkUjQBDaAb/Rxdyg5IHl4oXdfD1jdDHeb6E
+         ge0ZyFkkeDAlnN7ynh1waqjIMfAilCHK5Iq9WquvAbPEUASSHZFJrSFfJS8osu/LHBmt
+         SGyA==
+X-Gm-Message-State: AOJu0Yz1nmcqxKWSeQZfXkhb6FAnuokujn6Zc7AD2xBXr6cwAAREluX8
+	BBgbh8z/6BUYyEck8eMxqSmkjA2Fiw6tmlMTinY7MeoFJ5NJ3N4QB+Z9Rzu3+9W1
+X-Gm-Gg: ASbGncsRodQ/jU8POqjlXaDWY8D4vRWirsECtGh3cFZNnibbgw6dPXpMyFL4odoWEej
+	aAsFCO9/54KLUehuyar9JGz8RU+qjQ0WhRY9sGjQSq4SWPDeGaquyjTAqGHTaIrSWfeIwSg9KaW
+	XHhsBbGTcR0s8hcxeihacWk5Xwe+RtTMG3siMOwhSCHc49osUHjzwh+bvjbLvlJwQCZzGmW7Lk4
+	eq7VELiFQckuy8DhLBfrlyKqGNH5LLlzn+wMmRYGx8D/y7cvajjEKAwvZdj+Jw4zyQoouhQPtBG
+	AWmmyBFIHcdpjQ0/sEE6tLmaooqmy/AJRe3aXmdJ69scx2BYzvPMyCUhB3NYbc0pQT1P8ZM6aQa
+	cN5SiFGyKq0IGM7/YidaCLrHVijHHQw1mlD2JjTvN+ochee+/JyE=
+X-Google-Smtp-Source: AGHT+IETa4VeNVs1XESeSG14QEYq8OgxSn8xyhJhhIgDSUeSKfJ273h1QI4v2qtOAmFNN2QRahIVjQ==
+X-Received: by 2002:a05:6000:430b:b0:3c2:d7f0:9c4e with SMTP id ffacd0b85a97d-3d1afe48fa0mr5715459f8f.8.1756718129979;
+        Mon, 01 Sep 2025 02:15:29 -0700 (PDT)
+Return-Path: <markfromthespark@gmail.com>
+Received: from [192.168.4.154] ([94.10.235.104])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3cf33fb9d37sm14578844f8f.49.2025.09.01.02.15.29
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 Sep 2025 02:15:29 -0700 (PDT)
+Date: Mon, 1 Sep 2025 10:15:25 +0100
+From: Mark Kelly <markfromthespark@gmail.com>
+To: rita@affiliate.bluefocus.com
+Message-ID: <18533f28-fcd7-448d-8bf1-a2a9a252d32a@Spark>
+In-Reply-To: <UQRa_lV-T4yet6oog8OMZQ@geopod-ismtpd-25>
+References: <UQRa_lV-T4yet6oog8OMZQ@geopod-ismtpd-25>
+Subject: Re: Ugreen NAS Up To 20% Off For The New Customers
+X-Readdle-Message-ID: 18533f28-fcd7-448d-8bf1-a2a9a252d32a@Spark
+Content-Type: multipart/alternative; boundary="68b56430_2114bed5_7a9e"
+MIME-Version: 1.0
+
+--68b56430_2114bed5_7a9e
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+Hi Rita,
+
+Thanks for reaching out. The NAS solutions from Ugreen look great and I=E2=
+=80=99d love to promote them. However, I can=E2=80=99t do that with integ=
+rity unless I=E2=80=99ve had the chance to properly test a unit myself.
+
+If there=E2=80=99s any possibility of arranging a review unit, I=E2=80=99=
+d be glad to put it through its paces and create authentic content for my=
+ audience.
+
+Best regards,
+
+
+Mark
+youtube.com/=40mark=5Fkelly
+markkelly.me
+On 1 Sep 2025 at 10:11 +0100, rita=40affiliate.bluefocus.com <notificatio=
+ns=40outreach.impact.com>, wrote:
+>
+> Hi team,
+> Hope you're doing well. I'm Rita, affiliate marketing manager at Blue=46=
+ocus representing Ugreen.
+> UGREEN
+> Category: Charging Devices & NAS
+> Commission: 8%-15%
+> Impact ID: 31970
+> We=E2=80=99re excited to announce the Back to School Sale for US, DE, E=
+U, and UK markets=21 =46rom 9/1 to 9/14, enjoy 15% O=46=46 on selected UG=
+REEN NAS products. Plus, new customers get an extra 5% O=46=46, making it=
+ up to 20% in total savings=21
+> This is the perfect opportunity to showcase UGREEN=E2=80=99s advanced N=
+AS solutions featuring robust data security, seamless backups, and high-s=
+peed performance to your audience.
+>
+> Please see the campaign details below and feel free to share with your =
+audience:
+>
+> US
+> URL: https://nas.ugreen.com/pages/ugreen-nas-storage-limited-time-deals=
+
+> Description:Ugreen NAS Up To 20% Off =46or The New Customers
+> Validity: 9/1-9/14
+>
+> DE
+> URL: https://nas-de.ugreen.com/pages/ugreen-nas-speicher-sale-rabattakt=
+ion
+> Description:
+> Ugreen NAS bis zu 20 % Rabatt f=C3=BCr Neukunden.
+> Validity: 9/1-9/14
+>
+> EU
+> URL: https://nas-eu.ugreen.com/pages/ugreen-nas-storage-limited-time-de=
+als
+> Description: Ugreen NAS Up To 20% Off =46or The New Customers
+> Validity: 9/1-9/14
+>
+> UK
+> URL: https://nas-uk.ugreen.com/pages/ugreen-nas-storage-limited-time-de=
+als
+> Description: Ugreen NAS Up To 20% Off =46or The New Customers
+> Validity: 9/1-9/14
+>
+> Highlighted Products & Key =46eatures
+>
+> UGREEN US NASync DH4300 PLUS =E2=80=93
+> Up to 120TB storage, ultra-fast 2.5GbE performance, AI photo organizati=
+on, and secure local backup without monthly fees.
+>
+> UGREEN DE NASync DH4300 Plus =E2=80=93 Bis zu 120 TB Speicher, ultrasch=
+nelle 2,5-GbE-Leistung, KI-=46otoorganisation und sichere lokale Backups =
+ohne monatliche Geb=C3=BChren.
+>
+>
+> This is a limited-time offer (9/1=E2=80=939/14), so don=E2=80=99t miss =
+the chance to promote these powerful and reliable NAS solutions to your a=
+udience=21
+>
+> Looking forward to your active participation.
+>
+> Best regards,
+> Rita
+>
+> Unsubscribe
+
+--68b56430_2114bed5_7a9e
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+<html xmlns=3D"http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><t=
+itle></title>
+</head>
+<body>
+<div name=3D"messageBodySection">
+<div><span style=3D"font-family:.AppleSystemUIFont;font-size:19px;">Hi Rita=
+,</span><br>
+<br>
+<span style=3D"font-family:.AppleSystemUIFont;font-size:19px;">Thanks for r=
+eaching out. The NAS solutions from Ugreen look great and I=E2=80=99d love =
+to promote them. However, I can=E2=80=99t do that with integrity unless I=
+=E2=80=99ve had the chance to properly test a unit myself.</span><br>
+<br>
+<span style=3D"font-family:.AppleSystemUIFont;font-size:19px;">If there=E2=
+=80=99s any possibility of arranging a review unit, I=E2=80=99d be glad to =
+put it through its paces and create authentic content for my audience.</spa=
+n><br>
+<br>
+<span style=3D"font-family:.AppleSystemUIFont;font-size:19px;">Best regards=
+,</span><br>
+&nbsp;</div>
+</div>
+<div name=3D"messageSignatureSection"><br>
+<div>Mark</div>
+<div><a href=3D"https://youtube.com/@mark_kelly">youtube.com/@mark_kelly</a=
+></div>
+<div><a href=3D"https://markkelly.me">markkelly.me</a></div>
+</div>
+<div name=3D"messageReplySection">On 1 Sep 2025 at 10:11 +0100, rita@affili=
+ate.bluefocus.com &lt;notifications@outreach.impact.com&gt;, wrote:<br>
+<blockquote type=3D"cite">
+<style type=3D"text/css" id=3D"isPasted">
+/*<![CDATA[*/
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'PingFang SC'; color: #=
+000000} p.p2 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times; color: =
+#000000} p.p3 {margin: 0.0px 0.0px 14.0px 0.0px; font: 14.0px Times; color:=
+ #000000} p.p4 {margin: 0.0px 0.0px 12.0px 0.0px; font: 14.0px Times; color=
+: #000000} p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Times; color=
+: #6d6d6d; min-height: 18.0px}
+/*]]>*/
+</style>
+<p class=3D"p1"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><img src=3D"https://storage.googleapis.com/outreach-file=
+s/5c16e058-1aff-486a-a286-d0d4f1e7b523" style=3D"width:878px;display:inline=
+-block;vertical-align:bottom;margin-right:5px;margin-left:5px;text-align:ce=
+nter"><br>
+Hi team,</span></p>
+<p class=3D"p1"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"></span></p>
+<p class=3D"p1"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif">Hope you're doing well. I'm Rita, affiliate marketing ma=
+nager at BlueFocus representing <strong>Ugreen</strong>.</span></p>
+<p class=3D"p1"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif">UGREEN</span></p>
+<p class=3D"p1"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif">Category: Charging Devices &amp; NAS</span></p>
+<p class=3D"p1"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif">Commission: 8%-15%</span></p>
+<p class=3D"p1"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif">Impact ID: 31970</span></p>
+<p class=3D"p1"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"></span></p>
+<p id=3D"isPasted"><span style=3D"font-size:18px;font-family:'arial' , 'hel=
+vetica' , sans-serif">We=E2=80=99re excited to announce the <strong>Back to=
+ School Sale</strong> for <strong><span style=3D"background-color:rgb( 247 =
+, 218 , 100 )">US, DE, EU, and UK</span></strong> markets! From <strong>9/1=
+ to 9/14</strong>, enjoy <strong>15% OFF</strong> on selected UGREEN NAS pr=
+oducts. Plus, <strong>new customers get an extra 5% OFF</strong>, making it=
+ <strong><span style=3D"background-color:rgb( 247 , 218 , 100 )">up to 20% =
+in total savings</span></strong></span><span style=3D"background-color:rgb(=
+ 247 , 218 , 100 );font-size:18px;font-family:'arial' , 'helvetica' , sans-=
+serif">!</span> <span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"></span></p>
+<meta id=3D"isPasted"><span style=3D"font-size:18px;font-family:'arial' , '=
+helvetica' , sans-serif">This is the perfect opportunity to showcase UGREEN=
+=E2=80=99s advanced NAS solutions featuring robust data security, seamless =
+backups, and high-speed performance to your audience.</span><br>
+<span style=3D"font-size:18px;font-family:'arial' , 'helvetica' , sans-seri=
+f"><br>
+Please see the campaign details below and feel free to share with your audi=
+ence:</span>
+<p></p>
+<p class=3D"p3"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><br>
+<strong><span style=3D"background-color:rgb( 247 , 218 , 100 )">US</span></=
+strong></span></p>
+<p class=3D"p3"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><strong>URL:</strong> https://nas.ugreen.com/pages/ugree=
+n-nas-storage-limited-time-deals<br>
+<strong>Description:</strong><span class=3D"text-only" style=3D"white-space=
+:pre" id=3D"isPasted">Ugreen NAS Up To 20% Off For The New Customers</span>=
+<br>
+<strong>Validity:</strong> 9/1-9/14</span></p>
+<p class=3D"p5"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><br></span></p>
+<p class=3D"p3"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><strong><span style=3D"background-color:rgb( 247 , 218 ,=
+ 100 )">DE</span></strong></span></p>
+<p class=3D"p4"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><strong>URL:</strong> https://nas-de.ugreen.com/pages/ug=
+reen-nas-speicher-sale-rabattaktion<br>
+<strong>Description:</strong></span></p>
+<meta id=3D"isPasted"><span style=3D"font-size:18px;font-family:'arial' , '=
+helvetica' , sans-serif">Ugreen NAS bis zu 20 % Rabatt f=C3=BCr Neukunden.<=
+br>
+<strong>Validity:</strong> 9/1-9/14</span>
+<p></p>
+<p class=3D"p5"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><br></span></p>
+<p class=3D"p3"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><strong><span style=3D"background-color:rgb( 247 , 218 ,=
+ 100 )">EU</span></strong></span></p>
+<p class=3D"p3"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><strong>URL:</strong> https://nas-eu.ugreen.com/pages/ug=
+reen-nas-storage-limited-time-deals<strong><br>
+Description:</strong> <span class=3D"text-only" style=3D"white-space:pre" i=
+d=3D"isPasted">Ugreen NAS Up To 20% Off For The New Customers</span><br>
+<strong>Validity:</strong> 9/1-9/14</span></p>
+<p class=3D"p5"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><br></span></p>
+<p class=3D"p3"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><strong><span style=3D"background-color:rgb( 247 , 218 ,=
+ 100 )">UK</span></strong></span></p>
+<p class=3D"p4"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><strong>URL:</strong> https://nas-uk.ugreen.com/pages/ug=
+reen-nas-storage-limited-time-deals<br>
+<strong>Description:</strong> <span class=3D"text-only" style=3D"white-spac=
+e:pre" id=3D"isPasted">Ugreen NAS Up To 20% Off For The New Customers</span=
+><br>
+<strong>Validity:</strong> 9/1-9/14</span></p>
+<p class=3D"p2"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><br>
+<span style=3D"background-color:rgb( 247 , 218 , 100 )">Highlighted Product=
+s &amp; Key Features</span></span></p>
+<p class=3D"p2"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><br>
+<a href=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR=
+7RPOX-2BK2XdT2fTS8ZtXmRcz4As-2FtLyy-2Fhttyy-2BfMQLveZoZccee0QVmbuv8eZYhxdNT=
+Sy00UI-2BFqiX-2FxGdvJvD9CQ-2F3AzWRVA-3DAlfd_KPzbQLpSM5oFy9sqgwUDt-2BszLsVq8=
+Noncp83wmp6pX-2Bu7Qi47mqWZEn0WYKk7Q4pVZJWm1sh5uYQNcSeSeEdrdR4WcZMdRhs1pHEhg=
+FTCeib-2Bn7xX7dKNg1YQjK7VdmzOLVg2BiQ13dSZs873whywJnQNFfNEvHlW9FjHPeb11C4Az1=
+dxUtd3DaQal0Lgdo6Fmvc3pRVFzsE1-2BkhZ47KwDhp6FVHf5BpifC-2BZmZn2fX8m2B1l3LHlz=
+3lM4j-2BBAyvd-2B37Eh4koWv-2F-2BnVmHSgB9eXjKRlnPmAExLjAXi3-2B9puurkce2kRI6ZT=
+81qRwJwWrapaFXhzwzOfUO8LsfpmMWqh57bzwW4243KrhQmBGrggIYSvJ0bFGeCv8MeUkAjjAc6=
+4ZntT-2BKejmGaooMNSXN48NjZ0dh412Orp0kN95NwJYIt5T6p4VxtEU3uoZKIbool2RqVSDuNr=
+r5Whas492fAj6OyCshDQMvn52ipqz92NtWBXSJi1680KvdiWPci6UuuDwsSkin-2FbCkDbHE2YF=
+28L4hThdPKAOAzxe0Z57hQXO-2BLaiScHqjuuBTxxZnmOy8XoGtnEFgfi8-2F6dy8759tT1K6VU=
+uv-2Buf4K8ue4wmsvGg7icqevkGKHU0MIJ0HXsk2MOp1wLbWl-2Fc4iRPR-2FoZtg0Oo7s63DUp=
+byu7i6UJXXFcoLY2ltGSvxlTGxXbYhNFa5jI53J-2FX7tpDjxPbAYhtxmHOg-2Bu2tnE98PCOtK=
+dtooHz8FLahacrfg7sZpoo1eIDeoMuLDgQmJ4MB-2FmhYHwkwOFj8aJofr0hOkqu-2F-2FkFWht=
+3mNvOJ1CVBG0ansmZhv40HmasDeFwDp7RRODvFqEFADI07oggEYNgK-2B7B7iX1GIFU-2BtX9ZJ=
+Tkb-2BCCHotTbijyGapnwW0MJothiGKXokSPIyW2-2FIT-2Bw7OofnQP79IvIt1nxMP4du6UokX=
+KlU17c9DOoriDd0gdZmxXfaDGSmVnClQBE-2FevyeIP7urpaHKyBkOiS9AiITMSDAwgrMVQoV70=
+Bh9wVJdqmBOShe-2BbdZYc-2FFWS-2B9MnlCKH-2BBtMZS5SrQ-3D"><strong>UGREEN US NA=
+Sync DH4300 PLUS</strong></a> =E2=80=93</span></p>
+<meta id=3D"isPasted"><span style=3D"font-size:18px;font-family:'arial' , '=
+helvetica' , sans-serif">Up to 120TB storage, ultra-fast 2.5GbE performance=
+, AI photo organization, and secure local backup without monthly fees.<br><=
+/span> <span class=3D"Apple-converted-space" style=3D"font-size:18px;font-f=
+amily:'arial' , 'helvetica' , sans-serif"></span><span style=3D"font-size:1=
+8px;font-family:'arial' , 'helvetica' , sans-serif"><br>
+<a href=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR=
+7RPOX-2BK2XdT8T5o-2B-2B4rgb9KWt64-2BWs-2FIJ3QOBxKmb-2BpoBT3OJnvZFLenHBKVrcG=
+8aA4qd9dhyOutLobbqDgVWyD3wySIV8Hrr0w9mwEf3MF0LkmJmz65ptYeQr_KPzbQLpSM5oFy9s=
+qgwUDt-2BszLsVq8Noncp83wmp6pX-2Bu7Qi47mqWZEn0WYKk7Q4pVZJWm1sh5uYQNcSeSeEdrd=
+R4WcZMdRhs1pHEhgFTCeib-2Bn7xX7dKNg1YQjK7VdmzOLVg2BiQ13dSZs873whywJnQNFfNEvH=
+lW9FjHPeb11C4Az1dxUtd3DaQal0Lgdo6Fmvc3pRVFzsE1-2BkhZ47KwDhp6FVHf5BpifC-2BZm=
+Zn2fX8m2B1l3LHlz3lM4j-2BBAyvd-2B37Eh4koWv-2F-2BnVmHSgB9eXjKRlnPmAExLjAXi3-2=
+B9puurkce2kRI6ZT81qRwJwWrapaFXhzwzOfUO8LsfpmMWqh57bzwW4243KrhQmBGrggIYSvJ0b=
+FGeCv8MeUkAjjAc64ZntT-2BKejmGaooMNSXN48NjZ0dh412Orp0kN95NwJYIt5T6p4VxtEU3uo=
+ZKIbool2RqVSDuNrr5Whas492fAj6OyCshDQMvn52ipqz92NtWBXSJi1680KvdiWPci6UuuDwsS=
+kin-2FbCkDbHE2YF28L4hThdPKAOAzxe0Z57hQXO-2BLaiScHqjuuBTxxZnmOy8XoGtnEFgfi8-=
+2F6dy8759tT1K6VUuv-2Buf4K8ue4wmsvGg7icqevkGKHU0MIJ0HXsk2MOp1wLbWl-2Fc4iRPR-=
+2FoZtg0Oo7s63DUpbyu7i6UJXXFcoLY2ltGSvxlTGxXbYhNFa5jI53J-2FX7tpDjxPbAYhtxmHO=
+g-2Bu2tnE98PCOtKdtooHz8FLahacrfg7sZpoo1eIDeoMuLDgQmJ4MB-2FmhYHwkwOFj8aJofr0=
+hOkqu-2F-2FkFWht3mNvOJ1CVBG0ansmZhv40HmasDeFwDp7RRODvFqEFADI07oggEYNgK-2B7B=
+7iX1GIFU-2BtX9ZJTkb-2BCCHotTbijyGapnwW0MJothiGKXokSPN1z-2BQ9Ff4-2FSrTsLDVgZ=
+UsD4ae0K8Q8WDEGDYm4RaLca-2FPxFz6s76SN3SGLYxut-2FYRMnwhr8zK3ubAnHYMcPqfFvACt=
+AyT79laAarPvyfcqr9SgKhqOcBuDTMHKl52OMc96Zo0j-2BmNEkfsLJyLknbys-3D"><strong>=
+UGREEN DE NASync DH4300 Plus</strong></a> =E2=80=93</span>
+<meta id=3D"isPasted"><span style=3D"font-size:18px;font-family:'arial' , '=
+helvetica' , sans-serif">Bis zu 120 TB Speicher, ultraschnelle 2,5-GbE-Leis=
+tung, KI-Fotoorganisation und sichere lokale Backups ohne monatliche Geb=C3=
+=BChren.<br>
+<br>
+<br>
+This is a <strong>limited-time offer (9/1=E2=80=939/14)</strong>, so don=E2=
+=80=99t miss the chance to promote these powerful and reliable NAS solution=
+s to your audience!</span>
+<p></p>
+<p class=3D"p2"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><br>
+Looking forward to your active participation.</span></p>
+<p class=3D"p2"><span style=3D"font-size:18px;font-family:'arial' , 'helvet=
+ica' , sans-serif"><br>
+Best regards,<br>
+Rita</span></p>
+<p><span style=3D"font-size:18px;font-family:'arial' , 'helvetica' , sans-s=
+erif"></span></p>
+<div><span style=3D"font-size:18px;font-family:'arial' , 'helvetica' , sans=
+-serif"><br>
+<a href=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR=
+7RPOX-2BK2XdTxbxD4UJGmtW8DAxp3YXsDa7MPMCTETs3WSo52RM6Q9Hs8pDVfvfmNT63AenKOo=
+g8JaiDndXVwiwAsDekYhF4jhOG1UdQ0leYyQq00NU91YmJrCsQAIO6KbEzo8b-2BsF13YFE5zhL=
+pXrmu3FQGXAvWdy429t-2FNGBVSdoikf58EpHKPAaQ1E0567PKPjRw9yM-2FInHMFHTas-2BwQR=
+WIWqD7mzWNj4giWwJMspm3cxGkYpuTZFAm-2FB93lfEityf-2FRTOqN21pYHOw4lQJ7Txfs37NP=
+3cApJZxFJq-2BOuhzkRoS7n8LD3aGDoUzv9kxb8JswUFDGeA-3D-3Difec_KPzbQLpSM5oFy9sq=
+gwUDt-2BszLsVq8Noncp83wmp6pX-2Bu7Qi47mqWZEn0WYKk7Q4pVZJWm1sh5uYQNcSeSeEdrdR=
+4WcZMdRhs1pHEhgFTCeib-2Bn7xX7dKNg1YQjK7VdmzOLVg2BiQ13dSZs873whywJnQNFfNEvHl=
+W9FjHPeb11C4Az1dxUtd3DaQal0Lgdo6Fmvc3pRVFzsE1-2BkhZ47KwDhp6FVHf5BpifC-2BZmZ=
+n2fX8m2B1l3LHlz3lM4j-2BBAyvd-2B37Eh4koWv-2F-2BnVmHSgB9eXjKRlnPmAExLjAXi3-2B=
+9puurkce2kRI6ZT81qRwJwWrapaFXhzwzOfUO8LsfpmMWqh57bzwW4243KrhQmBGrggIYSvJ0bF=
+GeCv8MeUkAjjAc64ZntT-2BKejmGaooMNSXN48NjZ0dh412Orp0kN95NwJYIt5T6p4VxtEU3uoZ=
+KIbool2RqVSDuNrr5Whas492fAj6OyCshDQMvn52ipqz92NtWBXSJi1680KvdiWPci6UuuDwsSk=
+in-2FbCkDbHE2YF28L4hThdPKAOAzxe0Z57hQXO-2BLaiScHqjuuBTxxZnmOy8XoGtnEFgfi8-2=
+F6dy8759tT1K6VUuv-2Buf4K8ue4wmsvGg7icqevkGKHU0MIJ0HXsk2MOp1wLbWl-2Fc4iRPR-2=
+FoZtg0Oo7s63DUpbyu7i6UJXXFcoLY2ltGSvxlTGxXbYhNFa5jI53J-2FX7tpDjxPbAYhtxmHOg=
+-2Bu2tnE98PCOtKdtooHz8FLahacrfg7sZpoo1eIDeoMuLDgQmJ4MB-2FmhYHwkwOFj8aJofr0h=
+Okqu-2F-2FkFWht3mNvOJ1CVBG0ansmZhv40HmasDeFwDp7RRODvFqEFADI07oggEYNgK-2B7B7=
+iX1GIFU-2BtX9ZJTkb-2BCCHotTbijyGapnwW0MJothiGKXokSPHg7SOipkZsqnLCbT4IXh-2Fk=
+nFUA5x2TmI-2Fu4WR9CXThcWrsqLmpZKNFJVJw51g6BiisnN77tPfjrSqvjiMheJ2I0N7urKsPR=
+sJj-2FPGD2VjVEY19NMnyM4eTwKomUilXfV3JdrHQzjuQkomlV1-2BZ4F6E-3D">Unsubscribe=
+</a></span></div>
+<img src=3D"https://u29708799.ct.sendgrid.net/wf/open?upn=3Du001.O6ln9ndz4f=
+FEoZmcR4cGt3ep2l2PnNQ8lzSN77Z3Pe5uhzASwmWPYVlKFhLVKp2r6zhoFkAC4UmqHWZacdvsJ=
+EbZrLUQbF-2BuDfQH6-2B4699WnQzBbGG121YcN9t-2FDMgkMNcfdTqDwcVLE9-2FPpFvualGnb=
+aQ6vq12DLlkr4VDxswj5tFJKQBnoe6BHFFXU01bjWTpIjiy5dwz0hkZnJEcJvKt2UPDTbk3FPNz=
+qfVsWt4PlKlwjtlBP3othXOhTNqMxEzq0C-2F75A3l3-2Blk4o-2FEvJp7jvcq5wA8P-2F0cZdr=
+I95VjzHFVuRJiyx4lA52urd5qQaJTY78-2FXAA0u6JK-2Fct-2BKjtEdF2RdS4dBCCIfLFr8bKl=
+5Bf-2Boy4uAEEjpyesOsUPiKzVkaSe04NLQIVpQup7wdZzH9k3Q6JEpTL-2FndzZWm19dGUh3E8=
+lUhJNaKHR2E2nWAeurIft011AI5Wl1L8bJuUEpn1biQfi2fK6DKHe20ZQ2TXvIkS6CaHZzHnQaA=
+Pn2bXu3ciyt8T0Ueme41mo61yNAIEhN072ckE0g4jt9-2BM4ECvhiNTOZpgMJqctvwNGuPmlGWL=
+q5PfHaalq4FvJklcl0fH-2BJzNNPj8Ab1hxQ1B-2FNIEytgbDZGScbkNw5unez2Hc7JLFl4CABE=
+-2BfznbYJlcwd6LCab-2BUKSSID0K-2FCmRNzRAUMM5-2Bf1CZKPZRNHC54GjVVqGnAkefDWwHK=
+24NT-2FOvYUtZFhss15wSDqcpP39TQ2-2B-2BtI47luahoTk4fCjlgo0TrI4rzJ3vrFlpFtGq9x=
+B3hV267OtvklAzvApWB0u-2Fe69uEg6-2F-2FnV0hsWqd2ZAp-2FjaHDmJI8eme3nepPWLR4b3j=
+JiYbKubLuTIMkG3nEKe5XMvQsAXfaB3KElgAwwjjNbbfEBDpd9HN4toNPP9bqxL3Ki8pF7g9er2=
+R3-2FJs4rkRqP7eJFi-2BFnPQR7e5aFYaCfBqDperJIcxjvq9riS7PK2UXACIFJG5VKwa-2F260=
+MI91dbcM8HWq5VtbKDl0uAxit2GLuHQeKuJq7X2tg2wjHQH8piEOqrqk0f8golPlaec-3D" alt=
+=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;=
+width:1px !important;border-width:0 !important;margin-top:0 !important;marg=
+in-bottom:0 !important;margin-right:0 !important;margin-left:0 !important;p=
+adding-top:0 !important;padding-bottom:0 !important;padding-right:0 !import=
+ant;padding-left:0 !important;"></blockquote>
+</div>
+</body>
+</html>
+
+--68b56430_2114bed5_7a9e--

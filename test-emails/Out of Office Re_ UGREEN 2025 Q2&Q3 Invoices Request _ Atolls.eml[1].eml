@@ -1,0 +1,147 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:2f06:b0:1d03:27cf:8dbe with SMTP id qp6csp187250njb;
+        Fri, 29 Aug 2025 00:48:47 -0700 (PDT)
+X-Received: by 2002:a05:6000:1ac9:b0:3d0:d312:4f2f with SMTP id ffacd0b85a97d-3d0d31254a0mr490421f8f.35.1756453726731;
+        Fri, 29 Aug 2025 00:48:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756453726; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Win4zh35Nh5BCcb5ProNQ1hzarJzI4Y0Ws9ul1HCO57WuOidvNFDOrNzN+H6/XK2F3
+         kaMNvHJcN8vmptdwRAHWXh5nfpYaMUDVYx4mqWuR6UW4C4mAZ/iyZrjI1/1gjXBa4Q1X
+         U34ehP76D6A1tEoiRdWSaeV+rlyr83fL7uglWPMuRVeMhDcxOUXJaqjp1NLXeRpopBkV
+         Iaj6O8jm9A7kWT8zl5rHoXX5hNVXkQ+S6EYngkCqWI/o+4tZTo9E0TV19rXMmr7ok2R5
+         U3XIF/BDjo5UYum06uummwCxu3kJkObNcIHEMHPVY4en8xsNBeKMmoCmi7XL8kdHvgB5
+         u/Zw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-disposition:content-transfer-encoding:auto-submitted
+         :precedence:mime-version:subject:message-id:date:from:to
+         :dkim-signature;
+        bh=D7FfkElGopL2RMrkK95JNSgQmDCeDuke6x9dWvELB/E=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=abaIgq90ktyRMoATq5GmR+BFdhvfw3JeDUSPerC0uK9+LZzXlzIsctYlptfYUJw1ft
+         PkRCsxi6wxWIde9C+GwOXnNV1ASx2i5IQ+1AT/v18pWUqrvfyavQQ1p5NYF5xmj/UBXA
+         J5YaWCs+Ym7CwOb96vK+Oc8W4FXH2lgmtvRd53uIyQDvqrSplTDunUeoX/41s2zUIqxJ
+         /2p9wJ/lY8OE4E++LOpyY7dmY5EkU7GJKtLS+rFXMKTMR7l6SZmeJFwwmMBSuZRLQKo1
+         GcIMNwLQvsxpJ/BVO9SK9ljOtYFGHuh9j6wt+xRT7wYDnZwl4peDAPrCWrStD99iBqOH
+         mcnA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@atolls.com header.s=google header.b=H23z7hlw;
+       spf=pass (google.com: domain of benedikt.buecker@atolls.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=benedikt.buecker@atolls.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=atolls.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <benedikt.buecker@atolls.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id ffacd0b85a97d-3cf27ba5a25sor392702f8f.8.2025.08.29.00.48.46
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Fri, 29 Aug 2025 00:48:46 -0700 (PDT)
+Received-SPF: pass (google.com: domain of benedikt.buecker@atolls.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@atolls.com header.s=google header.b=H23z7hlw;
+       spf=pass (google.com: domain of benedikt.buecker@atolls.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=benedikt.buecker@atolls.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=atolls.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atolls.com; s=google; t=1756453726; x=1757058526; darn=affiliate.bluefocus.com;
+        h=content-disposition:content-transfer-encoding:auto-submitted
+         :precedence:mime-version:subject:message-id:date:from:to:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=D7FfkElGopL2RMrkK95JNSgQmDCeDuke6x9dWvELB/E=;
+        b=H23z7hlwF9NMuk+JQJS1HhqQD6MODvkZLdyCbul6Vc0aeS/i8XPS2jvu1fM4V/O6U4
+         f4szHBz9HSZq7Aw/O7q1TO26VviA+1R2d6t7ZECqXZRPHFmr0xYSeqpKgF83lyMB8rnx
+         s+B6ndqJWm8OiBsnub3/KMCPW32eKxvI7jaQ/SbZLAXlx5Y+qEtZJK4JrkSlMaCoK+BX
+         bRCupg3bx4791/vaf3TwpamXUvNxk+aeKhDp3X8IMq4nTGqXUGGElzuA73J3QbPdS+J3
+         hPcGRNJzJyK6lTCYjnAEnSuwS38OvKestLWRvYUJx+ZMHskiIFqKTM9bw1katqaYRP29
+         tbnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756453726; x=1757058526;
+        h=content-disposition:content-transfer-encoding:auto-submitted
+         :precedence:mime-version:subject:message-id:date:from:to
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D7FfkElGopL2RMrkK95JNSgQmDCeDuke6x9dWvELB/E=;
+        b=NIcU2/L20iB5T5uQN5iiA1jBPWIy1hFQRh0cFYfm1FpXRgPALR6EpAe+fr/BrRmGjN
+         wbipoQOk4sTGKX5fFEMIE28f6qxL3GqrpIJQ9hmB90dOw0N0BKrVkv68761HsBBc7Uvl
+         /CmE9Cw31S+FOvTpY2eHw4sa2x8mKElIOiGgwjpGtBnZpFhkfpU036qqULp51VIpxy89
+         rGjo107NcsZ23ocftPcdCqqzKf0ZxCkDM1AYnY8DsA3V0hFtYPEwM5L31axH2IFHGGp5
+         Hr6DpHPf8zUBOqFmpThUTP5ehqAKYRKBQ/zm/OQeTcPe5Mn24rKGv2K114zgn940jqDB
+         /u9g==
+X-Gm-Message-State: AOJu0YxJj67e7SfGI9z6kRzZkN+k7+LwRRSkEcABL/INA77RFL4udR/I
+	A1emnnGJlccotBd+9rbI62y0+1krIHjftJf0PirPeBMuGy/e9L8LwV+L+Il4ER2hHA16cM71SwW
+	WN4/1zb/cYfgQJJDkZSNc7JjxN50ejWh/NPI/YKSb+FB1bj8R7yKAc/eyZdbvf/tfXtLUpSMdXZ
+	P9y6Dlc+u/o6t0MIVBt1b7NmV2Tp+5LHV6R0ztJGfQN0q4noKF91if/1YonY/dOnwSoDp74Bdul
+	7xh9CrAQ8W9VzosaUmuNDUT
+X-Gm-Gg: ASbGnctaT/Uv3zlJuf5e7KeoTujKLoSaSlccZmJgyBXt1GLy1eXYxLpwQZ9B6sbUNx/
+	mCqjmv9HdwYi+mPQHA/q7dGQFbny7KqD2K5sM8AKXlIPmeQbO3FwR1Lvh/2FpxlCnAYjcL70A9b
+	noZMlEqT9okITVXJ2Sk3C/CXp6ueM1c0zywkqURk8mfjnrpr5aITp3RrE3PXRIBQ==
+X-Google-Smtp-Source: AGHT+IHXBGj5ZO3pAo2Hvq+A80XrNwdn1Ah91xFccysv0aN1jd+qZrnxhrsvxP8D+VOTzhcwoumk6Qtkw1rkhG1cFJu1tZ62L/Mb/o7QAJrk
+X-Received: by 2002:a5d:4d0a:0:b0:3cc:32f0:daf8 with SMTP id ffacd0b85a97d-3cc32f0db80mr6542484f8f.36.1756453725831;
+        Fri, 29 Aug 2025 00:48:45 -0700 (PDT)
+To: rita@affiliate.bluefocus.com
+From: "=?UTF-8?Q?Benedikt_B=C3=BCcker?=" <benedikt.buecker@atolls.com>
+Date: Fri, 29 Aug 2025 00:48:45 -0700
+Message-ID: <CAMOabq9HeFwafdzoUpmnQKmNbF_d=WO0S36jPRK=2tC0zn2Z1w@mail.gmail.com>
+Subject: Out of Office Re: UGREEN 2025 Q2&Q3 Invoices Request | Atolls
+Precedence: bulk
+X-Autoreply: yes
+Auto-Submitted: auto-replied
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+MIME-Version: 1.0
+
+Dear Partner,
+
+Thank you for your message. I am currently out of the office.
+
+Please note that your email will not be forwarded automatically.
+
+If you have an urgent topic please contact my colleague mohamed.hani@atolls=
+.com
+
+
+
+
+
+--=20
+
+Benedikt B=C3=BCcker
+Key Account Manager
+<https://de.igraal.com/>  <https://www.shoop.de/start>
+<https://www.mydealz.de/>
+Linienstra=C3=9Fe 98, 10115, Berlin, Germany
+
+    <https://atolls.com/>
+
+Shoop Germany GmbH, Linienstra=C3=9Fe 98, 10115 Berlin, Germany
+Registered at Commercial Register of Berlin Charlottenburg, HRB 127132 B,
+VAT-ID: DE271592727
+Managing Directors: Veit M=C3=BCrz, Kathrin Nusser
+
+This e-mail may contain confidential and/or privileged information. If you
+are not the intended recipient (or have received this e-mail in error)
+please notify the sender immediately and destroy this e-mail. Any
+unauthorised copying, disclosure or distribution of the material in this
+e-mail is strictly forbidden.
+
+<http://image.email.global-savings-group.com/lib/fe901373756c067972/m/1/0e2=
+214e6-3305-42a0-aee8-d13effca113f.pdf>
+
+[image: Q3-2025 PitchDeck]
+<http://image.email.global-savings-group.com/lib/fe901373756c067972/m/1/def=
+7685e-852f-46e1-9b96-04b3dddc3978.pdf>
+
+--=20
+Shoop Germany GmbH, Greifswalder Stra=C3=9Fe 212, 10405 Berlin, Germany, lo=
+cal=20
+court of Berlin Charlottenburg, HRB 127132 B, Managing Director: Veit M=C3=
+=BCrz,=20
+Kathrin Nusser
+
+
+This email may contain confidential and/or privileged=20
+information. If you are not the intended recipient (or have received this=20
+email by error) please notify the sender immediately and delete this email.=
+=20
+Any unauthorized copying, disclosure or distribution of the material in=20
+this email is strictly forbidden.
+

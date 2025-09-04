@@ -1,0 +1,196 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp3802138nji;
+        Thu, 21 Aug 2025 19:43:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWzDPYHMuXOGFB0SXcXfgdS9v2UYOCm2hHegcU6sWqFdak1fNaHxqxscEJf08tagr0Oai5
+X-Received: by 2002:a05:6a00:3e1e:b0:76b:caa5:9a32 with SMTP id d2e1a72fcca58-7702fa019ddmr1716147b3a.11.1755830607401;
+        Thu, 21 Aug 2025 19:43:27 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1755830607; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=Z3PlxuvOS5faSvRKYsWiqIPHUcJ4tmqCph+RpfUR6+KCdxRa34qbBdenQwIK5a9KK9
+         dOjzL1mgjsnXGQKv2WfOgM7qhJ980z7DJVmBmdwhdKcz7B4nzKvTSLSzL6ZHjEvsnizY
+         A47lOY7EmWz0hzlPQG59iAKsgt70P/h+iuRikL0UWSHKXNo1HZTC3MHGiK/jw6/sN5JH
+         +dxwytWxQTq3M4e5yz6vbQ4Yx9U2UK3rdJSRZ/zpufHiMevwIJaSWCxi83Hp3oG31lZ5
+         rrkavz5sYdBH1xlWVsCcQuJu9RU3H9Xf/1pLlplozltgYW6zMdK447enHPbx1uvaRobC
+         ANjA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:auto-submitted:in-reply-to:references:message-id:date
+         :thread-index:thread-topic:subject:to:from:dkim-signature;
+        bh=aXXq3mogcaJuZyTL9ilrbGayRxef8O0Okc6bCvfODSk=;
+        fh=z1MbCQN7ZmJy1kdV6Fjt4GRE80TsQd9EasJ/8pjS0dI=;
+        b=XCmN2Qu+Oq1JRyzB+jSXU54F9SKv8EnszmKT1LtiwzJo7m5WN/XKA91TsNyU9CBkXG
+         p32C/6cA7iB0UfyJQMypCvAGncvClONr+pUfhryF25dETwAaDj3C6Fn2nKSk2Ow0YCYR
+         eO+rdkj8DBhUies37PnK4r5w1M2yYeuyXJSwJmnlk2sIkFepTCGKqlf+WGOsqg53kWW1
+         2Q1bTzmZMJlXjAVcMz7a/Klrx7BtKrT2Ot7aHUnYqAIehrB+CjlTZldMGF+c1r9ap6gQ
+         BAJTzJZNs5WCPmZGUrsZV0fWh6C5MvDikT+uqsVqW2jmvV7EYYWWFKxxrCoCGdBFT4qy
+         M5Zg==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@rakuten.com header.s=selector2 header.b=LBF0guf7;
+       arc=pass (i=1 dkim=pass dkdomain=rakuten.com dmarc=pass fromdomain=rakuten.com);
+       spf=pass (google.com: domain of postmaster@os0p286cu011.outbound.protection.outlook.com designates 2a01:111:f403:dc06:: as permitted sender) smtp.helo=OS0P286CU011.outbound.protection.outlook.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=rakuten.com
+Return-Path: <>
+Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazhn150100000.outbound.protection.outlook.com. [2a01:111:f403:dc06::])
+        by mx.google.com with ESMTPS id d2e1a72fcca58-76e7d597204si5457195b3a.566.2025.08.21.19.43.27
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 19:43:27 -0700 (PDT)
+Received-SPF: pass (google.com: domain of postmaster@os0p286cu011.outbound.protection.outlook.com designates 2a01:111:f403:dc06:: as permitted sender) client-ip=2a01:111:f403:dc06::;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@rakuten.com header.s=selector2 header.b=LBF0guf7;
+       arc=pass (i=1 dkim=pass dkdomain=rakuten.com dmarc=pass fromdomain=rakuten.com);
+       spf=pass (google.com: domain of postmaster@os0p286cu011.outbound.protection.outlook.com designates 2a01:111:f403:dc06:: as permitted sender) smtp.helo=OS0P286CU011.outbound.protection.outlook.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=rakuten.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NwGgHZIPiRbh+r+Wqm4PYt463VcfDdCie57570EdvjSCE1FpHVO8U/Jo5QYjZAw/5IPPPp0Mtekac/hQP1R5WLcLa4r/+rrn2YaQR3trPyUcqRoziRDnm98QSOl5XabPKlP8xblViCNdpIh9qCKCQbAJczCIorE9Cm5LBCZfKkVDqAP67WdLfgbLPh/mdwy3hC4Ov77sI3AEeInNzmb3Gxdd1gYTXCJcHVuN+LGkoEzpcWv8OrWX7+lszCv2J5R3bp0Rn+0Qby0irpjXqrz2fN9pUSvw2PV5pYMOkGqsQC8N+CCZ5vLxUZPW2zUFZIOQrnuumAYh/vi9TzHHmkUHZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aXXq3mogcaJuZyTL9ilrbGayRxef8O0Okc6bCvfODSk=;
+ b=NFB9O+ygmUZx5Btt7vTmkdXDj0MBTaAwyVUYJKrqP8pZoQtuAf93rz0ExXJEl/jdUaiyPCHLufeZQPfcnS1GQxCB+ZY2BNVdzUr80rrL6CDsAEnqj77FBOPfe4QmjFgrsxlfvjvzVLARYX+IrPPJ+sPKbuKGfbH1L2gaYX6x8SGPtuzqD4uFPmkSSD6+x2ifGX4U8GAALGsJYNRD30qZ5WhFPregRrEPlz3l4V6HDxSBQO3oXkVYufCgX3mJohjIfTBPQnR+URRJcoohoD8bQYCPUFDlG0+j6OytAHz+0B3qrh8lDra5MdBF1oGV9ga0dlt0BZk5sSEQRC5COvgwrw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=pass
+ action=none header.from=rakuten.com; dkim=pass header.d=rakuten.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rakuten.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aXXq3mogcaJuZyTL9ilrbGayRxef8O0Okc6bCvfODSk=;
+ b=LBF0guf73vvYm9zF0AU5Z44MguEso/H6RKMN1ZmIeyOy0vrkEnmbqf7RG9+BqEjT6E0QJlBM2G4h5k1J6rlfDE1iMRbczRLWN7sBWCP1CdsUkBBD3oe5eJmzCSef2PUFBFqLyM0KS0YR0JB2Am37kEQN0pqblYppom5fNOVJO9I=
+Received: from TYCP286MB2928.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:302::11)
+ by TYRP286MB5685.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:2d8::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.16; Fri, 22 Aug
+ 2025 02:43:24 +0000
+Received: from TYCP286MB2928.JPNP286.PROD.OUTLOOK.COM ([::1]) by
+ TYCP286MB2928.JPNP286.PROD.OUTLOOK.COM ([fe80::a0bd:e0fa:ce77:82e6%7]) with
+ Microsoft SMTP Server id 15.20.9052.014; Fri, 22 Aug 2025 02:43:24 +0000
+From: "Garcia, Sara" <sara.garcia@rakuten.com>
+To: Rita Liu <rita@affiliate.bluefocus.com>
+Subject: Automatic reply: Silksilky x Rakuten Q3 collab
+Thread-Topic: Silksilky x Rakuten Q3 collab
+Thread-Index: AQHcEw6HcqyP8lOWpUWgqQmQCVcmzbRt9vMz
+Date: Fri, 22 Aug 2025 02:43:24 +0000
+Message-ID: <12c6391ee4e74b8da8b56e0c4697c5de@TYCP286MB2928.JPNP286.PROD.OUTLOOK.COM>
+References: <CANCt8Oyq6iHudAsH6t8odqMH_0fmT_wOy--qOhUBi-8_Qk4mxQ@mail.gmail.com>
+In-Reply-To: <CANCt8Oyq6iHudAsH6t8odqMH_0fmT_wOy--qOhUBi-8_Qk4mxQ@mail.gmail.com>
+X-MS-Has-Attach:
+X-Auto-Response-Suppress: All
+X-MS-Exchange-Inbox-Rules-Loop: sara.garcia@rakuten.com
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=rakuten.com;
+x-ms-exchange-parent-message-id: <CANCt8Oyq6iHudAsH6t8odqMH_0fmT_wOy--qOhUBi-8_Qk4mxQ@mail.gmail.com>
+auto-submitted: auto-generated
+x-ms-exchange-generated-message-source: Mailbox Rules Agent
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYCP286MB2928:EE_|TYRP286MB5685:EE_
+x-ms-office365-filtering-correlation-id: c0ad3052-8ebd-4096-2ca2-08dde125aa85
+x-ms-exchange-atpmessageproperties: SA
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|50650200027|366016|1800799024|10070799003|376014|8096899003|80100003;
+x-microsoft-antispam-message-info: =?us-ascii?Q?UkAIOlPeJ2EKOWsxlgqgPEebOk5aR8so6itvvyIc+7N1Ts7E7M/6UmILEWPx?=
+ =?us-ascii?Q?PPTtuQrqx4wMzoLGVCpoO7fgXkvYevakxFfqTWtzWYcmcM5kWQChka9ZcvK3?=
+ =?us-ascii?Q?ZQ5lYL3Hv0YvObsnJUdwEjgkYJlLhPifdhQdD7ce0IUNI1xPg9uJ8DAf36UN?=
+ =?us-ascii?Q?SVrWKQPgwdnQJrDBSLRZnypiQOGPJ33zdp4OH89/AziA46wO2bcyWOhYtI4v?=
+ =?us-ascii?Q?m/syeSvk22CnnE/IBbxqBUke63u96I51/DMhtgISvZ0FuX4Bo1UnUP+Hn0fD?=
+ =?us-ascii?Q?HkmyFWKn0TJM865R/KWR4dBBUyFVTfVPahiyXjkwAc+l98frX7qGGkHZXDeG?=
+ =?us-ascii?Q?w7HCy0KYpyfBd4vsE6KGwkjQjQdUtZQtBu21OF0JlgYWitqlySet7EgepCZ8?=
+ =?us-ascii?Q?yL4PaTXIYHKY9SQSpcMN3Bp5v10rpev8Tqk/qduBQnNHQOAPp/BOnpSqPHCp?=
+ =?us-ascii?Q?z5W+8C9Gk7e4bmZ+aeAn3lEo+H4byhT54yfrVkgiOqNeI1T2zhA8mrIoYO8j?=
+ =?us-ascii?Q?l2VamcZuxlNfyGaw4hO/Kl50lR8FwlVXzJ9lhjsxlyJpHRn2bpzMFMf6EIKF?=
+ =?us-ascii?Q?3YslDTavgFiQivmXxdXwy78mvhBtdeEAgsN70J2IOhGsFAFFE+CPsg8i1+TX?=
+ =?us-ascii?Q?/ZbIhooVN5cMvXVciwCRzTA2xAUWaD4W6Ctu542DRW56bpdhZDx8dd3zf+5c?=
+ =?us-ascii?Q?zjDrqK9bWrvZ/8tAOl8L+uj5a7QlYAGPkBhyzvKQ3EWHIev+kSSuOtpklCAb?=
+ =?us-ascii?Q?as8hdbb17K4IQpU2NS2Z7vDX4Fb6gCzedkzRZ2VWFPtz9n9PEOnY9N5Bw/rI?=
+ =?us-ascii?Q?fWbL+/T5u33bwsAbh+lVU4L6YzULy688f5TgI9+pq+1QP2FRjL7xQRzK0tAd?=
+ =?us-ascii?Q?E7MHhoDuM6v6WZZ/IEvnstAT1vX+4/tZboPo/TorIRrBpLik97jKircCdZXh?=
+ =?us-ascii?Q?E4qg170v2VP+FSQdT+LOnl4d1hgeOKw4oBnO39B4u7f1lrYt3CCUa336rAy/?=
+ =?us-ascii?Q?d3Zed92J7kCR3QIKiEB+1g1m0Q5bXAgtPQTulK48qEqTIF4hV/dqqIXm/GvM?=
+ =?us-ascii?Q?b+Oc838XoKzxxC464Zncs3YzMS1qmCriCb4ci/jP2GOtIRY0CTmNDrHMyZ5d?=
+ =?us-ascii?Q?YbsPXdGBXiaixnqKXpMkuw8zhf81li6QyV3LvbjaFlGP+qewknWRBxssQoko?=
+ =?us-ascii?Q?xqbIgwjhR6a6zCWmfHVIBSDLAQHp1LARp59mhydKBz6VkdeH5URsvr70a8+n?=
+ =?us-ascii?Q?gV62VRETCEf08CbbV/Fg5NHNdyuP/Tab1rHGF7trZ0S8YVPXq2ZGM2xUrmIj?=
+ =?us-ascii?Q?8ZcZOFyabwTLpvuhjM9SzSFmPgu8akT89v17wBESxFZwunaAzlknSRqPsTnr?=
+ =?us-ascii?Q?OuPFhNFAoZXNrCNRHtZX96m+1IAnAuhaVI6JNb3Gjm92YF0dfO38e82Ao1Q6?=
+ =?us-ascii?Q?5fJnXcyb/yM=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCP286MB2928.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(50650200027)(366016)(1800799024)(10070799003)(376014)(8096899003)(80100003);DIR:OUT;SFP:1501;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: Rwvx59zcV47uPCo/PHdjQJFxV/gPknX9OHPWS7a1UdowB7teG6UroXRDmplGyPdAABGMWu0LprAOYj9/8Hm6QLvcUN/rVD94dlZpDyYq+LeKLnIY6w1o/mf81s8ijZlAM6aty9vXfTZADE3ZBRk0zLYgQC4jKMFiQ8NpGUReSUA9Mtbs9eI7vaTrAeYFo1yMw3j7gj5rDp3h2b3k4bZyG8KOpBssf6fyQGVjts5HKDc7QqbECV10RxBrkUZ7fBbPgTvXM+BGK8n2W+frjRAuci81DUulYegL4z21n43FolbhXMze82FO6dJrZR+sH1aj
+Content-Type: multipart/alternative;
+	boundary="_000_12c6391ee4e74b8da8b56e0c4697c5deTYCP286MB2928JPNP286PRO_"
+X-OriginatorOrg: rakuten.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYCP286MB2928.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: c0ad3052-8ebd-4096-2ca2-08dde125aa85
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Aug 2025 02:43:24.7208
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53a8b0d9-d900-48cc-9d7e-5935dc8d5b17
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYRP286MB5685
+MIME-Version: 1.0
+
+--_000_12c6391ee4e74b8da8b56e0c4697c5deTYCP286MB2928JPNP286PRO_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+I will be out of the office until Monday, 8/25. For urgent issues please re=
+ach out to rr-rs_siteop-support@rakuten.com. Otherwise, I will reply when I=
+'m back. Thanks!
+
+--_000_12c6391ee4e74b8da8b56e0c4697c5deTYCP286MB2928JPNP286PRO_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
+hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
+fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Aptos;}
+@font-face
+	{font-family:"Segoe UI";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;
+	mso-ligatures:standardcontextual;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:black;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style>
+</head>
+<body lang=3D"EN-US" link=3D"#467886" vlink=3D"#96607D" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
+ze:14.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:black;background=
+:white;mso-highlight:white">I will be out of the office until Monday, 8/25.=
+ For urgent issues please reach out to rr-rs_siteop-support@rakuten.com.
+ Otherwise, I will reply when I'm back. Thanks!</span><span style=3D"font-s=
+ize:8.0pt;font-family:&quot;Segoe UI&quot;,sans-serif"><o:p></o:p></span></=
+p>
+</div>
+</body>
+</html>
+
+--_000_12c6391ee4e74b8da8b56e0c4697c5deTYCP286MB2928JPNP286PRO_--

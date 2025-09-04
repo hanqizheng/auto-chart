@@ -1,0 +1,149 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:4f8c:b0:1d03:27cf:8dbe with SMTP id he12csp173758njb;
+        Mon, 25 Aug 2025 20:29:59 -0700 (PDT)
+X-Received: by 2002:a05:6512:3e26:b0:55f:4e62:caa0 with SMTP id 2adb3069b0e04-55f4e62cb08mr183706e87.42.1756178998824;
+        Mon, 25 Aug 2025 20:29:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756178998; cv=none;
+        d=google.com; s=arc-20240605;
+        b=BMjae9dG0IJ0LR9/JZOJyN1S/CPuMdZANzDULd4CMIwvOZ0Y1RqmHKLKxV8T07Hewz
+         fOvMmXBMemLttuheB15orA/fPR54Y5PUqTR2MhUS7+fa5GWBymTNf6XqDPUkOw7RKVPR
+         LDU+hejgQibLjyhAyZwiAmyJv87DKsAt7oqN6t7MI0x9sQmI2xDR4qpIVXvdm1WrqC+r
+         2V+1cBzR0rznkPOMRKapexZgwhckkZbk3u9LBw6fIyx/ueqce+fLlm9CbiIiNE922seN
+         XqPEjEhBGsgwWVXrqE+fxe0wXc/o5lhq8TfmpJDY4SB+BsVu/l6h5+EWUGyaxXHsGX3I
+         8g7Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=auto-submitted:precedence:content-disposition
+         :content-transfer-encoding:mime-version:subject:message-id:date:from
+         :to:dkim-signature;
+        bh=NrtLqLOL0YtvWkSyoEiORqPP0DzFzMFob+0y5zMZfPA=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=TjsMr0a49kRZQVUEtlBIhmwyY0m7mEsC+/LrCuDFt7V9+H1qo/bo0l7qse9CJgv/ZV
+         Kc289ROh+YB3/E7htSiMBQpimc2xv3JMU7csgbWEKq+B7Gq9E1UJw2LIpggfOcNS+R8Z
+         ccJilytVQ5aK+ApyMoWpCCkeScWZcwzeziMRuv60oee7oQ9pSKfwb0RLnLFcLbYwgB5I
+         6T9GW/JqJIDEmcEV5zpo1Qwyqdh6R2h+/jNSROR9C9e0JWkz7q9O8uaijS+nn94xcCNF
+         BJdbL2hQKR5dutVf8LKqg548W1UBOXKtSAg8/Nf7QYF70puSLSW3vSjeewiswd+MY6rj
+         VB5A==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@yieldkit.com header.s=google header.b=HA8fpa8a;
+       spf=pass (google.com: domain of susana.laurentino@yieldkit.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=susana.laurentino@yieldkit.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=yieldkit.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <susana.laurentino@yieldkit.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 2adb3069b0e04-55f3fea0feesor506838e87.24.2025.08.25.20.29.58
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Mon, 25 Aug 2025 20:29:58 -0700 (PDT)
+Received-SPF: pass (google.com: domain of susana.laurentino@yieldkit.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@yieldkit.com header.s=google header.b=HA8fpa8a;
+       spf=pass (google.com: domain of susana.laurentino@yieldkit.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=susana.laurentino@yieldkit.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=yieldkit.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=yieldkit.com; s=google; t=1756178998; x=1756783798; darn=affiliate.bluefocus.com;
+        h=auto-submitted:precedence:content-disposition
+         :content-transfer-encoding:mime-version:subject:message-id:date:from
+         :to:from:to:cc:subject:date:message-id:reply-to;
+        bh=NrtLqLOL0YtvWkSyoEiORqPP0DzFzMFob+0y5zMZfPA=;
+        b=HA8fpa8auIMKJSofevBuFfwHWWa8TDtgh11kw4tndx0I0H9ylo6NVH0jE7L1TuFlXJ
+         3na3DXh80jWfvalPoshZjaAAeQDgZ8mdO2HZGXIRdFvHr4Fz+EC0SSQaDboEdZNGxd3q
+         BljXNv/LaT3uwceLrOKStLW4JFi55jRRqA/LVca5xnZXqg10g9OiONpzZ/HAcTYNmVu7
+         S/YWXxO7+HabvqDNz5tZf6lvHjuwMy9oFU7Ec1sFUXWyB+soVZj+F2bPALgLFA/FlW7J
+         FvxREQ4ewcm304E4wf9vdpVYi3hNyJl0RaSWpXd8Q0YcANIzsbVpbPAeD+ND11gVUk5J
+         9BUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756178998; x=1756783798;
+        h=auto-submitted:precedence:content-disposition
+         :content-transfer-encoding:mime-version:subject:message-id:date:from
+         :to:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NrtLqLOL0YtvWkSyoEiORqPP0DzFzMFob+0y5zMZfPA=;
+        b=mzlpGaU3i/GuQt00uX+LcwNDExxU4JWooDkf5jfF5WV+QWbeKT7i/nu/jmHmTjVlYY
+         EtbdF0bU812kxY28BrNwA+smo3njrjhfq4NStrG35F6QqpO4B3MAzOe15puO8umNXgtN
+         f99Cg+0q2qA5i90AjXH+HybyFwEM1fLF2DnrirSzssa5XhkGE7PD2518pBnKnAnTVjoS
+         b8EvqbnHoetbX2aBaVAwFHyn016CKc5cyjjR7TdNgsrj5LPRguUxaRVcAp79pndgdvkU
+         HGAjyzaxDcu8Az/ySVwIJPk4EH+RQEp6o0l1Td/qh5NtODQow274aiwriGX+d8/BQ4Jm
+         lieA==
+X-Gm-Message-State: AOJu0YyH+WdJvpU9KrMQ9lTXjhm5oeRkNjpZkFfU/C4nt/dc6wNP4YI+
+	genWXLS5VhNnbfUdJ1JBypeZ1/cZvUTEOgzGkKIqFAdIT00CfSjmmcf1L0qoDEEYpucgc7EWIn0
+	Syw6K4wrlt49cwPtUe8L9kb8NyfMigSzRA8HTARs7XRyDTGKSzXcDNzL9l8fyPMR2qF5wM8fL8S
+	NBLpfIL45MrArXePHDANIzGdVSIKa+
+X-Gm-Gg: ASbGnct8Bv/ZN8jHOZu21cyPeGmL4bp0TGvMwsxZLT9I2ie4DpW/iuibIj8nodeeLLe
+	z2MiH+Q9jo1rB3ZyQBzwGZdEzlpi3/Tq9QDNnkjyMyXYbj9/dmi6n+W0hWY2fUtBZ1LjGzspaGt
+	JL9QW1PsJmxdx2oUd+iUuXRIL1IsStgVYXpsfv1HW/JBjyYyYty7cjrBt/YpARmg==
+X-Google-Smtp-Source: AGHT+IHeBrgP8/NE6H5ym69bG/abppVZ+8oGTES1G/S+TJcy9awGWGIxQ9JGieCI0ST00qkNDuZpkMV0unUbx6V1ASvGWjExtSX+9+zra6DZ
+X-Received: by 2002:a05:651c:2106:b0:336:80e3:b1a5 with SMTP id 38308e7fff4ca-33680e3c73dmr9312421fa.13.1756178997598;
+        Mon, 25 Aug 2025 20:29:57 -0700 (PDT)
+To: rita@affiliate.bluefocus.com
+From: "Susana Laurentino" <susana.laurentino@yieldkit.com>
+Date: Mon, 25 Aug 2025 20:29:57 -0700
+Message-ID: <CAGFFMkAujApcA36mPz-cny4nAoGVu1GPPSZz_-DCGbr-iQeYmA@mail.gmail.com>
+Subject: Out of Office Re: UGREEN x YieldKit GmbH: Request to Create Charging & NAS Store Pages + Bonus for Extra Exposure
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline
+Precedence: bulk
+X-Autoreply: yes
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+
+PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJz
+ZXQ9dXRmLTgiPjxkaXYgZGlyPSJsdHIiPkhpIHRoZXJlLDxkaXY+dGhhbmsgeW91IGZvciB5b3Vy
+IG1lc3NhZ2UuPC9kaXY+PGRpdj5JIGFtIE9PTyB1bnRpbCB0aGUgMTIuMDkuIEZvciBtb3JlIHVy
+Z2VudCBtYXR0ZXJzIHBsZWFzZSBjb250YWN0IHZpYSBvdXIgU2VydmljZSBQb3J0YWwgb3IgPGEg
+aHJlZj0ibWFpbHRvOmFkdmVydGlzZXJAeWllbGRraXQuY29tIiB0YXJnZXQ9Il9ibGFuayI+YWR2
+ZXJ0aXNlckB5aWVsZGtpdC5jb208L2E+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48YSBocmVm
+PSJodHRwczovL21yZ2UuYXRsYXNzaWFuLm5ldC9zZXJ2aWNlZGVzay9jdXN0b21lci9wb3J0YWwv
+OCIgdGFyZ2V0PSJfYmxhbmsiPmh0dHBzOi8vbXJnZS5hdGxhc3NpYW4ubmV0L3NlcnZpY2VkZXNr
+L2N1c3RvbWVyL3BvcnRhbC84PC9hPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+QmVzdCw8L2Rp
+dj48ZGl2PlN1c2FuYTwvZGl2PjwvZGl2Pjxicj48YnI+LS0gPGJyPjxkaXYgZGlyPSJsdHIiPjxw
+PjxzcGFuIHN0eWxlPSJmb250LXdlaWdodDo0MDA7Zm9udC1mYW1pbHk6YXJpYWwsaGVsdmV0aWNh
+LHNhbnMtc2VyaWYiPjxzdHJvbmc+U3VzYW5hIExhdXJlbnRpbm88L3N0cm9uZz48YnI+PC9zcGFu
+PjwvcD48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6YXJpYWwsaGVsdmV0aWNhLHNhbnMtc2VyaWYi
+Pjwvc3Bhbj5TZW5pb3IgQWR2ZXJ0aXNlciBNYW5hZ2VyPGJyPjxwPjxzcGFuIHN0eWxlPSJmb250
+LWZhbWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fucy1zZXJpZiI+PHN0cm9uZz5FIDwvc3Ryb25nPiZu
+YnNwOzxhIGhyZWY9Im1haWx0bzpzdXNhbmEubGF1cmVudGlub0B5aWVsZGtpdC5jb20iIHRhcmdl
+dD0iX2JsYW5rIj5zdXNhbmEubGF1cmVudGlub0B5aWVsZGtpdC5jb208L2E+PC9zcGFuPjwvcD48
+cCBzdHlsZT0ibGluZS1oZWlnaHQ6MS4xIj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6YXJpYWws
+aGVsdmV0aWNhLHNhbnMtc2VyaWYiPjxzdHJvbmc+UDwvc3Ryb25nPjxzcGFuIHN0eWxlPSJmb250
+LXdlaWdodDo0MDAiPiAmbmJzcDs8YnI+PGJyPjxpbWcgc3JjPSJodHRwczovL2Nkbi5idWxrc2ln
+bmF0dXJlLmNvbS9pbWFnZXMvMjY2NS9sdVU5aHA4OTM5TWpqd2Nrbm1JZzVUcG1kUDVzd0ZuWE9X
+UzFNdDBHLnBuZyIgYWx0PSIiIHdpZHRoPSIyNTAiIGhlaWdodD0iNDgiPjwvc3Bhbj48L3NwYW4+
+PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxLjEiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTph
+cmlhbCxoZWx2ZXRpY2Esc2Fucy1zZXJpZiI+PHNwYW4gc3R5bGU9ImZvbnQtd2VpZ2h0OjQwMCI+
+U3RheSBhaGVhZCBvZiB0aGUgZ2FtZSB3aXRoIGRhaWx5IHVwZGF0ZXMg4oCTIGZvbGxvdyB1cyBv
+biA8L3NwYW4+PHNwYW4gc3R5bGU9InRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7Y29sb3I6IzAw
+MDBlZSI+PGEgc3R5bGU9ImNvbG9yOiMwMDAwZWU7dGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZSIg
+aHJlZj0iaHR0cHM6Ly93d3cubGlua2VkaW4uY29tL2NvbXBhbnkvbXJnZS1jb21tZXJjZS1hZHZl
+cnRpc2luZyIgdGFyZ2V0PSJfYmxhbmsiPjxzcGFuIHN0eWxlPSJmb250LXdlaWdodDo0MDAiPkxp
+bmtlZEluPC9zcGFuPjwvYT48c3BhbiBzdHlsZT0iZm9udC13ZWlnaHQ6NDAwIj4uPC9zcGFuPjwv
+c3Bhbj48L3NwYW4+PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxLjEiPjxzcGFuIHN0eWxlPSJm
+b250LWZhbWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fucy1zZXJpZiI+TGV04oCZcyBncm93IHRvZ2V0
+aGVyOiBUbyBqb2luIHVzLCBjaGVjayBvdXQgb3VyIDxzcGFuIHN0eWxlPSJ0ZXh0LWRlY29yYXRp
+b246dW5kZXJsaW5lO2NvbG9yOiMwMDAwZWUiPjxhIHN0eWxlPSJjb2xvcjojMDAwMGVlO3RleHQt
+ZGVjb3JhdGlvbjp1bmRlcmxpbmUiIGhyZWY9Imh0dHBzOi8vbXJnZS5qb2JzLnBlcnNvbmlvLmNv
+bS8iIHRhcmdldD0iX2JsYW5rIj5qb2IgdmFjYW5jaWVzPC9hPiE8L3NwYW4+PC9zcGFuPjwvcD48
+cCBzdHlsZT0ibGluZS1oZWlnaHQ6MSI+Jm5ic3A7PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDox
+Ij48c3BhbiBzdHlsZT0iZm9udC13ZWlnaHQ6NDAwO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5
+OmFyaWFsLGhlbHZldGljYSxzYW5zLXNlcmlmIj5tcmdlIEdyb3VwIEdtYkgsIEFuIGRlciBBbHN0
+ZXIgNDUsIDIwMDk5IEhhbWJ1cmcsIEdlcm1hbnk8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtZmFt
+aWx5OmFyaWFsLGhlbHZldGljYSxzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB4Ij48YnI+PC9zcGFu
+PjxzcGFuIHN0eWxlPSJmb250LXdlaWdodDo0MDA7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6
+YXJpYWwsaGVsdmV0aWNhLHNhbnMtc2VyaWYiPkV4ZWN1dGl2ZSBCb2FyZDogRGF2aWQgUmVlZCAo
+Q0VPKSwgTmlscyBHcmFiYmVydCAoQ1RPKSwgTWljaGFlbCBTY2hhbWJhY2ggKENGTyk8YnI+PC9z
+cGFuPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fucy1zZXJpZjtm
+b250LXNpemU6MTJweCI+UmVnaXN0ZXJlZDogSFJCIDE2NDQ1NSBhdCBBbXRzZ2VyaWNodCBIYW1i
+dXJnIChIYW1idXJnIERpc3RyaWN0IENvdXJ0KSwgPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZh
+bWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fucy1zZXJpZiI+VkFUIElEOiBERSAzNDAzNjUzMjYmbmJz
+cDs8L3NwYW4+PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxIj48c3BhbiBzdHlsZT0iZm9udC1m
+YW1pbHk6YXJpYWwsaGVsdmV0aWNhLHNhbnMtc2VyaWYiPjxzcGFuIHN0eWxlPSJmb250LXdlaWdo
+dDo0MDAiPjxicj48L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtd2VpZ2h0OjQwMDtmb250LXNpemU6
+MTBweCI+RGlzY2xhaW1lcjogVGhpcyBlbWFpbCBpcyBjb25maWRlbnRpYWwsIGFuZCBpbnRlbmRl
+ZCBzb2xlbHkgZm9yIHRoZSByZWNpcGllbnQuIElmIHJlY2VpdmVkIGluIGVycm9yLCBwbGVhc2Ug
+bm90aWZ5IHRoZSBzZW5kZXIsIGRlbGV0ZSBpdCwgYW5kIHJlZnJhaW4gZnJvbSBhbnkgZGlzY2xv
+c3VyZS4gVmlld3MgZXhwcmVzc2VkIGFyZSB0aGUgYXV0aG9yJ3Mgb3duIGFuZCBub3QgbmVjZXNz
+YXJpbHkgdGhvc2Ugb2YgdGhlIG9yZ2FuaXphdGlvbi4gVGhpcyBlbWFpbCBoYXMgYmVlbiBzY2Fu
+bmVkIGZvciB2aXJ1c2VzLCBidXQgbm8gbGlhYmlsaXR5IGlzIGFjY2VwdGVkIGZvciBhbnkgZGFt
+YWdlIGNhdXNlZCBieSBhbnkgY29udGVudCB0cmFuc21pdHRlZCBieSB0aGlzIGVtYWlsLjwvc3Bh
+bj48L3NwYW4+PC9wPjwvZGl2Pjxicj4NCg==

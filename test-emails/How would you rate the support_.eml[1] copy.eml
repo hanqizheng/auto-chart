@@ -1,0 +1,420 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp4030584nji;
+        Fri, 22 Aug 2025 05:01:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHayS7t+sDTgc/RNJx7A3SHzQceIW6Kb+j2ugwpwENTfjJYlC3fJUmkkyz/S1hpm19Qj4kk
+X-Received: by 2002:a05:600c:1ca4:b0:459:ddd6:1cc7 with SMTP id 5b1f17b1804b1-45b552f1141mr11914785e9.0.1755864116743;
+        Fri, 22 Aug 2025 05:01:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1755864116; cv=none;
+        d=google.com; s=arc-20240605;
+        b=XfcFyfO7IBBVJfPXYJDAQaDkYrMQYlT9MJX0DlN9VV6atSeY+ehegc3n/FHLhXVv+d
+         cpmkn7RYzyjlul1v9ASyI7fCNWu1nqIP0QfybtFttOz6XJT6Sqb5p1XwX9Bgq31I2Rwb
+         BqkPgkU1+BOBNm0Ft0lvxwUBNaei2J2y4pG7U3jEaETl9GoVGrWB6WNvjIg/HGNcHs1z
+         YuscqEjf/8xy8J8+wr2l6NI0jjcwGT3lpPI9OlPY3dmVRgzZnOakKGhNeWXky9TSOMi9
+         e3/1lbUFUtKZqSkJta51Ea4/84cSHaWdOZjuUpjnNeAsa7KtDUHKDRnRIajVUaFZazIp
+         knxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=dkim-signature:auto-submitted:content-transfer-encoding
+         :mime-version:subject:references:in-reply-to:message-id:to:reply-to
+         :from:date;
+        bh=0oR5Qia4stOYLqteBaW00vdlBad9DFfz2kqqQEgTkvQ=;
+        fh=ne4HxneCBH7B/C+YCRnI6yD7FswApjCaNzglkT25IKQ=;
+        b=SOKcW64ywFlP8y4Zbw4Fwvf/ZqzQ0nMuvEvLkSjNZItczKYxO8CJAtpHsNjpsoJHUO
+         MKhGfS73NgGzcK+4BooS3/cYAdE9ey1Ue0GF2nLYowEyzceBUQftaZc6JxEOpvFriBly
+         VyRdvXFNSnOkog2dTFeLzO6vQUZnW9Iw8EL4YRu0mSh2oUMpKJxM4/qkcMXjzucUmeAZ
+         6fNGYDumhS11ByHuH6KazP7Xey8x+uTQ9xY4v9YSA18meIteV/kGJvyrd/Tw2dNPZStU
+         FWA2lFoGsGjNQP/oOGAVvtdTMvuNKs4YN5K/qCRySSZmo1b6+IJk95eMgCxHPunokBJN
+         uwrg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mobilevikings.be header.s=zendesk1 header.b=w8dyQfmY;
+       spf=pass (google.com: domain of secondline@mobilevikings.be designates 188.172.137.15 as permitted sender) smtp.mailfrom=secondline@mobilevikings.be;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=mobilevikings.be
+Return-Path: <secondline@mobilevikings.be>
+Received: from mta-out15.pod17.euw1.zdsys.com (mta-out15.pod17.euw1.zdsys.com. [188.172.137.15])
+        by mx.google.com with ESMTPS id 5b1f17b1804b1-45b50de5105si16323625e9.57.2025.08.22.05.01.56
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Aug 2025 05:01:56 -0700 (PDT)
+Received-SPF: pass (google.com: domain of secondline@mobilevikings.be designates 188.172.137.15 as permitted sender) client-ip=188.172.137.15;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mobilevikings.be header.s=zendesk1 header.b=w8dyQfmY;
+       spf=pass (google.com: domain of secondline@mobilevikings.be designates 188.172.137.15 as permitted sender) smtp.mailfrom=secondline@mobilevikings.be;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=mobilevikings.be
+Received: from zendesk.com (unknown [127.0.0.6])
+	by mta-out15.pod17.euw1.zdsys.com (Zendesk) with ESMTP
+	id 1c7537c3-6ef4-432f-ba99-1cf96f423642
+	for <rita@affiliate.bluefocus.com>;
+	Fri, 22 Aug 2025 12:01:56 +0000 (UTC)
+Date: Fri, 22 Aug 2025 12:01:56 +0000
+From: Support <secondline@mobilevikings.be>
+Reply-To: Support <secondline@mobilevikings.be>
+To: Rita <rita@affiliate.bluefocus.com>
+Message-ID: <LZVYPPLPRDW_68a85c33d83f4_b6157872428_sprut@zendesk.com>
+In-Reply-To: <vcsr9bL3Q2GFHu8Ev5Cv8g@geopod-ismtpd-8>
+References: <LZVYPPLPRDW@zendesk.com>
+ <vcsr9bL3Q2GFHu8Ev5Cv8g@geopod-ismtpd-8>
+Subject: How would you rate the support?
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_68a85c347ab9_b615787259f";
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Delivery-Context: event-id-38329090595601
+Auto-Submitted: auto-generated
+X-Auto-Response-Suppress: All
+X-Mailer: Zendesk Mailer
+X-Zendesk-From-Account-Id: 86caae0
+X-Zendesk-Email-Id: 01K38TGA07GPAC9TKJYEYZAN6S
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mobilevikings.be;
+ q=dns/txt; s=zendesk1; t=1755864116;
+ bh=0oR5Qia4stOYLqteBaW00vdlBad9DFfz2kqqQEgTkvQ=;
+ h=date:from:reply-to:to:message-id:in-reply-to:references:subject:mime-version:content-type:content-transfer-encoding;
+ b=w8dyQfmYPBUB8QFsPxVmf39+hfZRxdIcV9sWRwizO4FXoMUQcl02yFGPmLNsqiak2KCG1Mz28Tj4SutLjhcUKHGjV/JSWpiZdlpMdzFi1m2snd+YJzRxdh6KpLmCGHepJI2Orm0Xyu0e1nqjwnzsbi3CL7UY2pfhywwXxXwnmt5eqALHMXNxSWQ8YX1ZWzK2P5Q5Rdu/G2QwijQ2ZUTkEv9PNWQBFZNkDswF0a0Y1N8n61F8iq1W4Mx72os+cg3dvgOgGQmw6EDEQINJaPCNVC9ElXNMZ6LJNFfNEDKunHPwmsfTKAbOV0TjWdkpBHw7Saet8T02Zzp8iuPE5twiTw==
+MIME-Version: 1.0
+
+----==_mimepart_68a85c347ab9_b615787259f
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hello Rita,
+
+We'd love to hear what you think of our customer service. Please take a m=
+oment to answer one simple question by clicking either link below:
+
+Request: SilkSilky Limited-Time Deals: Save Up to 64% Off!
+
+Share your feedback with us.
+
+You can copy the following URL into your browser to rate:
+
+https://support.mobilevikings.be/hc/en-us/survey_responses/01K38TGAMWRKQB=
+EGATJXN5ABTD?access_token=3DI1w1dmhdKWRBUlPTv63M4Cy8mQ
+
+
+
+
+--------------------------------
+This email is a service from Mobile Vikings.
+
+
+
+
+
+
+
+
+
+[LZVYPP-LPRDW]=
+
+----==_mimepart_68a85c347ab9_b615787259f
+Content-Type: text/html;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><m=
+eta name=3D"viewport" content=3D"width=3Ddevice-width">
+ =20
+  <title></title>
+
+  <link rel=3D"preconnect" href=3D"https://fonts.gstatic.com">
+  <link href=3D"https://fonts.googleapis.com/css2?family=3DQuicksand&amp;di=
+splay=3Dswap" rel=3D"stylesheet">
+
+ =20
+ =20
+ =20
+ =20
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body lang=3D"en-us" style=3D"width:100%!important; margin:0; padding:0; li=
+ne-height:1.5; font-family:'Quicksand', helvetica, arial, sans-serif; font-=
+size:14px; line-height:1.4; color:#333; -webkit-font-smoothing:antialiased;=
+ mso-line-height-rule:exactly; -ms-text-size-adjust:100%; -webkit-text-size=
+-adjust:100%;">
+
+<div style=3D"display:none!important; opacity:0!important; height:0!importa=
+nt;">
+Hello Rita,We'd love to hear what you think of our customer service. Please=
+ take a moment to answer one simple question by clicking either link below:=
+         How would you rate the support?         =20
+</div>
+
+<table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" class=3D"m=
+j-container" style=3D"background-color:#f5f5f5;width:100%;">
+    <tbody>
+        <tr>
+            <td></td>
+            <td class=3D"mj-container" style=3D"width:660px;padding:0;">
+                <div class=3D"container-outlook-open" data-width=3D"660"></=
+div>
+                <div style=3D"margin:0px auto;max-width:660px;padding:24px =
+0 0;" data-class=3D"">
+                    <table role=3D"presentation" cellpadding=3D"0" cellspac=
+ing=3D"0" style=3D"font-size:0px;width:100%;" align=3D"center" border=3D"0"=
+>
+                        <tbody>
+                            <tr>
+                                <td style=3D"text-align:center;vertical-ali=
+gn:top;direction:ltr;font-size:0px;padding:0px;border-radius:8px;overflow:h=
+idden;">
+                                    <!--[if mso | IE]><table role=3D"presen=
+tation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr>   <td style=
+=3D"width:660px;"><![endif]-->
+                                    <div style=3D"margin:0px auto;max-width=
+:660px;background:#000;">
+                                        <table role=3D"presentation" cellpa=
+dding=3D"0" cellspacing=3D"0" style=3D"font-size:0px;width:100%;background:=
+#000;" align=3D"center" border=3D"0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style=3D"text-align=
+:center;vertical-align:top;direction:ltr;font-size:0px;padding:0px;">
+                                                        <!--[if mso | IE]><=
+table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+">   <tr>   <td style=3D"vertical-align:top;width:660px;"><![endif]-->
+                                                        <div class=3D"mj-co=
+lumn-per-100 outlook-group-fix" style=3D"vertical-align:top;display:inline-=
+block;direction:ltr;font-size:13px;text-align:left;width:100%;">
+                                                            <table role=3D"=
+presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" border=3D"=
+0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                     =20
+                                                                        <td=
+ style=3D"word-wrap:break-word;font-size:0px;padding:16px;" align=3D"center=
+">
+                                                                           =
+ <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+border-collapse:collapse;border-spacing:0px;" align=3D"center" border=3D"0"=
+>
+                                                                           =
+     <tbody>
+                                                                           =
+         <tr>
+                                                                           =
+             <td style=3D"width:170px;"><img alt=3D"" height=3D"100px" src=
+=3D"https://mv-s3-mas-email-content.s3.amazonaws.com/optimizer/dt-4326/logo=
+-mobile-vikings.png" style=3D"border:none;border-radius:0px;display:block;f=
+ont-size:13px;outline:none;text-decoration:none;width:100%;height:100px;" w=
+idth=3D"170"></td>
+                                                                           =
+         </tr>
+                                                                           =
+     </tbody>
+                                                                           =
+ </table>
+                                                                        </t=
+d>
+                                                                     =20
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!--[if mso | IE]><=
+/td></tr></table><![endif]-->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--[if mso | IE]></td></tr><tr><td sty=
+le=3D"width:660px;"><![endif]-->
+                                    <div style=3D"margin:0px auto;max-width=
+:660px;background:#fff;">
+                                        <table role=3D"presentation" cellpa=
+dding=3D"0" cellspacing=3D"0" style=3D"font-size:0px;width:100%;background:=
+#fff;" align=3D"center" border=3D"0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style=3D"text-align=
+:center;vertical-align:top;direction:ltr;font-size:0px;padding:0px 9%;">
+                                                        <!--[if mso | IE]><=
+table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+">   <tr>   <td style=3D"vertical-align:top;width:660px;"><![endif]-->
+                                                        <div class=3D"mj-co=
+lumn-per-100 outlook-group-fix" style=3D"vertical-align:top;display:inline-=
+block;direction:ltr;font-size:13px;text-align:left;width:100%;">
+                                                            <table role=3D"=
+presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" border=3D"=
+0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td=
+ style=3D"word-wrap:break-word;font-size:0px;padding:20px 0px 40px;" align=
+=3D"left">
+                                                                           =
+ <div style=3D"cursor:auto;color:#333;font-family:'Quicksand', helvetica, a=
+rial, sans-serif;font-size:13px;line-height:22px;text-align:left;">
+
+                                                                           =
+   <p dir=3D"ltr">Hello Rita,</p><p dir=3D"ltr">We'd love to hear what you =
+think of our customer service. Please take a moment to answer one simple qu=
+estion by clicking either link below:</p><p dir=3D"ltr"></p><table align=3D=
+"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"border: 10px solid #f8f9f9; padding: 20px; max=
+-width: 640px"> <tbody> <tr> <td> <table align=3D"center" width=3D"100%" bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"margin-block-end: 20px"> <tbody style=3D"width: 100%"> <tr style=3D"wid=
+th: 100%"> <td data-id=3D"__react-email-column"> <p style=3D"font-size: 14p=
+x; line-height: 24px; margin: 0" dir=3D"ltr"> How would you rate the suppor=
+t? </p> </td> </tr> </tbody> </table> <table align=3D"center" width=3D"100%=
+" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" st=
+yle=3D"margin-block-start: 12px; border-spacing: 0 4px"> <tbody style=3D"wi=
+dth: 100%"> <tr style=3D"width: 100%"> <td data-id=3D"__react-email-column"=
+> <a href=3D"https://support.mobilevikings.be/hc/en-us/survey_responses/01K=
+38TGAMWRKQBEGATJXN5ABTD?access_token=3DI1w1dmhdKWRBUlPTv63M4Cy8mQ&amp;ratin=
+g=3D2" style=3D" line-height: 100%; text-decoration: none; display: inline-=
+block; max-width: 100%; border: 1px solid #1f73b7; border-radius: 4px; colo=
+r: #1f73b7; background-color: #fff; padding: 10px 16px 10px 16px; width: 80=
+px; text-align: center; font-size: 18px; " target=3D"_blank"> <span> <!--[i=
+f mso]> <i style=3D"mso-font-width: 400%; mso-text-raise: 15" hidden>&#8202=
+;&#8202;</i> <![endif]--> </span> <span style=3D" max-width: 100%; display:=
+ inline-block; line-height: 120%; mso-padding-alt: 0px; mso-text-raise: 7.5=
+px; ">=F0=9F=91=8D </span> <span> <!--[if mso]> <i style=3D"mso-font-width:=
+ 400%" hidden>&#8202;&#8202;&#8203;</i> <![endif]--> </span> </a> <a href=
+=3D"https://support.mobilevikings.be/hc/en-us/survey_responses/01K38TGAMWRK=
+QBEGATJXN5ABTD?access_token=3DI1w1dmhdKWRBUlPTv63M4Cy8mQ&amp;rating=3D2" st=
+yle=3D" line-height: 100%; text-decoration: none; display: inline-block; ma=
+x-width: 100%; color: #1f73b7; background-color: #fff; padding: 10px 16px 1=
+0px 16px; " target=3D"_blank"> <span> <!--[if mso]> <i style=3D"mso-font-wi=
+dth: 400%; mso-text-raise: 15" hidden>&#8202;&#8202;</i> <![endif]--> </spa=
+n> <span style=3D" max-width: 100%; display: inline-block; line-height: 120=
+%; mso-padding-alt: 0px; mso-text-raise: 7.5px; "> Good, I'm satisfied </sp=
+an> <span> <!--[if mso]> <i style=3D"mso-font-width: 400%" hidden>&#8202;&#=
+8202;&#8203;</i> <![endif]--> </span> </a> </td> </tr> </tbody> </table><ta=
+ble align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" role=3D"presentation" style=3D"margin-block-start: 12px; border-s=
+pacing: 0 4px"> <tbody style=3D"width: 100%"> <tr style=3D"width: 100%"> <t=
+d data-id=3D"__react-email-column"> <a href=3D"https://support.mobileviking=
+s.be/hc/en-us/survey_responses/01K38TGAMWRKQBEGATJXN5ABTD?access_token=3DI1=
+w1dmhdKWRBUlPTv63M4Cy8mQ&amp;rating=3D1" style=3D" line-height: 100%; text-=
+decoration: none; display: inline-block; max-width: 100%; border: 1px solid=
+ #1f73b7; border-radius: 4px; color: #1f73b7; background-color: #fff; paddi=
+ng: 10px 16px 10px 16px; width: 80px; text-align: center; font-size: 18px; =
+" target=3D"_blank"> <span> <!--[if mso]> <i style=3D"mso-font-width: 400%;=
+ mso-text-raise: 15" hidden>&#8202;&#8202;</i> <![endif]--> </span> <span s=
+tyle=3D" max-width: 100%; display: inline-block; line-height: 120%; mso-pad=
+ding-alt: 0px; mso-text-raise: 7.5px; ">=F0=9F=91=8E </span> <span> <!--[if=
+ mso]> <i style=3D"mso-font-width: 400%" hidden>&#8202;&#8202;&#8203;</i> <=
+![endif]--> </span> </a> <a href=3D"https://support.mobilevikings.be/hc/en-=
+us/survey_responses/01K38TGAMWRKQBEGATJXN5ABTD?access_token=3DI1w1dmhdKWRBU=
+lPTv63M4Cy8mQ&amp;rating=3D1" style=3D" line-height: 100%; text-decoration:=
+ none; display: inline-block; max-width: 100%; color: #1f73b7; background-c=
+olor: #fff; padding: 10px 16px 10px 16px; " target=3D"_blank"> <span> <!--[=
+if mso]> <i style=3D"mso-font-width: 400%; mso-text-raise: 15" hidden>&#820=
+2;&#8202;</i> <![endif]--> </span> <span style=3D" max-width: 100%; display=
+: inline-block; line-height: 120%; mso-padding-alt: 0px; mso-text-raise: 7.=
+5px; "> Bad, I'm unsatisfied </span> <span> <!--[if mso]> <i style=3D"mso-f=
+ont-width: 400%" hidden>&#8202;&#8202;&#8203;</i> <![endif]--> </span> </a>=
+ </td> </tr> </tbody> </table> </td> </tr> </tbody> </table>
+
+                                                                           =
+ </div>
+                                                                        </t=
+d>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!--[if mso | IE]><=
+/td></tr></table><![endif]-->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                   =20
+                                    <!--[if mso | IE]></td></tr><tr><td sty=
+le=3D"width:660px;"><![endif]-->
+                                    <div style=3D"margin:0px auto;max-width=
+:660px;background:#f5f5f5;">
+                                        <table role=3D"presentation" cellpa=
+dding=3D"0" cellspacing=3D"0" style=3D"font-size:0px;width:100%;background:=
+#f5f5f5;" align=3D"center" border=3D"0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style=3D"text-align=
+:center;vertical-align:top;direction:ltr;font-size:0px;padding:0px;">
+                                                        <!--[if mso | IE]><=
+table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+">   <tr>   <td style=3D"vertical-align:top;width:660px;"><![endif]-->
+                                                       =20
+                                                        <!--[if mso | IE]><=
+/td><td style=3D"vertical-align:top;width:660px;"><![endif]-->
+                                                        <div class=3D"mj-co=
+lumn-per-100 outlook-group-fix" style=3D"vertical-align:top;display:inline-=
+block;direction:ltr;font-size:13px;text-align:left;width:100%;">
+                                                            <table role=3D"=
+presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" border=3D"=
+0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                     =20
+                                                                        <td=
+ style=3D"word-wrap:break-word;font-size:0px;padding:10px 20px 20px;" align=
+=3D"center">
+                                                                           =
+ <div style=3D"cursor:auto;color:#9b9b9b;font-family:'Quicksand', helvetica=
+, arial, sans-serif;font-size:12px;line-height:2;text-align:center;">=C2=A9=
+ All rights reserved.<br> Mobile Vikings nv, Kempische Steenweg 309/1, 3500=
+ Hasselt, KBO no. 886.946.917<br></div>
+                                                                        </t=
+d>
+                                                                     =20
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!--[if mso | IE]><=
+/td></tr></table><![endif]-->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--[if mso | IE]></td></tr></table><![=
+endif]-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class=3D"container-outlook-close"></div>
+            </td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<span style=3D"color:#FFFFFF" aria-hidden=3D"true" class=3D"zd_encoded_id">=
+[LZVYPP-LPRDW]</span>
+
+
+<div itemscope=3D"" itemtype=3D"http://schema.org/EmailMessage" style=3D"di=
+splay:none">  <div itemprop=3D"action" itemscope=3D"" itemtype=3D"http://sc=
+hema.org/ViewAction">    <link itemprop=3D"url" href=3D"https://support.mob=
+ilevikings.be/hc/requests/3313408">    <meta itemprop=3D"name" content=3D"V=
+iew ticket">  </div></div></body></html>=
+
+----==_mimepart_68a85c347ab9_b615787259f--

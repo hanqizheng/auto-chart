@@ -1,0 +1,448 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:4f8c:b0:1d03:27cf:8dbe with SMTP id he12csp357391njb;
+        Tue, 26 Aug 2025 03:54:18 -0700 (PDT)
+X-Received: by 2002:a05:6402:3552:b0:61c:5cac:293f with SMTP id 4fb4d7f45d1cf-61c5cac2c5bmr6793064a12.6.1756205657870;
+        Tue, 26 Aug 2025 03:54:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756205657; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Xdwv3Wa9j8x/7D62BjGCtn681qaAJsd3hTPlOe6p6xlOMtrHrllVa7YnCBf4nV5nML
+         KGYQwSnUORynkXiGgqsYdfgJ8AkTbXgd/Fpc7DPpAyXXlUzLe6VeTvB7I2Tq2e5eYglO
+         2V2XcjyEsWhdCIGl37n7JUe4L+vQPv/xyT5tIrg1ln9LBBV/tl4jlnTcjNEN0aL7UIKM
+         9mTwuu+ylYc7U2ObryBg0HGk6ixJcc+FeTQGCZagI79d8jA9xvYxQmwT3H3kA2qRiUhD
+         Kubv14DifWcYBFydPV8UmOL+WAB0jlLzR02vPX4ASTohLXgrdEkMoh7l5u+a6WcJWjxw
+         /Rcg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=7sNMu++X/U8DGH+sEUFF2I8cegyPeVQssI8g303Lwk8=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=czhavTzjFILKc+OOCr+H44bR3Z4TXP6B6LkkWUoI9jO/qCOKn/vFTfQf4b864buNlE
+         ojj1X+W4g4urtCT780ll9eXnVLpX9pSZba0CLVIN15aW1nOaQVEfNmOznNvQ/e2w0Fnx
+         9aup3WRx7aa3tMiM+qVYXd6CvQUveBL6k5UAnBGVM3O4aIuH3/cgAlANKtCUb0m+NHHJ
+         Fyd2bZg0zpApA2OGFyHCPsSLueOCwdxwH6QtkwuUnTKZOLfDG8ZHMWfjlimc3USGBhVW
+         b7eFFlnIa0V0NOIDYyzlJlG/S1wIYRaoVEtkKRsZlwZqGmlfyj5OOjA4j4hrDaVi//q/
+         Bkag==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20230601 header.b=JELbXK77;
+       spf=pass (google.com: domain of mama.assia.id@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=mama.assia.id@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <mama.assia.id@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 4fb4d7f45d1cf-61c30cec144sor3116624a12.0.2025.08.26.03.54.17
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Tue, 26 Aug 2025 03:54:17 -0700 (PDT)
+Received-SPF: pass (google.com: domain of mama.assia.id@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20230601 header.b=JELbXK77;
+       spf=pass (google.com: domain of mama.assia.id@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=mama.assia.id@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756205657; x=1756810457; darn=affiliate.bluefocus.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7sNMu++X/U8DGH+sEUFF2I8cegyPeVQssI8g303Lwk8=;
+        b=JELbXK77BL++koGh98s4FMTu2EQe44cyXfEVfpMyUg5/vsGiD3YR8Grb8onkjBeA1O
+         YeVCfe+CZXyANsXxXgVhR9zPVsCQCiSi6UUZkvWJI/Nzq+QZ9xD7VTB9kn0XWncpjKZZ
+         Z/pOsEEflyp5B4XQDWs/lHO1BS+R5nk7MCK4kqO7pS0Ubj+zxcCdrjas5C7tWS9sw61k
+         APYGWWpNx991Vx6HAlqqj+nZKKdQsZkX74xqU0SSBdFrNqmIeenMUQg/eeTtOrdywN5L
+         BdX/zU29jG2Jyz5zk9IHCYNxKZsGOBADdrkxN8HeWb9NEBB/o4BTRG3nLdGgWcAydwKq
+         lmAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756205657; x=1756810457;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7sNMu++X/U8DGH+sEUFF2I8cegyPeVQssI8g303Lwk8=;
+        b=HeV/fLMbMn0DJbu4r4kZIAebN0HuHgSnlpDyU7rK8BRH1GEwosWaiJcex8+8JahEY/
+         165zgrqCGa0BNPjG/HHilxBHHOl41WH8rAzS7o1p8wj/8E0fkXVX2DBJSKcDknSM4P9O
+         vp1B1LTHIx2GIy0ePo6RBFG9EvRm3LL3a+LUh8u6aTraY8GXPFIOMwMw+dLwmpDBKTFP
+         Idfze2Srn5fiHvYFB7CW1gPIjGaYr30WU/jPL8BuWE+ppyiwVcPAGzfVu0vVj6RvO3ej
+         8qA6Mz7+cJNH1O2wX1XGp+8CmGSRq7fofii8xpZtgYvna6SVOAL6NlG0mm+no8pBMCmP
+         sksA==
+X-Gm-Message-State: AOJu0YyN3GkSg19eSRW3CovLnmLCTRo++nDC+9xwCE91saJ8x2FvKQJG
+	vy9C5ascGUDdSIow6cu8ROsATWrb+FYPcJL0OXD3xY1wFQ+RXBfKBIw9uGNIy1cc3cozSImo1V8
+	twJ5hVwkCtHhxOUH7U+hyLS+fsBthHSXFfA7f
+X-Gm-Gg: ASbGnctLsqnYjqIcxU4emGXPmwOAf/sq7wCQd7FOI6j+lTu+tq+LKC2GwOtTlu59CEz
+	3uW75HLhMKrI2bsJUJXt06KjZEnBc6VrnFz9m0MD/taXu94+HbPiZRxZ0xqoCiMDEquAah5jx7V
+	zc0ZTqnglITHv8vh75xvXv87KXrgPll0WYXZtopSRrzv5i9cl9NVCnXh2oG3U+nbq0+ln15gjI4
+	X2LID2sDsKUMp3U7qj6erx4Ho+O7RlolVqCZSyH2K+2UUq54BU=
+X-Google-Smtp-Source: AGHT+IEDX9Ez7b4fPqKJ6igHmlsBUsIGH1on6AY2epCpybuy8bYy/1smJejKahj0FTK5qHCUFtFaXa7Eru4QPAITdB0=
+X-Received: by 2002:a05:6402:2756:b0:617:c1e5:bfa9 with SMTP id
+ 4fb4d7f45d1cf-61c1b9104d2mr11919713a12.33.1756205656872; Tue, 26 Aug 2025
+ 03:54:16 -0700 (PDT)
+References: <mALTTrX9T5OuxwKcXHf6-g@geopod-ismtpd-22>
+In-Reply-To: <mALTTrX9T5OuxwKcXHf6-g@geopod-ismtpd-22>
+From: Assia Telha <mama.assia.id@gmail.com>
+Date: Tue, 26 Aug 2025 12:54:05 +0200
+X-Gm-Features: Ac12FXyddrNUFhkifp3YWpaTNI_uYksFvdx6-GiW9f_2cAMRPQ5s9Ofg9dF0pv4
+Message-ID: <CAK2Z1+T_so33=kpwksSp3LMMbuA3k42XJZ0v63OmCRBXsBaa2w@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_This_Week_Only=3A_SilkSilky_Deals_=E2=80=93_Up_to_70=25_Of?=
+	=?UTF-8?Q?f=21?=
+To: rita@affiliate.bluefocus.com
+Content-Type: multipart/alternative; boundary="000000000000549e48063d427e97"
+MIME-Version: 1.0
+
+--000000000000549e48063d427e97
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello Rita,
+
+Thank you for this collaboration proposal, which I=E2=80=99m happy to accep=
+t. Would
+it be possible to receive some products in order to promote them?
+
+Thanks, and speak soon!
+
+Assia
+
+Le lun. 25 ao=C3=BBt 2025 =C3=A0 14:14, rita@affiliate.bluefocus.com <
+notifications@outreach.impact.com> a =C3=A9crit :
+
+>
+>
+> Hi team,
+>
+>
+> Hope you're doing well. I'm Rita, affiliate marketing manager at BlueFocu=
+s
+> representing SilkSilky
+>
+>
+> Category: Women's wear
+>
+> Commission:10%-20%
+>
+> Impact ID: 22953
+>
+> Website: https://silksilky.com/
+>
+>
+> We=E2=80=99re excited to share our latest campaigns with you, which are *=
+only
+> available this week* and would be a perfect fit for your audience.
+>
+> *Campaign Details*
+>
+> *Discount Code: SLS10*
+>
+> *Description: Silksilky Save $10 on orders over $109*
+>
+> *URL: **https://silksilky.com/collections/best-seller*
+> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2B=
+K2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-=
+3D-3DOuIB_ZRbUrm9TIiGKhb6BH58prDFmyg0z9wIiNYdI9oxftqyZUJMy82jBZM5fuzMvPAu1Z=
+X0lSRvJ0tkSRCdfQmD0jE4dDaI9mZKtL3zKts7gDEj8er5kANZV7BtCHiGa-2FB5IP-2BrhufrF=
+Om2u4HUmChTEraDGZXSvZRjkFM3-2F9REyxvmlfQeQuqtC07nbjkTjkBm-2F2FpLMT1HnQQfq8j=
+9dgNFKD5ElgEZ9jV73DFMoDHTVmJJPaEonKT1GOKjyHWLAcrYffkmTe-2FgF7I-2F0GoCHiLi-2=
+Bu9-2BhldIvfbUrd3gZaBiD9w0zoelLxCjmt5Ft1OoSTh9o5FoakjFDX-2Be7HPUxzlC9qy-2Bd=
+rT2o0snTE7QqLy5f3coN5txxe9DnQ-2FgXo4P82UJMiCeH56xljpQkRZkdeSCs2P5XqD403TvIL=
+tG2tP-2B5UC0yOAPMyzYGd5gohGVaewYEsdieZLObCNGNm-2B-2BA-2Fb8qiDKFqWwr5e5Y4HvO=
+BmIviJs2eDU0HWZYyodGkaoelT9nX6izdDFb9MxrJ0c7ekqWK04JBgELMCeZE-2Fyaabey8SR08=
+R6OxCDCuA-2F7GVkXguJN-2FSHy0jy-2FVXY1WJEymr0bWt720BeNcS-2BA-2F1Xfd3PshXMXHt=
+aETdOfzI3PuQa7KT9f09nCpdxrWYcQ-2FlAORzx8qtj01TA-2B1-2BUf5JDd1ojrXU9ftnMZ25x=
+SOzgFPG3U1-2BxmEnL6R0UFikdJc8Pa07dEjwxBeiNrPbGHO4-2FgCNNJ03pMobe-2FAW90VxN4=
+NG3zeVwm4a-2B05uUw-2Fwdm09bsLTTybKJp5hyx9YoX9TxWU2NmYtTqQpi6S-2B0VL4mTSmSTy=
+MrWko9M7oxf2VuvGKIRyu1FYgSPmQZf7GZ-2BXB2kPHXf-2Fbx-2BHOcYKgwyt8nsi1Wuyqf9jb=
+Jgm2m6uCfDz0jrkiXRyntQwBxoCzGbQO-2FAuZGaUnaUqmOP9tHUNjBOIS51AUNDQ-2Bac-2FLj=
+GdFF5T5KuP78vWOHIrxNkM2UrlW0-2BTUORYUD-2FlGoJt-2BExSdxZCvQwQcqj9Cj65HEFpC-2=
+FzKpLM-2FhFLOry6th1L1aNe-2BZyStD-2BgA0-3D>
+>
+> *Validity: 8/20-8/31*
+>
+>
+> *Discount Code: SLS30*
+>
+> *Description: Silksilky Save $30 on orders over $199*
+>
+> *URL: **https://silksilky.com/collections/best-seller*
+> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2B=
+K2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-=
+3D-3D-Njo_ZRbUrm9TIiGKhb6BH58prDFmyg0z9wIiNYdI9oxftqyZUJMy82jBZM5fuzMvPAu1Z=
+X0lSRvJ0tkSRCdfQmD0jE4dDaI9mZKtL3zKts7gDEj8er5kANZV7BtCHiGa-2FB5IP-2BrhufrF=
+Om2u4HUmChTEraDGZXSvZRjkFM3-2F9REyxvmlfQeQuqtC07nbjkTjkBm-2F2FpLMT1HnQQfq8j=
+9dgNFKD5ElgEZ9jV73DFMoDHTVmJJPaEonKT1GOKjyHWLAcrYffkmTe-2FgF7I-2F0GoCHiLi-2=
+Bu9-2BhldIvfbUrd3gZaBiD9w0zoelLxCjmt5Ft1OoSTh9o5FoakjFDX-2Be7HPUxzlC9qy-2Bd=
+rT2o0snTE7QqLy5f3coN5txxe9DnQ-2FgXo4P82UJMiCeH56xljpQkRZkdeSCs2P5XqD403TvIL=
+tG2tP-2B5UC0yOAPMyzYGd5gohGVaewYEsdieZLObCNGNm-2B-2BA-2Fb8qiDKFqWwr5e5Y4HvO=
+BmIviJs2eDU0HWZYyodGkaoelT9nX6izdDFb9MxrJ0c7ekqWK04JBgELMCeZE-2Fyaabey8SR08=
+R6OxCDCuA-2F7GVkXguJN-2FSHy0jy-2FVXY1WJEymr0bWt720BeNcS-2BA-2F1Xfd3PshXMXHt=
+aETdOfzI3PuQa7KT9f09nCpdxrWYcQ-2FlAORzx8qtj01TA-2B1-2BUf5JDd1ojrXU9ftnMZ25x=
+SOzgFPG3U1-2BxmEnL6R0UFikdJc8Pa07dEjwxBeiNrPbGHO4-2FgCNNJ03pMobe-2FAW90VxN4=
+NG3zeVwm4a-2B05uUw-2Fwdm09bsLTTybKJp5hyx9YoX9TxWU2NmYtTqQpi6S-2B0VL4mTSmSTy=
+MrWko9M7oxf2VuvGKIRyu1FYgSPmQZf7GZ-2BXB2kPHXf-2Fbx-2BHOcYKgwyt8nsi1Wuyqf9jb=
+Jgm2m6uCfDz0jrkiXR3w-2BRZCaQJ-2Bv5IxypThl8ijg-2FP9mONZryv4p8qtwRUiVpZMpEhBU=
+4TccVifONG0F5pNHLTKT9h0ZIFD6gcwnNfFByAyefy2rNUM37sJtFyFH97msl-2FTEGdOT8XS8Z=
+vo2HMbOgb8qb3yJi2QQomKSmcM-3D>
+>
+> *Validity: 8/20-8/31*
+>
+>
+> *Campaign Name**=EF=BC=9A**Silk Apparel for Women*
+> *Description: Silk Apparel for Women**=EF=BC=9A**save up to 70%**=EF=BC=
+=81*
+>
+> *URL: **https://silksilky.com/collections/silk-apparel-for-women*
+> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2B=
+K2XdT48tQmztTqvWNg5JdkTQOr-2FPlS5dgVM8Y7eBHcWWjSSLQxRfBQyhyLjHagwC1lUr0s5BY=
+rArQhMy9kwuP5MeAlc-3DAabm_ZRbUrm9TIiGKhb6BH58prDFmyg0z9wIiNYdI9oxftqyZUJMy8=
+2jBZM5fuzMvPAu1ZX0lSRvJ0tkSRCdfQmD0jE4dDaI9mZKtL3zKts7gDEj8er5kANZV7BtCHiGa=
+-2FB5IP-2BrhufrFOm2u4HUmChTEraDGZXSvZRjkFM3-2F9REyxvmlfQeQuqtC07nbjkTjkBm-2=
+F2FpLMT1HnQQfq8j9dgNFKD5ElgEZ9jV73DFMoDHTVmJJPaEonKT1GOKjyHWLAcrYffkmTe-2Fg=
+F7I-2F0GoCHiLi-2Bu9-2BhldIvfbUrd3gZaBiD9w0zoelLxCjmt5Ft1OoSTh9o5FoakjFDX-2B=
+e7HPUxzlC9qy-2BdrT2o0snTE7QqLy5f3coN5txxe9DnQ-2FgXo4P82UJMiCeH56xljpQkRZkde=
+SCs2P5XqD403TvILtG2tP-2B5UC0yOAPMyzYGd5gohGVaewYEsdieZLObCNGNm-2B-2BA-2Fb8q=
+iDKFqWwr5e5Y4HvOBmIviJs2eDU0HWZYyodGkaoelT9nX6izdDFb9MxrJ0c7ekqWK04JBgELMCe=
+ZE-2Fyaabey8SR08R6OxCDCuA-2F7GVkXguJN-2FSHy0jy-2FVXY1WJEymr0bWt720BeNcS-2BA=
+-2F1Xfd3PshXMXHtaETdOfzI3PuQa7KT9f09nCpdxrWYcQ-2FlAORzx8qtj01TA-2B1-2BUf5JD=
+d1ojrXU9ftnMZ25xSOzgFPG3U1-2BxmEnL6R0UFikdJc8Pa07dEjwxBeiNrPbGHO4-2FgCNNJ03=
+pMobe-2FAW90VxN4NG3zeVwm4a-2B05uUw-2Fwdm09bsLTTybKJp5hyx9YoX9TxWU2NmYtTqQpi=
+6S-2B0VL4mTSmSTyMrWko9M7oxf2VuvGKIRyu1FYgSPmQZf7GZ-2BXB2kPHXf-2Fbx-2BHOcYKg=
+wyt8nsi1Wuyqf9jbJgm2m6uCfDz0jrkiXR3sbngqgUU06au-2B-2B7WQxtmokWGLSYUQHm7yqSZ=
+gp8k-2ByAxGVw-2BYZwy7exteEeqB42NeffQ4tA-2Bn5S3CZ1u6m3Ro70xJRsLFqxutgWsu4Tt2=
+0NFbZ8UoysEnHDow9-2FACjfpjLVCfjiiXRvjOouLnJscM-3D>
+>
+> *Validity: 8/20-8/31*
+>
+>
+> If you need any support, feel free to reach out. Please also send over
+> your latest media kit*, rate card*, and details regarding *available
+> placements or exposure opportunities.*
+>
+>
+> We're open to the following types of partnerships:
+>
+>    - paid placement for additional exposure
+>    - CPAi for additional exposure
+>    - exclusive code for additional exposure
+>
+>
+> Best regards,
+>
+> Rita
+>
+> Unsubscribe
+> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2B=
+K2XdTxbxD4UJGmtW8DAxp3YXsDa7MPMCTETs3WSo52RM6Q9Hs8pDVfvfmNT63AenKOog8JaiDnd=
+XVwiwAsDekYhF4jhLbY1vi78rOk8EqJkeFGzHRTDBrz6RGkiGmJWjrWf8kL1ivwtkVjaJdwBzQe=
+H4F0YBECEq91tpSiRTbuvGckDP36BW3jd1hwYYDo-2BjFw-2BDKURZWs17IRAMlJiXVsE3mQ9QD=
+0z03O7nSEkD3Mpgn-2BCMggEs17mNNfIbCVY6pHYM-2FK41oLd6RxHvRq7EJry4DMVEjv0yOxc-=
+2B-2FMwhMDV9x02IbVWYtdqARb1xXhjeu9VOrQ-3D-3Def0k_ZRbUrm9TIiGKhb6BH58prDFmyg=
+0z9wIiNYdI9oxftqyZUJMy82jBZM5fuzMvPAu1ZX0lSRvJ0tkSRCdfQmD0jE4dDaI9mZKtL3zKt=
+s7gDEj8er5kANZV7BtCHiGa-2FB5IP-2BrhufrFOm2u4HUmChTEraDGZXSvZRjkFM3-2F9REyxv=
+mlfQeQuqtC07nbjkTjkBm-2F2FpLMT1HnQQfq8j9dgNFKD5ElgEZ9jV73DFMoDHTVmJJPaEonKT=
+1GOKjyHWLAcrYffkmTe-2FgF7I-2F0GoCHiLi-2Bu9-2BhldIvfbUrd3gZaBiD9w0zoelLxCjmt=
+5Ft1OoSTh9o5FoakjFDX-2Be7HPUxzlC9qy-2BdrT2o0snTE7QqLy5f3coN5txxe9DnQ-2FgXo4=
+P82UJMiCeH56xljpQkRZkdeSCs2P5XqD403TvILtG2tP-2B5UC0yOAPMyzYGd5gohGVaewYEsdi=
+eZLObCNGNm-2B-2BA-2Fb8qiDKFqWwr5e5Y4HvOBmIviJs2eDU0HWZYyodGkaoelT9nX6izdDFb=
+9MxrJ0c7ekqWK04JBgELMCeZE-2Fyaabey8SR08R6OxCDCuA-2F7GVkXguJN-2FSHy0jy-2FVXY=
+1WJEymr0bWt720BeNcS-2BA-2F1Xfd3PshXMXHtaETdOfzI3PuQa7KT9f09nCpdxrWYcQ-2FlAO=
+Rzx8qtj01TA-2B1-2BUf5JDd1ojrXU9ftnMZ25xSOzgFPG3U1-2BxmEnL6R0UFikdJc8Pa07dEj=
+wxBeiNrPbGHO4-2FgCNNJ03pMobe-2FAW90VxN4NG3zeVwm4a-2B05uUw-2Fwdm09bsLTTybKJp=
+5hyx9YoX9TxWU2NmYtTqQpi6S-2B0VL4mTSmSTyMrWko9M7oxf2VuvGKIRyu1FYgSPmQZf7GZ-2=
+BXB2kPHXf-2Fbx-2BHOcYKgwyt8nsi1Wuyqf9jbJgm2m6uCfDz0jrkiXR7rRF1s-2BvbuMG283M=
+1nR3oGVMLjgRIcLkTKaanmHddsLE3mzOxtMPu8BXYugXCAyKBDcMC-2BykJ4yGTFePJh78h5RlH=
+L0zINn3R9UtKVAenoRlJkmWw3ksc2xOWVD7ieAWOe-2F-2B2ZV4QE7wKfd0rx-2B-2F5g-3D>
+>
+
+--000000000000549e48063d427e97
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><d=
+iv dir=3D"ltr">Hello Rita,&nbsp;<div><br></div><div>Thank you for this coll=
+aboration proposal, which I=E2=80=99m happy to accept. Would it be possible=
+ to receive some products in order to promote them?&nbsp;</div><div><br></d=
+iv><div>Thanks, and speak soon!</div><div><br></div><div>Assia&nbsp;</div><=
+/div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" =
+class=3D"gmail_attr">Le&nbsp;lun. 25 ao=C3=BBt 2025 =C3=A0&nbsp;14:14, <a h=
+ref=3D"mailto:rita@affiliate.bluefocus.com">rita@affiliate.bluefocus.com</a=
+> &lt;<a href=3D"mailto:notifications@outreach.impact.com">notifications@ou=
+treach.impact.com</a>&gt; a =C3=A9crit&nbsp;:<br></div><blockquote class=3D=
+"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
+04,204,204);padding-left:1ex"><div>
+
+
+<p><img src=3D"https://storage.googleapis.com/outreach-files/cadd1487-d7e5-=
+49ec-a7b5-dcde19546668" style=3D"width: 717px; display: inline-block; verti=
+cal-align: bottom; margin-right: 5px; margin-left: 5px; text-align: center;=
+"><br><br><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,=
+helvetica,sans-serif">Hi team,&nbsp;<br></span></p><p><span style=3D"color:=
+rgb(0,0,0);font-family:arial,helvetica,sans-serif"><br></span><span style=
+=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"=
+>Hope you're doing well. I'm Rita, affiliate marketing manager at BlueFocus=
+ representing SilkSilky</span></p><p><span style=3D"color:rgb(0,0,0);font-f=
+amily:arial,helvetica,sans-serif"><br></span><span style=3D"font-size:18px;=
+color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">Category: Women's =
+wear</span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-famil=
+y:arial,helvetica,sans-serif">Commission:10%-20%</span></p><p><span style=
+=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"=
+>Impact ID: 22953</span><span style=3D"font-size:18px;color:rgb(0,0,0);font=
+-family:arial,helvetica,sans-serif">&nbsp;</span></p><p><span style=3D"font=
+-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">Website=
+: <a href=3D"https://silksilky.com/" target=3D"_blank">https://silksilky.co=
+m/</a></span><span style=3D"font-family:arial,helvetica,sans-serif"><br></s=
+pan></p><p><span style=3D"color:rgb(0,0,0);font-family:arial,helvetica,sans=
+-serif"></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-f=
+amily:arial,helvetica,sans-serif"><br></span></p><p><span style=3D"font-siz=
+e:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">We=E2=80=99=
+re excited to share our latest campaigns with you, which are&nbsp;<strong><=
+span style=3D"background-color:rgb(247,218,100)">only available this week</=
+span></strong> and would be a perfect fit for your audience.<br><br><strong=
+>Campaign Details</strong></span><br><br></p><p><span style=3D"font-size:18=
+px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"><strong>Discoun=
+t Code: <span style=3D"background-color:rgb(247,218,100)">SLS10</span></str=
+ong></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-famil=
+y:arial,helvetica,sans-serif"><strong>Description: Silksilky Save $10 on or=
+ders over $109</strong></span></p><p><span style=3D"font-size:18px;color:rg=
+b(0,0,0);font-family:arial,helvetica,sans-serif"><strong>URL:&nbsp;</strong=
+><a href=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzx=
+R7RPOX-2BK2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eK=
+H25Qiugg-3D-3DOuIB_ZRbUrm9TIiGKhb6BH58prDFmyg0z9wIiNYdI9oxftqyZUJMy82jBZM5f=
+uzMvPAu1ZX0lSRvJ0tkSRCdfQmD0jE4dDaI9mZKtL3zKts7gDEj8er5kANZV7BtCHiGa-2FB5IP=
+-2BrhufrFOm2u4HUmChTEraDGZXSvZRjkFM3-2F9REyxvmlfQeQuqtC07nbjkTjkBm-2F2FpLMT=
+1HnQQfq8j9dgNFKD5ElgEZ9jV73DFMoDHTVmJJPaEonKT1GOKjyHWLAcrYffkmTe-2FgF7I-2F0=
+GoCHiLi-2Bu9-2BhldIvfbUrd3gZaBiD9w0zoelLxCjmt5Ft1OoSTh9o5FoakjFDX-2Be7HPUxz=
+lC9qy-2BdrT2o0snTE7QqLy5f3coN5txxe9DnQ-2FgXo4P82UJMiCeH56xljpQkRZkdeSCs2P5X=
+qD403TvILtG2tP-2B5UC0yOAPMyzYGd5gohGVaewYEsdieZLObCNGNm-2B-2BA-2Fb8qiDKFqWw=
+r5e5Y4HvOBmIviJs2eDU0HWZYyodGkaoelT9nX6izdDFb9MxrJ0c7ekqWK04JBgELMCeZE-2Fya=
+abey8SR08R6OxCDCuA-2F7GVkXguJN-2FSHy0jy-2FVXY1WJEymr0bWt720BeNcS-2BA-2F1Xfd=
+3PshXMXHtaETdOfzI3PuQa7KT9f09nCpdxrWYcQ-2FlAORzx8qtj01TA-2B1-2BUf5JDd1ojrXU=
+9ftnMZ25xSOzgFPG3U1-2BxmEnL6R0UFikdJc8Pa07dEjwxBeiNrPbGHO4-2FgCNNJ03pMobe-2=
+FAW90VxN4NG3zeVwm4a-2B05uUw-2Fwdm09bsLTTybKJp5hyx9YoX9TxWU2NmYtTqQpi6S-2B0V=
+L4mTSmSTyMrWko9M7oxf2VuvGKIRyu1FYgSPmQZf7GZ-2BXB2kPHXf-2Fbx-2BHOcYKgwyt8nsi=
+1Wuyqf9jbJgm2m6uCfDz0jrkiXRyntQwBxoCzGbQO-2FAuZGaUnaUqmOP9tHUNjBOIS51AUNDQ-=
+2Bac-2FLjGdFF5T5KuP78vWOHIrxNkM2UrlW0-2BTUORYUD-2FlGoJt-2BExSdxZCvQwQcqj9Cj=
+65HEFpC-2FzKpLM-2FhFLOry6th1L1aNe-2BZyStD-2BgA0-3D" target=3D"_blank"><span=
+><strong>https://silksilky.com/collections/best-seller</strong></span></a><=
+/span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:ari=
+al,helvetica,sans-serif"><strong>Validity: 8/20-8/31</strong></span></p><p>=
+<span style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,=
+sans-serif"><br></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0=
+);font-family:arial,helvetica,sans-serif"><strong>Discount Code: <span styl=
+e=3D"background-color:rgb(247,218,100)">SLS30</span></strong></span></p><p>=
+<span style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,=
+sans-serif"><strong>Description: Silksilky Save $30 on orders over $199</st=
+rong></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);font-fami=
+ly:arial,helvetica,sans-serif"><strong>URL:&nbsp;</strong><a href=3D"https:=
+//u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK2XdT48tQ=
+mztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-3D-3D-Njo=
+_ZRbUrm9TIiGKhb6BH58prDFmyg0z9wIiNYdI9oxftqyZUJMy82jBZM5fuzMvPAu1ZX0lSRvJ0t=
+kSRCdfQmD0jE4dDaI9mZKtL3zKts7gDEj8er5kANZV7BtCHiGa-2FB5IP-2BrhufrFOm2u4HUmC=
+hTEraDGZXSvZRjkFM3-2F9REyxvmlfQeQuqtC07nbjkTjkBm-2F2FpLMT1HnQQfq8j9dgNFKD5E=
+lgEZ9jV73DFMoDHTVmJJPaEonKT1GOKjyHWLAcrYffkmTe-2FgF7I-2F0GoCHiLi-2Bu9-2Bhld=
+IvfbUrd3gZaBiD9w0zoelLxCjmt5Ft1OoSTh9o5FoakjFDX-2Be7HPUxzlC9qy-2BdrT2o0snTE=
+7QqLy5f3coN5txxe9DnQ-2FgXo4P82UJMiCeH56xljpQkRZkdeSCs2P5XqD403TvILtG2tP-2B5=
+UC0yOAPMyzYGd5gohGVaewYEsdieZLObCNGNm-2B-2BA-2Fb8qiDKFqWwr5e5Y4HvOBmIviJs2e=
+DU0HWZYyodGkaoelT9nX6izdDFb9MxrJ0c7ekqWK04JBgELMCeZE-2Fyaabey8SR08R6OxCDCuA=
+-2F7GVkXguJN-2FSHy0jy-2FVXY1WJEymr0bWt720BeNcS-2BA-2F1Xfd3PshXMXHtaETdOfzI3=
+PuQa7KT9f09nCpdxrWYcQ-2FlAORzx8qtj01TA-2B1-2BUf5JDd1ojrXU9ftnMZ25xSOzgFPG3U=
+1-2BxmEnL6R0UFikdJc8Pa07dEjwxBeiNrPbGHO4-2FgCNNJ03pMobe-2FAW90VxN4NG3zeVwm4=
+a-2B05uUw-2Fwdm09bsLTTybKJp5hyx9YoX9TxWU2NmYtTqQpi6S-2B0VL4mTSmSTyMrWko9M7o=
+xf2VuvGKIRyu1FYgSPmQZf7GZ-2BXB2kPHXf-2Fbx-2BHOcYKgwyt8nsi1Wuyqf9jbJgm2m6uCf=
+Dz0jrkiXR3w-2BRZCaQJ-2Bv5IxypThl8ijg-2FP9mONZryv4p8qtwRUiVpZMpEhBU4TccVifON=
+G0F5pNHLTKT9h0ZIFD6gcwnNfFByAyefy2rNUM37sJtFyFH97msl-2FTEGdOT8XS8Zvo2HMbOgb=
+8qb3yJi2QQomKSmcM-3D" target=3D"_blank"><span><strong>https://silksilky.com=
+/collections/best-seller</strong></span></a></span></p><p><span style=3D"fo=
+nt-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"><stro=
+ng>Validity: 8/20-8/31</strong></span></p><p><span style=3D"font-size:18px;=
+color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"><br><strong>Campai=
+gn Name</strong></span><span style=3D"font-size:18px;color:rgb(0,0,0);font-=
+family:arial,helvetica,sans-serif"><strong>=EF=BC=9A</strong></span><span s=
+tyle=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-se=
+rif"><strong><span style=3D"background-color:rgb(247,218,100)">Silk Apparel=
+ for Women</span></strong><br><strong>Description: Silk Apparel for Women</=
+strong></span><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:ar=
+ial,helvetica,sans-serif"><strong>=EF=BC=9A</strong></span><span style=3D"f=
+ont-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"><str=
+ong><span style=3D"background-color:rgb(247,218,100)">save up to 70%</span>=
+</strong></span><span style=3D"font-size:18px;color:rgb(0,0,0);font-family:=
+arial,helvetica,sans-serif"><strong><span style=3D"background-color:rgb(247=
+,218,100)">=EF=BC=81</span></strong></span></p><p><span style=3D"font-size:=
+18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"><strong>URL:&=
+nbsp;</strong><a href=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du=
+001.B8VMPMOzxR7RPOX-2BK2XdT48tQmztTqvWNg5JdkTQOr-2FPlS5dgVM8Y7eBHcWWjSSLQxR=
+fBQyhyLjHagwC1lUr0s5BYrArQhMy9kwuP5MeAlc-3DAabm_ZRbUrm9TIiGKhb6BH58prDFmyg0=
+z9wIiNYdI9oxftqyZUJMy82jBZM5fuzMvPAu1ZX0lSRvJ0tkSRCdfQmD0jE4dDaI9mZKtL3zKts=
+7gDEj8er5kANZV7BtCHiGa-2FB5IP-2BrhufrFOm2u4HUmChTEraDGZXSvZRjkFM3-2F9REyxvm=
+lfQeQuqtC07nbjkTjkBm-2F2FpLMT1HnQQfq8j9dgNFKD5ElgEZ9jV73DFMoDHTVmJJPaEonKT1=
+GOKjyHWLAcrYffkmTe-2FgF7I-2F0GoCHiLi-2Bu9-2BhldIvfbUrd3gZaBiD9w0zoelLxCjmt5=
+Ft1OoSTh9o5FoakjFDX-2Be7HPUxzlC9qy-2BdrT2o0snTE7QqLy5f3coN5txxe9DnQ-2FgXo4P=
+82UJMiCeH56xljpQkRZkdeSCs2P5XqD403TvILtG2tP-2B5UC0yOAPMyzYGd5gohGVaewYEsdie=
+ZLObCNGNm-2B-2BA-2Fb8qiDKFqWwr5e5Y4HvOBmIviJs2eDU0HWZYyodGkaoelT9nX6izdDFb9=
+MxrJ0c7ekqWK04JBgELMCeZE-2Fyaabey8SR08R6OxCDCuA-2F7GVkXguJN-2FSHy0jy-2FVXY1=
+WJEymr0bWt720BeNcS-2BA-2F1Xfd3PshXMXHtaETdOfzI3PuQa7KT9f09nCpdxrWYcQ-2FlAOR=
+zx8qtj01TA-2B1-2BUf5JDd1ojrXU9ftnMZ25xSOzgFPG3U1-2BxmEnL6R0UFikdJc8Pa07dEjw=
+xBeiNrPbGHO4-2FgCNNJ03pMobe-2FAW90VxN4NG3zeVwm4a-2B05uUw-2Fwdm09bsLTTybKJp5=
+hyx9YoX9TxWU2NmYtTqQpi6S-2B0VL4mTSmSTyMrWko9M7oxf2VuvGKIRyu1FYgSPmQZf7GZ-2B=
+XB2kPHXf-2Fbx-2BHOcYKgwyt8nsi1Wuyqf9jbJgm2m6uCfDz0jrkiXR3sbngqgUU06au-2B-2B=
+7WQxtmokWGLSYUQHm7yqSZgp8k-2ByAxGVw-2BYZwy7exteEeqB42NeffQ4tA-2Bn5S3CZ1u6m3=
+Ro70xJRsLFqxutgWsu4Tt20NFbZ8UoysEnHDow9-2FACjfpjLVCfjiiXRvjOouLnJscM-3D" ta=
+rget=3D"_blank"><span><strong>https://silksilky.com/collections/silk-appare=
+l-for-women</strong></span></a></span></p><p><span style=3D"font-size:18px;=
+color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"><strong>Validity: =
+8/20-8/31</strong></span></p><p><span style=3D"font-size:18px;color:rgb(0,0=
+,0);font-family:arial,helvetica,sans-serif"><br></span></p><p><span style=
+=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif"=
+>If you need any support, feel free to reach out. Please also send over you=
+r latest media kit<strong>, rate card</strong>, and details regarding <stro=
+ng>available placements or exposure opportunities.</strong></span></p><p><s=
+pan style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sa=
+ns-serif"><br></span></p><p><span style=3D"font-size:18px;color:rgb(0,0,0);=
+font-family:arial,helvetica,sans-serif">We're open to the following types o=
+f partnerships:</span></p><ul><li style=3D"font-size:18px;color:rgb(0,0,0);=
+font-family:arial,helvetica,sans-serif">paid placement for additional expos=
+ure</li><li style=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helv=
+etica,sans-serif">CPAi for additional exposure</li><li style=3D"font-size:1=
+8px;color:rgb(0,0,0);font-family:arial,helvetica,sans-serif">exclusive code=
+ for additional exposure</li></ul><p><span style=3D"font-size:18px;color:rg=
+b(0,0,0);font-family:arial,helvetica,sans-serif"><br></span></p><p><span st=
+yle=3D"font-size:18px;color:rgb(0,0,0);font-family:arial,helvetica,sans-ser=
+if">Best regards,</span></p><p><span style=3D"font-size:18px;color:rgb(0,0,=
+0);font-family:arial,helvetica,sans-serif">Rita</span></p><div><br><a href=
+=3D"https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2=
+BK2XdTxbxD4UJGmtW8DAxp3YXsDa7MPMCTETs3WSo52RM6Q9Hs8pDVfvfmNT63AenKOog8JaiDn=
+dXVwiwAsDekYhF4jhLbY1vi78rOk8EqJkeFGzHRTDBrz6RGkiGmJWjrWf8kL1ivwtkVjaJdwBzQ=
+eH4F0YBECEq91tpSiRTbuvGckDP36BW3jd1hwYYDo-2BjFw-2BDKURZWs17IRAMlJiXVsE3mQ9Q=
+D0z03O7nSEkD3Mpgn-2BCMggEs17mNNfIbCVY6pHYM-2FK41oLd6RxHvRq7EJry4DMVEjv0yOxc=
+-2B-2FMwhMDV9x02IbVWYtdqARb1xXhjeu9VOrQ-3D-3Def0k_ZRbUrm9TIiGKhb6BH58prDFmy=
+g0z9wIiNYdI9oxftqyZUJMy82jBZM5fuzMvPAu1ZX0lSRvJ0tkSRCdfQmD0jE4dDaI9mZKtL3zK=
+ts7gDEj8er5kANZV7BtCHiGa-2FB5IP-2BrhufrFOm2u4HUmChTEraDGZXSvZRjkFM3-2F9REyx=
+vmlfQeQuqtC07nbjkTjkBm-2F2FpLMT1HnQQfq8j9dgNFKD5ElgEZ9jV73DFMoDHTVmJJPaEonK=
+T1GOKjyHWLAcrYffkmTe-2FgF7I-2F0GoCHiLi-2Bu9-2BhldIvfbUrd3gZaBiD9w0zoelLxCjm=
+t5Ft1OoSTh9o5FoakjFDX-2Be7HPUxzlC9qy-2BdrT2o0snTE7QqLy5f3coN5txxe9DnQ-2FgXo=
+4P82UJMiCeH56xljpQkRZkdeSCs2P5XqD403TvILtG2tP-2B5UC0yOAPMyzYGd5gohGVaewYEsd=
+ieZLObCNGNm-2B-2BA-2Fb8qiDKFqWwr5e5Y4HvOBmIviJs2eDU0HWZYyodGkaoelT9nX6izdDF=
+b9MxrJ0c7ekqWK04JBgELMCeZE-2Fyaabey8SR08R6OxCDCuA-2F7GVkXguJN-2FSHy0jy-2FVX=
+Y1WJEymr0bWt720BeNcS-2BA-2F1Xfd3PshXMXHtaETdOfzI3PuQa7KT9f09nCpdxrWYcQ-2FlA=
+ORzx8qtj01TA-2B1-2BUf5JDd1ojrXU9ftnMZ25xSOzgFPG3U1-2BxmEnL6R0UFikdJc8Pa07dE=
+jwxBeiNrPbGHO4-2FgCNNJ03pMobe-2FAW90VxN4NG3zeVwm4a-2B05uUw-2Fwdm09bsLTTybKJ=
+p5hyx9YoX9TxWU2NmYtTqQpi6S-2B0VL4mTSmSTyMrWko9M7oxf2VuvGKIRyu1FYgSPmQZf7GZ-=
+2BXB2kPHXf-2Fbx-2BHOcYKgwyt8nsi1Wuyqf9jbJgm2m6uCfDz0jrkiXR7rRF1s-2BvbuMG283=
+M1nR3oGVMLjgRIcLkTKaanmHddsLE3mzOxtMPu8BXYugXCAyKBDcMC-2BykJ4yGTFePJh78h5Rl=
+HL0zINn3R9UtKVAenoRlJkmWw3ksc2xOWVD7ieAWOe-2F-2B2ZV4QE7wKfd0rx-2B-2F5g-3D" =
+target=3D"_blank"> Unsubscribe</a></div><img src=3D"https://u29708799.ct.se=
+ndgrid.net/wf/open?upn=3Du001.fv8DR-2B3DHC-2BO9CeYT7G0O-2BByOUdegpVD6deFi05=
+XIG-2FaBB1BKYoj7NWH7KVAbFKW6tgDf-2FzsTd6yOCamIvAqiaqi-2BHuMpB4I56g3UZxZYZ53=
+q-2FAkqYXP-2BF-2FsQqCTzmPLl0ViEvCEVkKiGXPGGq04st0SAG-2BTIRbNmwTlhIs4xPBpbQG=
+M6ZMJoECjHwNT-2BCtTKu3Rnnby62IZViuojxnOGR9lTBcbFfR0HuqVkA-2BzX2YtJmeSoCtMbO=
+gAk2Zm7asW-2Br6Jhe05HB3M2-2FY1C1TWyND8nohbggkTvTyi2So8oQf1TWqhI8Lgwf06KGLFs=
+RNkulVIQYmBMQlirQel-2FroG4lhkgAzcIa8-2FhE093c-2BCffssLe1ko9HbI86qmJN5zmd4yZ=
+Wo5ceKPYiNIokoVDjcBr17C8MIc7-2BIM9ajUp2CNR-2Bm-2BP-2BB7Xen3hDUnOpk2LU9YdQXb=
+xiAWao6-2FVrhtETQh-2BhnMo60Z-2Bg6W7sV-2F9foABN4CuRaA5sX52lLGAuYKJvDGVOxU-2F=
+gI-2Fia7hrKy-2F8PY7MspeiaA-2BXf9295k5ypfJmaRhfKTvJ0SMEp02BHyHZUJOKE3BAMbc7s=
+UUY2n-2FUB3rYlYYpaTTJcG-2Bg8FhRQEkbF1gnArQEzlxUrNyNvBYxAIJ0pukdFuWdGzA8GKg8=
+XhkiP-2Bj2I1Maejt1LKlC9fTqCI0prui2OwHiu7SIgpl73Y7hUOKW3Gzj-2FcnziAOQ0cRxAxh=
+d909sFjgCCdXOX4PEU8PgscSobvZsVlUCYMNUHBy1Y772mWbz0d-2Fa3I7bMQSFmi-2F5aPxvTe=
+9PxNdsEenc1kVp8D2RkNIhkh629B4mftDGvd10C3-2FgGuI1RAdS6KqX-2FDgMDlmENVpftBibc=
+lyVcBt3ghjJWKdD7n6Hs0-2FXPtd6WnAOfaGE-2F3tow9I0kntJbh5MmBtPBq0DINeHAJ2E5JQt=
+2MjOOjMER-2BmOwZbg7X8ptl7BVzGhlg0ANu2ObOPLiiBEPDe5CaQjWEZz5iyGViT-2BIUiEhTp=
+9oac4g8MwvS6mDquRIsxk1mn8U-2BJOAtD2zHdPXuYO5K07EOTIZQUck-3D" alt=3D"" width=
+=3D"1" height=3D"1" border=3D"0" style=3D"height: 1px; width: 1px; border-w=
+idth: 0px; margin: 0px; padding: 0px;"></div>
+</blockquote></div>
+
+--000000000000549e48063d427e97--

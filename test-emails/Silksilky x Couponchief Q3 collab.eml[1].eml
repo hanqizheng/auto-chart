@@ -1,0 +1,175 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp4569625nji;
+        Sat, 23 Aug 2025 00:53:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEw64JarNIsVmkvY2+gqUMMhi3TOxfSGoGaIUNe2uINVpnO7iE5GK+zHG2nVjYftEwgi/qW
+X-Received: by 2002:a05:622a:1486:b0:4b2:9883:831c with SMTP id d75a77b69052e-4b2aaa6e72fmr62450881cf.26.1755935636488;
+        Sat, 23 Aug 2025 00:53:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1755935636; cv=none;
+        d=google.com; s=arc-20240605;
+        b=M5jzDNqjQYsQw/BpDXHaRYH1uR7k4vAPLs75SWmwZ61F0XYANCh1/7AuAcn09Q4aVF
+         Jxs2Rt/w3UwLR0/fSSkoZ8+hiUmC8be4YVyYLAZ5DKf2RbK8ZfyeWhq657QQ/Ej2okFn
+         GJDhdWVT+CDK66l9Baz+Fgz03KhZNMbDpns1VyWxOBsvMaheoKp7bbA1HnVY+k1eQx8R
+         9P/GR7kwaGTT3vUd4B/6MHM2xvz5PjSvJdL9rmvhCMJkKSSkRif/EjsbUTfqwMyEflh+
+         7CcuJoujxHk2d0Bg+RXdjRhAON1itP3CjAFlyaYH3Z00KzWpz9Wj7HlATxdgLfH0d3Cc
+         8zAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:references:in-reply-to:importance:mime-version:to:from
+         :subject:date:dkim-signature;
+        bh=cPFuRs3KeDotzzSn9SNwvxN0/R7r2WX8cZTWzXczrWA=;
+        fh=T0bDjpbD7OIL2l4jHOHpXwvpWLVwEwYnziv+s3J6D84=;
+        b=OzAUXNcCDxxeJUEU0SDb3o7MOas7Gfzj6EQhae/yxZIWYacI+t/dps9QBUdmlaAFWy
+         SWnmzsYdgL/jDk66seAHPA0RqZcE1xOzTyIVdHTk+y0WJraF5lXbSJ8Ed5j8wBsutJUM
+         lEJrF4LfF5gKOFyCdtB6CwMI5xlwy94ZciDejMx+SwX6I68jcQDrHgw70t+L5xxBIcfR
+         kk0r7LLQ8E2pDxAjcj65dwNNO6MdAo0i/bRGVkMnv4ZO0Dt6wSY2kLWM3NpzgjQzQulD
+         I3Q2J0NT+k4iDUwzVO5DupTxXDwzzUIhY0pbC08T7Au2zWC5W/LDV0eBtnfnaAFuNf4c
+         eX9g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@couponchief.com header.s=20171106-s2m3mvm2 header.b=ZMudhEG9;
+       spf=pass (google.com: domain of grace@couponchief.com designates 173.203.187.73 as permitted sender) smtp.mailfrom=grace@couponchief.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=couponchief.com
+Return-Path: <grace@couponchief.com>
+Received: from smtp73.iad3a.emailsrvr.com (smtp73.iad3a.emailsrvr.com. [173.203.187.73])
+        by mx.google.com with ESMTPS id af79cd13be357-7ebebe9a7ecsi61780385a.159.2025.08.23.00.53.56
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 Aug 2025 00:53:56 -0700 (PDT)
+Received-SPF: pass (google.com: domain of grace@couponchief.com designates 173.203.187.73 as permitted sender) client-ip=173.203.187.73;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@couponchief.com header.s=20171106-s2m3mvm2 header.b=ZMudhEG9;
+       spf=pass (google.com: domain of grace@couponchief.com designates 173.203.187.73 as permitted sender) smtp.mailfrom=grace@couponchief.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=couponchief.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=couponchief.com;
+	s=20171106-s2m3mvm2; t=1755935635;
+	bh=HA3CfUgyYmVdAOYaiOODpa/dI/26uBLXw3ZfUPBAc74=;
+	h=Date:Subject:From:To:From;
+	b=ZMudhEG9/UiaqWrGCNBtwZyhRkQLVqsJcxYoQlE5ew/UCOPESp+UXAw1QeQ72FYgJ
+	 zVJMZ7/XTuANJNz21mNDPETBoAE7Rs8N3w7fxWnlP0wPscB+4wj6WgyU98YYg8vkEq
+	 i5m3rMQFQubFSGrQ0TRyjoIU/A4TeZShJc6bnwxQ=
+Received: from app61.wa-webapps.iad3a (relay-webapps.rsapps.net [172.27.255.140])
+	by smtp10.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id A07FA6366
+	for <rita@affiliate.bluefocus.com>; Sat, 23 Aug 2025 03:53:55 -0400 (EDT)
+Received: from couponchief.com (localhost.localdomain [127.0.0.1])
+	by app61.wa-webapps.iad3a (Postfix) with ESMTP id 81DF7619B8
+	for <rita@affiliate.bluefocus.com>; Sat, 23 Aug 2025 03:53:55 -0400 (EDT)
+Received: by mail.emailsrvr.com
+    (Authenticated sender: grace@couponchief.com, from: grace@couponchief.com) 
+    with HTTP; Sat, 23 Aug 2025 03:53:55 -0400 (EDT)
+X-Auth-ID: grace@couponchief.com
+Date: Sat, 23 Aug 2025 03:53:55 -0400 (EDT)
+Subject: RE: Silksilky x Couponchief Q3 collab
+From: grace@couponchief.com
+To: "Rita Liu" <rita@affiliate.bluefocus.com>
+Content-Type: multipart/alternative;
+	boundary="----=_20250823035355000000_79261"
+X-Type: html
+In-Reply-To: <CANCt8Ow8Jzq36fJt87KGkuCs35=4SxRzh15wRn=qVs142UXbZw@mail.gmail.com>
+References: <CANCt8Ow8Jzq36fJt87KGkuCs35=4SxRzh15wRn=qVs142UXbZw@mail.gmail.com>
+X-Client-IP: 216.247.33.232
+Message-ID: <1755935635.40120853@mail.emailsrvr.com>
+X-Mailer: webmail/19.0.28-RC
+X-Classification-ID: fd5407b5-4c26-4444-8c83-fdadd904ed88-1-1
+MIME-Version: 1.0
+
+------=_20250823035355000000_79261
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+=0AThanks for sending this! Confirming that they've been added to your stor=
+e page.=0A =0ABest,=0AGrace=0A =0A-----Original Message-----=0AFrom: "Rita =
+Liu" <rita@affiliate.bluefocus.com>=0ASent: Friday, August 22, 2025 1:04am=
+=0ATo: grace@couponchief.com=0ASubject: Silksilky x Couponchief Q3 collab=
+=0A=0A=0A=0A=0A=0AHi Grace, =0AHope you're doing well. I'm Rita, affiliate =
+marketing manager at BlueFocus representing SilkSilky.=0ACategory: Women's =
+wear=0ACommission: 10% =0AImpact ID: 22953 =0AI set up an exclusive code fo=
+r your team, could you offer a weekly HP popular offer for Silksilky next w=
+eek?=0Aexclusive code: SilkChief10=0ACampaign URL: [ https://silksilky.com/=
+collections/best-seller ]( https://silksilky.com/collections/best-seller )=
+=0ADescription: Silk Apparel from Silksilky enjoy extra 10% off with exclus=
+ive code on all the products =0AValidity: 8/21-9/30  =0A =0AThe following a=
+re the Campaign Details.=0ACoupon Code: SLS30=0ACampaign URL: [ https://sil=
+ksilky.com/collections/best-seller ]( https://silksilky.com/collections/bes=
+t-seller )=0ADescription: Silk Apparel from Silksilky Save $30 on orders ov=
+er $199=0AValidity: 8/21-8/31=0A=0ACampaign URL: [ https://silksilky.com/co=
+llections/silk-apparel-for-women ]( https://silksilky.com/collections/silk-=
+apparel-for-women )=0ADescription: Silk Apparel for Women=EF=BC=9Asave up t=
+o 64%=0AValidity: 8/21-8/31=0A=0ALooking forward to hearing from you.=0AReg=
+ards,=0ARita
+------=_20250823035355000000_79261
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><f=
+ont face=3D"arial" size=3D"2"><p style=3D"margin:0;padding:0;font-family: a=
+rial; font-size: 10pt; overflow-wrap: break-word;">Thanks for sending this!=
+ Confirming that they've been added to your store page.</p>=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;">&nbsp;</p>=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;">Best,</p>=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;">Grace</p>=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;">&nbsp;</p>=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;">-----Original Message-----<br>From: &quot;Rita Liu&quo=
+t; &lt;rita@affiliate.bluefocus.com&gt;<br>Sent: Friday, August 22, 2025 1:=
+04am<br>To: grace@couponchief.com<br>Subject: Silksilky x Couponchief Q3 co=
+llab<br><br></p>=0A=
+<div id=3D"SafeStyles1755935617">=0A=
+<div dir=3D"ltr">=0A=
+<div dir=3D"ltr">=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;"><span style=3D"font-family: arial, sans-serif;">Hi Gra=
+ce,&nbsp;</span></p>=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;"><span style=3D"font-family: arial, sans-serif;">Hope y=
+ou're doing well. I'm Rita, affiliate marketing manager at BlueFocus repres=
+enting SilkSilky.</span></p>=0A=
+<ul>=0A=
+<li><span style=3D"font-family: arial, sans-serif;">Category: Women's wear<=
+/span></li>=0A=
+<li><span style=3D"font-family: arial, sans-serif;">Commission: 10%&nbsp;</=
+span></li>=0A=
+<li><span style=3D"font-family: arial,sans-serif;">Impact ID: 22953&nbsp;</=
+span></li>=0A=
+</ul>=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;">I set up an exclusive code for your team, could you of=
+fer <strong style=3D"background-color: #ea9999;">a weekly HP popular offer<=
+/strong> for Silksilky next week?</p>=0A=
+<div><strong style=3D"background-color: #fff2cc;">exclusive code:&nbsp;</st=
+rong><strong style=3D"background-color: #fff2cc;">SilkChief10</strong></div=
+>=0A=
+<div><strong><span style=3D"background-color: #fff2cc;">Campaign URL:&nbsp;=
+</span></strong><strong style=3D"background-color: #fff2cc;"><a href=3D"htt=
+ps://silksilky.com/collections/best-seller" target=3D"_blank">https://silks=
+ilky.com/collections/best-seller</a></strong></div>=0A=
+<div><strong style=3D"background-color: #fff2cc;">Description: Silk Apparel=
+ from Silksilky enjoy extra 10% off with exclusive code on all the products=
+&nbsp;</strong></div>=0A=
+<div><strong style=3D"background-color: #fff2cc;">Validity: 8/21-9/30&nbsp;=
+&nbsp;</strong></div>=0A=
+<div><strong style=3D"background-color: #fff2cc;">&nbsp;</strong></div>=0A=
+<div>The following are the Campaign Details.<br><strong style=3D"background=
+-color: #d0e0e3;">Coupon Code: SLS30<br>Campaign URL: <a href=3D"https://si=
+lksilky.com/collections/best-seller">https://silksilky.com/collections/best=
+-seller</a><br>Description: Silk Apparel from Silksilky Save $30 on orders =
+over $199<br>Validity: 8/21-8/31</strong></div>=0A=
+<div><strong style=3D"background-color: #d0e0e3;"><br>Campaign URL: <a href=
+=3D"https://silksilky.com/collections/silk-apparel-for-women">https://silks=
+ilky.com/collections/silk-apparel-for-women</a><br>Description: Silk Appare=
+l for Women=EF=BC=9Asave up to 64%<br>Validity: 8/21-8/31</strong></div>=0A=
+<div>=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;"><span style=3D"font-family: arial,helvetica,sans-serif=
+; background-color: #ffffff;">Looking forward to hearing from you.</span></=
+p>=0A=
+<p style=3D"margin:0;padding:0;font-family: arial; font-size: 10pt; overflo=
+w-wrap: break-word;">Regards,<br>Rita</p>=0A=
+</div>=0A=
+</div>=0A=
+</div>=0A=
+</div></font>=
+
+------=_20250823035355000000_79261--

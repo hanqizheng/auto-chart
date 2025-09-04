@@ -1,0 +1,1255 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp3985178nji;
+        Fri, 22 Aug 2025 03:33:44 -0700 (PDT)
+X-Received: by 2002:a05:690c:6a0f:b0:718:37f7:66d6 with SMTP id 00721157ae682-71fdc3c8457mr26863467b3.25.1755858823843;
+        Fri, 22 Aug 2025 03:33:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1755858823; cv=none;
+        d=google.com; s=arc-20240605;
+        b=eMsflngUdakCTusuZ4FePTWmTvkm+2qczMzuI8CRZOWVGyW3KqV9U+FV4ISWNpx1H9
+         cuZvFMy3a/+qLzc0PZTi+496r+SFc6dPp2GHEVu8zrmyc3XS7RiZLHQpCmy8pBtFOyDi
+         P2mwGuX81Q1awXuoCROrOCm4aQ3SELiJLGvx1xSRqGuq31Iq+B6xEXjfCgaeXuG0cX3z
+         q/hPNr3Er2Mmd43iKYKn4d1y+VJRccYMM7m9U0EnzvlZbNCzscw/jNJijyNiEViUCIuI
+         nS+c/Xoeq+wuDJVw8FufLaXBDcqj2F7FhfpnjwaXK8bLcQxpgkHYx9tVXxrQpiPQOxdp
+         t8Mw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=/kVyy2O10MgLWIEYCbOH/N8Iw99OTe0Az6UyiHMi3BU=;
+        fh=wenntM/rGt+1dtiacJtUz1nHIyJb/47mjdxnRJ4TmVw=;
+        b=CYq6omEBgHuTB3Tiy8yIeZUn/toQ8s08Cv34pKPiQUrkRfiJUEJmIrKn2AMcaGEKnn
+         EhjqES5YolHTuhxQJx0FVEF1bFXRRrZsjKTvGlLgIyKyT3ZXdJZTLWyzcRYi7Tkg6JGz
+         jqQHLbIV6TgpQkWAYFop8XuOXa3dGa04Ypl4BlxqC5gucpwGm/A336lcOT+ORMbqRUsx
+         dAM0W44VTUn+mB8LWD0UUYULEzxVS/dIWDwK6CGi2OtgXGcV/1iKM9cG2dWoBB83nfk2
+         kC2+THIRevJXeWaB0oF+64NkR0vCTh6hj4DmR8LbNS1k4vldaTl+3KvNXMBCMJMQfY9y
+         Cx/Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@kosmos-marketing-com.20230601.gappssmtp.com header.s=20230601 header.b=oLVWxUl1;
+       spf=softfail (google.com: domain of transitioning atorne@kosmos-marketing.com does not designate 209.85.220.41 as permitted sender) smtp.mailfrom=atorne@kosmos-marketing.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <atorne@kosmos-marketing.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 00721157ae682-71e7aeaf039sor117508807b3.7.2025.08.22.03.33.43
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Fri, 22 Aug 2025 03:33:43 -0700 (PDT)
+Received-SPF: softfail (google.com: domain of transitioning atorne@kosmos-marketing.com does not designate 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@kosmos-marketing-com.20230601.gappssmtp.com header.s=20230601 header.b=oLVWxUl1;
+       spf=softfail (google.com: domain of transitioning atorne@kosmos-marketing.com does not designate 209.85.220.41 as permitted sender) smtp.mailfrom=atorne@kosmos-marketing.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kosmos-marketing-com.20230601.gappssmtp.com; s=20230601; t=1755858823; x=1756463623; darn=affiliate.bluefocus.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/kVyy2O10MgLWIEYCbOH/N8Iw99OTe0Az6UyiHMi3BU=;
+        b=oLVWxUl1sUptKHmicWGOZRH6x6K2Bw+/6GtRstCp00aQ8LWp9z2ztinGMqwyA/qt6Z
+         A23d7VLZA1zvmvnJfQDbPAmFvop40T4XNH3AuhF981d7agdcAgXO3JUsLvPwhQx9jcv6
+         J3B3E+ohRbxGbqgm6hhAqmmmb7mwoZjVO2wVgwL+ExjFU5ytxm2ilnXPVAjy+dJbfP9z
+         VEOaTiiDxxx3GgxVj/i+Osm+ALhy1Hh0GNYgY4vaQBwtNdDmSv6IjttaGfwbGMwNSnTu
+         x7E7bv0gEYMQNBu8vHiwnrmUsonXXs0zZXVJgoi14soyh5s+0aY1jd4G6T5pRo7ItqyK
+         J74g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755858823; x=1756463623;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/kVyy2O10MgLWIEYCbOH/N8Iw99OTe0Az6UyiHMi3BU=;
+        b=BDjya9SxnNe+b2NRMTDjrNXMWoXWDL3FSJ6qjIqob5Xw3AJ5HRfTaH9gQcv309aRyr
+         KKsxK802Qy5gaktq+dv5io6XQhjINuLMpUmT5x0GuP2f6zTqVKV3g0La6Vte05S88oTb
+         ZfXKSfbCgX3LRc26Fgrp3xIqA29kZjXejG8WtMqtB1gP1YYbduPfCG+W8vo5WI/Ki8Ln
+         QbuSBjxu8q+7gwWLJzqbxmfl/uM5+NuFFWOJ8+Tht2KGwPlM8pNIz+0/rX1lhEYo0SXG
+         8RPqzjDJXWJTHq0LKpXTZaWUv1GXd+wLxwWQkHPUWw97W4maihwFYfX37NMs9rDOz+9A
+         XvxA==
+X-Gm-Message-State: AOJu0YynQVrWaPR9EI2hLuDSPOa0cTrNdO89A1agnk3Wr0Zc26Yv5nCz
+	yxz0GYxyR++4K9R8E3mM/J4JMNeRZ4YZLvmPXwc5J6vi6W32oPbHpuLAllKFuLFgx3W7TXA9oPr
+	Yx/fOWd+3pRZBPF0RR9mOjdrEwVncvJbQskDpJMf1uEam1O4QiTjL3Dk=
+X-Gm-Gg: ASbGnctRlB9u67TMr+36UeziAivWGCv3XBvvcsDorizW5IulFXDKxFt421o+Ty5JW9+
+	9cyVw/3ZOARNHJLAyFiRTu01094qR9xgCkw1lVNggl52cPQYfHGjUsKPuYZKcELDFHFM6AUXxHa
+	PLAzNZDB/dP11OCq/dlBoWgEvaBWiDMCVZmfe/zakY24tLw29NlHd/4iCmOrFVZ0GD5xMdVZdVa
+	Pch6g==
+X-Google-Smtp-Source: AGHT+IHVu7R6ZT+eYyOTq7DUe41/cyQqW4DeRfMhtpR1SPZzZQcfw1FtrAPqemASBs32aY2lddZqFwzIc1c7srFRlxk=
+X-Received: by 2002:a05:690c:9a01:b0:71f:b944:1037 with SMTP id
+ 00721157ae682-71fdc536be9mr23005787b3.52.1755858822495; Fri, 22 Aug 2025
+ 03:33:42 -0700 (PDT)
+References: <L6yEk17nTp6KM0zrN4vOmg@geopod-ismtpd-canary-0>
+ <CACYnie1j=SvH4aY4vZcGepn0eij0CyE_92X_=VXGBUzptKmQkA@mail.gmail.com> <CANCt8OyqtiyTvgY4OLr=bOawV+L4d8jnxns74dU9vc=-CFJ6ng@mail.gmail.com>
+In-Reply-To: <CANCt8OyqtiyTvgY4OLr=bOawV+L4d8jnxns74dU9vc=-CFJ6ng@mail.gmail.com>
+From: =?UTF-8?Q?Ariadna_Torn=C3=A9?= <atorne@kosmos-marketing.com>
+Date: Fri, 22 Aug 2025 12:33:29 +0200
+X-Gm-Features: Ac12FXwqBho3vQoCeMQ2C6OqWe1_BpkaJBVOhtWkCvDXR0PNlwTdqiJVwZxmz1g
+Message-ID: <CACYnie18d9n=YiHvr0nJ=RM=2NZj35qxtqLue3ssXWfnGh+31g@mail.gmail.com>
+Subject: Re: SilkSilky Limited-Time Deals: Save Up to 64% Off!
+To: Rita Liu <rita@affiliate.bluefocus.com>
+Cc: Xavier Ros <xros@kosmos-marketing.com>
+Content-Type: multipart/alternative; boundary="000000000000641d7e063cf1bdbd"
+MIME-Version: 1.0
+
+--000000000000641d7e063cf1bdbd
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello Rita,
+
+I send you our offers and our offerwalls and let's see if they can work
+well for you. We work in fintech, supermarkets, fashion, home...
+We work in different GEOs for fintech, Spain, Mexico, Colombia, Poland,
+Romania and the Philippines. In the other sectors, we just work in Spain.
+
+Here I leave you our offerwalls, where you would see your offers promoted
+in case they fit there:
+Credilemon ES: https://www.credilemon.com/es/prestamos-personales
+Credilemon MX: https://www.credilemon.com/mx/prestamos-personales
+Credilemon CO: https://www.credilemon.com/co/prestamos-personales
+Credilemon PL: https://www.credilemon.com/pl/pozyczki
+Credilemon RO: https://www.credilemon.com/ro/credite-nevoi-personale
+Credilemon PH: https://www.credilemon.com/ph/loans
+Kosmos Market: https://kosmosmarket.com/
+
+We also have offers that you can promote. Apart from Kosmos Market, I send
+you the payouts of our fintech offers:
+
+Portal
+
+Market
+
+Payout
+
+Target
+
+Credilemon Finanzas
+
+ES <https://www.credilemon.com/es/comparador>
+
+2,8=E2=82=AC CPL
+
+solicitud mayor a 250=E2=82=AC
+
+Pr=C3=A9stame
+
+ES <https://www.prestame.es/es/solicitar>
+
+2,2=E2=82=AC CPL
+
+solicitud mayor a 250=E2=82=AC
+
+Portal
+
+Market
+
+Payout
+
+Target
+
+Credilemon
+
+MX <https://www.credilemon.com/mx/comparador>
+
+1=E2=82=AC CPL
+
+Solicitud mayor a 7.500 MXN
+
+Prestador
+
+MX <https://www.prestador.mx/>
+
+0,4=E2=82=AC CPL
+
+Solicitud mayor a 7.500 MXN
+
+Portal
+
+Market
+
+Payout
+
+Target
+
+Credilemon
+
+CO <https://www.credilemon.com/co/comparador>
+
+1,0=E2=82=AC CPL
+
+Solicitud mayor a $50.000
+
+Portal
+
+Market
+
+Payout
+
+Target
+
+Credilemon
+
+PL <https://www.credilemon.com/pl/Form>
+
+1,25=E2=82=AC CPL
+
+Solicitud mayor a 800 PLN
+
+
+Portal
+
+Market
+
+Payout
+
+Target
+
+Credilemon
+
+PH <https://www.credilemon.com/ph/comparador>
+
+0,2=E2=82=AC CPL
+
+Solicitud mayor a 5000=E2=82=B1 (80=E2=82=AC)
+
+
+Portal
+
+Market
+
+Payout
+
+Target
+
+Credilemon
+
+RO <https://www.credilemon.com/ro/comparator-financiar>
+
+1=E2=82=AC CPL
+
+Solicitud mayor a 500 lei
+
+Waiting for a response,
+
+Best,
+
+
+Missatge de Rita Liu <rita@affiliate.bluefocus.com> del dia dv., 22 d=E2=80=
+=99ag.
+2025 a les 9:03:
+
+> Hi Ariadna,
+>
+> Thanks for sharing the information, and we would like to explore potentia=
+l
+> collaboration with you too! Could you Please send over your latest media
+> kit, rate card, and details regarding available placements or exposure
+> opportunities.
+>
+>
+> We're open to the following types of partnerships:
+>
+>    - paid placement for additional exposure
+>    - CPAi for additional exposure
+>    - exclusive code for additional exposure
+>
+> Feel free to reach out if you need any additional materials or assistance=
+.
+>
+> Best Regards,
+> Rita
+>
+> Ariadna Torn=C3=A9 <atorne@kosmos-marketing.com> =E4=BA=8E2025=E5=B9=B48=
+=E6=9C=8821=E6=97=A5=E5=91=A8=E5=9B=9B 18:58=E5=86=99=E9=81=93=EF=BC=9A
+>
+>> Hello Rita!
+>>
+>> Nice to meet you! Your offers are appealing to us, and also is your
+>> website. We work with longer promotions (at least 1 month if it is
+>> possible).
+>>
+>> Anyways, we are open to a collaboration between companies. Do you have a=
+n
+>> affiliate website where we can see all your offers?
+>>
+>> We are also open to a collaboration call to talk about it. Let's arrange
+>> it some day that fits both of us!
+>>
+>> Chat soon,
+>>
+>> Ariadna
+>>
+>> Missatge de rita@affiliate.bluefocus.com <
+>> notifications@outreach.impact.com> del dia dj., 21 d=E2=80=99ag. 2025 a =
+les
+>> 12:44:
+>>
+>>> Hi team,
+>>>
+>>>
+>>> Hope you're doing well. I'm Rita, affiliate marketing manager at
+>>> BlueFocus representing SilkSilky
+>>>
+>>> Category: Women's wear
+>>>
+>>> Commission: 5%~25%
+>>>
+>>> Impact ID: 22953
+>>>
+>>> website=EF=BC=9Ahttps://silksilky.com/
+>>>
+>>>
+>>> We=E2=80=99re excited to share our latest campaigns with you and believ=
+e they
+>>> would be a great fit for your audience. Featuring these promotions on y=
+our
+>>> platform could help drive engagement and maximize conversions for both
+>>> sides.
+>>> Please see the full promotion details below and feel free to share with
+>>> your audience:
+>>>
+>>>
+>>> Campaign Details
+>>>
+>>>
+>>> Coupon Code: SLS10
+>>>
+>>> Description: Silksilky Save $10 on orders over $109
+>>>
+>>> URL: https://silksilky.com/collections/best-seller
+>>> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-=
+2BK2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiug=
+g-3D-3DY6cL_3zuMSEr2I391ZVTnONlLoB8nykammuNioWutCF79D5o3VBBuhnKSChnAGIctxV-=
+2BZKfN3g2-2FXmkZu9UMdN9z9IAzdMm5Pxax2-2BixBNaZ5BR8cF6paWIpZXfKG5VIi8XxNNltG=
+6saFoFf67WWkuy-2F0VZP2NwaUFr973m-2FIOIksRJF1qStfdAU08kHOS5RPy-2FF3LNZLoJIdP=
+7jWc4I0l9QNf6CMAytsbcAEdfPmYwF8MiNvBiDt5yrJ2H-2F6CjRiwzomUWT2sh9uBA-2FV0VJv=
+VO415zWvfMYybWRJVbEELXadaF85Qa68tXKevngYhA-2Be5-2Bsuk4I3Jp8yWugIugKgjraZQC5=
+F-2BA2xaKoC0xKZ-2F-2FctkHeC-2FVm4BzEE9DP2Kbjif0HkkukK3MJytww83X9-2Bz0ErlJN-=
+2BzIeoe0W7NtEP3IWMMdJ-2BzEvRbMnksF9X-2FtGocmTUpCRmfyu-2B53kUTtWMLBU9MZK373C=
+51kOis5luQPtW1Crw-2FRd3uonrH476teq-2B9QIszKxbHN5G0A2Dw54XsX6hL-2Fces1eJCkI3=
+shFv7n-2B9hEvHA4ZVBhHLHJEq2K-2Fyjhr5p1TM2jmXxQtLNqOfy6WL9wGwOd-2FMyeD7y5XU-=
+2Bv2NascPlG1t825Sd7SFwyz73LJ9VLBJTmXh0WG7nzIJJSSEGwIpfWIflUAvXScN5UZbuI-2By=
+uGZJBqGKh6xY-2F4O0jvv99oXMccUSI0SeI10kPpNnPiQw62e6mynfQsscucQSix1PT0HPU98mU=
+iTFheL9fl1VrXVf819PiCQpYxie-2FlVdfawAM4ywBhKF-2FnkpYQRViUcyPODj8G9bScfMAg6G=
+-2BLu8gJQHgohCSImavCEaFvDch1Ja2YYfqD85fG1mHPmlurs3wPLOjtkV4WEoMn7HS-2B6e5Oz=
+KygYKIGVdwS83qp4xZe0IBBKNFA30cS5V4MFFl7FnLxPWalhqy1lsRjWCj-2Fp0kGww3KE-2Fq4=
+RuoGUFfQSlzasUiCqOvBmHymTXOVwuwZt-2B5dlu8MjfpdXC-2BeT8UpJPiqLUIPHp5SqXjr5m4=
+NuNaRnCN0D-2F9A2heIRSgj0ccuC7Al5jcfX3s1xu-2BsTelGEf>
+>>>
+>>> Validity: 8/20-8/31
+>>>
+>>>
+>>> Coupon Code: SLS30
+>>>
+>>> Description: Silksilky Save $30 on orders over $199
+>>>
+>>> URL: https://silksilky.com/collections/best-seller
+>>> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-=
+2BK2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiug=
+g-3D-3Dg7ZK_3zuMSEr2I391ZVTnONlLoB8nykammuNioWutCF79D5o3VBBuhnKSChnAGIctxV-=
+2BZKfN3g2-2FXmkZu9UMdN9z9IAzdMm5Pxax2-2BixBNaZ5BR8cF6paWIpZXfKG5VIi8XxNNltG=
+6saFoFf67WWkuy-2F0VZP2NwaUFr973m-2FIOIksRJF1qStfdAU08kHOS5RPy-2FF3LNZLoJIdP=
+7jWc4I0l9QNf6CMAytsbcAEdfPmYwF8MiNvBiDt5yrJ2H-2F6CjRiwzomUWT2sh9uBA-2FV0VJv=
+VO415zWvfMYybWRJVbEELXadaF85Qa68tXKevngYhA-2Be5-2Bsuk4I3Jp8yWugIugKgjraZQC5=
+F-2BA2xaKoC0xKZ-2F-2FctkHeC-2FVm4BzEE9DP2Kbjif0HkkukK3MJytww83X9-2Bz0ErlJN-=
+2BzIeoe0W7NtEP3IWMMdJ-2BzEvRbMnksF9X-2FtGocmTUpCRmfyu-2B53kUTtWMLBU9MZK373C=
+51kOis5luQPtW1Crw-2FRd3uonrH476teq-2B9QIszKxbHN5G0A2Dw54XsX6hL-2Fces1eJCkI3=
+shFv7n-2B9hEvHA4ZVBhHLHJEq2K-2Fyjhr5p1TM2jmXxQtLNqOfy6WL9wGwOd-2FMyeD7y5XU-=
+2Bv2NascPlG1t825Sd7SFwyz73LJ9VLBJTmXh0WG7nzIJJSSEGwIpfWIflUAvXScN5UZbuI-2By=
+uGZJBqGKh6xY-2F4O0jvv99oXMccUSI0SeI10kPpNnPiQw62e6mynfQsscucQSix1PT0HPU98mU=
+iTFheL9fl1VrXVf819PiCQpYxie-2FlVdfawAM4ywBhKF-2FnkpYQRViUcyPODj8G9bScfMAg6G=
+-2BLu8gJQHgohCSImavCEaFvDch1Ja2YYfqD85fG1mHPmlurs3wPLOjtkV4WEoMn7HS-2B6e5Oz=
+KygYKIGVdwS83qp4xZe0IBBKNFA30cS5V4MFFl7E36A4SGSFbOCVeBDYTKU4J9jhLTsWt8j-2Bq=
+jLCO4zSjeP3Nn-2FgcphL8i0hOFpV59CZcrHbgroIoqzsbt5YdS2w-2FTjwVcOShrJvp0sCx4EP=
+go5mvu2SCyrLfyh3SLK1cihf3UxUdSvJFbRWOgirvdc26>
+>>>
+>>> Validity: 8/20-8/31
+>>>
+>>>
+>>> Description: Silk Apparel for Women=EF=BC=9Asave up to 64%
+>>>
+>>> URL: https://silksilky.com/collections/silk-apparel-for-women
+>>> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-=
+2BK2XdT48tQmztTqvWNg5JdkTQOr-2FPlS5dgVM8Y7eBHcWWjSSLQxRfBQyhyLjHagwC1lUr0s5=
+BYrArQhMy9kwuP5MeAlc-3D5wXR_3zuMSEr2I391ZVTnONlLoB8nykammuNioWutCF79D5o3VBB=
+uhnKSChnAGIctxV-2BZKfN3g2-2FXmkZu9UMdN9z9IAzdMm5Pxax2-2BixBNaZ5BR8cF6paWIpZ=
+XfKG5VIi8XxNNltG6saFoFf67WWkuy-2F0VZP2NwaUFr973m-2FIOIksRJF1qStfdAU08kHOS5R=
+Py-2FF3LNZLoJIdP7jWc4I0l9QNf6CMAytsbcAEdfPmYwF8MiNvBiDt5yrJ2H-2F6CjRiwzomUW=
+T2sh9uBA-2FV0VJvVO415zWvfMYybWRJVbEELXadaF85Qa68tXKevngYhA-2Be5-2Bsuk4I3Jp8=
+yWugIugKgjraZQC5F-2BA2xaKoC0xKZ-2F-2FctkHeC-2FVm4BzEE9DP2Kbjif0HkkukK3MJytw=
+w83X9-2Bz0ErlJN-2BzIeoe0W7NtEP3IWMMdJ-2BzEvRbMnksF9X-2FtGocmTUpCRmfyu-2B53k=
+UTtWMLBU9MZK373C51kOis5luQPtW1Crw-2FRd3uonrH476teq-2B9QIszKxbHN5G0A2Dw54XsX=
+6hL-2Fces1eJCkI3shFv7n-2B9hEvHA4ZVBhHLHJEq2K-2Fyjhr5p1TM2jmXxQtLNqOfy6WL9wG=
+wOd-2FMyeD7y5XU-2Bv2NascPlG1t825Sd7SFwyz73LJ9VLBJTmXh0WG7nzIJJSSEGwIpfWIflU=
+AvXScN5UZbuI-2ByuGZJBqGKh6xY-2F4O0jvv99oXMccUSI0SeI10kPpNnPiQw62e6mynfQsscu=
+cQSix1PT0HPU98mUiTFheL9fl1VrXVf819PiCQpYxie-2FlVdfawAM4ywBhKF-2FnkpYQRViUcy=
+PODj8G9bScfMAg6G-2BLu8gJQHgohCSImavCEaFvDch1Ja2YYfqD85fG1mHPmlurs3wPLOjtkV4=
+WEoMn7HS-2B6e5OzKygYKIGVdwS83qp4xZe0IBBKNFA30cS5V4MFFl7Gm-2B-2FHqtxUO5ZHqMW=
+32-2B4wxDGOBBvkDlZcATpOOubVxotUJV6KKB-2F-2FUxHPRhZ6AZOMYNKBHDR3KzE5dFqC8kXI=
+bbOaJeXlreqLa9xJnDZa3teHU3veatn2YkRieqo6G2pimW8rxrl3g4-2B-2F4S2LQT1Z1>
+>>>
+>>> Validity: 8/20-8/31
+>>>
+>>>
+>>> All the codes are ready.  Let=E2=80=99s work together to bring these de=
+als to
+>>> more users. Looking forward to your active participation!
+>>> Feel free to reach out if you need any additional materials or
+>>> assistance.
+>>>
+>>>
+>>> Best regards,
+>>>
+>>> Rita
+>>>
+>>> Unsubscribe
+>>> <https://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-=
+2BK2XdTxbxD4UJGmtW8DAxp3YXsDa7MPMCTETs3WSo52RM6Q9Hs8pDVfvfmNT63AenKOog8JaiD=
+ndXVwiwAsDekYhF4jivDo3-2FDgz80psmYRJ5YzxQmGQ7dS-2B-2FB9Xn0qBHPXDdxttiZW9ZzY=
+lWBxj2UThGYyWPqLQ1-2B0-2F3NWTN2KfoNxM5JsWOBpe0-2FxyuydrKKLB8YDcbE49IDt0Oye9=
+GG0KoUs7f2nJfQQiYW4-2BNWxCXgLcpyU46ozFGrHY6pX51kE7gH0jcWfoooWzj-2BTyDduRfxY=
+qjB2vVdIpOVrosuWWZknMeqHxl-2FbaA0UQQM0bhjRtP5A-3D-3DiWEz_3zuMSEr2I391ZVTnON=
+lLoB8nykammuNioWutCF79D5o3VBBuhnKSChnAGIctxV-2BZKfN3g2-2FXmkZu9UMdN9z9IAzdM=
+m5Pxax2-2BixBNaZ5BR8cF6paWIpZXfKG5VIi8XxNNltG6saFoFf67WWkuy-2F0VZP2NwaUFr97=
+3m-2FIOIksRJF1qStfdAU08kHOS5RPy-2FF3LNZLoJIdP7jWc4I0l9QNf6CMAytsbcAEdfPmYwF=
+8MiNvBiDt5yrJ2H-2F6CjRiwzomUWT2sh9uBA-2FV0VJvVO415zWvfMYybWRJVbEELXadaF85Qa=
+68tXKevngYhA-2Be5-2Bsuk4I3Jp8yWugIugKgjraZQC5F-2BA2xaKoC0xKZ-2F-2FctkHeC-2F=
+Vm4BzEE9DP2Kbjif0HkkukK3MJytww83X9-2Bz0ErlJN-2BzIeoe0W7NtEP3IWMMdJ-2BzEvRbM=
+nksF9X-2FtGocmTUpCRmfyu-2B53kUTtWMLBU9MZK373C51kOis5luQPtW1Crw-2FRd3uonrH47=
+6teq-2B9QIszKxbHN5G0A2Dw54XsX6hL-2Fces1eJCkI3shFv7n-2B9hEvHA4ZVBhHLHJEq2K-2=
+Fyjhr5p1TM2jmXxQtLNqOfy6WL9wGwOd-2FMyeD7y5XU-2Bv2NascPlG1t825Sd7SFwyz73LJ9V=
+LBJTmXh0WG7nzIJJSSEGwIpfWIflUAvXScN5UZbuI-2ByuGZJBqGKh6xY-2F4O0jvv99oXMccUS=
+I0SeI10kPpNnPiQw62e6mynfQsscucQSix1PT0HPU98mUiTFheL9fl1VrXVf819PiCQpYxie-2F=
+lVdfawAM4ywBhKF-2FnkpYQRViUcyPODj8G9bScfMAg6G-2BLu8gJQHgohCSImavCEaFvDch1Ja=
+2YYfqD85fG1mHPmlurs3wPLOjtkV4WEoMn7HS-2B6e5OzKygYKIGVdwS83qp4xZe0IBBKNFA30c=
+S5V4MFFl7GBDSCrJTZBbGKtqNhmMUz1OgxIjmtPjtEGeeJqUsM0rNa32m7JG7mdrEh7xoVhyUvH=
+uNt2vrocKJeXmOF9JLEh-2BwWCleCqrKArrzrq1Tf8VdGXT-2FhMi6bQenGFpzh2VKc9RqixCLo=
+qYsafiLX82xTl>
+>>>
+>>
+>>
+>> --
+>> [image: facebook] <https://www.facebook.com/KosmosMarketing>
+>> [image: linkedin] <https://www.linkedin.com/company/kosmos-marketing-bcn=
+>
+>> Ariadna Torn=C3=A9
+>>
+>> Marketing & Sales Specialist
+>>
+>> Kosmos Marketing
+>>
+>>
+>> atorne@kosmos-marketing.com
+>> kosmos-marketing.com
+>> Carrer de la Llacuna 22, 4-4, Barcelona, Catalonia, Spain
+>>
+>
+
+--=20
+[image: facebook] <https://www.facebook.com/KosmosMarketing>
+[image: linkedin] <https://www.linkedin.com/company/kosmos-marketing-bcn>
+Ariadna Torn=C3=A9
+
+Marketing & Sales Specialist
+
+Kosmos Marketing
+
+
+atorne@kosmos-marketing.com
+kosmos-marketing.com
+Carrer de la Llacuna 22, 4-4, Barcelona, Catalonia, Spain
+
+--000000000000641d7e063cf1bdbd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><d=
+iv dir=3D"ltr">Hello Rita,<div><br></div><div>I send you our offers and our=
+ offerwalls and let's see if they can work well for you. We work in fintech=
+, supermarkets, fashion, home...</div><div>We work in different GEOs for fi=
+ntech, Spain, Mexico, Colombia, Poland, Romania and the Philippines. In the=
+ other sectors, we just work in Spain.</div><div><br></div><div>Here I leav=
+e you our offerwalls, where you would see your offers promoted in case they=
+ fit there:</div><div>Credilemon ES:&nbsp;<a href=3D"https://www.credilemon=
+.com/es/prestamos-personales">https://www.credilemon.com/es/prestamos-perso=
+nales</a>&nbsp;<br>Credilemon MX:&nbsp;<a href=3D"https://www.credilemon.co=
+m/mx/prestamos-personales">https://www.credilemon.com/mx/prestamos-personal=
+es</a>&nbsp;</div><div>Credilemon CO:&nbsp;<a href=3D"https://www.credilemo=
+n.com/co/prestamos-personales">https://www.credilemon.com/co/prestamos-pers=
+onales</a></div><div>Credilemon PL:&nbsp;<a href=3D"https://www.credilemon.=
+com/pl/pozyczki">https://www.credilemon.com/pl/pozyczki</a></div><div>Credi=
+lemon RO:&nbsp;<a href=3D"https://www.credilemon.com/ro/credite-nevoi-perso=
+nale">https://www.credilemon.com/ro/credite-nevoi-personale</a></div><div>C=
+redilemon PH:&nbsp;<a href=3D"https://www.credilemon.com/ph/loans">https://=
+www.credilemon.com/ph/loans</a></div><div>Kosmos Market:&nbsp;<a href=3D"ht=
+tps://kosmosmarket.com/">https://kosmosmarket.com/</a></div><div><br></div>=
+<div>We also have offers that you can promote. Apart from Kosmos Market, I =
+send you the payouts of our fintech offers:</div><div><span id=3D"gmail-doc=
+s-internal-guid-a2d68690-7fff-adb1-31c9-4609fc2631a5"><div dir=3D"ltr" styl=
+e=3D"margin-left:0pt" align=3D"left"><table style=3D"border:none;border-col=
+lapse:collapse"><colgroup><col width=3D"100"><col width=3D"100"><col width=
+=3D"100"><col width=3D"202"></colgroup><tbody><tr style=3D"height:15.75pt">=
+<td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0)=
+;vertical-align:bottom;background-color:rgb(60,120,216);padding:2pt;overflo=
+w:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin=
+-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial=
+,sans-serif;color:rgb(255,255,255);background-color:transparent;font-weight=
+:700;font-variant-numeric:normal;font-variant-east-asian:normal;font-varian=
+t-alternates:normal;vertical-align:baseline">Portal</span></p></td><td styl=
+e=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertica=
+l-align:bottom;background-color:rgb(60,120,216);padding:2pt;overflow:hidden=
+"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt=
+;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-se=
+rif;color:rgb(255,255,255);background-color:transparent;font-weight:700;fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;font-variant-altern=
+ates:normal;vertical-align:baseline">Market</span></p></td><td style=3D"bor=
+der-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:=
+bottom;background-color:rgb(60,120,216);padding:2pt;overflow:hidden"><p dir=
+=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-=
+bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;colo=
+r:rgb(255,255,255);background-color:transparent;font-weight:700;font-varian=
+t-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:nor=
+mal;vertical-align:baseline">Payout</span></p></td><td style=3D"border-widt=
+h:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:bottom;b=
+ackground-color:rgb(60,120,216);padding:2pt;overflow:hidden"><p dir=3D"ltr"=
+ style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0=
+pt"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;color:rgb(25=
+5,255,255);background-color:transparent;font-weight:700;font-variant-numeri=
+c:normal;font-variant-east-asian:normal;font-variant-alternates:normal;vert=
+ical-align:baseline">Target</span></p></td></tr><tr style=3D"height:26.25pt=
+"><td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,=
+0);vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=
+=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><s=
+pan style=3D"font-size:10pt;font-family:Arial,sans-serif;background-color:t=
+ransparent;font-weight:700;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;font-variant-alternates:normal;vertical-align:baseline">Credilem=
+on Finanzas</span></p></td><td style=3D"border-width:0.75pt;border-style:so=
+lid;border-color:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidd=
+en"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0=
+pt;margin-bottom:0pt"><a href=3D"https://www.credilemon.com/es/comparador" =
+style=3D"text-decoration-line:none"><span style=3D"font-size:10pt;font-fami=
+ly:Arial,sans-serif;background-color:transparent;font-weight:700;font-varia=
+nt-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:no=
+rmal;text-decoration-line:underline;vertical-align:baseline">ES</span></a><=
+/p></td><td style=3D"border-width:0.75pt;border-style:solid;border-color:rg=
+b(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" =
+style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0p=
+t"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;background-co=
+lor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;=
+font-variant-alternates:normal;vertical-align:baseline">2,8=E2=82=AC CPL</s=
+pan></p></td><td style=3D"border-width:0.75pt;border-style:solid;border-col=
+or:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"=
+ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bott=
+om:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;backgrou=
+nd-color:transparent;font-variant-numeric:normal;font-variant-east-asian:no=
+rmal;font-variant-alternates:normal;vertical-align:baseline">solicitud mayo=
+r a 250=E2=82=AC</span></p></td></tr><tr style=3D"height:15.75pt"><td style=
+=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical=
+-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-hei=
+ght:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D=
+"font-size:10pt;font-family:Arial,sans-serif;background-color:transparent;f=
+ont-weight:700;font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-variant-alternates:normal;vertical-align:baseline">Pr=C3=A9stame</span>=
+</p></td><td style=3D"border-width:0.75pt;border-style:solid;border-color:r=
+gb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr"=
+ style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0=
+pt"><a href=3D"https://www.prestame.es/es/solicitar" style=3D"text-decorati=
+on-line:none"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;ba=
+ckground-color:transparent;font-weight:700;font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-variant-alternates:normal;text-decoration-l=
+ine:underline;vertical-align:baseline">ES</span></a></p></td><td style=3D"b=
+order-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-alig=
+n:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1=
+.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font=
+-size:10pt;font-family:Arial,sans-serif;background-color:transparent;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;font-variant-alternate=
+s:normal;vertical-align:baseline">2,2=E2=82=AC CPL</span></p></td><td style=
+=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical=
+-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-hei=
+ght:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D=
+"font-size:10pt;font-family:Arial,sans-serif;background-color:transparent;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alte=
+rnates:normal;vertical-align:baseline">solicitud mayor a 250=E2=82=AC</span=
+></p></td></tr></tbody></table><br><span id=3D"gmail-docs-internal-guid-843=
+9001e-7fff-ee54-53f2-5733158f077b"><div dir=3D"ltr" style=3D"margin-left:0p=
+t" align=3D"left"><table style=3D"border:none;border-collapse:collapse"><co=
+lgroup><col width=3D"100"><col width=3D"100"><col width=3D"100"><col width=
+=3D"202"></colgroup><tbody><tr style=3D"height:15.75pt"><td style=3D"border=
+-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:bot=
+tom;background-color:rgb(60,120,216);padding:2pt;overflow:hidden"><p dir=3D=
+"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bot=
+tom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;color:r=
+gb(255,255,255);background-color:transparent;font-weight:700;font-variant-n=
+umeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal=
+;vertical-align:baseline">Portal</span></p></td><td style=3D"border-width:0=
+.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:bottom;back=
+ground-color:rgb(60,120,216);padding:2pt;overflow:hidden"><p dir=3D"ltr" st=
+yle=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"=
+><span style=3D"font-size:10pt;font-family:Arial,sans-serif;color:rgb(255,2=
+55,255);background-color:transparent;font-weight:700;font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;font-variant-alternates:normal;vertica=
+l-align:baseline">Market</span></p></td><td style=3D"border-width:0.75pt;bo=
+rder-style:solid;border-color:rgb(0,0,0);vertical-align:bottom;background-c=
+olor:rgb(60,120,216);padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"l=
+ine-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span s=
+tyle=3D"font-size:10pt;font-family:Arial,sans-serif;color:rgb(255,255,255);=
+background-color:transparent;font-weight:700;font-variant-numeric:normal;fo=
+nt-variant-east-asian:normal;font-variant-alternates:normal;vertical-align:=
+baseline">Payout</span></p></td><td style=3D"border-width:0.75pt;border-sty=
+le:solid;border-color:rgb(0,0,0);vertical-align:bottom;background-color:rgb=
+(60,120,216);padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-heig=
+ht:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"=
+font-size:10pt;font-family:Arial,sans-serif;color:rgb(255,255,255);backgrou=
+nd-color:transparent;font-weight:700;font-variant-numeric:normal;font-varia=
+nt-east-asian:normal;font-variant-alternates:normal;vertical-align:baseline=
+">Target</span></p></td></tr><tr style=3D"height:15.75pt"><td style=3D"bord=
+er-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:b=
+ottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38=
+;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-si=
+ze:10pt;font-family:Arial,sans-serif;background-color:transparent;font-weig=
+ht:700;font-variant-numeric:normal;font-variant-east-asian:normal;font-vari=
+ant-alternates:normal;vertical-align:baseline">Credilemon</span></p></td><t=
+d style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);v=
+ertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"l=
+ine-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><a href=
+=3D"https://www.credilemon.com/mx/comparador" style=3D"text-decoration-line=
+:none"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;backgroun=
+d-color:transparent;font-weight:700;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;font-variant-alternates:normal;text-decoration-line:und=
+erline;vertical-align:baseline">MX</span></a></p></td><td style=3D"border-w=
+idth:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:botto=
+m;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;tex=
+t-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:1=
+0pt;font-family:Arial,sans-serif;color:rgb(0,0,0);background-color:transpar=
+ent;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant=
+-alternates:normal;vertical-align:baseline">1=E2=82=AC CPL</span></p></td><=
+td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);=
+vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"=
+line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span =
+style=3D"font-size:10pt;font-family:Arial,sans-serif;color:rgb(0,0,0);backg=
+round-color:transparent;font-variant-numeric:normal;font-variant-east-asian=
+:normal;font-variant-alternates:normal;vertical-align:baseline">Solicitud m=
+ayor a 7.500 MXN</span></p></td></tr><tr style=3D"height:15.75pt"><td style=
+=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical=
+-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-hei=
+ght:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D=
+"font-size:10pt;font-family:Arial,sans-serif;background-color:transparent;f=
+ont-weight:700;font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-variant-alternates:normal;vertical-align:baseline">Prestador</span></p>=
+</td><td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0=
+,0,0);vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" sty=
+le=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt">=
+<a href=3D"https://www.prestador.mx/" style=3D"text-decoration-line:none"><=
+span style=3D"font-size:10pt;font-family:Arial,sans-serif;background-color:=
+transparent;font-weight:700;font-variant-numeric:normal;font-variant-east-a=
+sian:normal;font-variant-alternates:normal;text-decoration-line:underline;v=
+ertical-align:baseline">MX</span></a></p></td><td style=3D"border-width:0.7=
+5pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:bottom;paddin=
+g:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:=
+center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font=
+-family:Arial,sans-serif;background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;font-variant-alternates:normal;vertic=
+al-align:baseline">0,4=E2=82=AC CPL</span></p></td><td style=3D"border-widt=
+h:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:bottom;p=
+adding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-a=
+lign:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt=
+;font-family:Arial,sans-serif;background-color:transparent;font-variant-num=
+eric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;v=
+ertical-align:baseline">Solicitud mayor a 7.500 MXN</span></p></td></tr></t=
+body></table><br></div><div dir=3D"ltr" style=3D"margin-left:0pt" align=3D"=
+left"><span id=3D"gmail-docs-internal-guid-61c49114-7fff-3555-f2c3-472392af=
+69f2"><div dir=3D"ltr" style=3D"margin-left:0pt" align=3D"left"><table styl=
+e=3D"border:none;border-collapse:collapse"><colgroup><col width=3D"100"><co=
+l width=3D"100"><col width=3D"100"><col width=3D"202"></colgroup><tbody><tr=
+ style=3D"height:15.75pt"><td style=3D"border-width:0.75pt;border-style:sol=
+id;border-color:rgb(0,0,0);vertical-align:bottom;background-color:rgb(60,12=
+0,216);padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.3=
+8;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-s=
+ize:10pt;font-family:Arial,sans-serif;color:rgb(255,255,255);background-col=
+or:transparent;font-weight:700;font-variant-numeric:normal;font-variant-eas=
+t-asian:normal;font-variant-alternates:normal;vertical-align:baseline">Port=
+al</span></p></td><td style=3D"border-width:0.75pt;border-style:solid;borde=
+r-color:rgb(0,0,0);vertical-align:bottom;background-color:rgb(60,120,216);p=
+adding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-a=
+lign:center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt=
+;font-family:Arial,sans-serif;color:rgb(255,255,255);background-color:trans=
+parent;font-weight:700;font-variant-numeric:normal;font-variant-east-asian:=
+normal;font-variant-alternates:normal;vertical-align:baseline">Market</span=
+></p></td><td style=3D"border-width:0.75pt;border-style:solid;border-color:=
+rgb(0,0,0);vertical-align:bottom;background-color:rgb(60,120,216);padding:2=
+pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:cen=
+ter;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-fa=
+mily:Arial,sans-serif;color:rgb(255,255,255);background-color:transparent;f=
+ont-weight:700;font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-variant-alternates:normal;vertical-align:baseline">Payout</span></p></t=
+d><td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,=
+0);vertical-align:bottom;background-color:rgb(60,120,216);padding:2pt;overf=
+low:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;marg=
+in-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Ari=
+al,sans-serif;color:rgb(255,255,255);background-color:transparent;font-weig=
+ht:700;font-variant-numeric:normal;font-variant-east-asian:normal;font-vari=
+ant-alternates:normal;vertical-align:baseline">Target</span></p></td></tr><=
+tr style=3D"height:15.75pt"><td style=3D"border-width:0.75pt;border-style:s=
+olid;border-color:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hid=
+den"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:=
+0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans=
+-serif;background-color:transparent;font-weight:700;font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;font-variant-alternates:normal;vertical=
+-align:baseline">Credilemon</span></p></td><td style=3D"border-width:0.75pt=
+;border-style:solid;border-color:rgb(0,0,0);vertical-align:bottom;padding:2=
+pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:cen=
+ter;margin-top:0pt;margin-bottom:0pt"><a href=3D"https://www.credilemon.com=
+/co/comparador" style=3D"text-decoration-line:none"><span style=3D"font-siz=
+e:10pt;font-family:Arial,sans-serif;background-color:transparent;font-weigh=
+t:700;font-variant-numeric:normal;font-variant-east-asian:normal;font-varia=
+nt-alternates:normal;text-decoration-line:underline;vertical-align:baseline=
+">CO</span></a></p></td><td style=3D"border-width:0.75pt;border-style:solid=
+;border-color:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidden"=
+><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;=
+margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-ser=
+if;background-color:transparent;font-variant-numeric:normal;font-variant-ea=
+st-asian:normal;font-variant-alternates:normal;vertical-align:baseline">1,0=
+=E2=82=AC CPL</span></p></td><td style=3D"border-width:0.75pt;border-style:=
+solid;border-color:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hi=
+dden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top=
+:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,san=
+s-serif;background-color:transparent;font-variant-numeric:normal;font-varia=
+nt-east-asian:normal;font-variant-alternates:normal;vertical-align:baseline=
+">Solicitud mayor a $50.000</span></p></td></tr></tbody></table><br></div><=
+div dir=3D"ltr" style=3D"margin-left:0pt" align=3D"left"><span id=3D"gmail-=
+docs-internal-guid-ac425c3a-7fff-7926-2522-5319f0ec9d07"><div dir=3D"ltr" s=
+tyle=3D"margin-left:0pt" align=3D"left"><table style=3D"border:none;border-=
+collapse:collapse"><colgroup><col width=3D"100"><col width=3D"100"><col wid=
+th=3D"100"><col width=3D"202"></colgroup><tbody><tr style=3D"height:15.75pt=
+"><td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,=
+0);vertical-align:bottom;background-color:rgb(60,120,216);padding:2pt;overf=
+low:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;marg=
+in-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Ari=
+al,sans-serif;color:rgb(255,255,255);background-color:transparent;font-weig=
+ht:700;font-variant-numeric:normal;font-variant-east-asian:normal;font-vari=
+ant-alternates:normal;vertical-align:baseline">Portal</span></p></td><td st=
+yle=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);verti=
+cal-align:bottom;background-color:rgb(60,120,216);padding:2pt;overflow:hidd=
+en"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0=
+pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-=
+serif;color:rgb(255,255,255);background-color:transparent;font-weight:700;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alte=
+rnates:normal;vertical-align:baseline">Market</span></p></td><td style=3D"b=
+order-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-alig=
+n:bottom;background-color:rgb(60,120,216);padding:2pt;overflow:hidden"><p d=
+ir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margi=
+n-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;co=
+lor:rgb(255,255,255);background-color:transparent;font-weight:700;font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:n=
+ormal;vertical-align:baseline">Payout</span></p></td><td style=3D"border-wi=
+dth:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:bottom=
+;background-color:rgb(60,120,216);padding:2pt;overflow:hidden"><p dir=3D"lt=
+r" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom=
+:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;color:rgb(=
+255,255,255);background-color:transparent;font-weight:700;font-variant-nume=
+ric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;ve=
+rtical-align:baseline">Target</span></p></td></tr><tr style=3D"height:15.75=
+pt"><td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,=
+0,0);vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" styl=
+e=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><=
+span style=3D"font-size:10pt;font-family:Arial,sans-serif;background-color:=
+transparent;font-weight:700;font-variant-numeric:normal;font-variant-east-a=
+sian:normal;font-variant-alternates:normal;vertical-align:baseline">Credile=
+mon</span></p></td><td style=3D"border-width:0.75pt;border-style:solid;bord=
+er-color:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidden"><p d=
+ir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margi=
+n-bottom:0pt"><a href=3D"https://www.credilemon.com/pl/Form" style=3D"text-=
+decoration-line:none"><span style=3D"font-size:10pt;font-family:Arial,sans-=
+serif;background-color:transparent;font-weight:700;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;font-variant-alternates:normal;text-deco=
+ration-line:underline;vertical-align:baseline">PL</span></a></p></td><td st=
+yle=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);verti=
+cal-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-=
+height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=
+=3D"font-size:10pt;font-family:Arial,sans-serif;background-color:transparen=
+t;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-a=
+lternates:normal;vertical-align:baseline">1,25=E2=82=AC CPL</span></p></td>=
+<td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0)=
+;vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D=
+"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span=
+ style=3D"font-size:10pt;font-family:Arial,sans-serif;background-color:tran=
+sparent;font-variant-numeric:normal;font-variant-east-asian:normal;font-var=
+iant-alternates:normal;vertical-align:baseline">Solicitud mayor a 800 PLN</=
+span></p></td></tr></tbody></table></div><p dir=3D"ltr" style=3D"line-heigh=
+t:1.38;margin-top:0pt;margin-bottom:0pt"><br></p><div dir=3D"ltr" style=3D"=
+margin-left:0pt" align=3D"left"><table style=3D"border:none;border-collapse=
+:collapse"><colgroup><col width=3D"100"><col width=3D"100"><col width=3D"10=
+0"><col width=3D"202"></colgroup><tbody><tr style=3D"height:15.75pt"><td st=
+yle=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);verti=
+cal-align:bottom;background-color:rgb(60,120,216);padding:2pt;overflow:hidd=
+en"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0=
+pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-=
+serif;color:rgb(255,255,255);background-color:transparent;font-weight:700;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alte=
+rnates:normal;vertical-align:baseline">Portal</span></p></td><td style=3D"b=
+order-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-alig=
+n:bottom;background-color:rgb(60,120,216);padding:2pt;overflow:hidden"><p d=
+ir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margi=
+n-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;co=
+lor:rgb(255,255,255);background-color:transparent;font-weight:700;font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:n=
+ormal;vertical-align:baseline">Market</span></p></td><td style=3D"border-wi=
+dth:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:bottom=
+;background-color:rgb(60,120,216);padding:2pt;overflow:hidden"><p dir=3D"lt=
+r" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom=
+:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;color:rgb(=
+255,255,255);background-color:transparent;font-weight:700;font-variant-nume=
+ric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;ve=
+rtical-align:baseline">Payout</span></p></td><td style=3D"border-width:0.75=
+pt;border-style:solid;border-color:rgb(0,0,0);vertical-align:bottom;backgro=
+und-color:rgb(60,120,216);padding:2pt;overflow:hidden"><p dir=3D"ltr" style=
+=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><s=
+pan style=3D"font-size:10pt;font-family:Arial,sans-serif;color:rgb(255,255,=
+255);background-color:transparent;font-weight:700;font-variant-numeric:norm=
+al;font-variant-east-asian:normal;font-variant-alternates:normal;vertical-a=
+lign:baseline">Target</span></p></td></tr><tr style=3D"height:15.75pt"><td =
+style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);ver=
+tical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"lin=
+e-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span sty=
+le=3D"font-size:10pt;font-family:Arial,sans-serif;background-color:transpar=
+ent;font-weight:700;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;font-variant-alternates:normal;vertical-align:baseline">Credilemon</spa=
+n></p></td><td style=3D"border-width:0.75pt;border-style:solid;border-color=
+:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"lt=
+r" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-bottom=
+:0pt"><a href=3D"https://www.credilemon.com/ph/comparador" style=3D"text-de=
+coration-line:none"><span style=3D"font-size:10pt;font-family:Arial,sans-se=
+rif;background-color:transparent;font-weight:700;font-variant-numeric:norma=
+l;font-variant-east-asian:normal;font-variant-alternates:normal;text-decora=
+tion-line:underline;vertical-align:baseline">PH</span></a></p></td><td styl=
+e=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertica=
+l-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-he=
+ight:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span style=
+=3D"font-size:10pt;font-family:Arial,sans-serif;background-color:transparen=
+t;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-a=
+lternates:normal;vertical-align:baseline">0,2=E2=82=AC CPL</span></p></td><=
+td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);=
+vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"=
+line-height:1.38;text-align:center;margin-top:0pt;margin-bottom:0pt"><span =
+style=3D"font-size:10pt;font-family:Arial,sans-serif;background-color:trans=
+parent;font-variant-numeric:normal;font-variant-east-asian:normal;font-vari=
+ant-alternates:normal;vertical-align:baseline">Solicitud mayor a 5000=E2=82=
+=B1 (80=E2=82=AC)</span></p></td></tr></tbody></table></div><p dir=3D"ltr" =
+style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><br></p><div di=
+r=3D"ltr" style=3D"margin-left:0pt" align=3D"left"><table style=3D"border:n=
+one;border-collapse:collapse"><colgroup><col width=3D"100"><col width=3D"10=
+0"><col width=3D"100"><col width=3D"202"></colgroup><tbody><tr style=3D"hei=
+ght:15.75pt"><td style=3D"border-width:0.75pt;border-style:solid;border-col=
+or:rgb(0,0,0);vertical-align:bottom;background-color:rgb(60,120,216);paddin=
+g:2pt;overflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:=
+center;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font=
+-family:Arial,sans-serif;color:rgb(255,255,255);background-color:transparen=
+t;font-weight:700;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;font-variant-alternates:normal;vertical-align:baseline">Portal</span></p>=
+</td><td style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0=
+,0,0);vertical-align:bottom;background-color:rgb(60,120,216);padding:2pt;ov=
+erflow:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;m=
+argin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:=
+Arial,sans-serif;color:rgb(255,255,255);background-color:transparent;font-w=
+eight:700;font-variant-numeric:normal;font-variant-east-asian:normal;font-v=
+ariant-alternates:normal;vertical-align:baseline">Market</span></p></td><td=
+ style=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);ve=
+rtical-align:bottom;background-color:rgb(60,120,216);padding:2pt;overflow:h=
+idden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-to=
+p:0pt;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sa=
+ns-serif;color:rgb(255,255,255);background-color:transparent;font-weight:70=
+0;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-a=
+lternates:normal;vertical-align:baseline">Payout</span></p></td><td style=
+=3D"border-width:0.75pt;border-style:solid;border-color:rgb(0,0,0);vertical=
+-align:bottom;background-color:rgb(60,120,216);padding:2pt;overflow:hidden"=
+><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;=
+margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-ser=
+if;color:rgb(255,255,255);background-color:transparent;font-weight:700;font=
+-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alterna=
+tes:normal;vertical-align:baseline">Target</span></p></td></tr><tr style=3D=
+"height:15.75pt"><td style=3D"border-width:0.75pt;border-style:solid;border=
+-color:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidden"><p dir=
+=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;margin-=
+bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-serif;back=
+ground-color:transparent;font-weight:700;font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;font-variant-alternates:normal;vertical-align:base=
+line">Credilemon</span></p></td><td style=3D"border-width:0.75pt;border-sty=
+le:solid;border-color:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow=
+:hidden"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-=
+top:0pt;margin-bottom:0pt"><a href=3D"https://www.credilemon.com/ro/compara=
+tor-financiar" style=3D"text-decoration-line:none"><span style=3D"font-size=
+:10pt;font-family:Arial,sans-serif;background-color:transparent;font-weight=
+:700;font-variant-numeric:normal;font-variant-east-asian:normal;font-varian=
+t-alternates:normal;text-decoration-line:underline;vertical-align:baseline"=
+>RO</span></a></p></td><td style=3D"border-width:0.75pt;border-style:solid;=
+border-color:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidden">=
+<p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0pt;m=
+argin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-seri=
+f;background-color:transparent;font-variant-numeric:normal;font-variant-eas=
+t-asian:normal;font-variant-alternates:normal;vertical-align:baseline">1=E2=
+=82=AC CPL</span></p></td><td style=3D"border-width:0.75pt;border-style:sol=
+id;border-color:rgb(0,0,0);vertical-align:bottom;padding:2pt;overflow:hidde=
+n"><p dir=3D"ltr" style=3D"line-height:1.38;text-align:center;margin-top:0p=
+t;margin-bottom:0pt"><span style=3D"font-size:10pt;font-family:Arial,sans-s=
+erif;background-color:transparent;font-variant-numeric:normal;font-variant-=
+east-asian:normal;font-variant-alternates:normal;vertical-align:baseline">S=
+olicitud mayor a 500 lei</span></p></td></tr></tbody></table><br></div><div=
+ style=3D"margin-left:0pt" align=3D"left">Waiting for a response,</div><div=
+ style=3D"margin-left:0pt" align=3D"left"><br></div><div style=3D"margin-le=
+ft:0pt" align=3D"left">Best,</div><div style=3D"margin-left:0pt" align=3D"l=
+eft"><br></div></span></div></span></div></span></div></span></div></div><b=
+r><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
+=3D"gmail_attr">Missatge de Rita Liu &lt;<a href=3D"mailto:rita@affiliate.b=
+luefocus.com">rita@affiliate.bluefocus.com</a>&gt; del dia dv., 22 d=E2=80=
+=99ag. 2025 a les 9:03:<br></div><blockquote class=3D"gmail_quote" style=3D=
+"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
+ft:1ex"><div dir=3D"ltr"><div dir=3D"ltr">Hi Ariadna,<br><br>Thanks for sha=
+ring the information, and we would like to explore potential collaboration =
+with you too! Could you&nbsp;<span style=3D"color:rgb(0,0,0);font-family:He=
+lvetica">Please send over your latest media kit</span><span style=3D"color:=
+rgb(0,0,0);font-family:Helvetica">, rate card</span><span style=3D"color:rg=
+b(0,0,0);font-family:Helvetica">, and details regarding </span><span style=
+=3D"color:rgb(0,0,0);font-family:Helvetica">available placements or exposur=
+e opportunities.</span><p style=3D"margin:0px;font-variant-numeric:normal;f=
+ont-variant-east-asian:normal;font-variant-alternates:normal;font-size-adju=
+st:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;=
+line-height:normal;font-family:Helvetica;color:rgb(0,0,0);min-height:22px">=
+<br></p>
+<p style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian:=
+normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:au=
+to;font-feature-settings:normal;font-stretch:normal;line-height:normal;font=
+-family:Helvetica;color:rgb(0,0,0)">We're open to the following types of pa=
+rtnerships:</p>
+<ul>
+<li style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian=
+:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:a=
+uto;font-feature-settings:normal;font-stretch:normal;line-height:normal;fon=
+t-family:Helvetica;color:rgb(0,0,0)"><span style=3D"font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;font-variant-alternates:normal;font-siz=
+e-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:n=
+ormal;line-height:normal;font-family:Times"></span>paid placement for addit=
+ional exposure</li>
+<li style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian=
+:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:a=
+uto;font-feature-settings:normal;font-stretch:normal;line-height:normal;fon=
+t-family:Helvetica;color:rgb(0,0,0)"><span style=3D"font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;font-variant-alternates:normal;font-siz=
+e-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:n=
+ormal;line-height:normal;font-family:Times"></span>CPAi for additional expo=
+sure</li>
+<li style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian=
+:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:a=
+uto;font-feature-settings:normal;font-stretch:normal;line-height:normal;fon=
+t-family:Helvetica;color:rgb(0,0,0)"><span style=3D"font-variant-numeric:no=
+rmal;font-variant-east-asian:normal;font-variant-alternates:normal;font-siz=
+e-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:n=
+ormal;line-height:normal;font-family:Times"></span>exclusive code for addit=
+ional exposure</li></ul>
+<p style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian:=
+normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:au=
+to;font-feature-settings:normal;font-stretch:normal;line-height:normal;font=
+-family:Helvetica;color:rgb(0,0,0)">Feel free to reach out if you need any =
+additional materials or assistance.<br><br>Best Regards,<br>Rita</p></div><=
+br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">Ariadna=
+ Torn=C3=A9 &lt;<a href=3D"mailto:atorne@kosmos-marketing.com" target=3D"_b=
+lank">atorne@kosmos-marketing.com</a>&gt; =E4=BA=8E2025=E5=B9=B48=E6=9C=882=
+1=E6=97=A5=E5=91=A8=E5=9B=9B 18:58=E5=86=99=E9=81=93=EF=BC=9A<br></div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Hello Rita!<=
+div><br></div><div>Nice to meet you! Your offers are appealing to us, and a=
+lso is your website. We work with longer promotions (at least 1 month if it=
+ is possible).&nbsp;</div><div><br></div><div>Anyways, we are open to a col=
+laboration between companies. Do you have an affiliate website where we can=
+ see all your offers?</div><div><br></div><div>We are also open to a collab=
+oration call to talk about it. Let's arrange it some day that fits both of =
+us!</div><div><br></div><div>Chat soon,</div><div><br></div><div>Ariadna</d=
+iv></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_att=
+r">Missatge de <a href=3D"mailto:rita@affiliate.bluefocus.com" target=3D"_b=
+lank">rita@affiliate.bluefocus.com</a> &lt;<a href=3D"mailto:notifications@=
+outreach.impact.com" target=3D"_blank">notifications@outreach.impact.com</a=
+>&gt; del dia dj., 21 d=E2=80=99ag. 2025 a les 12:44:<br></div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex"><div>
+
+
+<p><span style=3D"font-family:arial,helvetica,sans-serif">Hi team,</span><s=
+pan style=3D"font-family:arial,helvetica,sans-serif">&nbsp;</span></p><p><s=
+pan style=3D"font-family:arial,helvetica,sans-serif"><br></span></p><p><spa=
+n style=3D"font-family:arial,helvetica,sans-serif">Hope you're doing well. =
+I'm Rita, affiliate marketing manager at BlueFocus representing SilkSilky</=
+span></p><p><span style=3D"font-family:arial,helvetica,sans-serif">Category=
+: Women's wear</span></p><p><span style=3D"font-family:arial,helvetica,sans=
+-serif">Commission: 5%~25%</span></p><p><span style=3D"font-family:arial,he=
+lvetica,sans-serif">Impact ID: 22953</span><span style=3D"font-family:arial=
+,helvetica,sans-serif">&nbsp;</span></p><p><span style=3D"font-family:arial=
+,helvetica,sans-serif">website</span><span style=3D"font-family:arial,helve=
+tica,sans-serif">=EF=BC=9A<a href=3D"https://silksilky.com/" target=3D"_bla=
+nk">https://silksilky.com/</a></span></p><p><span style=3D"font-family:aria=
+l,helvetica,sans-serif"><br></span></p><p><span style=3D"font-family:arial,=
+helvetica,sans-serif">We=E2=80=99re excited to share our latest campaigns w=
+ith you and believe they would be a great fit for your audience. Featuring =
+these promotions on your platform could help drive engagement and maximize =
+conversions for both sides.<br>Please see the full promotion details below =
+and feel free to share with your audience:</span></p><p><span style=3D"font=
+-family:arial,helvetica,sans-serif"><br>Campaign Details</span></p><p><span=
+ style=3D"font-family:arial,helvetica,sans-serif"><br></span></p><p><span s=
+tyle=3D"font-family:arial,helvetica,sans-serif">Coupon Code: SLS10</span></=
+p><p><span style=3D"font-family:arial,helvetica,sans-serif">Description: Si=
+lksilky Save $10 on orders over $109</span></p><p><span style=3D"font-famil=
+y:arial,helvetica,sans-serif">URL:&nbsp;<a href=3D"https://u29708799.ct.sen=
+dgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK2XdT48tQmztTqvWNg5JdkTQOr-=
+2B-2FFKjGM5PjVlnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-3D-3DY6cL_3zuMSEr2I391ZVTnO=
+NlLoB8nykammuNioWutCF79D5o3VBBuhnKSChnAGIctxV-2BZKfN3g2-2FXmkZu9UMdN9z9IAzd=
+Mm5Pxax2-2BixBNaZ5BR8cF6paWIpZXfKG5VIi8XxNNltG6saFoFf67WWkuy-2F0VZP2NwaUFr9=
+73m-2FIOIksRJF1qStfdAU08kHOS5RPy-2FF3LNZLoJIdP7jWc4I0l9QNf6CMAytsbcAEdfPmYw=
+F8MiNvBiDt5yrJ2H-2F6CjRiwzomUWT2sh9uBA-2FV0VJvVO415zWvfMYybWRJVbEELXadaF85Q=
+a68tXKevngYhA-2Be5-2Bsuk4I3Jp8yWugIugKgjraZQC5F-2BA2xaKoC0xKZ-2F-2FctkHeC-2=
+FVm4BzEE9DP2Kbjif0HkkukK3MJytww83X9-2Bz0ErlJN-2BzIeoe0W7NtEP3IWMMdJ-2BzEvRb=
+MnksF9X-2FtGocmTUpCRmfyu-2B53kUTtWMLBU9MZK373C51kOis5luQPtW1Crw-2FRd3uonrH4=
+76teq-2B9QIszKxbHN5G0A2Dw54XsX6hL-2Fces1eJCkI3shFv7n-2B9hEvHA4ZVBhHLHJEq2K-=
+2Fyjhr5p1TM2jmXxQtLNqOfy6WL9wGwOd-2FMyeD7y5XU-2Bv2NascPlG1t825Sd7SFwyz73LJ9=
+VLBJTmXh0WG7nzIJJSSEGwIpfWIflUAvXScN5UZbuI-2ByuGZJBqGKh6xY-2F4O0jvv99oXMccU=
+SI0SeI10kPpNnPiQw62e6mynfQsscucQSix1PT0HPU98mUiTFheL9fl1VrXVf819PiCQpYxie-2=
+FlVdfawAM4ywBhKF-2FnkpYQRViUcyPODj8G9bScfMAg6G-2BLu8gJQHgohCSImavCEaFvDch1J=
+a2YYfqD85fG1mHPmlurs3wPLOjtkV4WEoMn7HS-2B6e5OzKygYKIGVdwS83qp4xZe0IBBKNFA30=
+cS5V4MFFl7FnLxPWalhqy1lsRjWCj-2Fp0kGww3KE-2Fq4RuoGUFfQSlzasUiCqOvBmHymTXOVw=
+uwZt-2B5dlu8MjfpdXC-2BeT8UpJPiqLUIPHp5SqXjr5m4NuNaRnCN0D-2F9A2heIRSgj0ccuC7=
+Al5jcfX3s1xu-2BsTelGEf" target=3D"_blank"><span>https://silksilky.com/colle=
+ctions/best-seller</span></a></span></p><p><span style=3D"font-family:arial=
+,helvetica,sans-serif">Validity: 8/20-8/31</span></p><p><span style=3D"font=
+-family:arial,helvetica,sans-serif"><br></span></p><p><span style=3D"font-f=
+amily:arial,helvetica,sans-serif">Coupon Code: SLS30</span></p><p><span sty=
+le=3D"font-family:arial,helvetica,sans-serif">Description: Silksilky Save $=
+30 on orders over $199</span></p><p><span style=3D"font-family:arial,helvet=
+ica,sans-serif">URL:&nbsp;<a href=3D"https://u29708799.ct.sendgrid.net/ls/c=
+lick?upn=3Du001.B8VMPMOzxR7RPOX-2BK2XdT48tQmztTqvWNg5JdkTQOr-2B-2FFKjGM5PjV=
+lnTWxih3uhZ9t6879kT0KH7eKH25Qiugg-3D-3Dg7ZK_3zuMSEr2I391ZVTnONlLoB8nykammuN=
+ioWutCF79D5o3VBBuhnKSChnAGIctxV-2BZKfN3g2-2FXmkZu9UMdN9z9IAzdMm5Pxax2-2BixB=
+NaZ5BR8cF6paWIpZXfKG5VIi8XxNNltG6saFoFf67WWkuy-2F0VZP2NwaUFr973m-2FIOIksRJF=
+1qStfdAU08kHOS5RPy-2FF3LNZLoJIdP7jWc4I0l9QNf6CMAytsbcAEdfPmYwF8MiNvBiDt5yrJ=
+2H-2F6CjRiwzomUWT2sh9uBA-2FV0VJvVO415zWvfMYybWRJVbEELXadaF85Qa68tXKevngYhA-=
+2Be5-2Bsuk4I3Jp8yWugIugKgjraZQC5F-2BA2xaKoC0xKZ-2F-2FctkHeC-2FVm4BzEE9DP2Kb=
+jif0HkkukK3MJytww83X9-2Bz0ErlJN-2BzIeoe0W7NtEP3IWMMdJ-2BzEvRbMnksF9X-2FtGoc=
+mTUpCRmfyu-2B53kUTtWMLBU9MZK373C51kOis5luQPtW1Crw-2FRd3uonrH476teq-2B9QIszK=
+xbHN5G0A2Dw54XsX6hL-2Fces1eJCkI3shFv7n-2B9hEvHA4ZVBhHLHJEq2K-2Fyjhr5p1TM2jm=
+XxQtLNqOfy6WL9wGwOd-2FMyeD7y5XU-2Bv2NascPlG1t825Sd7SFwyz73LJ9VLBJTmXh0WG7nz=
+IJJSSEGwIpfWIflUAvXScN5UZbuI-2ByuGZJBqGKh6xY-2F4O0jvv99oXMccUSI0SeI10kPpNnP=
+iQw62e6mynfQsscucQSix1PT0HPU98mUiTFheL9fl1VrXVf819PiCQpYxie-2FlVdfawAM4ywBh=
+KF-2FnkpYQRViUcyPODj8G9bScfMAg6G-2BLu8gJQHgohCSImavCEaFvDch1Ja2YYfqD85fG1mH=
+Pmlurs3wPLOjtkV4WEoMn7HS-2B6e5OzKygYKIGVdwS83qp4xZe0IBBKNFA30cS5V4MFFl7E36A=
+4SGSFbOCVeBDYTKU4J9jhLTsWt8j-2BqjLCO4zSjeP3Nn-2FgcphL8i0hOFpV59CZcrHbgroIoq=
+zsbt5YdS2w-2FTjwVcOShrJvp0sCx4EPgo5mvu2SCyrLfyh3SLK1cihf3UxUdSvJFbRWOgirvdc=
+26" target=3D"_blank"><span>https://silksilky.com/collections/best-seller</=
+span></a></span></p><p><span style=3D"font-family:arial,helvetica,sans-seri=
+f">Validity: 8/20-8/31</span></p><p><span style=3D"font-family:arial,helvet=
+ica,sans-serif"><br></span></p><p><span style=3D"font-family:arial,helvetic=
+a,sans-serif">Description: Silk Apparel for Women</span><span style=3D"font=
+-family:arial,helvetica,sans-serif">=EF=BC=9A</span><span style=3D"font-fam=
+ily:arial,helvetica,sans-serif">save up to 64%</span></p><p><span style=3D"=
+font-family:arial,helvetica,sans-serif">URL:&nbsp;<a href=3D"https://u29708=
+799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK2XdT48tQmztTqvWN=
+g5JdkTQOr-2FPlS5dgVM8Y7eBHcWWjSSLQxRfBQyhyLjHagwC1lUr0s5BYrArQhMy9kwuP5MeAl=
+c-3D5wXR_3zuMSEr2I391ZVTnONlLoB8nykammuNioWutCF79D5o3VBBuhnKSChnAGIctxV-2BZ=
+KfN3g2-2FXmkZu9UMdN9z9IAzdMm5Pxax2-2BixBNaZ5BR8cF6paWIpZXfKG5VIi8XxNNltG6sa=
+FoFf67WWkuy-2F0VZP2NwaUFr973m-2FIOIksRJF1qStfdAU08kHOS5RPy-2FF3LNZLoJIdP7jW=
+c4I0l9QNf6CMAytsbcAEdfPmYwF8MiNvBiDt5yrJ2H-2F6CjRiwzomUWT2sh9uBA-2FV0VJvVO4=
+15zWvfMYybWRJVbEELXadaF85Qa68tXKevngYhA-2Be5-2Bsuk4I3Jp8yWugIugKgjraZQC5F-2=
+BA2xaKoC0xKZ-2F-2FctkHeC-2FVm4BzEE9DP2Kbjif0HkkukK3MJytww83X9-2Bz0ErlJN-2Bz=
+Ieoe0W7NtEP3IWMMdJ-2BzEvRbMnksF9X-2FtGocmTUpCRmfyu-2B53kUTtWMLBU9MZK373C51k=
+Ois5luQPtW1Crw-2FRd3uonrH476teq-2B9QIszKxbHN5G0A2Dw54XsX6hL-2Fces1eJCkI3shF=
+v7n-2B9hEvHA4ZVBhHLHJEq2K-2Fyjhr5p1TM2jmXxQtLNqOfy6WL9wGwOd-2FMyeD7y5XU-2Bv=
+2NascPlG1t825Sd7SFwyz73LJ9VLBJTmXh0WG7nzIJJSSEGwIpfWIflUAvXScN5UZbuI-2ByuGZ=
+JBqGKh6xY-2F4O0jvv99oXMccUSI0SeI10kPpNnPiQw62e6mynfQsscucQSix1PT0HPU98mUiTF=
+heL9fl1VrXVf819PiCQpYxie-2FlVdfawAM4ywBhKF-2FnkpYQRViUcyPODj8G9bScfMAg6G-2B=
+Lu8gJQHgohCSImavCEaFvDch1Ja2YYfqD85fG1mHPmlurs3wPLOjtkV4WEoMn7HS-2B6e5OzKyg=
+YKIGVdwS83qp4xZe0IBBKNFA30cS5V4MFFl7Gm-2B-2FHqtxUO5ZHqMW32-2B4wxDGOBBvkDlZc=
+ATpOOubVxotUJV6KKB-2F-2FUxHPRhZ6AZOMYNKBHDR3KzE5dFqC8kXIbbOaJeXlreqLa9xJnDZ=
+a3teHU3veatn2YkRieqo6G2pimW8rxrl3g4-2B-2F4S2LQT1Z1" target=3D"_blank"><span=
+>https://silksilky.com/collections/silk-apparel-for-women</span></a></span>=
+</p><p><span style=3D"font-family:arial,helvetica,sans-serif">Validity: 8/2=
+0-8/31</span></p><p><span style=3D"font-family:arial,helvetica,sans-serif">=
+<br></span></p><p><span style=3D"font-family:arial,helvetica,sans-serif">Al=
+l the codes are ready.&nbsp;&nbsp;Let=E2=80=99s work together to bring thes=
+e deals to more users. Looking forward to your active participation!<br>Fee=
+l free to reach out if you need any additional materials or assistance.</sp=
+an></p><p><span style=3D"font-family:arial,helvetica,sans-serif"><br></span=
+></p><p><span style=3D"font-family:arial,helvetica,sans-serif">Best regards=
+,</span></p><p><span style=3D"font-family:arial,helvetica,sans-serif">Rita<=
+/span></p><span style=3D"font-family:arial,helvetica,sans-serif"> </span><d=
+iv><span style=3D"font-family:arial,helvetica,sans-serif"><br><a href=3D"ht=
+tps://u29708799.ct.sendgrid.net/ls/click?upn=3Du001.B8VMPMOzxR7RPOX-2BK2XdT=
+xbxD4UJGmtW8DAxp3YXsDa7MPMCTETs3WSo52RM6Q9Hs8pDVfvfmNT63AenKOog8JaiDndXVwiw=
+AsDekYhF4jivDo3-2FDgz80psmYRJ5YzxQmGQ7dS-2B-2FB9Xn0qBHPXDdxttiZW9ZzYlWBxj2U=
+ThGYyWPqLQ1-2B0-2F3NWTN2KfoNxM5JsWOBpe0-2FxyuydrKKLB8YDcbE49IDt0Oye9GG0KoUs=
+7f2nJfQQiYW4-2BNWxCXgLcpyU46ozFGrHY6pX51kE7gH0jcWfoooWzj-2BTyDduRfxYqjB2vVd=
+IpOVrosuWWZknMeqHxl-2FbaA0UQQM0bhjRtP5A-3D-3DiWEz_3zuMSEr2I391ZVTnONlLoB8ny=
+kammuNioWutCF79D5o3VBBuhnKSChnAGIctxV-2BZKfN3g2-2FXmkZu9UMdN9z9IAzdMm5Pxax2=
+-2BixBNaZ5BR8cF6paWIpZXfKG5VIi8XxNNltG6saFoFf67WWkuy-2F0VZP2NwaUFr973m-2FIO=
+IksRJF1qStfdAU08kHOS5RPy-2FF3LNZLoJIdP7jWc4I0l9QNf6CMAytsbcAEdfPmYwF8MiNvBi=
+Dt5yrJ2H-2F6CjRiwzomUWT2sh9uBA-2FV0VJvVO415zWvfMYybWRJVbEELXadaF85Qa68tXKev=
+ngYhA-2Be5-2Bsuk4I3Jp8yWugIugKgjraZQC5F-2BA2xaKoC0xKZ-2F-2FctkHeC-2FVm4BzEE=
+9DP2Kbjif0HkkukK3MJytww83X9-2Bz0ErlJN-2BzIeoe0W7NtEP3IWMMdJ-2BzEvRbMnksF9X-=
+2FtGocmTUpCRmfyu-2B53kUTtWMLBU9MZK373C51kOis5luQPtW1Crw-2FRd3uonrH476teq-2B=
+9QIszKxbHN5G0A2Dw54XsX6hL-2Fces1eJCkI3shFv7n-2B9hEvHA4ZVBhHLHJEq2K-2Fyjhr5p=
+1TM2jmXxQtLNqOfy6WL9wGwOd-2FMyeD7y5XU-2Bv2NascPlG1t825Sd7SFwyz73LJ9VLBJTmXh=
+0WG7nzIJJSSEGwIpfWIflUAvXScN5UZbuI-2ByuGZJBqGKh6xY-2F4O0jvv99oXMccUSI0SeI10=
+kPpNnPiQw62e6mynfQsscucQSix1PT0HPU98mUiTFheL9fl1VrXVf819PiCQpYxie-2FlVdfawA=
+M4ywBhKF-2FnkpYQRViUcyPODj8G9bScfMAg6G-2BLu8gJQHgohCSImavCEaFvDch1Ja2YYfqD8=
+5fG1mHPmlurs3wPLOjtkV4WEoMn7HS-2B6e5OzKygYKIGVdwS83qp4xZe0IBBKNFA30cS5V4MFF=
+l7GBDSCrJTZBbGKtqNhmMUz1OgxIjmtPjtEGeeJqUsM0rNa32m7JG7mdrEh7xoVhyUvHuNt2vro=
+cKJeXmOF9JLEh-2BwWCleCqrKArrzrq1Tf8VdGXT-2FhMi6bQenGFpzh2VKc9RqixCLoqYsafiL=
+X82xTl" target=3D"_blank"> Unsubscribe</a></span></div><img src=3D"https://=
+u29708799.ct.sendgrid.net/wf/open?upn=3Du001.D00MiZwg4C8IrIZFnBr5UcyXw4FBT8=
+uXp-2BXEv7z1R5E-2B9S6PXPe1L-2BXlsdODM0g5MQbzITmSF0oy7j2lRqfEwgaQ9KiVPtzvp-2=
+B29vaFbNAIrKB9ISQdAQTLCbdvmZT-2BOrMgSUYmhKRpQbaoiJCW8L5LVx4zwnTnvge0ay8U8oa=
+F-2Ft0fxvMS6e54u9itDZqR556kE-2B4pwI-2FsysXMw6lXJlefV-2F3cYNQza6sEZyh8vgwId9=
+7UcBRM1-2BIEsXLk0WBkNLVPjDjAhuELB3XyOeRrCXkIr90pYmxgTAKdcf-2BXE75EbcTY1ffjb=
+1fBCLzE2S-2FQW5UBg07VWLtiXklQeCDejgzE-2BhVDIVdQcgbZu1DqsoNGYoTonIqjLDIhsS6c=
+d5zTW3ZTd7vLppK8py6gzMIa6QebhCAOleJPDGApqongxqIsFpWMJFj9n7p00RJdhAhZnXMsCes=
+ySDc9gqnsQkDSeAuBPMzyd-2FAxrsgSUs3uiodDEog3w6jCfKQG-2FTUbfQSyRuvx5Qc8jqYyT1=
+UgZ8Z-2FtTZbNeofIFBVkIcI1PvntlhUv-2F0gsj0EbbfEOU0f2qzi-2BYDMY-2B4HjaaRkcr5G=
+5khktSkhbeWsz-2Bhd0YgnUHw-2Banh2Y0amUg4A7TiWIop7117oBDgt3rLzc8SvFQGRMVoeuTe=
+sOLOFeeQ32F2i9HxWUBfcItncB3yjpoeg9NBQQGTtdcfHJQpiCd0U110gP2dWDrfNwKXsdD1ECq=
+REqrQujLXAO8UbsfcFroBTA-2FAoQx71iSDx0LM8ZxbdXvN1mDQGVOSuUMBda1TnJfAxI2JKSCB=
+4CRtCVTtArFfIhamrqZpED8BbY0EQ-2B0mnWurrKYYY7uQdirKES2hIv6LuzMCwciIk2Yo3RrfO=
+1BYYCNSNDwUsSl4GHY-2BdoMEvIE-2BoHJIDo95HeXZK5gs3389EKzuxeNK6u5yvfJBF1VTnQoz=
+atd7w2f3V8fZ2Ia9PMrG665DAawGmW2E0Hfv6dmVv-2BesVp9foHVp60va0dTBr2yuQIzDNKq2z=
+qO0QtpoxQ-2Fc-2FKnt0IFP1EjdssLnFMvmMTVHUMRd-2FkC8In8-2BLqaUTdYv4AvNE" alt=
+=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height: 1px; width: 1p=
+x; border-width: 0px; margin: 0px; padding: 0px;"></div>
+</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
+=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
+ignature"><div dir=3D"ltr"><table cellpadding=3D"0" cellspacing=3D"0" style=
+=3D"vertical-align:-webkit-baseline-middle;font-family:Tahoma"><tbody><tr><=
+td><table cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align:-webk=
+it-baseline-middle"><tbody><tr><td style=3D"vertical-align:top"><table cell=
+padding=3D"0" cellspacing=3D"0" style=3D"vertical-align:-webkit-baseline-mi=
+ddle"><tbody><tr><td style=3D"text-align:center"><img src=3D"https://www.ko=
+smos-marketing.com/img/kosmosfavicon.png" width=3D"130" style=3D"max-width:=
+ 130px; display: block;"></td></tr><tr><td height=3D"30"></td></tr><tr><td =
+style=3D"text-align:center"><table cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"vertical-align:-webkit-baseline-middle;display:inline-block"><tbody><t=
+r><td><a href=3D"https://www.facebook.com/KosmosMarketing" color=3D"#1BB1DC=
+" style=3D"color:rgb(17,85,204);display:inline-block;padding:0px;background=
+-color:rgb(27,177,220)" target=3D"_blank"><img src=3D"https://cdn2.hubspot.=
+net/hubfs/53/tools/email-signature-generator/icons/facebook-icon-2x.png" al=
+t=3D"facebook" color=3D"#1BB1DC" height=3D"24" style=3D"max-width: 135px; d=
+isplay: block;"></a></td><td width=3D"5"><div></div></td><td><a href=3D"htt=
+ps://www.linkedin.com/company/kosmos-marketing-bcn" color=3D"#1BB1DC" style=
+=3D"color:rgb(17,85,204);display:inline-block;padding:0px;background-color:=
+rgb(27,177,220)" target=3D"_blank"><img src=3D"https://cdn2.hubspot.net/hub=
+fs/53/tools/email-signature-generator/icons/linkedin-icon-2x.png" alt=3D"li=
+nkedin" color=3D"#1BB1DC" height=3D"24" style=3D"max-width: 135px; display:=
+ block;"></a></td><td width=3D"5"><div></div></td></tr></tbody></table></td=
+></tr></tbody></table></td><td width=3D"46"><div></div></td><td style=3D"pa=
+dding:0px;vertical-align:middle"><h3 color=3D"#000000" style=3D"margin:0px;=
+font-size:18px;color:rgb(0,0,0)"><span style=3D"font-weight:normal"><font s=
+ize=3D"2">Ariadna Torn=C3=A9</font></span></h3><p color=3D"#000000" style=
+=3D"margin:0px;color:rgb(0,0,0);font-size:14px;line-height:22px"><font size=
+=3D"2">Marketing &amp; Sales Specialist</font></p><p color=3D"#000000" styl=
+e=3D"margin:0px;color:rgb(0,0,0);font-size:14px;line-height:22px"><font siz=
+e=3D"2">Kosmos Marketing</font></p><table cellpadding=3D"0" cellspacing=3D"=
+0" style=3D"color:rgb(255,255,255);vertical-align:-webkit-baseline-middle;w=
+idth:278px"><tbody><tr><td height=3D"10"></td></tr><tr><td color=3D"#1bb1dC=
+" height=3D"1" style=3D"width:278px;border-bottom:2px solid rgb(27,177,220)=
+;border-left:none;display:block"></td></tr><tr><td height=3D"10"></td></tr>=
+</tbody></table><table cellpadding=3D"0" cellspacing=3D"0" style=3D"color:r=
+gb(255,255,255);vertical-align:-webkit-baseline-middle"><tbody><tr height=
+=3D"25" style=3D"vertical-align:middle"><td width=3D"30" style=3D"vertical-=
+align:middle"><br></td><td style=3D"padding:0px;color:rgb(0,0,0)"><br></td>=
+</tr><tr height=3D"25" style=3D"vertical-align:middle"><td width=3D"30" sty=
+le=3D"vertical-align:middle"><table cellpadding=3D"0" cellspacing=3D"0" sty=
+le=3D"vertical-align:-webkit-baseline-middle"><tbody><tr><td style=3D"verti=
+cal-align:bottom"><span color=3D"#1bb1dC" width=3D"11" style=3D"display:blo=
+ck;background-color:rgb(27,177,220)"><img src=3D"https://cdn2.hubspot.net/h=
+ubfs/53/tools/email-signature-generator/icons/email-icon-2x.png" color=3D"#=
+1bb1dC" width=3D"13" style=3D"display: block;"></span></td></tr></tbody></t=
+able></td><td style=3D"padding:0px"><a href=3D"mailto:atorne@kosmos-marketi=
+ng.com" color=3D"#000000" style=3D"color:rgb(0,0,0)" target=3D"_blank">ator=
+ne@kosmos-marketing.com</a></td></tr><tr height=3D"25" style=3D"vertical-al=
+ign:middle"><td width=3D"30" style=3D"vertical-align:middle"><table cellpad=
+ding=3D"0" cellspacing=3D"0" style=3D"vertical-align:-webkit-baseline-middl=
+e"><tbody><tr><td style=3D"vertical-align:bottom"><span color=3D"#1bb1dC" w=
+idth=3D"11" style=3D"display:block;background-color:rgb(27,177,220)"><img s=
+rc=3D"https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/ico=
+ns/link-icon-2x.png" color=3D"#1bb1dC" width=3D"13" style=3D"display: block=
+;"></span></td></tr></tbody></table></td><td style=3D"padding:0px"><a href=
+=3D"https://kosmos-marketing.com/" color=3D"#000000" style=3D"color:rgb(0,0=
+,0)" target=3D"_blank">kosmos-marketing.com</a></td></tr><tr height=3D"25" =
+style=3D"vertical-align:middle"><td width=3D"30" style=3D"vertical-align:mi=
+ddle"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align:-w=
+ebkit-baseline-middle"><tbody><tr><td style=3D"vertical-align:bottom"><span=
+ color=3D"#1bb1dC" width=3D"11" style=3D"display:block;background-color:rgb=
+(27,177,220)"><img src=3D"https://cdn2.hubspot.net/hubfs/53/tools/email-sig=
+nature-generator/icons/address-icon-2x.png" color=3D"#1bb1dC" width=3D"13" =
+style=3D"display: block;"></span></td></tr></tbody></table></td><td style=
+=3D"padding:0px"><span color=3D"#000000" style=3D"color:rgb(0,0,0)">Carrer =
+de la Llacuna 22, 4-4, Barcelona, Catalonia, Spain</span></td></tr></tbody>=
+</table><br style=3D"color:rgb(34,34,34)"></td></tr></tbody></table></td></=
+tr></tbody></table></div></div>
+</blockquote></div></div>
+</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
+=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
+ignature"><div dir=3D"ltr"><table cellpadding=3D"0" cellspacing=3D"0" style=
+=3D"vertical-align:-webkit-baseline-middle;font-size:medium;font-family:Tah=
+oma"><tbody><tr><td><table cellpadding=3D"0" cellspacing=3D"0" style=3D"ver=
+tical-align:-webkit-baseline-middle"><tbody><tr><td style=3D"vertical-align=
+:top"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align:-w=
+ebkit-baseline-middle"><tbody><tr><td style=3D"text-align:center"><img src=
+=3D"https://www.kosmos-marketing.com/img/kosmosfavicon.png" width=3D"130" s=
+tyle=3D"max-width: 130px; display: block;"></td></tr><tr><td height=3D"30">=
+</td></tr><tr><td style=3D"text-align:center"><table cellpadding=3D"0" cell=
+spacing=3D"0" style=3D"vertical-align:-webkit-baseline-middle;display:inlin=
+e-block"><tbody><tr><td><a href=3D"https://www.facebook.com/KosmosMarketing=
+" color=3D"#1BB1DC" style=3D"color:rgb(17,85,204);display:inline-block;padd=
+ing:0px;background-color:rgb(27,177,220)" target=3D"_blank"><img src=3D"htt=
+ps://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/facebo=
+ok-icon-2x.png" alt=3D"facebook" color=3D"#1BB1DC" height=3D"24" style=3D"m=
+ax-width: 135px; display: block;"></a></td><td width=3D"5"><div></div></td>=
+<td><a href=3D"https://www.linkedin.com/company/kosmos-marketing-bcn" color=
+=3D"#1BB1DC" style=3D"color:rgb(17,85,204);display:inline-block;padding:0px=
+;background-color:rgb(27,177,220)" target=3D"_blank"><img src=3D"https://cd=
+n2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/linkedin-icon=
+-2x.png" alt=3D"linkedin" color=3D"#1BB1DC" height=3D"24" style=3D"max-widt=
+h: 135px; display: block;"></a></td><td width=3D"5"><div></div></td></tr></=
+tbody></table></td></tr></tbody></table></td><td width=3D"46"><div></div></=
+td><td style=3D"padding:0px;vertical-align:middle"><h3 color=3D"#000000" st=
+yle=3D"margin:0px;font-size:18px;color:rgb(0,0,0)">Ariadna Torn=C3=A9</h3><=
+p color=3D"#000000" style=3D"margin:0px;color:rgb(0,0,0);font-size:14px;lin=
+e-height:22px">Marketing &amp; Sales Specialist</p><p color=3D"#000000" sty=
+le=3D"margin:0px;color:rgb(0,0,0);font-size:14px;line-height:22px">Kosmos M=
+arketing</p><table cellpadding=3D"0" cellspacing=3D"0" style=3D"color:rgb(2=
+55,255,255);vertical-align:-webkit-baseline-middle;width:278px"><tbody><tr>=
+<td height=3D"10"></td></tr><tr><td color=3D"#1bb1dC" height=3D"1" style=3D=
+"width:278px;border-bottom:2px solid rgb(27,177,220);border-left:none;displ=
+ay:block"></td></tr><tr><td height=3D"10"></td></tr></tbody></table><table =
+cellpadding=3D"0" cellspacing=3D"0" style=3D"color:rgb(255,255,255);vertica=
+l-align:-webkit-baseline-middle"><tbody><tr height=3D"25" style=3D"vertical=
+-align:middle"><td width=3D"30" style=3D"vertical-align:middle"><br></td><t=
+d style=3D"padding:0px;color:rgb(0,0,0)"><br></td></tr><tr height=3D"25" st=
+yle=3D"vertical-align:middle"><td width=3D"30" style=3D"vertical-align:midd=
+le"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align:-web=
+kit-baseline-middle"><tbody><tr><td style=3D"vertical-align:bottom"><span c=
+olor=3D"#1bb1dC" width=3D"11" style=3D"display:block;background-color:rgb(2=
+7,177,220)"><img src=3D"https://cdn2.hubspot.net/hubfs/53/tools/email-signa=
+ture-generator/icons/email-icon-2x.png" color=3D"#1bb1dC" width=3D"13" styl=
+e=3D"display: block;"></span></td></tr></tbody></table></td><td style=3D"pa=
+dding:0px"><a href=3D"mailto:atorne@kosmos-marketing.com" color=3D"#000000"=
+ style=3D"color:rgb(0,0,0);font-size:12px" target=3D"_blank">atorne@kosmos-=
+marketing.com</a></td></tr><tr height=3D"25" style=3D"vertical-align:middle=
+"><td width=3D"30" style=3D"vertical-align:middle"><table cellpadding=3D"0"=
+ cellspacing=3D"0" style=3D"vertical-align:-webkit-baseline-middle"><tbody>=
+<tr><td style=3D"vertical-align:bottom"><span color=3D"#1bb1dC" width=3D"11=
+" style=3D"display:block;background-color:rgb(27,177,220)"><img src=3D"http=
+s://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-ic=
+on-2x.png" color=3D"#1bb1dC" width=3D"13" style=3D"display: block;"></span>=
+</td></tr></tbody></table></td><td style=3D"padding:0px"><a href=3D"https:/=
+/kosmos-marketing.com/" color=3D"#000000" style=3D"color:rgb(0,0,0);font-si=
+ze:12px" target=3D"_blank">kosmos-marketing.com</a></td></tr><tr height=3D"=
+25" style=3D"vertical-align:middle"><td width=3D"30" style=3D"vertical-alig=
+n:middle"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-alig=
+n:-webkit-baseline-middle"><tbody><tr><td style=3D"vertical-align:bottom"><=
+span color=3D"#1bb1dC" width=3D"11" style=3D"display:block;background-color=
+:rgb(27,177,220)"><img src=3D"https://cdn2.hubspot.net/hubfs/53/tools/email=
+-signature-generator/icons/address-icon-2x.png" color=3D"#1bb1dC" width=3D"=
+13" style=3D"display: block;"></span></td></tr></tbody></table></td><td sty=
+le=3D"padding:0px"><span color=3D"#000000" style=3D"font-size:12px;color:rg=
+b(0,0,0)">Carrer de la Llacuna 22, 4-4, Barcelona, Catalonia, Spain</span><=
+/td></tr></tbody></table><br style=3D"color:rgb(34,34,34)"></td></tr></tbod=
+y></table></td></tr></tbody></table></div></div>
+
+--000000000000641d7e063cf1bdbd--

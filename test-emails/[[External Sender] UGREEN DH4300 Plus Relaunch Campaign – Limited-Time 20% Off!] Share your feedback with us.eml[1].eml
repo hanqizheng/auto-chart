@@ -1,0 +1,271 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:541b:b0:1d03:27cf:8dbe with SMTP id d27csp210842njk;
+        Sat, 30 Aug 2025 09:01:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQSgpTSYzxzZ05wNiANvHOYHN6ypugAND2CXU10iBCQ8OTJ1WWP4N0HsqXEYOzPyBe4kTF
+X-Received: by 2002:a17:902:f642:b0:234:986c:66cf with SMTP id d9443c01a7336-24944ac387bmr31525075ad.16.1756569719460;
+        Sat, 30 Aug 2025 09:01:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756569719; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gmCgob0BiGYCicQwdQoShJElN3H2YfGArQG0vfyTzkAJ6xMMlA/2bK4riSEWxjDWHZ
+         HB1Zc7ryUCAqgEYIdRz6nKnDxmvAZn9QiT/BoZU0dhW7mhgJ4nynlu+wuICMpFC17b8f
+         NbEDeuSPIm+J0VYvrszgExshZ9epo3OPRvtGq0Cf+njyyKF3/GeExeiIycZt03Ecfbuq
+         4ivz4Q7lJVB4nwV5txoKTtyIsOTWY7KmLT29st6Ivct6DJCmCJqDF86WfOKFwwe5prs4
+         R8GMvGadHq4uQyJReFJf0ec/Qjsw69+ozr8PBxNZ0U2SqlzOee8aqb5HT8Jd0TMqFOcA
+         ITnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=dkim-signature:auto-submitted:content-transfer-encoding
+         :mime-version:subject:references:in-reply-to:message-id:to:reply-to
+         :from:date;
+        bh=1zNmRJ8M0aH5JV2LGSfrlLo3kMrOgN3FFgi0cpX/lLg=;
+        fh=skRwHcA08KKTfqd1Nx//9Ag4RSe7XVAgEnKl+4GCmdg=;
+        b=XeIariWpC3+0apAOsxTQkC8JPF9ArPz6z+JFiF7cG1CC1D6adxrD2C5IF3cq/fn4Fb
+         8gYJcwgRcQWlGecnZwXsz6hqSKIlTuz2baYroKWVF+XDeWM3wvprZBU5eSoTeoJW1elV
+         YunNWrQnVVY8Yt8a+piLcBVELjvWageUqRn8woXP/SfiPeYN1lDWrENq+J+iReNMwK6a
+         +L9q2elbbthz1qOgACEuZWNxy1sQ/THNgK9R47j81tIkBci6+wKGGI7ZuCvqAFYkKGLu
+         p/S6MkygZBYkSfG+w3Af9Yj+M9FCGQJSf/8SxPW/sH8Skw0Bk6blghu1iPjEiaK/iXdy
+         8I0Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@capitaloneshopping.com header.s=zendesk1 header.b=m6RY7Bqn;
+       spf=pass (google.com: domain of partners@capitaloneshopping.com designates 192.161.151.7 as permitted sender) smtp.mailfrom=partners@capitaloneshopping.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=capitaloneshopping.com
+Return-Path: <partners@capitaloneshopping.com>
+Received: from mta-out7.pod13.usw2.zdsys.com (mta-out7.pod13.usw2.zdsys.com. [192.161.151.7])
+        by mx.google.com with ESMTPS id d9443c01a7336-2490370bca5si40649525ad.142.2025.08.30.09.01.59
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Aug 2025 09:01:59 -0700 (PDT)
+Received-SPF: pass (google.com: domain of partners@capitaloneshopping.com designates 192.161.151.7 as permitted sender) client-ip=192.161.151.7;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@capitaloneshopping.com header.s=zendesk1 header.b=m6RY7Bqn;
+       spf=pass (google.com: domain of partners@capitaloneshopping.com designates 192.161.151.7 as permitted sender) smtp.mailfrom=partners@capitaloneshopping.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=capitaloneshopping.com
+Received: from zendesk.com (unknown [127.0.0.6])
+	by mta-out15.pod13.usw2.zdsys.com (Zendesk) with ESMTP
+	id 79160022-17e2-48ac-8320-62649a0d7a9a
+	for <rita@affiliate.bluefocus.com>;
+	Sat, 30 Aug 2025 16:01:57 +0000 (UTC)
+Date: Sat, 30 Aug 2025 16:01:57 +0000
+From: Support <partners@capitaloneshopping.com>
+Reply-To: Support <partners@capitaloneshopping.com>
+To: "rita@affiliate.bluefocus.com" <rita@affiliate.bluefocus.com>
+Message-ID: <WNYWZG03L5R_68b320759dd0c_7815b023433c3_sprut@zendesk.com>
+In-Reply-To: <re5brRjgS5inPjW3OivgHw@geopod-ismtpd-2>
+References: <WNYWZG03L5R@zendesk.com>
+ <re5brRjgS5inPjW3OivgHw@geopod-ismtpd-2>
+Subject: =?UTF-8?Q?[[External_Sender]_UGREEN_DH4300_Plus_Relaunch_Campaign?=
+ =?UTF-8?Q?_=E2=80=93_Limited-Time_20%_Off!]_Share_your_feedback_with_us?=
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_68b32075d2b0c_7815b0234345e";
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Delivery-Context: event-id-39209956198669
+Auto-Submitted: auto-generated
+X-Auto-Response-Suppress: All
+X-Mailer: Zendesk Mailer
+X-Zendesk-From-Account-Id: c63d3d3
+X-Zendesk-Email-Id: 01K3XVDJEVG7S84TQ2804ZEWZM
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=capitaloneshopping.com; q=dns/txt; s=zendesk1; t=1756569717;
+ bh=1zNmRJ8M0aH5JV2LGSfrlLo3kMrOgN3FFgi0cpX/lLg=;
+ h=date:from:reply-to:to:message-id:in-reply-to:references:subject:mime-version:content-type:content-transfer-encoding;
+ b=m6RY7Bqn90CN6JZu8o0CagGztd0wbEdNryke/rOjkGToWSEgFckMGbNQUs96nIgBmJ8/jf/cuuVCqCfY3Ll87Xv8CwNQdSPO4mg3rjMdM+Z5q9jwG2icXx6zWQxZgJ0MgeiMhIOrSmJ/jbgO9J4VAz+a+Rg1I1qv933W7X0/MXDM6Z4F5sb23ypC96EaUpqAAJ+4FPT1RUKXQzOKqMfqvkB5uuoatsqwIU64z1/0aEVY1NOlh08ZCtuqjcaxFAMSVOVf+BtPkoZughCPvw9mT0rVcjkQIwVU7ozmclCjyD7WETgsa5qvCqrG1DFb+ivI63yBclgmBA7tJ62WK29P5A==
+MIME-Version: 1.0
+
+----==_mimepart_68b32075d2b0c_7815b0234345e
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<div>Hello rita@affiliate.bluefocus.com, we'd love to hear how we did on =
+your recent request <a href=3D"help.wikibuy.com/hc/requests/807720" targe=
+t=3D"_blank">[External Sender] UGREEN DH4300 Plus Relaunch Campaign =E2=80=
+=93 Limited-Time 20% Off!</a>. If you're up for it, take a moment to answ=
+er a few questions. We really appreciate it.
+
+Request: [External Sender] UGREEN DH4300 Plus Relaunch Campaign =E2=80=93=
+ Limited-Time 20% Off!
+
+Share your feedback with us.
+
+You can copy the following URL into your browser to rate:
+
+https://help.wikibuy.com/hc/en-us/survey_responses/01K3XVDK0CCW73XKAS0PN1=
+3W9Z?access_token=3DSDLqO4jNiu-1TrX9qdOR5bUksg
+</div>
+
+
+
+
+
+
+
+
+
+
+
+[WNYWZG-03L5R]=
+
+----==_mimepart_68b32075d2b0c_7815b0234345e
+Content-Type: text/html;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+        <style type=3D"text/css">
+          table td {
+            border-collapse: collapse;
+          }
+          body[dir=3Drtl] .directional_text_wrapper { direction: rtl; unico=
+de-bidi: embed; }
+
+        </style>
+      </head>
+      <body lang=3D"en-us" style=3D"width: 100%!important; margin: 0; paddi=
+ng: 0; " font-family:=3D"" arial,=3D"" sans-serif;?}}?=3D"">
+        <div style=3D"padding: 10px ; line-height: 18px; font-family: 'Aria=
+l',sans-serif; font-size: 12px; color:#444444;">
+          <div style=3D"color: #b5b5b5;"> </div>
+         =20
+          <p dir=3D"ltr"></p><div>Hello rita@affiliate.bluefocus.com, we'd =
+love to hear how we did on your recent request <a href=3D"help.wikibuy.com/=
+hc/requests/807720" target=3D"_blank">[External Sender] UGREEN DH4300 Plus =
+Relaunch Campaign =E2=80=93 Limited-Time 20% Off!</a>. If you're up for it,=
+ take a moment to answer a few questions. We really appreciate it.<p dir=3D=
+"ltr"></p><table align=3D"center" width=3D"100%" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"border: 10px solid =
+#f8f9f9; padding: 20px; max-width: 640px"> <tbody> <tr> <td> <table align=
+=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"presentation" style=3D"margin-block-end: 20px"> <tbody style=3D"wi=
+dth: 100%"> <tr style=3D"width: 100%"> <td data-id=3D"__react-email-column"=
+> <p style=3D"font-size: 14px; line-height: 24px; margin: 0" dir=3D"ltr"> H=
+ow would you rate the support you received? </p> </td> </tr> </tbody> </tab=
+le> <table align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" role=3D"presentation" style=3D"margin-block-start: 12px; b=
+order-spacing: 0 4px"> <tbody style=3D"width: 100%"> <tr style=3D"width: 10=
+0%"> <td data-id=3D"__react-email-column"> <a href=3D"https://help.wikibuy.=
+com/hc/en-us/survey_responses/01K3XVDK0CCW73XKAS0PN13W9Z?access_token=3DSDL=
+qO4jNiu-1TrX9qdOR5bUksg&amp;rating=3D5" style=3D" line-height: 100%; text-d=
+ecoration: none; display: inline-block; max-width: 100%; border: 1px solid =
+#1f73b7; border-radius: 4px; color: #1f73b7; background-color: #fff; paddin=
+g: 10px 16px 10px 16px; width: 80px; text-align: center; font-size: 18px; "=
+ target=3D"_blank"><span><!--[if mso ]><i style=3D"mso-font-width: 400%; ms=
+o-text-raise: 15" hidden >&#8202;&#8202;</i ><! [endif]--></span><span styl=
+e=3D" max-width: 100%; display: inline-block; line-height: 120%; mso-paddin=
+g-alt: 0px; mso-text-raise: 7.5px; ">5</span><span><!--[if mso ]><i style=
+=3D"mso-font-width: 400%" hidden >&#8202;&#8202;&#8203;</i ><! [endif]--></=
+span></a> <a href=3D"https://help.wikibuy.com/hc/en-us/survey_responses/01K=
+3XVDK0CCW73XKAS0PN13W9Z?access_token=3DSDLqO4jNiu-1TrX9qdOR5bUksg&amp;ratin=
+g=3D5" style=3D" line-height: 100%; text-decoration: none; display: inline-=
+block; max-width: 100%; color: #1f73b7; background-color: #fff; padding: 10=
+px 16px 10px 16px; " target=3D"_blank"><span><!--[if mso ]><i style=3D"mso-=
+font-width: 400%; mso-text-raise: 15" hidden >&#8202;&#8202;</i ><! [endif]=
+--></span><span style=3D" max-width: 100%; display: inline-block; line-heig=
+ht: 120%; mso-padding-alt: 0px; mso-text-raise: 7.5px; ">Very satisfied</sp=
+an><span><!--[if mso ]><i style=3D"mso-font-width: 400%" hidden >&#8202;&#8=
+202;&#8203;</i ><! [endif]--></span></a> </td> </tr> </tbody> </table><tabl=
+e align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" style=3D"margin-block-start: 12px; border-spa=
+cing: 0 4px"> <tbody style=3D"width: 100%"> <tr style=3D"width: 100%"> <td =
+data-id=3D"__react-email-column"> <a href=3D"https://help.wikibuy.com/hc/en=
+-us/survey_responses/01K3XVDK0CCW73XKAS0PN13W9Z?access_token=3DSDLqO4jNiu-1=
+TrX9qdOR5bUksg&amp;rating=3D4" style=3D" line-height: 100%; text-decoration=
+: none; display: inline-block; max-width: 100%; border: 1px solid #1f73b7; =
+border-radius: 4px; color: #1f73b7; background-color: #fff; padding: 10px 1=
+6px 10px 16px; width: 80px; text-align: center; font-size: 18px; " target=
+=3D"_blank"><span><!--[if mso ]><i style=3D"mso-font-width: 400%; mso-text-=
+raise: 15" hidden >&#8202;&#8202;</i ><! [endif]--></span><span style=3D" m=
+ax-width: 100%; display: inline-block; line-height: 120%; mso-padding-alt: =
+0px; mso-text-raise: 7.5px; ">4</span><span><!--[if mso ]><i style=3D"mso-f=
+ont-width: 400%" hidden >&#8202;&#8202;&#8203;</i ><! [endif]--></span></a>=
+ <a href=3D"https://help.wikibuy.com/hc/en-us/survey_responses/01K3XVDK0CCW=
+73XKAS0PN13W9Z?access_token=3DSDLqO4jNiu-1TrX9qdOR5bUksg&amp;rating=3D4" st=
+yle=3D" line-height: 100%; text-decoration: none; display: inline-block; ma=
+x-width: 100%; color: #1f73b7; background-color: #fff; padding: 10px 16px 1=
+0px 16px; " target=3D"_blank"><span><!--[if mso ]><i style=3D"mso-font-widt=
+h: 400%; mso-text-raise: 15" hidden >&#8202;&#8202;</i ><! [endif]--></span=
+><span style=3D" max-width: 100%; display: inline-block; line-height: 120%;=
+ mso-padding-alt: 0px; mso-text-raise: 7.5px; "></span><span><!--[if mso ]>=
+<i style=3D"mso-font-width: 400%" hidden >&#8202;&#8202;&#8203;</i ><! [end=
+if]--></span></a> </td> </tr> </tbody> </table><table align=3D"center" widt=
+h=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"present=
+ation" style=3D"margin-block-start: 12px; border-spacing: 0 4px"> <tbody st=
+yle=3D"width: 100%"> <tr style=3D"width: 100%"> <td data-id=3D"__react-emai=
+l-column"> <a href=3D"https://help.wikibuy.com/hc/en-us/survey_responses/01=
+K3XVDK0CCW73XKAS0PN13W9Z?access_token=3DSDLqO4jNiu-1TrX9qdOR5bUksg&amp;rati=
+ng=3D3" style=3D" line-height: 100%; text-decoration: none; display: inline=
+-block; max-width: 100%; border: 1px solid #1f73b7; border-radius: 4px; col=
+or: #1f73b7; background-color: #fff; padding: 10px 16px 10px 16px; width: 8=
+0px; text-align: center; font-size: 18px; " target=3D"_blank"><span><!--[if=
+ mso ]><i style=3D"mso-font-width: 400%; mso-text-raise: 15" hidden >&#8202=
+;&#8202;</i ><! [endif]--></span><span style=3D" max-width: 100%; display: =
+inline-block; line-height: 120%; mso-padding-alt: 0px; mso-text-raise: 7.5p=
+x; ">3</span><span><!--[if mso ]><i style=3D"mso-font-width: 400%" hidden >=
+&#8202;&#8202;&#8203;</i ><! [endif]--></span></a> <a href=3D"https://help.=
+wikibuy.com/hc/en-us/survey_responses/01K3XVDK0CCW73XKAS0PN13W9Z?access_tok=
+en=3DSDLqO4jNiu-1TrX9qdOR5bUksg&amp;rating=3D3" style=3D" line-height: 100%=
+; text-decoration: none; display: inline-block; max-width: 100%; color: #1f=
+73b7; background-color: #fff; padding: 10px 16px 10px 16px; " target=3D"_bl=
+ank"><span><!--[if mso ]><i style=3D"mso-font-width: 400%; mso-text-raise: =
+15" hidden >&#8202;&#8202;</i ><! [endif]--></span><span style=3D" max-widt=
+h: 100%; display: inline-block; line-height: 120%; mso-padding-alt: 0px; ms=
+o-text-raise: 7.5px; "></span><span><!--[if mso ]><i style=3D"mso-font-widt=
+h: 400%" hidden >&#8202;&#8202;&#8203;</i ><! [endif]--></span></a> </td> <=
+/tr> </tbody> </table><table align=3D"center" width=3D"100%" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"margin-bl=
+ock-start: 12px; border-spacing: 0 4px"> <tbody style=3D"width: 100%"> <tr =
+style=3D"width: 100%"> <td data-id=3D"__react-email-column"> <a href=3D"htt=
+ps://help.wikibuy.com/hc/en-us/survey_responses/01K3XVDK0CCW73XKAS0PN13W9Z?=
+access_token=3DSDLqO4jNiu-1TrX9qdOR5bUksg&amp;rating=3D2" style=3D" line-he=
+ight: 100%; text-decoration: none; display: inline-block; max-width: 100%; =
+border: 1px solid #1f73b7; border-radius: 4px; color: #1f73b7; background-c=
+olor: #fff; padding: 10px 16px 10px 16px; width: 80px; text-align: center; =
+font-size: 18px; " target=3D"_blank"><span><!--[if mso ]><i style=3D"mso-fo=
+nt-width: 400%; mso-text-raise: 15" hidden >&#8202;&#8202;</i ><! [endif]--=
+></span><span style=3D" max-width: 100%; display: inline-block; line-height=
+: 120%; mso-padding-alt: 0px; mso-text-raise: 7.5px; ">2</span><span><!--[i=
+f mso ]><i style=3D"mso-font-width: 400%" hidden >&#8202;&#8202;&#8203;</i =
+><! [endif]--></span></a> <a href=3D"https://help.wikibuy.com/hc/en-us/surv=
+ey_responses/01K3XVDK0CCW73XKAS0PN13W9Z?access_token=3DSDLqO4jNiu-1TrX9qdOR=
+5bUksg&amp;rating=3D2" style=3D" line-height: 100%; text-decoration: none; =
+display: inline-block; max-width: 100%; color: #1f73b7; background-color: #=
+fff; padding: 10px 16px 10px 16px; " target=3D"_blank"><span><!--[if mso ]>=
+<i style=3D"mso-font-width: 400%; mso-text-raise: 15" hidden >&#8202;&#8202=
+;</i ><! [endif]--></span><span style=3D" max-width: 100%; display: inline-=
+block; line-height: 120%; mso-padding-alt: 0px; mso-text-raise: 7.5px; "></=
+span><span><!--[if mso ]><i style=3D"mso-font-width: 400%" hidden >&#8202;&=
+#8202;&#8203;</i ><! [endif]--></span></a> </td> </tr> </tbody> </table><ta=
+ble align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" role=3D"presentation" style=3D"margin-block-start: 12px; border-s=
+pacing: 0 4px"> <tbody style=3D"width: 100%"> <tr style=3D"width: 100%"> <t=
+d data-id=3D"__react-email-column"> <a href=3D"https://help.wikibuy.com/hc/=
+en-us/survey_responses/01K3XVDK0CCW73XKAS0PN13W9Z?access_token=3DSDLqO4jNiu=
+-1TrX9qdOR5bUksg&amp;rating=3D1" style=3D" line-height: 100%; text-decorati=
+on: none; display: inline-block; max-width: 100%; border: 1px solid #1f73b7=
+; border-radius: 4px; color: #1f73b7; background-color: #fff; padding: 10px=
+ 16px 10px 16px; width: 80px; text-align: center; font-size: 18px; " target=
+=3D"_blank"><span><!--[if mso ]><i style=3D"mso-font-width: 400%; mso-text-=
+raise: 15" hidden >&#8202;&#8202;</i ><! [endif]--></span><span style=3D" m=
+ax-width: 100%; display: inline-block; line-height: 120%; mso-padding-alt: =
+0px; mso-text-raise: 7.5px; ">1</span><span><!--[if mso ]><i style=3D"mso-f=
+ont-width: 400%" hidden >&#8202;&#8202;&#8203;</i ><! [endif]--></span></a>=
+ <a href=3D"https://help.wikibuy.com/hc/en-us/survey_responses/01K3XVDK0CCW=
+73XKAS0PN13W9Z?access_token=3DSDLqO4jNiu-1TrX9qdOR5bUksg&amp;rating=3D1" st=
+yle=3D" line-height: 100%; text-decoration: none; display: inline-block; ma=
+x-width: 100%; color: #1f73b7; background-color: #fff; padding: 10px 16px 1=
+0px 16px; " target=3D"_blank"><span><!--[if mso ]><i style=3D"mso-font-widt=
+h: 400%; mso-text-raise: 15" hidden >&#8202;&#8202;</i ><! [endif]--></span=
+><span style=3D" max-width: 100%; display: inline-block; line-height: 120%;=
+ mso-padding-alt: 0px; mso-text-raise: 7.5px; ">Very unsatisfied</span><spa=
+n><!--[if mso ]><i style=3D"mso-font-width: 400%" hidden >&#8202;&#8202;&#8=
+203;</i ><! [endif]--></span></a> </td> </tr> </tbody> </table> </td> </tr>=
+ </tbody> </table></div>
+         =20
+        </div>
+      <span style=3D"color:#FFFFFF" aria-hidden=3D"true" class=3D"zd_encode=
+d_id">[WNYWZG-03L5R]</span>
+     =20
+</body></html>=
+
+----==_mimepart_68b32075d2b0c_7815b0234345e--

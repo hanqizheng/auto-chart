@@ -1,0 +1,112 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5809261nji;
+        Mon, 25 Aug 2025 07:26:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEHfwf+oPe0NpMhYuG04JwqsOV0XvZIXc9tbh25u+X0XEPjjdf/MCuR/J+lqjeknFNQ0PEY
+X-Received: by 2002:a05:620a:4614:b0:7ee:1aaa:e1ec with SMTP id af79cd13be357-7ee1aaae395mr794019185a.17.1756131996839;
+        Mon, 25 Aug 2025 07:26:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756131996; cv=none;
+        d=google.com; s=arc-20240605;
+        b=aTVa91weEbFCQQh4cc5mqZjo2PbSILYzDt3YnSnTFUTol2uZIeY9vZ/WBgAfGAwCvT
+         whyNtaK+3tNgkTRDeZZ42GfLSFAqd0EpggQ9KIyPyjHT5LLJyy6z6m5qfawDTq4O9MTk
+         1rNxqYOT7ayElXfoGlBsS+8FhAiTsqlUSnP/Blbz8qxgU5ZTjB9ybRPBx1/fwRm/T/Kv
+         7yAS0/Yvs5/nIhfINq1UQfppDwoOe2wMZpMG470RBKjtmNOlrf3IpjF36t5KZb+jT2k4
+         Lgwj6R+8WmNE9YcqakwDPprR3Mk98go6hNZ6eH71qyaJcCZ3Jz9M4ncCEg/YMpeCRJNq
+         +SeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:auto-submitted:reply-to:references:in-reply-to:to:from
+         :subject:mime-version:date:sender:dkim-signature;
+        bh=ETiztWhi6zFTmpUQGrgjqgc8U68Btba2CYYRbybod/0=;
+        fh=z1MbCQN7ZmJy1kdV6Fjt4GRE80TsQd9EasJ/8pjS0dI=;
+        b=hN85BujfB2OqRpxIEpbutj+AwHpWOu1k2yU3dGAPXSdZOcx9sZv6eEtxtIn63RL0kg
+         bSbm9T32SJlU1AzlHB8WOJzhc6+TJcwwtJEZt4hvEYyyUGkoU0XWSKuAWVcRK7aINXXD
+         yeHCUX/k5r7eAgI9/F/RCCv8Raf6B874qnf5CzCYM4dLHpZIwnOyxM1kec62hbmtZ5Jj
+         pMeDvzCte77BS5/I6Dl2jAAJiJgzbEnV3REYuRd/p6tavuESDqut8YfT+lpF53g1a//M
+         G472OJtGG9nAoq7YvXfvkJzIXlRxDscXitrNUR3+CoDeBEfECzJnvzpFZmWlVnFLAMXP
+         Avcg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@byloftie.com header.s=gor header.b=e2b3Rfi5;
+       spf=pass (google.com: domain of bounce+77aa00.d793d6-rita=affiliate.bluefocus.com@byloftie.com designates 159.135.233.31 as permitted sender) smtp.mailfrom="bounce+77aa00.d793d6-rita=affiliate.bluefocus.com@byloftie.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=byloftie.com
+Return-Path: <bounce+77aa00.d793d6-rita=affiliate.bluefocus.com@byloftie.com>
+Received: from m233-31.mailgun.net (m233-31.mailgun.net. [159.135.233.31])
+        by mx.google.com with UTF8SMTPS id af79cd13be357-7ebf3bb9477si219836085a.1208.2025.08.25.07.26.36
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Aug 2025 07:26:36 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounce+77aa00.d793d6-rita=affiliate.bluefocus.com@byloftie.com designates 159.135.233.31 as permitted sender) client-ip=159.135.233.31;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@byloftie.com header.s=gor header.b=e2b3Rfi5;
+       spf=pass (google.com: domain of bounce+77aa00.d793d6-rita=affiliate.bluefocus.com@byloftie.com designates 159.135.233.31 as permitted sender) smtp.mailfrom="bounce+77aa00.d793d6-rita=affiliate.bluefocus.com@byloftie.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=byloftie.com
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=byloftie.com; q=dns/txt; s=gor; t=1756131995; x=1756139195;
+ h=Message-Id: reply-to: References: In-Reply-To: To: To: From: From: Subject: Subject: Content-Type: Mime-Version: Date: Sender: Sender;
+ bh=ETiztWhi6zFTmpUQGrgjqgc8U68Btba2CYYRbybod/0=;
+ b=e2b3Rfi5SFY/lwMQuxdLBdCP5RCpr0BKWgWcNDM9qu6WJg68uKpYt78vMK5WhlBZPXGBXvB6H6dbiXpPK4QMcJHIt2iaC/otgHASk0Rj6d0e2AXb+nPBAxt1VUA9iw+rTn004/7TjAirfcmr+QcCw0UoP9QMn+ElLtpaAat/W6o=
+X-Mailgun-Sid: WyIyN2RjZiIsInJpdGFAYWZmaWxpYXRlLmJsdWVmb2N1cy5jb20iLCJkNzkzZDYiXQ==
+Received: by ece3694d4246a16d8cffdc7b0bb7b19fd8960e6f893a5703f873bfa92d80128e with HTTP
+ id 68ac729222230b316d36ddff; Mon, 25 Aug 2025 14:26:26 GMT
+X-Mailgun-Sending-Ip-Pool-Name: Default Gorgias Pool
+X-Mailgun-Sending-Ip-Pool: 611b5bcd781aa5a47024f0f8
+X-Mailgun-Sending-Ip: 159.135.233.31
+Sender: hello@byloftie.com
+Date: Mon, 25 Aug 2025 14:26:26 +0000
+Content-Type: multipart/alternative;
+ boundary="c6f165eb39020cc14c910d15b548a3a0ff5c996c8ebffe1a60fa227b2499"
+Subject: =?UTF-8?q?This_Week_Only:_SilkSilky_Deals_=E2=80=93_Up_to_70%_Off!?=
+From: Loftie <hello@byloftie.com>
+To: Rita Liu <rita@affiliate.bluefocus.com>
+X-Mailgun-Dkim: true
+In-Reply-To: <175612443480.199.2005858776078102979.ticket-id-gAAAAABorFUS0TpjosavFl8hTjoNPBKkBp8UFowdz_sqhmjX70b6Rv6w0K6S-McdBMRIizrtO57dgkdbAkt60JnBpg9zZo4ujw==@gorgias.com>
+X-GORGIAS-TICKET-ID: 404301957
+References: <tOr-FBMDTTGWZYhwIsSBFw@geopod-ismtpd-27>
+ <175612443480.199.2005858776078102979.ticket-id-gAAAAABorFUS0TpjosavFl8hTjoNPBKkBp8UFowdz_sqhmjX70b6Rv6w0K6S-McdBMRIizrtO57dgkdbAkt60JnBpg9zZo4ujw==@gorgias.com>
+X-Gorgias-Further-Handle: false
+reply-to: Loftie <hello@byloftie.com>
+Auto-Submitted: auto-replied
+Message-Id: <175613198684.1071.2316616469567192012.ticket-id-gAAAAABorHKSBqjbQI_N1Yo1gCe05TTZgnXzVq164VQN6tf85xEohF3OwwNgf-qUWlScxUfcffRhG0g5p47-1otp35gkKldW-A==@gorgias.com>
+MIME-Version: 1.0
+
+--c6f165eb39020cc14c910d15b548a3a0ff5c996c8ebffe1a60fa227b2499
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ascii
+
+Hi Rita,
+
+How would you rate the help Carolina gave you?
+
+https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&score=1
+https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&score=2
+https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&score=3
+https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&score=4
+https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&score=5
+
+Thanks!
+--c6f165eb39020cc14c910d15b548a3a0ff5c996c8ebffe1a60fa227b2499
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=ascii
+
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii"><div>Hi Rita,</div><div><br></div><div>How would you rate the help Carolina gave you?</div><div><br></div><div><div>
+  
+      <a href="https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&amp;score=1" style="text-decoration: none">
+          <img src="https://gorgias-assets.gorgias.io/static/public/img/satisfaction-survey/empty-star.png" width="15" height="15" crossorigin="anonymous">
+      </a>
+  
+      <a href="https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&amp;score=2" style="text-decoration: none">
+          <img src="https://gorgias-assets.gorgias.io/static/public/img/satisfaction-survey/empty-star.png" width="15" height="15" crossorigin="anonymous">
+      </a>
+  
+      <a href="https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&amp;score=3" style="text-decoration: none">
+          <img src="https://gorgias-assets.gorgias.io/static/public/img/satisfaction-survey/empty-star.png" width="15" height="15" crossorigin="anonymous">
+      </a>
+  
+      <a href="https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&amp;score=4" style="text-decoration: none">
+          <img src="https://gorgias-assets.gorgias.io/static/public/img/satisfaction-survey/empty-star.png" width="15" height="15" crossorigin="anonymous">
+      </a>
+  
+      <a href="https://loftie.gorgias.com/satisfaction-survey?token=IjQwNDMwMTk1Ny44MDYyMzAxOTUuMzA2MzU2MDIi.G44EEg.zZAAMMTw28MSDe0dbbLk3uyoTUU&amp;score=5" style="text-decoration: none">
+          <img src="https://gorgias-assets.gorgias.io/static/public/img/satisfaction-survey/empty-star.png" width="15" height="15" crossorigin="anonymous" alt="Click here to respond to the survey!">
+      </a>
+  
+</div></div><div><br></div><div>Thanks!</div>
+--c6f165eb39020cc14c910d15b548a3a0ff5c996c8ebffe1a60fa227b2499--

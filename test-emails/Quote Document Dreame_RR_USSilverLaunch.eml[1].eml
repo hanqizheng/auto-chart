@@ -1,0 +1,240 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp4230410nji;
+        Fri, 22 Aug 2025 10:13:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFuWmZDpNX6qv6k0v4GzXTSr6MiRrDIxM2kD8FHlGshsyH1c4B7BWHixfeZv/I0VhYGJtl0
+X-Received: by 2002:a05:6830:280a:b0:741:213e:2212 with SMTP id 46e09a7af769-74500a6da84mr2206191a34.17.1755882810241;
+        Fri, 22 Aug 2025 10:13:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1755882810; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Vg7MUDmxEZSkwT8LQF+tPPYS2m3DAfLUuAbq0+dP2RfuVLm0WPvl/xDAqx5x3wCZ4N
+         3DTV/ST5j7vbbhvQUjOSkfln7GtsbqSw07T1SkB79c31S0YVF6x/ftPPROfsIcofY32R
+         JhTaE9kRZXPQQ4Uobibdrr+gXBHl0eSwyOA68rQ6mJh2Bu1CAqFAfbs/i7tbIPIwgHOC
+         j8k8Dq41b5s4RFLwIVTkDDs+75esbnkY37w+S5pmM5rHfVHPZbHFng/rNh7fOABbHTdg
+         8EyPUsqa7OiY7gzIvFl6wg8ZbMOlpQsnshbzgy3oVIISpZ0gObq4VBVfjZ+xEWSnb8fG
+         T7JA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:subject:date:message-id:to:from:feedback-id:reply-to
+         :sender:dkim-signature;
+        bh=yqfAR8/4tqYUEzoCdbzOFS8ygzyut6Go6VX2vIE55L0=;
+        fh=T0bDjpbD7OIL2l4jHOHpXwvpWLVwEwYnziv+s3J6D84=;
+        b=e1lT6+eM54Opwj2gGWpxNctomlhBfBZBjRGjhcWqtui+gpVJ9WkXaXOzU6AHdZaQnl
+         Ab8wHkCypTXCzaUv9X5isizrnVgqvO0+yqayZvJFyxn/4PT/K2FFJJ1UCe7wji9eWS2o
+         pyUqPOtnty1RCM/nCsiz+e6tMSGdtkcuwU0bD6e8xHcmE1FXG3NPTq5Q+o5qQO5bweCE
+         GbfkZxTybQh/zBBTep1YQ9RyOl24/vuaa4EWv2LbeTgVISvOBB1bonbIm7CVUHhpFGPr
+         ut93CPlavXLy/thRecGD6idlFwPZC1LoCxN0tAh7/tt0WeK8GQXplX73zvw7nHvk88NM
+         ysKg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@docusign.net header.s=mail1 header.b=C1wXpwY4;
+       spf=pass (google.com: domain of dse_na2@docusign.net designates 64.207.219.8 as permitted sender) smtp.mailfrom=dse_na2@docusign.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=docusign.net
+Return-Path: <dse_na2@docusign.net>
+Received: from mailsea.docusign.net (mailsea.docusign.net. [64.207.219.8])
+        by mx.google.com with ESMTPS id 46e09a7af769-7450e54850asi50283a34.424.2025.08.22.10.13.29
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Aug 2025 10:13:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of dse_na2@docusign.net designates 64.207.219.8 as permitted sender) client-ip=64.207.219.8;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@docusign.net header.s=mail1 header.b=C1wXpwY4;
+       spf=pass (google.com: domain of dse_na2@docusign.net designates 64.207.219.8 as permitted sender) smtp.mailfrom=dse_na2@docusign.net;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=docusign.net
+Received: from CH103FE31.corp.docusign.net (unknown [10.104.81.9])
+	by mailsea.docusign.net (Postfix) with ESMTP id 16F041D577
+	for <rita@affiliate.bluefocus.com>; Fri, 22 Aug 2025 17:13:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=docusign.net;
+	s=mail1; t=1755882809;
+	bh=yqfAR8/4tqYUEzoCdbzOFS8ygzyut6Go6VX2vIE55L0=;
+	h=Reply-To:Feedback-ID:From:To:Date:Subject;
+	b=C1wXpwY47Z0jG/yqRxY4de4SlT2LVlmX8Q4k2+HBEd3+1H57pPKCRwXXNYiRKIiMM
+	 KJHypkfHN9QM7yFHaoNRtjsSS8Efp47WZe+Qf2s6yS2WEzNkgQsnHlchVh3cpxbe+R
+	 PMr8vTLMv5jfUbkFLyjAWHR2A0jsmvpcu7446Zk+jpUUZhpd0F7riXsz2PT3pSoVAN
+	 RwKW9F1a3ZnFZqp15Gz/Qsj/sHl6sXo2MMCJnd6CT186xFDtrfaeUkq84T/wCCwhn/
+	 K8i1WJc6D582m5OQyQo/Kxi7wn6YQzrusNKzcicAxihDLG6jGEwmUiB9LubO8/GTVn
+	 37LmpV5h70prQ==
+Received: from docusign.net ([127.0.0.1]) by CH103FE31.corp.docusign.net with Microsoft SMTPSVC(10.0.17763.1697);
+	 Fri, 22 Aug 2025 10:13:28 -0700
+Sender: DocuSign System  <dse_na2@docusign.net>
+Reply-To: "Sara Wojcik"  <sara.wojcik@rakuten.com>
+Feedback-ID: 0:473a00f7-9624-4975-8413-6806570f5578:CarbonCopyNotification:Docusign_Prod
+X-DS-Score: 0
+From: "Sara Wojcik via Docusign" <dse_na2@docusign.net>
+To: "Rita Liu" <rita@affiliate.bluefocus.com>
+Message-ID: <1d081bd277224d199b5fabef811624dc@docusign.net>
+Date: Fri, 22 Aug 2025 10:13:28 -0700
+Subject: Quote Document Dreame_RR_USSilverLaunch
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_2D0F1CF4_D193_4769_B88F_9ACB69DB8543"
+X-OriginalArrivalTime: 22 Aug 2025 17:13:28.0860 (UTC) FILETIME=[142325C0:01DC1388]
+MIME-Version: 1.0
+
+------=_NextPart_2D0F1CF4_D193_4769_B88F_9ACB69DB8543
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello Rita Liu,
+
+No Content
+
+No Content
+
+https://na2=2Edocusign=2Enet/Signing/EmailStart=2Easpx?a=3D51ccdfd3-fe5=
+4-4b4d-8311-d987cef4c05c&etti=3D5&acct=3Dba704173-2002-4d18-a5fc-5212e5=
+ee2875&er=3D5044436c-0e50-4dec-ae42-1aa06f8db292
+
+If clicking the link does not work, you can highlight and copy the enti=
+re line above and paste it into your browser to get started=2E
+
+This message was sent to you by Sara Wojcik who is using the Docusign E=
+lectronic Signature Service=2E If you would rather not receive email fr=
+om this sender you may contact the sender with your request=2E
+
+Do Not Share This Email
+This email contains a secure link to Docusign=2E Please do not share th=
+is email, link, or access code with others=2E
+
+Questions about the Document?
+If you need to modify the document or have questions about the details =
+in the document, please reach out to the sender by emailing them direct=
+ly=2E
+
+Stop receiving this email
+Report this email https://protect=2Edocusign=2Enet/report-abuse?e=3DAUt=
+omjpFak9GlbPL0zFFi12KPVyWGs5MBm_mgJggPbWIs4w8WCaHTwlJewzBWu9-GvZf3nZ_rs=
+X3YD90oSA6rSDMILzaN0cY8eEnb1ZFKeUFStuTnmVzOT4FOC3WmfZ81V91q7yth5hLx1o8L=
+G7qE2t08-1s6FyaPplNkwtPas-XjsyTuQLOFuf_nzNLWwWqrn0WrUhIsV5dFwM9IkWmeBLJ=
+pFfvxI7W-yXDmXgAnuUdHXzgZmX0ngEa-nDAvBU9cNF9AhuGdroKPZLLbxWtc8OwKFvOHQE=
+8WHC7HgkSG7jB85QS9RTQOXAPrfv3D06Kzw4J976iLDxzNbBRwFETmM5JS-LUf4XsGPrlch=
+VNrzIFuUC9gRpPkoE25PHu2bbBS0SkA3RqvsLrJlFsEuuij7Ma4SIBfqVcyoriWQiL5WTVD=
+ToXEfaYy6bwVMOFMgC8SsmAKW6ocw9coAFKtdmcxTU&lang=3Den
+Declining to sign=20
+Managing notifications=20
+
+If you have trouble signing, visit "How to Sign a Document" on our Docu=
+sign Support Center, or become part of the Docusign Community to access=
+ tips and guidance from peers=2E
+https://support=2Edocusign=2Ecom/s/articles/How-do-I-sign-a-DocuSign-do=
+cument-Basic-Signing?language=3Den_US&#38;utm_campaign=3DGBL_XX_DBU_UPS=
+_2211_SignNotificationEmailFooter&#38;utm_medium=3Dproduct&#38;utm_sour=
+ce=3Dpostsend
+------=_NextPart_2D0F1CF4_D193_4769_B88F_9ACB69DB8543
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html lang=3D"en"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><m=
+eta name=3D"viewport" content=3D"initial-scale=3D1.0"><meta name=3D"format-=
+detection" content=3D"telephone=3Dno"><title>CarbonCopyNotification</title>=
+</head><body style=3D"background-color:#EAEAEA;padding:2%;font-family:Helve=
+tica,Arial,Sans Serif;"><table role=3D"presentation" border=3D"0" cellspaci=
+ng=3D"0" cellpadding=3D"0" align=3D"center" width=3D"100%" dir=3D""><tr><td=
+></td><td width=3D"640"><table role=3D"presentation" style=3D"mso-table-lsp=
+ace:0pt;mso-table-rspace:0pt;border-collapse:collapse;background-color:#fff=
+fff;max-width:640px;"><tr><td style=3D"padding:10px 24px;"><img style=3D"bo=
+rder:none;" width=3D"116" src=3D"https://docucdn-a.akamaihd.net/olive/image=
+s/2.62.0/global-assets/email-templates/email-logo.png" alt=3D"DocuSign"></t=
+d></tr><tr><td style=3D"padding:0px 24px 30px 24px;"><table role=3D"present=
+ation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" alig=
+n=3D"center" style=3D"background-color:#c1393d;color:#ffffff;"><tr><td styl=
+e=3D"padding:28px 36px 36px 36px;border-radius:2px;background-color:#c1393d=
+;color:#ffffff;font-size:16px;font-family:Helvetica,Arial,Sans Serif;width:=
+100%;text-align:center;" align=3D"center"><img width=3D"75" height=3D"75" s=
+rc=3D"https://docucdn-a.akamaihd.net/olive/images/2.76.0/email/iconFileWhit=
+e.png" style=3D"width:75px;height:75px;"><table role=3D"presentation" borde=
+r=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%"><tr><td style=3D=
+"padding-top:24px;font-size:16px;font-family:Helvetica,Arial,Sans Serif;bor=
+der:none;text-align:center;color:#ffffff" align=3D"center"> Sara Wojcik sen=
+t you a copy. </td></tr></table><table role=3D"presentation" border=3D"0" c=
+ellspacing=3D"0" cellpadding=3D"0" width=3D"100%"><tr><td align=3D"center" =
+style=3D"padding-top:30px;"><div><table cellspacing=3D"0" cellpadding=3D"0"=
+><tr><td align=3D"center" height=3D"44" style=3D"font-size:15px;color:#fcf4=
+f4;background-color:#c1393d;font-family:Helvetica,Arial,Sans Serif;font-wei=
+ght:bold;text-align:center;text-decoration:none;;border-radius:2px;backgrou=
+nd-color:#c1393d;;display: block;"><a href=3D"https://na2.docusign.net/Sign=
+ing/EmailStart.aspx?a=3D51ccdfd3-fe54-4b4d-8311-d987cef4c05c&amp;etti=3D5&a=
+mp;acct=3Dba704173-2002-4d18-a5fc-5212e5ee2875&amp;er=3D5044436c-0e50-4dec-=
+ae42-1aa06f8db292" style=3D"font-size:15px;color:#fcf4f4;background-color:#=
+c1393d;font-family:Helvetica,Arial,Sans Serif;font-weight:bold;text-align:c=
+enter;text-decoration:none;;border-radius:2px;background-color:#c1393d;;dis=
+play:inline-block"><span style=3D"padding:0px 24px;;line-height:44px;"><!--=
+[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<![endif]--> REVIEW DOCUMENT <=
+!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<![endif]--></span></a></td=
+></tr></table></div></td></tr></table></td></tr></table></td></tr><tr><td s=
+tyle=3D"padding:0px 24px 24px 24px;color:#000000;font-size:16px;font-family=
+:Helvetica,Arial,Sans Serif;background-color:white;"><table role=3D"present=
+ation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0"><tr><td style=3D"pa=
+dding-bottom:20px;"><div style=3D"font-family:Helvetica,Arial,Sans Serif;fo=
+nt-weight:bold;line-height:18px;font-size:15px;color:#333333;"> Sara Wojcik=
+ </div><div style=3D"font-family:Helvetica,Arial,Sans Serif;line-height:18p=
+x;font-size:15px;color:#666666;">sara.wojcik@rakuten.com</div></td></tr></t=
+able><span style=3D"font-size:15px;color:#333333;font-family:Helvetica,Aria=
+l,Sans Serif;line-height:20px;">Rita Liu,<br><br> Complete with Docusign: D=
+reame_RR_USSilverLaunch.pdf<br><br> Thank You, Sara Wojcik</span></td></tr>=
+<tr><td style=3D"padding:0px 24px 12px 24px;background-color:#ffffff;font-f=
+amily:Helvetica,Arial,Sans Serif;font-size:11px;color:#666666;"></td></tr><=
+tr><td style=3D"padding:30px 24px 45px 24px;background-color:#EAEAEA;"><p s=
+tyle=3D"margin-bottom:1em;font-family:Helvetica,Arial,Sans Serif;font-size:=
+13px;color:#666666;line-height:18px;"><b aria-level=3D"3" role=3D"heading">=
+Do Not Share This Email</b><br> This email contains a secure link to Docusi=
+gn. Please do not share this email, link, or access code with others.<br></=
+p><p style=3D"margin-bottom:1em;font-family:Helvetica,Arial,Sans Serif;font=
+-size:13px;color:#666666;line-height:18px;"><b aria-level=3D"3" role=3D"hea=
+ding">Alternate Signing Method</b><br> Visit Docusign.com, click 'Access Do=
+cuments', and enter the security code:<br> 51CCDFD3FE544B4D8311D987CEF4C05C=
+2 </p><p style=3D"margin-bottom:1em;font-family:Helvetica,Arial,Sans Serif;=
+font-size:13px;color:#666666;line-height:18px;"><b aria-level=3D"3" role=3D=
+"heading">About Docusign</b><br> Sign documents electronically in just minu=
+tes. It's safe, secure, and legally binding. Whether you're in an office, a=
+t home, on-the-go -- or even across the globe -- Docusign provides a profes=
+sional trusted solution for Digital Transaction Management=E2=84=A2. </p><p=
+ style=3D"margin-bottom:1em;font-family:Helvetica,Arial,Sans Serif;font-siz=
+e:13px;color:#666666;line-height:18px;"><b aria-level=3D"3" role=3D"heading=
+">Questions about the Document?</b><br> If you need to modify the document =
+or have questions about the details in the document, please reach out to th=
+e sender by emailing them directly.<br><br><b aria-level=3D"3" role=3D"head=
+ing">Stop receiving this email</b><br><a href=3D"https://protect.docusign.n=
+et/report-abuse?e=3DAUtomjpFak9GlbPL0zFFi12KPVyWGs5MBm_mgJggPbWIs4w8WCaHTwl=
+JewzBWu9-GvZf3nZ_rsX3YD90oSA6rSDMILzaN0cY8eEnb1ZFKeUFStuTnmVzOT4FOC3WmfZ81V=
+91q7yth5hLx1o8LG7qE2t08-1s6FyaPplNkwtPas-XjsyTuQLOFuf_nzNLWwWqrn0WrUhIsV5dF=
+wM9IkWmeBLJpFfvxI7W-yXDmXgAnuUdHXzgZmX0ngEa-nDAvBU9cNF9AhuGdroKPZLLbxWtc8Ow=
+KFvOHQE8WHC7HgkSG7jB85QS9RTQOXAPrfv3D06Kzw4J976iLDxzNbBRwFETmM5JS-LUf4XsGPr=
+lchVNrzIFuUC9gRpPkoE25PHu2bbBS0SkA3RqvsLrJlFsEuuij7Ma4SIBfqVcyoriWQiL5WTVDT=
+oXEfaYy6bwVMOFMgC8SsmAKW6ocw9coAFKtdmcxTU&amp;lang=3Den" style=3D"color:#24=
+63d1;">Report this email</a> or read more about <a href=3D"https://support.=
+docusign.com/en/guides/Declining-to-sign-DocuSign-Signer-Guide" style=3D"co=
+lor:#2463d1;">Declining to sign</a> and <a href=3D"https://support.docusign=
+.com/en/articles/How-do-I-manage-my-email-notifications" style=3D"color:#24=
+63d1;">Managing notifications</a>.<br><br> If you have trouble signing, vis=
+it &quot;<a href=3D"https://support.docusign.com/s/articles/How-do-I-sign-a=
+-DocuSign-document-Basic-Signing?language=3Den_US&amp;utm_campaign=3DGBL_XX=
+_DBU_UPS_2211_SignNotificationEmailFooter&amp;utm_medium=3Dproduct&amp;utm_=
+source=3Dpostsend" style=3D"color:#2463d1;">How to Sign a Document</a>&quot=
+; on our <a href=3D"https://support.docusign.com/" style=3D"color:#2463d1;"=
+>Docusign Support Center</a>, or become part of the <a href=3D"https://comm=
+unity.docusign.com/new-member-guide-142?utm_campaign=3DGBL_US_PRD_AWA_2405_=
+CommunityCTA&amp;utm_medium=3Demail&amp;utm_source=3Dpostsend" style=3D"col=
+or:#2463d1;">Docusign Community</a> to access tips and guidance from peers.=
+<br><br></p><p style=3D"margin-bottom:1em;font-family:Helvetica,Arial,Sans =
+Serif;font-size:13px;color:#666666;line-height:18px;"><a href=3D"https://ww=
+w.docusign.com/features-and-benefits/mobile?utm_campaign=3DGBL_XX_DBU_UPS_2=
+211_SignNotificationEmailFooter&amp;utm_medium=3Dproduct&amp;utm_source=3Dp=
+ostsend" style=3D"color:#2463d1;"><img style=3D"margin-right:7px;border:non=
+e;vertical-align:middle;" width=3D"18" height=3D"18" src=3D"https://docucdn=
+-a.akamaihd.net/olive/images/2.62.0/global-assets/email-templates/icon-down=
+load-app.png" alt=3D"">Download the Docusign App </a></p><p style=3D"margin=
+-bottom:1em;font-family:Helvetica,Arial,Sans Serif;font-size:13px;color:#66=
+6666;line-height:18px;font-size:10px;line-height:14px;">This message was se=
+nt to you by Sara Wojcik who is using the Docusign Electronic Signature Ser=
+vice. If you would rather not receive email from this sender you may contac=
+t the sender with your request.</p></td></tr></table></td><td></td></tr></t=
+able><span itemscope=3D"" itemtype=3D"http://schema.org/EmailMessage"><meta=
+ itemprop=3D"text" content=3D"Sara Wojcik sent you a document to review and=
+ sign."><span itemscope=3D"" itemprop=3D"about" itemtype=3D"http://schema.o=
+rg/CreativeWork"><span itemscope=3D"" itemprop=3D"action" itemtype=3D"http:=
+//schema.org/ViewAction"><meta itemprop=3D"url" content=3D"https://na2.docu=
+sign.net/Signing/EmailStart.aspx?a=3D51ccdfd3-fe54-4b4d-8311-d987cef4c05c&a=
+mp;etti=3D5&amp;acct=3Dba704173-2002-4d18-a5fc-5212e5ee2875&amp;er=3D504443=
+6c-0e50-4dec-ae42-1aa06f8db292"><meta itemprop=3D"name" content=3D"View Doc=
+uments"></span></span></span></body></html>=
+
+------=_NextPart_2D0F1CF4_D193_4769_B88F_9ACB69DB8543--

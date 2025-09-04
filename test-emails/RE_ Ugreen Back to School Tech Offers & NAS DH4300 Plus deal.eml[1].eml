@@ -1,0 +1,673 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp3299445nji;
+        Thu, 21 Aug 2025 03:12:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFROzJXyF0z2ORdfWQPX2eRX2Mz4ST3lvS4nGmW3DxdrSMhQh2CQAW9s/muUztvTG1Xh1PV
+X-Received: by 2002:a05:620a:4626:b0:7e9:f81f:ce9f with SMTP id af79cd13be357-7ea08ef1030mr177685085a.77.1755771174100;
+        Thu, 21 Aug 2025 03:12:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1755771174; cv=none;
+        d=google.com; s=arc-20240605;
+        b=OWGo/SORCjUBKZKMjAvQaDAZnXZ0w9nLMXxMSosfxHXs2bvArXQF5VJ7vELeyNknFH
+         o1d5SOkjbdyIjmUEV2HCWo9/XcLTMVoZl1U1tFXs2/EoPA1AulKGc1jQ02J399KuDsIR
+         gSpyocLhk8PJHsZWtLt+3jzhP4iFXJMGykeEEAaSBO9Oh9jINsySqTKXc+fsyxkQNdkh
+         /05qLMjCZix+N6u5fXcgFvR2G0vOpCHnNYSb4hAlBd4uTDk3J02tvq0IYvJKmiUimORF
+         pnLo9TsEw1l3NGUoKOZv6fP66h29AKontjdAScQLcQa4PHXY0kNLRsPeQa+2KMGQi9mF
+         bXHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=date:feedback-id:list-unsubscribe-post:list-unsubscribe
+         :content-language:thread-index:mime-version:message-id:subject
+         :in-reply-to:references:cc:to:from:dkim-signature;
+        bh=mCANbImXUwwzVD0o9L758I7Hp5xRs4/I5GEjE7/6NU4=;
+        fh=/9vy9yP2X10wPI4/uydwokQYu2Q4NPJRzmKKuEJxMO8=;
+        b=cXtSxIxfFypiUQP4R3+OQj9V8JyiImCtIB8XbnYnhrtDEX0c6ZN5oWV7y+IIGeE+gK
+         Dyc/kob/QzEwOytduHUPeXoZjx9eoHwt6We9al7xU8CXTNyAyYbfaGUH/kEvHuHXOqIC
+         N4zvzIRgyTsyD2QG9JmhdS3M8OIeNKbe260LOXAHkrvF0Pg0BR8ICK47XC48W8Faz1Dg
+         Yf5gf6uCtiQU7GEepi2ol5Y2hQ1JI4liLSjC1B3RpU5O7iHC2HvIie2Ly5jXeEtdy5pf
+         bI/GY1012agR1DgKBfaj7ExhRAJVWZ8raULoO2LdHKzhohpuqlouypDhwHIaU3EKoPr6
+         n2tw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@panelplace.com header.s=nc2048 header.b=m33RCsQQ;
+       spf=pass (google.com: domain of 17557155724429542-150287-1-affiliate.bluefocus.com@emnc.panelplace.com designates 103.66.104.126 as permitted sender) smtp.mailfrom=17557155724429542-150287-1-affiliate.bluefocus.com@emnc.panelplace.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=panelplace.com
+Return-Path: <17557155724429542-150287-1-affiliate.bluefocus.com@emnc.panelplace.com>
+Received: from mail126.panelplace.com (mail126.panelplace.com. [103.66.104.126])
+        by mx.google.com with ESMTPS id af79cd13be357-7e87e1e875bsi567876385a.812.2025.08.21.03.12.53
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Aug 2025 03:12:54 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 17557155724429542-150287-1-affiliate.bluefocus.com@emnc.panelplace.com designates 103.66.104.126 as permitted sender) client-ip=103.66.104.126;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@panelplace.com header.s=nc2048 header.b=m33RCsQQ;
+       spf=pass (google.com: domain of 17557155724429542-150287-1-affiliate.bluefocus.com@emnc.panelplace.com designates 103.66.104.126 as permitted sender) smtp.mailfrom=17557155724429542-150287-1-affiliate.bluefocus.com@emnc.panelplace.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=panelplace.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=nc2048; d=panelplace.com;
+ h=From:To:Cc:References:In-Reply-To:Subject:Message-ID:MIME-Version:Content-Type:List-Unsubscribe:Feedback-ID:Date:from:to:subject; i=advertise@panelplace.com;
+ bh=mCANbImXUwwzVD0o9L758I7Hp5xRs4/I5GEjE7/6NU4=;
+ b=m33RCsQQJpCuVy9Nwl86iDR1iecZ4KJYxJP9vMkrpVVdvh2AfegolJfLUiTFIc/yvWdIzW6vsYl2
+   SziwbFhBq5n/p2RPWQVqjqjGyulYGIsiZ1i4i4YJSiVlw/3aux7coFwJElwkrCmVNWusx5UYehvq
+   n1NusfTKiv6bAmBcMCFfmCy9FawIPpHzI5DTRjNetTBjmLrl+ZAMvntHfEQQXQBq/Nx9YxpzefUj
+   0TV6SPKlhIN6ku6XBjRO9VkqJyjWtgM1orvs5G5cl469XRUe/g/qEcyt25MC0htqkwnVQ/6cwPJ2
+   pwXM0JLUsNWPe4aKlJ30CKHrsveFqd3jr5zdJg==
+Received: by mail194.panelplace.com id hkroia25oeon for <rita@affiliate.bluefocus.com>; Thu, 21 Aug 2025 15:42:51 +0530 (envelope-from <17557155724429542-150287-1-affiliate.bluefocus.com@emnc.panelplace.com>)
+From: "PanelPlace" <advertise@panelplace.com>
+To: <rita@affiliate.bluefocus.com>
+Cc: <advertise@panelplace.com>
+References: <gHLEr3jTT_KQ0ueRNE59QQ@geopod-ismtpd-2>
+In-Reply-To: <gHLEr3jTT_KQ0ueRNE59QQ@geopod-ismtpd-2>
+Subject: RE: Ugreen Back to School Tech Offers & NAS DH4300 Plus deal
+Message-ID: <005901dc1284$2726f5c0$7574e140$@panelplace.com>
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_005A_01DC12C7.354C0A80"
+Thread-Index: AQIdpiYLlCMxPNuWzE9kLX2n1eu1FbPpuqQA
+Content-Language: en-sg
+X-InjTime: 1755771169
+List-Unsubscribe: <https://unsub-api.netcorecloud.net/YHNMJN?id=150287=Nh8HCVYFCwAORRJDQxgTQRNEGRkUGUISQUZGRENCQkNDQxcYQxUZGBkZEkNDGBNBE1RFS11NA3IAAAANDwsDFwZNVVQWUF9XWkxBTQBXXh0CUwwMAwhXB1ZUUlBRW1dXUR9fTBdFSgIWFkcNEE1RTFIUUBdaXBZRDhQDBw8NFwdNDVJMTGxxdnRzfFwKXE8XAA==>, <mailto:17557155724429542-150287-fncunsub@usub.ftrans03.com?subject=Unsubscribe>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-ID: MTUwMjg3OjIwMjUwODIxXzE1Og==:pepipostO
+x-dkim-options: s=nc2048;d=panelplace.com
+X-Abuse-Reports-To: abuse@pepipost.com
+X-FNCID: 150287-17557155724429542-0
+X-Mta-Source: dennizkee_150287
+X-Traffic-Type: 150287-4
+X-Mailer: NetcoreCloud Mailer
+Date: Thu, 21 Aug 2025 15:42:53 +0530
+MIME-Version: 1.0
+
+------=_NextPart_000_005A_01DC12C7.354C0A80
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear Rita,
+
+=20
+
+Thanks for reaching out, it is very nice to hear from you.
+
+=20
+
+We=E2=80=99re not in BlueFocus=E2=80=99s or Ugreen=E2=80=99s program, =
+may I know how did you get to know us?
+
+=20
+
+Thank you,
+
+Denniz
+
+PanelPlace.com
+
+=20
+
+-- Learn how PanelPlace.com can help you:  =
+<https://www.panelplace.com/business> =
+https://www.panelplace.com/business --
+
+=20
+
+From: rita@affiliate.bluefocus.com <notifications@outreach.impact.com>=20
+Sent: Wednesday, 20 August 2025 5:59 pm
+To: affiliate@panelplace.com
+Subject: Ugreen Back to School Tech Offers & NAS DH4300 Plus deal
+
+=20
+
+  =
+<https://storage.googleapis.com/outreach-files/a1d10892-75c8-4a4b-8db4-ca=
+3f9ea227b4>=20
+
+
+Hi team,
+
+=20
+
+Hope you're doing well. I'm Rita, affiliate marketing manager at =
+BlueFocus representing Ugreen.
+
+UGREEN
+
+Category: Charging Devices & NAS
+
+Commission: 8%-15%
+
+Impact ID: 31970
+
+=20
+
+We=E2=80=99re excited to bring you UGREEN=E2=80=99s Back to School =
+campaigns for the US and DE markets. In addition to strong seasonal =
+discounts, we=E2=80=99re launching our brand-new NAS DH4300 Plus =
+=E2=80=94 a powerful storage solution designed to keep your data secure, =
+organized, and always within reach. With up to 20% off for launch week, =
+it=E2=80=99s the perfect opportunity to introduce this new product to =
+your audience.
+
+Please see the full promotion details below and feel free to share with =
+your audience:
+
+=20
+
+US
+
+US Campaign: Back To School, Back with Smart Tech=20
+
+URL: https://www.ugreen.com/pages/back-to-school-ugreen-us
+
+Description: Save up to 30% + Extra 10% Off for Students=20
+
+Validity: 8/20-8/31
+
+=20
+
+US NAS DH4300: =
+https://nas.ugreen.com/products/ugreen-nasync-dh4300-plus-nas-storage
+
+Description: Save up to 20% off on NAS DH4300 Plus=EF=BC=8CProtect & =
+Back Up Your Data
+
+Validity: 8/20-8/31
+
+=20
+
+DE
+
+DE Campaign: Back To School, Back with Smart Tech=20
+
+URL: https://de.ugreen.com/pages/ugreen-zuruck-zur-schule-aktion
+
+Description: Save up to 30% + Extra 10% Off for Students=20
+
+Validity: 8/20-8/31
+
+=20
+
+DE NAS DH4300: =
+https://nas-de.ugreen.com/products/ugreen-nasync-dh4300-plus-network-atta=
+ched-storage
+
+Description: Sch=C3=BCtzen & Sichern Sie Ihre Daten mit dem DH4300 =
+Plus=EF=BC=8CSpare 20% diese Woche
+
+Validity: 8/20-8/24
+
+=20
+
+=20
+
+We encourage you to feature UGREEN=E2=80=99s all-new NAS DH4300 Plus. =
+Here are a few highlights:
+
+Next-Level Charging Anywhere: Up to 500W fast charging with multiple =
+USB-C ports =E2=80=94 ideal for home, work, and travel setups.
+
+Secure Digital Storage: UGREEN NAS systems enable private media =
+libraries and cloud backups with ease =E2=80=94 perfect for building =
+your own family or work data center.
+
+Smart Tracking Made Simple: FineTrack Smart Finder helps users stay =
+organized with effortless Bluetooth tracking.
+
+=20
+
+Let=E2=80=99s work together to bring these high-performance tech deals =
+to more users. Looking forward to your active participation!
+
+=20
+
+Best regards,
+
+Rita
+
+
+Unsubscribe
+
+=20
+
+
+------=_NextPart_000_005A_01DC12C7.354C0A80
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><m=
+eta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)"><!--=
+[if !mso]><style>v\:* {behavior:url(#default#VML);}=0A=
+o\:* {behavior:url(#default#VML);}=0A=
+w\:* {behavior:url(#default#VML);}=0A=
+.shape {behavior:url(#default#VML);}=0A=
+</style><![endif]--><style><!--=0A=
+/* Font Definitions */=0A=
+@font-face=0A=
+	{font-family:"Cambria Math";=0A=
+	panose-1:2 4 5 3 5 4 6 3 2 4;}=0A=
+@font-face=0A=
+	{font-family:DengXian;=0A=
+	panose-1:2 1 6 0 3 1 1 1 1 1;}=0A=
+@font-face=0A=
+	{font-family:Calibri;=0A=
+	panose-1:2 15 5 2 2 2 4 3 2 4;}=0A=
+@font-face=0A=
+	{font-family:Aptos;}=0A=
+@font-face=0A=
+	{font-family:"\@DengXian";=0A=
+	panose-1:2 1 6 0 3 1 1 1 1 1;}=0A=
+@font-face=0A=
+	{font-family:"PingFang SC";=0A=
+	panose-1:0 0 0 0 0 0 0 0 0 0;}=0A=
+@font-face=0A=
+	{font-family:"PingFang SC Semibold";=0A=
+	panose-1:0 0 0 0 0 0 0 0 0 0;}=0A=
+@font-face=0A=
+	{font-family:Times;=0A=
+	panose-1:2 2 6 3 5 4 5 2 3 4;}=0A=
+@font-face=0A=
+	{font-family:"Songti SC";=0A=
+	panose-1:0 0 0 0 0 0 0 0 0 0;}=0A=
+/* Style Definitions */=0A=
+p.MsoNormal, li.MsoNormal, div.MsoNormal=0A=
+	{margin:0cm;=0A=
+	font-size:12.0pt;=0A=
+	font-family:"Aptos",sans-serif;}=0A=
+a:link, span.MsoHyperlink=0A=
+	{mso-style-priority:99;=0A=
+	color:blue;=0A=
+	text-decoration:underline;}=0A=
+p.p1, li.p1, div.p1=0A=
+	{mso-style-name:p1;=0A=
+	margin:0cm;=0A=
+	font-size:8.5pt;=0A=
+	font-family:"PingFang SC",serif;=0A=
+	color:black;}=0A=
+p.p2, li.p2, div.p2=0A=
+	{mso-style-name:p2;=0A=
+	margin:0cm;=0A=
+	font-size:9.0pt;=0A=
+	font-family:"PingFang SC",serif;=0A=
+	color:black;}=0A=
+p.p3, li.p3, div.p3=0A=
+	{mso-style-name:p3;=0A=
+	margin:0cm;=0A=
+	font-size:9.0pt;=0A=
+	font-family:"PingFang SC Semibold",serif;=0A=
+	color:black;}=0A=
+p.p4, li.p4, div.p4=0A=
+	{mso-style-name:p4;=0A=
+	margin:0cm;=0A=
+	font-size:9.0pt;=0A=
+	font-family:"Times",serif;=0A=
+	color:black;}=0A=
+p.p5, li.p5, div.p5=0A=
+	{mso-style-name:p5;=0A=
+	margin:0cm;=0A=
+	font-size:9.0pt;=0A=
+	font-family:"Times",serif;=0A=
+	color:#0000E9;}=0A=
+p.p6, li.p6, div.p6=0A=
+	{mso-style-name:p6;=0A=
+	margin:0cm;=0A=
+	font-size:9.0pt;=0A=
+	font-family:"Times",serif;=0A=
+	color:black;}=0A=
+p.p7, li.p7, div.p7=0A=
+	{mso-style-name:p7;=0A=
+	margin:0cm;=0A=
+	font-size:9.0pt;=0A=
+	font-family:"PingFang SC",serif;=0A=
+	color:black;}=0A=
+span.s2=0A=
+	{mso-style-name:s2;=0A=
+	color:black;}=0A=
+span.apple-converted-space=0A=
+	{mso-style-name:apple-converted-space;}=0A=
+span.EmailStyle32=0A=
+	{mso-style-type:personal-reply;=0A=
+	font-family:"Aptos",sans-serif;=0A=
+	color:windowtext;}=0A=
+.MsoChpDefault=0A=
+	{mso-style-type:export-only;=0A=
+	font-size:10.0pt;=0A=
+	mso-ligatures:none;}=0A=
+@page WordSection1=0A=
+	{size:612.0pt 792.0pt;=0A=
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}=0A=
+div.WordSection1=0A=
+	{page:WordSection1;}=0A=
+--></style><!--[if gte mso 9]><xml>=0A=
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />=0A=
+</xml><![endif]--><!--[if gte mso 9]><xml>=0A=
+<o:shapelayout v:ext=3D"edit">=0A=
+<o:idmap v:ext=3D"edit" data=3D"1" />=0A=
+</o:shapelayout></xml><![endif]--></head><body lang=3D"EN-SG" link=3D"blue"=
+ vlink=3D"purple" style=3D"word-wrap:break-word"><div class=3D"WordSection1=
+"><p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Dear Rita,<o:p></=
+o:p></span></p><p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p=
+>&nbsp;</o:p></span></p><p class=3D"MsoNormal"><span style=3D"font-size:11.=
+0pt">Thanks for reaching out, it is very nice to hear from you.<o:p></o:p><=
+/span></p><p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbs=
+p;</o:p></span></p><p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">=
+We=E2=80=99re not in BlueFocus=E2=80=99s or Ugreen=E2=80=99s program, may I=
+ know how did you get to know us?<o:p></o:p></span></p><p class=3D"MsoNorma=
+l"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></span></p><p class=3D=
+"MsoNormal"><span style=3D"font-size:11.0pt">Thank you,<o:p></o:p></span></=
+p><p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Denniz<o:p></o:p>=
+</span></p><p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">PanelPla=
+ce.com<o:p></o:p></span></p><p class=3D"MsoNormal"><span style=3D"font-size=
+:11.0pt"><o:p>&nbsp;</o:p></span></p><p class=3D"MsoNormal"><span style=3D"=
+font-size:11.0pt">-- Learn how PanelPlace.com can help you: <a href=3D"http=
+://emnc.panelplace.com/WSMFUGVHLEJD?id=3D150287=3DIB8HCVYFCwAORVEABgsBVAJdD=
+w5VAFMBBFADBlpbUwBSWlZaVVcMCV1bVFYFDQpZBFxFS11NA3IAAAANDwsDFwZNVVQWUF9XWkxB=
+TQBXXh0CUwwMAwhXB1ZUUlBRW1dXUR9fTBdFAxcWXF8NABZDAF0BVUlYWAFXTwUJCUw1MS4lNnB=
+uK3l8cn0GWwcfTgA=3D&amp;fl=3DCxdDSBAPFhdOTkVNE1ldBF8UVVhXXExRDgtJBhYRCw0GEE=
+Q=3D"><span style=3D"color:#0563C1">https://www.panelplace.com/business</sp=
+an></a> --</span><span style=3D"font-size:11.0pt"><o:p></o:p></span></p><p =
+class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></spa=
+n></p><div><div style=3D"border:none;border-top:solid #E1E1E1 1.0pt;padding=
+:3.0pt 0cm 0cm 0cm"><p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D=
+"font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">From:</span><=
+/b><span lang=3D"EN-US" style=3D"font-size:11.0pt;font-family:&quot;Calibri=
+&quot;,sans-serif"> rita@affiliate.bluefocus.com &lt;notifications@outreach=
+.impact.com&gt; <br><b>Sent:</b> Wednesday, 20 August 2025 5:59 pm<br><b>To=
+:</b> affiliate@panelplace.com<br><b>Subject:</b> Ugreen Back to School Tec=
+h Offers &amp; NAS DH4300 Plus deal<o:p></o:p></span></p></div></div><p cla=
+ss=3D"MsoNormal"><o:p>&nbsp;</o:p></p><div id=3D"isPasted"><p class=3D"p1">=
+<span style=3D"font-size:13.5pt"><img border=3D"0" width=3D"640" height=3D"=
+100" style=3D"width:6.6666in;height:1.0416in" id=3D"_x0000_i1026" src=3D"ht=
+tps://storage.googleapis.com/outreach-files/a1d10892-75c8-4a4b-8db4-ca3f9ea=
+227b4"></span><o:p></o:p></p><p class=3D"MsoNormal"><br><span style=3D"font=
+-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif">Hi team,</span><o:p>=
+</o:p></p><p class=3D"p2"><span style=3D"font-size:13.5pt;font-family:&quot=
+;Arial&quot;,sans-serif">&nbsp;</span><o:p></o:p></p><p class=3D"p2"><span =
+style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif">Hope yo=
+u're doing well. I'm Rita, affiliate marketing manager at BlueFocus represe=
+nting <strong><span style=3D"font-family:&quot;Arial&quot;,sans-serif">Ugre=
+en</span></strong>.</span><o:p></o:p></p><p class=3D"p3"><strong><span styl=
+e=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif">UGREEN</spa=
+n></strong><o:p></o:p></p><p class=3D"p2"><span style=3D"font-size:13.5pt;f=
+ont-family:&quot;Arial&quot;,sans-serif">Category: Charging Devices &amp; N=
+AS</span><o:p></o:p></p><p class=3D"p2"><span style=3D"font-size:13.5pt;fon=
+t-family:&quot;Arial&quot;,sans-serif">Commission: 8%-15%</span><o:p></o:p>=
+</p><p class=3D"p3"><strong><span style=3D"font-size:13.5pt;font-family:&qu=
+ot;Arial&quot;,sans-serif">Impact ID: 31970</span></strong><o:p></o:p></p><=
+p class=3D"p2"><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot=
+;,sans-serif">&nbsp;</span><o:p></o:p></p><p class=3D"p2"><span style=3D"fo=
+nt-size:13.5pt">We=E2=80=99re excited to bring you <strong id=3D"isPasted">=
+<span style=3D"font-family:&quot;PingFang SC&quot;,serif">UGREEN=E2=80=99s =
+Back to School campaigns</span></strong> for the US and DE markets. In addi=
+tion to strong seasonal discounts, we=E2=80=99re launching our <strong><spa=
+n style=3D"font-family:&quot;PingFang SC&quot;,serif">brand-new NAS DH4300 =
+Plus</span></strong> =E2=80=94 a powerful storage solution designed to keep=
+ your data <strong><span style=3D"font-family:&quot;PingFang SC&quot;,serif=
+">secure, organized, and always within reach</span></strong>. With <strong>=
+<span style=3D"font-family:&quot;PingFang SC&quot;,serif">up to 20% off for=
+ launch week</span></strong>, it=E2=80=99s the perfect opportunity to intro=
+duce this new product to your audience.</span><o:p></o:p></p><p class=3D"p2=
+"><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif"=
+>Please see the full promotion details below and feel free to share with yo=
+ur audience:</span><o:p></o:p></p><p class=3D"p2"><span style=3D"font-size:=
+13.5pt;font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span><o:p></o:p></=
+p><p class=3D"p4"><strong><span style=3D"font-size:13.5pt;font-family:&quot=
+;Arial&quot;,sans-serif">US</span></strong><o:p></o:p></p><p class=3D"p4"><=
+strong><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-s=
+erif">US Campaign: Back To School, Back with Smart Tech</span></strong><spa=
+n class=3D"apple-converted-space"><b><span style=3D"font-size:13.5pt;font-f=
+amily:&quot;Arial&quot;,sans-serif"> </span></b></span><o:p></o:p></p><p cl=
+ass=3D"p5"><strong><span style=3D"font-size:13.5pt;font-family:&quot;Arial&=
+quot;,sans-serif;color:black">URL:&nbsp;</span></strong><span class=3D"s2">=
+<span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif"><=
+a href=3D"http://emnc.panelplace.com/WSMFUGVHLEJD?id=3D150287=3DIB8HCVYFCwA=
+ORVNTB1oBUQQCWgtSWlpTAgBfVldaVQZRW1IKU1cPCF9cAQFbXFEFUQBFS11NA3IAAAANDwsDFw=
+ZNVVQWUF9XWkxBTQBXXh0CUwwMAwhXB1ZUUlBRW1dXUR9fTBdFAxcWXF8NABZDAF0BVUlYWAFXT=
+wUJCUw1MS4lNnBuK3l8cn0GWwcfTgA=3D&amp;fl=3DCxdDSBAPFhdMCwtUUwAEWApKWk0aSgdc=
+BQEUDQdMDAYXTFtLTFZVUVpS&amp;ext=3DdXBuPXUwMDEuQjhWTVBNT3p4UjdSUE9YLTJCSzJY=
+ZFQ3dUhaZ2p4bTRndTZ6VWZxSUtPeTNIU2tkMXp6R3pQRTBkdWNBMktrT0ZnT0hvUnRNcWgzRkZ=
+FbS0yRm1SVGdadUJRLTNELTNEQmpXb19UcUJxOXhWTEg1cmtJdlBKMWxYV2k5dTFUaUpVeHJaRU=
+ZUTE5MSEhBUU91N3Q0RllwVlBsQ1ZzdERvOEZ5U3I2eDIzUldyd3hyVlotMkZBZlpqV1lRcS0yQ=
+mNrNHY1UmxHd3ZoRUZVQ2xhbDVPTldJQTdtWlRoYmdoUWRiLTJCT0xxb285MmE4R0xydXNJaFVm=
+a1VOTUtBYll3QVZ1aGpMbGtPWlZKelNtb045bWpKLTJCcmp4OHIyNERBQ2d6OGsxYm92RENscDR=
+GZTZKUkJWZXZWVGxmLTJCclk2S3FDNWp2cXB0dHZKWlFEYVJWbEdnYllLeHFOZEVyalRwUGZUQn=
+p2dzF2amY5SWhiQlpXdEIzVlR5UjkxQW51cm9qUi0yRllLeXllTjhtQmd2R3RHRi0yQnlWbjJzT=
+C0yQlYwa2RXdGpyRnJPN09ZNTR1RjJBeGFtNW5iZTR2NEZmOEx5Z3lDa1ZWdlRGSnZSZm5BTFlh=
+bndnQ1g3bU9OTkRyTjNxRGxpWmtxLTJCWFZ3OGJabGRaZnpQTGFLSXFJWkd3MDJLWTBrTHlwbVh=
+GOWJ1RjRFd0M2QUlWdHQ1WExDOFJ5RkZCdFBKU0VIT3BxTVlrdDNTUW9WaFpuWno1cW1KU2VSVG=
+t5bWo3NHNKUkUtMkZJQldwWHFnYm9nNVp0Q3NELTJCUlBnYnM1YmFnWnpMdHBjTER3WGxKZnFqa=
+HNLQVc4TFY0Q3BoQy0yRnoyeDktMkI5VldWZXQtMkZjeHpTS0RpTDdXMnVjMlVyTkRUcGdnd3Fa=
+VFNSbnpHLTJGd05KRXk0UzA4U2hVcjlrdWljQ3lHQW40NU9rRy0yRkRvV0FDdkQ4Q2NRb3ktMkI=
+0bmR6Tm8xUlBHSzlmelYydmNYRUdXd3hKQ2o2cjZ1WkRmUHpjUWpTdXR5TzFLbkREam5GRUtac1=
+BvV1hYbmlxcGRtR0tyYzR1Zmt4RFhDZFlHbzh2SzhPRTVqWmROdFlTMFEtMkJTdHpKMjVYallvR=
+EFKdnI5TnFzY2M0STNDOGxSaHRlQnhVYkItMkJNWXNJN0I4TzExUTdBVC0yRmdGRFMzcnFFV2Nl=
+MDJUSjMtMkZjb3NuV2FrS3U4aktkZWJkaEY3YXBiWmRHM1didmFqaERnek5jLTJCcmpQcnUtMkY=
+1NFAxQnlseWN2V28tMkJnOXdtd3ZlOGRLYmVhdC0yQnRKWEZpYnMtMkZnb1dYcUVkNmh3Q0lBck=
+hsbDk5bFp2bDFGODFCcGVoSTNlVzRsYjNhSkt4ZGZrdk05MGprUk9rQi0yQnFwS1FVOHItMkJ0R=
+002SVhwRms3WDA4WDdJTEV5TS0yQjY2WW40NUxKS0dqZ21zZGd0alhGTDZYNXIyOHNWeXd5VUh3=
+Y2ZucktuV3VXZ0hrVkJBN0NPRmo0ZVlybVpsakYtMkZydHhLRUdnQi0yQmR3QzBCaTNjNVFxa1F=
+vTlBJUVh2aXBjMEh1YjF1dzQ1bUxNS3dzS1hac01TVW4yRGkxMUdLLTJGa2VTUEFleXU=3D"><s=
+trong><span style=3D"font-family:&quot;Arial&quot;,sans-serif;color:#0000E9=
+">https://www.ugreen.com/pages/back-to-school-ugreen-us</span></strong></a>=
+</span></span><o:p></o:p></p><p class=3D"p4"><strong><span style=3D"font-si=
+ze:13.5pt;font-family:&quot;Arial&quot;,sans-serif">Description: <span styl=
+e=3D"background:#FAC51C">Save up to 30%</span> + <span style=3D"background:=
+#F7DA64">Extra 10%</span> Off for Students</span></strong><span class=3D"ap=
+ple-converted-space"><b><span style=3D"font-size:13.5pt;font-family:&quot;A=
+rial&quot;,sans-serif"> </span></b></span><o:p></o:p></p><p class=3D"p4"><s=
+trong><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-se=
+rif">Validity: 8/20-8/31</span></strong><o:p></o:p></p><p class=3D"p6"><o:p=
+>&nbsp;</o:p></p><p class=3D"p5"><strong><span style=3D"font-size:13.5pt;fo=
+nt-family:&quot;Arial&quot;,sans-serif;color:black">US NAS DH4300:&nbsp;</s=
+pan></strong><span class=3D"s2"><span style=3D"font-size:13.5pt;font-family=
+:&quot;Arial&quot;,sans-serif"><a href=3D"http://emnc.panelplace.com/WSMFUG=
+VHLEJD?id=3D150287=3DIB8HCVYFCwAORQdUVQhRV1VSCFtSC1QKWVBVAQBVUwBTUQ8KBwcKCF=
+8OAVMHWgBXAwJFS11NA3IAAAANDwsDFwZNVVQWUF9XWkxBTQBXXh0CUwwMAwhXB1ZUUlBRW1dXU=
+R9fTBdFAxcWXF8NABZDAF0BVUlYWAFXTwUJCUw1MS4lNnBuK3l8cn0GWwcfTgA=3D&amp;fl=3D=
+CxdDSBAPFhdMCwtUUwAEWApKWk0aSgdcBQEUDQdMDAYXTFtLTFZVUVpS&amp;ext=3DdXBuPXUw=
+MDEuQjhWTVBNT3p4UjdSUE9YLTJCSzJYZFQyZlRTOFp0WG1SY3o0QXMtMkZ0THl5LTJGaHR0eXk=
+tMkJmTVFMdmVab1pjY2VlMFFWbWJ1djhlWlloeGROVFN5MDBVSS0yQkZxaVgtMkZ4R2R2SnZEOU=
+NRLTJGM0F6V1JWQS0zRDlQTGxfVHFCcTl4VkxINXJrSXZQSjFsWFdpOXUxVGlKVXhyWkVGVExOT=
+EhIQVFPdTd0NEZZcFZQbENWc3REbzhGeVNyNngyM1JXcnd4clZaLTJGQWZaaldZUXEtMkJjazR2=
+NVJsR3d2aEVGVUNsYWw1T05XSUE3bVpUaGJnaFFkYi0yQk9McW9vOTJhOEdMcnVzSWhVZmtVTk1=
+LQWJZd0FWdWhqTGxrT1pWSnpTbW9OOW1qSi0yQnJqeDhyMjREQUNnejhrMWJvdkRDbHA0RmU2Sl=
+JCVmV2VlRsZi0yQnJZNktxQzVqdnFwdHR2SlpRRGFSVmxHZ2JZS3hxTmRFcmpUcFBmVEJ6dncxd=
+mpmOUloYkJaV3RCM1ZUeVI5MUFudXJvalItMkZZS3l5ZU44bUJndkd0R0YtMkJ5Vm4yc0wtMkJW=
+MGtkV3RqckZyTzdPWTU0dUYyQXhhbTVuYmU0djRGZjhMeWd5Q2tWVnZURkp2UmZuQUxZYW53Z0N=
+YN21PTk5Eck4zcURsaVprcS0yQlhWdzhiWmxkWmZ6UExhS0lxSVpHdzAyS1kwa0x5cG1YRjlidU=
+Y0RXdDNkFJVnR0NVhMQzhSeUZGQnRQSlNFSE9wcU1Za3QzU1FvVmhablp6NXFtSlNlUlRreW1qN=
+zRzSlJFLTJGSUJXcFhxZ2JvZzVadENzRC0yQlJQZ2JzNWJhZ1p6THRwY0xEd1hsSmZxamhzS0FX=
+OExWNENwaEMtMkZ6Mng5LTJCOVZXVmV0LTJGY3h6U0tEaUw3VzJ1YzJVck5EVHBnZ3dxWlRTUm5=
+6Ry0yRndOSkV5NFMwOFNoVXI5a3VpY0N5R0FuNDVPa0ctMkZEb1dBQ3ZEOENjUW95LTJCNG5kek=
+5vMVJQR0s5ZnpWMnZjWEVHV3d4SkNqNnI2dVpEZlB6Y1FqU3V0eU8xS25ERGpuRkVLWnNQb1dYW=
+G5pcXBkbUdLcmM0dWZreERYQ2RZR284dks4T0U1alpkTnRZUzBRLTJCU3R6SjI1WGpZb0RBSnZy=
+OU5xc2NjNEkzQzhsUmh0ZUJ4VWJCLTJCTVlzSTdCOE8xMVE3QVQtMkZnRkRTM3JxRVdjZTAyVEo=
+zLTJGY29zbldha0t1OGpLZGViZGhGN2FwYlpkRzNXYnZhamhEZ3pOYy0yQnJqUHJ1LTJGNTRQMU=
+J5bHljdldvLTJCZzl3bXd2ZThkS2JlYXQtMkJ0SlhGaWJzLTJGZ29XWHFFZDZod0NJQXJIbGw5O=
+WxadmwxRjgxQnBlaEkzZVc0bGIzYUpLeGRma3ZNOTBqa1JPa0ItMkJxcEtRVThyLTJCdEdNNklY=
+cEg0WjA3STdOY05GRFJlVW1Dc0N5eTBDSU1hQk5RTEppSGl3NDBKTlJiaGlYdVhKaWE0cEQ2TWV=
+VME41ZVJzei0yQjJUdU9iQzZpMjY1SWRTMTBzaFFCOVplaVBFSC0yQlMtMkJFLTJGTkFlcVJnUU=
+lOYURwUnp6QnNQNERTN1R1eUIyVFA4TzJxM0U0dE5DOUxhRlJJNkxDLTJCQlNFdUc=3D"><stro=
+ng><span style=3D"font-family:&quot;Arial&quot;,sans-serif;color:#0000E9">h=
+ttps://nas.ugreen.com/products/ugreen-nasync-dh4300-plus-nas-storage</span>=
+</strong></a></span></span><o:p></o:p></p><p class=3D"p4"><strong><span sty=
+le=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif">Descriptio=
+n: <span style=3D"background:#F7DA64">Save up to 20% off</span> on NAS DH43=
+00 Plus</span></strong><strong><span lang=3D"ZH-CN" style=3D"font-size:13.5=
+pt;font-family:DengXian">=EF=BC=8C</span></strong><strong><span style=3D"fo=
+nt-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif">Protect &amp; Back=
+ Up Your Data</span></strong><o:p></o:p></p><p class=3D"p4"><strong><span s=
+tyle=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif">Validity=
+: 8/20-8/31</span></strong><o:p></o:p></p><p class=3D"p6"><o:p>&nbsp;</o:p>=
+</p><p class=3D"p4"><strong><span style=3D"font-size:13.5pt;font-family:&qu=
+ot;Arial&quot;,sans-serif">DE</span></strong><o:p></o:p></p><p class=3D"p4"=
+><strong><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans=
+-serif">DE Campaign: Back To School, Back with Smart Tech</span></strong><s=
+pan class=3D"apple-converted-space"><b><span style=3D"font-size:13.5pt;font=
+-family:&quot;Arial&quot;,sans-serif"> </span></b></span><o:p></o:p></p><p =
+class=3D"p5"><strong><span style=3D"font-size:13.5pt;font-family:&quot;Aria=
+l&quot;,sans-serif;color:black">URL:&nbsp;</span></strong><span class=3D"s2=
+"><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif"=
+><a href=3D"http://emnc.panelplace.com/WSMFUGVHLEJD?id=3D150287=3DIB8HCVYFC=
+wAORQFXV1kDBwUACFwEX1tUBQJRXQJSU1VRAVEOAQZYWwgNBAJXAAoFVgBFS11NA3IAAAANDwsD=
+FwZNVVQWUF9XWkxBTQBXXh0CUwwMAwhXB1ZUUlBRW1dXUR9fTBdFAxcWXF8NABZDAF0BVUlYWAF=
+XTwUJCUw1MS4lNnBuK3l8cn0GWwcfTgA=3D&amp;fl=3DCxdDSBAPFhdMCwtUUwAEWApKWk0aSg=
+dcBQEUDQdMDAYXTFtLTFZVUVpS&amp;ext=3DdXBuPXUwMDEuQjhWTVBNT3p4UjdSUE9YLTJCSz=
+JYZFR4VWU5WTM0bTdLdURVSDd1WkprLTJGTUUtMkY5cGp6NE5KdXM2RGUzbGtNS29DMVBFdmZGV=
+2owcmYwa2NZMzhYMW5pbXYyLTJGY1NUczk1cEYxZEd2enh0MlZaNC0zRGU5LXVfVHFCcTl4VkxI=
+NXJrSXZQSjFsWFdpOXUxVGlKVXhyWkVGVExOTEhIQVFPdTd0NEZZcFZQbENWc3REbzhGeVNyNng=
+yM1JXcnd4clZaLTJGQWZaaldZUXEtMkJjazR2NVJsR3d2aEVGVUNsYWw1T05XSUE3bVpUaGJnaF=
+FkYi0yQk9McW9vOTJhOEdMcnVzSWhVZmtVTk1LQWJZd0FWdWhqTGxrT1pWSnpTbW9OOW1qSi0yQ=
+nJqeDhyMjREQUNnejhrMWJvdkRDbHA0RmU2SlJCVmV2VlRsZi0yQnJZNktxQzVqdnFwdHR2SlpR=
+RGFSVmxHZ2JZS3hxTmRFcmpUcFBmVEJ6dncxdmpmOUloYkJaV3RCM1ZUeVI5MUFudXJvalItMkZ=
+ZS3l5ZU44bUJndkd0R0YtMkJ5Vm4yc0wtMkJWMGtkV3RqckZyTzdPWTU0dUYyQXhhbTVuYmU0dj=
+RGZjhMeWd5Q2tWVnZURkp2UmZuQUxZYW53Z0NYN21PTk5Eck4zcURsaVprcS0yQlhWdzhiWmxkW=
+mZ6UExhS0lxSVpHdzAyS1kwa0x5cG1YRjlidUY0RXdDNkFJVnR0NVhMQzhSeUZGQnRQSlNFSE9w=
+cU1Za3QzU1FvVmhablp6NXFtSlNlUlRreW1qNzRzSlJFLTJGSUJXcFhxZ2JvZzVadENzRC0yQlJ=
+QZ2JzNWJhZ1p6THRwY0xEd1hsSmZxamhzS0FXOExWNENwaEMtMkZ6Mng5LTJCOVZXVmV0LTJGY3=
+h6U0tEaUw3VzJ1YzJVck5EVHBnZ3dxWlRTUm56Ry0yRndOSkV5NFMwOFNoVXI5a3VpY0N5R0FuN=
+DVPa0ctMkZEb1dBQ3ZEOENjUW95LTJCNG5kek5vMVJQR0s5ZnpWMnZjWEVHV3d4SkNqNnI2dVpE=
+ZlB6Y1FqU3V0eU8xS25ERGpuRkVLWnNQb1dYWG5pcXBkbUdLcmM0dWZreERYQ2RZR284dks4T0U=
+1alpkTnRZUzBRLTJCU3R6SjI1WGpZb0RBSnZyOU5xc2NjNEkzQzhsUmh0ZUJ4VWJCLTJCTVlzST=
+dCOE8xMVE3QVQtMkZnRkRTM3JxRVdjZTAyVEozLTJGY29zbldha0t1OGpLZGViZGhGN2FwYlpkR=
+zNXYnZhamhEZ3pOYy0yQnJqUHJ1LTJGNTRQMUJ5bHljdldvLTJCZzl3bXd2ZThkS2JlYXQtMkJ0=
+SlhGaWJzLTJGZ29XWHFFZDZod0NJQXJIbGw5OWxadmwxRjgxQnBlaEkzZVc0bGIzYUpLeGRma3Z=
+NOTBqa1JPa0ItMkJxcEtRVThyLTJCdEdNNklYcEdHUy0yRjhXbXczN01xdGxPa01SQ25uQ2NrRn=
+Z1VnhIMTQwLTJGTVdJbkNVbm5Yc0J5TEw0MFctMkZSQmUtMkZjLTJCbkhkWnVCaDlPQUxla1gtM=
+kJjVFpYOEdON2xGTG05dUZrNFpSSTBSUGVTUktrR2MwRVNCQXBFUG1EdjFQSEg3dmctMkJjLTJG=
+NUx4ZzE2Um5Pb2Jvc0tMbkRZeUVNM3d1MEI=3D"><strong><span style=3D"font-family:=
+&quot;Arial&quot;,sans-serif;color:#0000E9">https://de.ugreen.com/pages/ugr=
+een-zuruck-zur-schule-aktion</span></strong></a></span></span><o:p></o:p></=
+p><p class=3D"p4"><strong><span style=3D"font-size:13.5pt;font-family:&quot=
+;Arial&quot;,sans-serif">Description: <span style=3D"background:#F7DA64">Sa=
+ve up to 30%</span> + <span style=3D"background:#F7DA64">Extra 10% Off</spa=
+n> for Students</span></strong><span class=3D"apple-converted-space"><b><sp=
+an style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif"> </s=
+pan></b></span><o:p></o:p></p><p class=3D"p4"><strong><span style=3D"font-s=
+ize:13.5pt;font-family:&quot;Arial&quot;,sans-serif">Validity: 8/20-8/31</s=
+pan></strong><o:p></o:p></p><p class=3D"p6"><o:p>&nbsp;</o:p></p><p class=
+=3D"p5"><strong><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quo=
+t;,sans-serif;color:black">DE NAS DH4300:&nbsp;</span></strong><span class=
+=3D"s2"><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-=
+serif"><a href=3D"http://emnc.panelplace.com/WSMFUGVHLEJD?id=3D150287=3DIB8=
+HCVYFCwAORVZbUVsHWFZSWl0GDVdXBFYDAlZSWgJTBwFaUAwKXgELBVpWCAoFBQJFS11NA3IAAA=
+ANDwsDFwZNVVQWUF9XWkxBTQBXXh0CUwwMAwhXB1ZUUlBRW1dXUR9fTBdFAxcWXF8NABZDAF0BV=
+UlYWAFXTwUJCUw1MS4lNnBuK3l8cn0GWwcfTgA=3D&amp;fl=3DCxdDSBAPFhdMCwtUUwAEWApK=
+Wk0aSgdcBQEUDQdMDAYXTFtLTFZVUVpS&amp;ext=3DdXBuPXUwMDEuQjhWTVBNT3p4UjdSUE9Y=
+LTJCSzJYZFQ4VDVvLTJCLTJCNHJnYjlLV3Q2NC0yQldzLTJGSUozUU9CeEttYi0yQnBvQlQzT0p=
+udlpGTGVuSEJLVnJjRzhhQTRxZDlkaHlPdXRMb2JicURnVld5RDN3eVNJVjhIcnIwdzltd0VmM0=
+1GMExrbUptejY1cHRMaWcwX1RxQnE5eFZMSDVya0l2UEoxbFhXaTl1MVRpSlV4clpFRlRMTkxIS=
+EFRT3U3dDRGWXBWUGxDVnN0RG84RnlTcjZ4MjNSV3J3eHJWWi0yRkFmWmpXWVFxLTJCY2s0djVS=
+bEd3dmhFRlVDbGFsNU9OV0lBN21aVGhiZ2hRZGItMkJPTHFvbzkyYThHTHJ1c0loVWZrVU5NS0F=
+iWXdBVnVoakxsa09aVkp6U21vTjltakotMkJyang4cjI0REFDZ3o4azFib3ZEQ2xwNEZlNkpSQl=
+ZldlZUbGYtMkJyWTZLcUM1anZxcHR0dkpaUURhUlZsR2diWUt4cU5kRXJqVHBQZlRCenZ3MXZqZ=
+jlJaGJCWld0QjNWVHlSOTFBbnVyb2pSLTJGWUt5eWVOOG1CZ3ZHdEdGLTJCeVZuMnNMLTJCVjBr=
+ZFd0anJGck83T1k1NHVGMkF4YW01bmJlNHY0RmY4THlneUNrVlZ2VEZKdlJmbkFMWWFud2dDWDd=
+tT05ORHJOM3FEbGlaa3EtMkJYVnc4YlpsZFpmelBMYUtJcUlaR3cwMktZMGtMeXBtWEY5YnVGNE=
+V3QzZBSVZ0dDVYTEM4UnlGRkJ0UEpTRUhPcHFNWWt0M1NRb1ZoWm5aejVxbUpTZVJUa3ltajc0c=
+0pSRS0yRklCV3BYcWdib2c1WnRDc0QtMkJSUGdiczViYWdaekx0cGNMRHdYbEpmcWpoc0tBVzhM=
+VjRDcGhDLTJGejJ4OS0yQjlWV1ZldC0yRmN4elNLRGlMN1cydWMyVXJORFRwZ2d3cVpUU1Juekc=
+tMkZ3TkpFeTRTMDhTaFVyOWt1aWNDeUdBbjQ1T2tHLTJGRG9XQUN2RDhDY1FveS0yQjRuZHpObz=
+FSUEdLOWZ6VjJ2Y1hFR1d3eEpDajZyNnVaRGZQemNRalN1dHlPMUtuRERqbkZFS1pzUG9XWFhua=
+XFwZG1HS3JjNHVma3hEWENkWUdvOHZLOE9FNWpaZE50WVMwUS0yQlN0ekoyNVhqWW9EQUp2cjlO=
+cXNjYzRJM0M4bFJodGVCeFViQi0yQk1Zc0k3QjhPMTFRN0FULTJGZ0ZEUzNycUVXY2UwMlRKMy0=
+yRmNvc25XYWtLdThqS2RlYmRoRjdhcGJaZEczV2J2YWpoRGd6TmMtMkJyalBydS0yRjU0UDFCeW=
+x5Y3ZXby0yQmc5d213dmU4ZEtiZWF0LTJCdEpYRmlicy0yRmdvV1hxRWQ2aHdDSUFySGxsOTlsW=
+nZsMUY4MUJwZWhJM2VXNGxiM2FKS3hkZmt2TTkwamtST2tCLTJCcXBLUVU4ci0yQnRHTTZJWHBI=
+YVBMN2oyaXBYOURFczEtMkZrWC0yRkhUSThjVXpxTUt2QzJOcnl5OWJVSHFPTXRzeGVNUjdSSTB=
+jNXF2RUJ4cHRwYUthOHBWMFNuQk54MGlVemdiNklQLTJGY3ZuV0swWk1NTlhlT0huVy0yQnI5Y0=
+RDZ3E1QXQxVENoRnRBSm1RZ3cyZldPUnQ1UVkwNkpUbldLQmNEYUZJYzNHSA=3D=3D"><strong=
+><span style=3D"font-family:&quot;Arial&quot;,sans-serif;color:#0000E9">htt=
+ps://nas-de.ugreen.com/products/ugreen-nasync-dh4300-plus-network-attached-=
+storage</span></strong></a></span></span><o:p></o:p></p><p class=3D"p4"><st=
+rong><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-ser=
+if">Description: Sch=C3=BCtzen &amp; Sichern Sie Ihre Daten mit dem DH4300 =
+Plus</span></strong><strong><span lang=3D"ZH-CN" style=3D"font-size:13.5pt;=
+font-family:DengXian">=EF=BC=8C</span></strong><strong><span style=3D"font-=
+size:13.5pt;font-family:&quot;Arial&quot;,sans-serif;background:#F7DA64">Sp=
+are 20% diese Woche</span></strong><o:p></o:p></p><p class=3D"p4"><strong><=
+span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif">Va=
+lidity: 8/20-8/24</span></strong><o:p></o:p></p><p class=3D"p6"><o:p>&nbsp;=
+</o:p></p><p class=3D"p7"><o:p>&nbsp;</o:p></p><p class=3D"p2"><span style=
+=3D"font-size:13.5pt">We encourage you to feature UGREEN=E2=80=99s all-new =
+<strong><span style=3D"font-family:&quot;PingFang SC&quot;,serif">NAS DH430=
+0 Plus</span></strong>. Here are a few highlights:</span><o:p></o:p></p><p =
+id=3D"isPasted"><strong><span style=3D"font-size:13.5pt;font-family:&quot;A=
+ptos&quot;,sans-serif">Next-Level Charging Anywhere</span></strong><span st=
+yle=3D"font-size:13.5pt">: Up to 500W fast charging with multiple USB-C por=
+ts =E2=80=94 ideal for home, work, and travel setups.</span><o:p></o:p></p>=
+<p><strong><span style=3D"font-size:13.5pt;font-family:&quot;Aptos&quot;,sa=
+ns-serif">Secure Digital Storage</span></strong><span style=3D"font-size:13=
+.5pt">: UGREEN NAS systems enable private media libraries and cloud backups=
+ with ease =E2=80=94 perfect for building your own family or work data cent=
+er.</span><o:p></o:p></p><p><strong><span style=3D"font-size:13.5pt;font-fa=
+mily:&quot;Aptos&quot;,sans-serif">Smart Tracking Made Simple</span></stron=
+g><span style=3D"font-size:13.5pt">: FineTrack Smart Finder helps users sta=
+y organized with effortless Bluetooth tracking.</span><o:p></o:p></p><p cla=
+ss=3D"p2"><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,san=
+s-serif">&nbsp;</span><o:p></o:p></p><p class=3D"p2"><span style=3D"font-si=
+ze:13.5pt;font-family:&quot;Arial&quot;,sans-serif">Let=E2=80=99s work toge=
+ther to bring these high-performance tech deals to more users. Looking forw=
+ard to your active participation!</span><o:p></o:p></p><p class=3D"p2"><spa=
+n style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;,sans-serif">&nbsp=
+;</span><o:p></o:p></p><p class=3D"p2"><span style=3D"font-size:13.5pt;font=
+-family:&quot;Arial&quot;,sans-serif">Best regards,</span><o:p></o:p></p><p=
+ class=3D"p2"><span style=3D"font-size:13.5pt;font-family:&quot;Arial&quot;=
+,sans-serif">Rita</span><o:p></o:p></p></div><div><p class=3D"MsoNormal"><s=
+pan style=3D"font-size:13.5pt"><br><a href=3D"http://emnc.panelplace.com/WS=
+MFUGVHLEJD?id=3D150287=3DIB8HCVYFCwAORQMGAgsKVVYADVwDWFELVVFRVQAEVgJTW1QJBg=
+xbAQ9bBAVVC1JQB1dFS11NA3IAAAANDwsDFwZNVVQWUF9XWkxBTQBXXh0CUwwMAwhXB1ZUUlBRW=
+1dXUR9fTBdFAxcWXF8NABZDAF0BVUlYWAFXTwUJCUw1MS4lNnBuK3l8cn0GWwcfTgA=3D&amp;f=
+l=3DCxdDSBAPFhdMCwtUUwAEWApKWk0aSgdcBQEUDQdMDAYXTFtLTFZVUVpS&amp;ext=3DdXBu=
+PXUwMDEuQjhWTVBNT3p4UjdSUE9YLTJCSzJYZFR4YnhENFVKR210VzhEQXhwM1lYc0RhN01QTUN=
+URVRzM1dTbzUyUk02UTlIczhwRFZmdmZtTlQ2M0FlbktPb2c4SmFpRG5kWFZ3aXdBc0Rla1loRj=
+RqaUZ3ZkVGN1phcVdpQi0yQkp2OHBOVWw0VHJjSElWTGw1Z1VjSk9UeTJFaFhFeHUwcXU1ckdSZ=
+kdDWWhZdFRlM2Q4eXRLaUpoNi0yRkt5S2NCa1NZR0RXY2o2YkZtYW51OTlxYzdjV3NuSFZGTDdt=
+NGk1NVpJd0pWZEx5RmNQV2dsWjZ0bmhQWU1rNEZFUEY0cHRjV1lkUU1iRm5oRlJyZ09YZ01xVnh=
+mZFlmU1pnZms4ZnBsb2NrUi0yRmZiLTJGbkNBQ2UweTdtZUNxWmFIUkdSTUdKUng4NGdmbGtMYl=
+htamQ4R0NobmZ2eHdleERvcDVuQS0zRC0zRDBiVkFfVHFCcTl4VkxINXJrSXZQSjFsWFdpOXUxV=
+GlKVXhyWkVGVExOTEhIQVFPdTd0NEZZcFZQbENWc3REbzhGeVNyNngyM1JXcnd4clZaLTJGQWZa=
+aldZUXEtMkJjazR2NVJsR3d2aEVGVUNsYWw1T05XSUE3bVpUaGJnaFFkYi0yQk9McW9vOTJhOEd=
+McnVzSWhVZmtVTk1LQWJZd0FWdWhqTGxrT1pWSnpTbW9OOW1qSi0yQnJqeDhyMjREQUNnejhrMW=
+JvdkRDbHA0RmU2SlJCVmV2VlRsZi0yQnJZNktxQzVqdnFwdHR2SlpRRGFSVmxHZ2JZS3hxTmRFc=
+mpUcFBmVEJ6dncxdmpmOUloYkJaV3RCM1ZUeVI5MUFudXJvalItMkZZS3l5ZU44bUJndkd0R0Yt=
+MkJ5Vm4yc0wtMkJWMGtkV3RqckZyTzdPWTU0dUYyQXhhbTVuYmU0djRGZjhMeWd5Q2tWVnZURkp=
+2UmZuQUxZYW53Z0NYN21PTk5Eck4zcURsaVprcS0yQlhWdzhiWmxkWmZ6UExhS0lxSVpHdzAyS1=
+kwa0x5cG1YRjlidUY0RXdDNkFJVnR0NVhMQzhSeUZGQnRQSlNFSE9wcU1Za3QzU1FvVmhablp6N=
+XFtSlNlUlRreW1qNzRzSlJFLTJGSUJXcFhxZ2JvZzVadENzRC0yQlJQZ2JzNWJhZ1p6THRwY0xE=
+d1hsSmZxamhzS0FXOExWNENwaEMtMkZ6Mng5LTJCOVZXVmV0LTJGY3h6U0tEaUw3VzJ1YzJVck5=
+EVHBnZ3dxWlRTUm56Ry0yRndOSkV5NFMwOFNoVXI5a3VpY0N5R0FuNDVPa0ctMkZEb1dBQ3ZEOE=
+NjUW95LTJCNG5kek5vMVJQR0s5ZnpWMnZjWEVHV3d4SkNqNnI2dVpEZlB6Y1FqU3V0eU8xS25ER=
+GpuRkVLWnNQb1dYWG5pcXBkbUdLcmM0dWZreERYQ2RZR284dks4T0U1alpkTnRZUzBRLTJCU3R6=
+SjI1WGpZb0RBSnZyOU5xc2NjNEkzQzhsUmh0ZUJ4VWJCLTJCTVlzSTdCOE8xMVE3QVQtMkZnRkR=
+TM3JxRVdjZTAyVEozLTJGY29zbldha0t1OGpLZGViZGhGN2FwYlpkRzNXYnZhamhEZ3pOYy0yQn=
+JqUHJ1LTJGNTRQMUJ5bHljdldvLTJCZzl3bXd2ZThkS2JlYXQtMkJ0SlhGaWJzLTJGZ29XWHFFZ=
+DZod0NJQXJIbGw5OWxadmwxRjgxQnBlaEkzZVc0bGIzYUpLeGRma3ZNOTBqa1JPa0ItMkJxcEtR=
+VThyLTJCdEdNNklYcEhnenlFa3NtWWpSY1NlTERDS3BRbWFzTUp0MmlEQlVqeFBBLTJGOWZoTmN=
+GMzc4TWZLZnNaUWZSUC0yQm81aXBXNzRMa1Z4azZza2NBQjBHcWN6c3Z6dXhQN01UNjNiNjN1SV=
+BqTTBESzdMbG9KVW9HZDlFYnVQMC0yQmxIckRFVndBZUNlWUszV1RSeHA3VWk4MDdqNkJXSmFPc=
+w=3D=3D">Unsubscribe</a></span><o:p></o:p></p></div><p class=3D"MsoNormal">=
+<img border=3D"0" width=3D"1" height=3D"1" style=3D"width:.0083in;height:.0=
+083in" id=3D"_x0000_i1025" src=3D"https://u29708799.ct.sendgrid.net/wf/open=
+?upn=3Du001.mBe6-2F3K0CYFEMJ362i6RgSXmYurtf-2BxAnCoyqaIJsYO7Z4-2FLaTAfzUAZq=
+1ChH-2FzVZzGhZuqHFQftLBOOSypuZ-2Bqm9aBTFOoQDopymCX4vnKroqT5oCGpqopZnAFy99Kw=
+oly0-2Bgq-2FzALlT2XGpEK1PkzPztxuNgTqHbdV-2BqDMqrspGVqB9IGVTx1RenLEDMKZKyqLc=
+246-2FchhJgIMvY5MvUIJhtvmscQA-2FYxytYtomNQXyZdFcaZUg7hucG-2Fe18fEU3km79z3wk=
+1df91u0mrdS4OjsWUDvsKGOeK7-2FysGiXO4qvd72UuTSCYTbyZFyLpata9D9GyzcLqpdGdTtu2=
+9FzVwgILPDIZ3auAShBdsz3NpEChfmZpKuOUZ8MVpHrAOGNWHXQnDcTlnPZDXz-2F1qlPDu9odV=
+VW7k-2BRXiTUwWXCsg-2BjD1xqv37xPYknOobYVWRViGEajNSacj3im7PkVGXMcyLNFEE5Mh1ru=
+O73hlFjQzQEvCpHQMb86P5myQNKnZApsafWuooe6sgEG6C7QZL0zy8zLf96xjd8OdsqaxWK8OLZ=
+pcHaDoD6HBhKJN9Txqfv50bSEwdtQ7sGXhTVPFYOCcJsfdYTN-2BgqnXzSjvYsnP9ZNy-2F4tX4=
+GkskxhdYOuiTwyo5zA9K3J3-2FrP9-2FQLrrsJh-2FaEyLXx-2Bo5XNMCCfdjR5D-2FtMUvurfg=
+HhGcGFIQIW6HAWqRNjXOY-2Fc8QMTBDjem-2FmBIP-2FBE7CqenxgcwCcNX8q8-2FkI5AknSUcv=
+TCmexkdFQJWgnhrKzBGZxuPlkE5gtMUHpKTHC0mdfU7DCOqmWNKt1Jg13DJs2ZiPKGsZdpQptF3=
+X3-2BuGVD6lyE3noVAl-2FPA1l2l3vzBLqBUmupSFEq4c2-2BpxSV-2FRnthvi17xi11eehpjgg=
+Dvwydd1aukOYhdxgsW0iwRE1Y6ooZuL8nxpCEor-2FRCZnpLjsn3FN0oP51-2BBb-2FpXEP0JVv=
+5ISu5zsaYLAs9wUaxMejBUmdw83dqA-2BJEF-2FA9sZd0CPlyrKcNN6ywADbo4M-2B-2FrY-2Be=
+g5PsktiKfDUxjYIOZVCAvBlNN8bv5FWcicqaem9Gkfm-2Fhf4G5B7"><o:p></o:p></p></div=
+><p>&nbsp;<br></p>=0A=
+<img id=3D"SBBBB" src=3D"http://emnc.panelplace.com/WSMFUGVHLEJD?id=3D15028=
+7=3DLB8HCVYFCwAORRJDQxgTQRNEGRkUGUISQUZGRENCQkNDQxcYQxUZGBkZEkNDGBNBE1RFS11=
+NA3IAAAANDwsDFwZNVVQWUF9XWkxBTQBXXh0CUwwMAwhXB1ZUUlBRW1dXUR9fTBdFAxcWXF8NAB=
+ZDAF0BVUlYWAFXTwUJCUw1MS4lNnBuK3l8cn0GWwcfTgA=3D"></body></html>=0A=
+
+
+------=_NextPart_000_005A_01DC12C7.354C0A80--

@@ -1,0 +1,465 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5316133nji;
+        Sun, 24 Aug 2025 10:41:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdcYysib3T+32wbst3YFJTw0kCt1vgjU7hZLNnZwq1B0hfaSknSzg1AaRyL8Fv1OIMIwzx
+X-Received: by 2002:a05:6000:2913:b0:3c3:5406:12b4 with SMTP id ffacd0b85a97d-3c5dcff40d3mr7581932f8f.62.1756057292161;
+        Sun, 24 Aug 2025 10:41:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756057292; cv=none;
+        d=google.com; s=arc-20240605;
+        b=dLwQxKTAA5G9mAv+KQ9hdCDXfXC2MMYNAf+Irv+woShp4agnajPlk9NBQiKcYH9Xm+
+         l1wbfECyPu1Y2fiXyPYmgYlVHL1SAM2NHVD+4qPKz++72HTlm6ZyE71/Oao2sLAK7YS0
+         1aUxXrQLJwaryfz1jZbpjTWUfgAx2crWFn09XM7p2Wcsxs9Y39mlO97nNErHp/KKYPRx
+         hHc5rug7TySTqcTZpSTllyAK0l6sYZR10djzot/0VEfFEh2u+m8NwAP38EjrV6/P9cvr
+         qB4N/VpPj6Nmf7aLaTFfMYS9lSZgxXzQqBLsNp5K0hApYF4vQLFhfMnN4/hX9+9stzs/
+         ASMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:message-id:to:from:subject:mime-version
+         :date:sender:dkim-signature;
+        bh=U3dVYqW7x2Ip+66b+j8VAFo9JHyY+tIU5Y2aaghwqgo=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=L2hi8DXP4V3rpwpaSw7BaeEgwFpTCft6hMHPR7h/3LTnZ1Ey23BtdxM7vtk/oJ2kIc
+         Ks0r5sRLRcj1kqEUBO5QEs3ibski0/IZ6Jzko5Pxcowqi76sDo9u35nAR+zaBY34ITNn
+         ZN21zv4APGMls5H98VHDC3KGL4pc60qj8wVB2V8UG8bGye6A5i8UkhzvMFibJDrkMiDD
+         /L+7EvnKBU0evOauUgQmQzkLYRsPxcmR4txfDywtrRxmX4h8+cm2TzTLxt9CD32YahfT
+         uSUqnMIEdx2p9x9GUXMk55RkFurVTZiqz9JlXgFSipO8lBNpsZSdbjqYunx+A+acaN6t
+         01qA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mgeu.lumaly.de header.s=s1 header.b=qgqlUa+6;
+       spf=pass (google.com: domain of bounce+919ccb.5e034-rita=affiliate.bluefocus.com@mgeu.lumaly.de designates 185.250.239.4 as permitted sender) smtp.mailfrom="bounce+919ccb.5e034-rita=affiliate.bluefocus.com@mgeu.lumaly.de";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=lumaly.de
+Return-Path: <bounce+919ccb.5e034-rita=affiliate.bluefocus.com@mgeu.lumaly.de>
+Received: from m239-4.eu.mailgun.net (m239-4.eu.mailgun.net. [185.250.239.4])
+        by mx.google.com with UTF8SMTPS id ffacd0b85a97d-3c711f8dc52si2545389f8f.260.2025.08.24.10.41.31
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 24 Aug 2025 10:41:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounce+919ccb.5e034-rita=affiliate.bluefocus.com@mgeu.lumaly.de designates 185.250.239.4 as permitted sender) client-ip=185.250.239.4;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mgeu.lumaly.de header.s=s1 header.b=qgqlUa+6;
+       spf=pass (google.com: domain of bounce+919ccb.5e034-rita=affiliate.bluefocus.com@mgeu.lumaly.de designates 185.250.239.4 as permitted sender) smtp.mailfrom="bounce+919ccb.5e034-rita=affiliate.bluefocus.com@mgeu.lumaly.de";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=lumaly.de
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mgeu.lumaly.de; q=dns/txt; s=s1; t=1756057291; x=1756064491;
+ h=Content-Transfer-Encoding: Content-Type: Message-Id: To: To: From: From: Subject: Subject: Mime-Version: Date: Sender: Sender;
+ bh=U3dVYqW7x2Ip+66b+j8VAFo9JHyY+tIU5Y2aaghwqgo=;
+ b=qgqlUa+6bFScZmhqfz0HiHT2EefOByTtH27vijEtXNfKYawNQp1WVA68gsIVeCwq+rQ/hNS2orEPP0YIEJHqi1HwCFVkd97ENdR/sERRB1BIaMSq8RyVuWpGtj9kUj72VAg8vjwD8C5onZR6eTvsLWVOHXmWiqUujudWrC3IdoI=
+X-Mailgun-Sid: WyJiODljYiIsInJpdGFAYWZmaWxpYXRlLmJsdWVmb2N1cy5jb20iLCI1ZTAzNCJd
+Received: by 1526d001e0ea38276da9eca0302e999913225c5798e75f51e7fbc4fdefadbd63 with HTTP
+ id 68ab4ecbca5807a38b2ffdcb; Sun, 24 Aug 2025 17:41:31 GMT
+X-Mailgun-Sending-Ip: 185.250.239.4
+Sender: fiona=lumaly.de@mgeu.lumaly.de
+Date: Sun, 24 Aug 2025 17:41:31 +0000
+Subject: =?UTF-8?q?Hei=C3=9Fe_Sommer_Deals_bei_Lumaly_-_jetzt_sichern!_=E2=98=80?=
+ =?UTF-8?q?=EF=B8=8F?=
+From: Fiona von Lumaly <fiona@lumaly.de>
+To: rita@affiliate.bluefocus.com
+X-Mailgun-Track-Opens: true
+X-Mailgun-Track-Clicks: true
+X-Mailgun-Variables: {"email_id": "13348801"}
+Message-Id: <20250824174131.5e8ed574622c4513@mgeu.lumaly.de>
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><s=
+pan class=3D"preheader" style=3D"color: transparent; display: none; height:=
+ 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: al=
+l; visibility: hidden; width: 0;"></span><!DOCTYPE HTML PUBLIC "-//W3C//DTD=
+ XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" style=3D"margin: 0; padding=
+: 0;">
+<head>
+   =20
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1">
+    <title> Hei=C3=9Fe Sommer Deals bei Lumaly - jetzt sichern! =E2=98=80=
+=EF=B8=8F </title>
+    <link href=3D"https://fonts.googleapis.com/css2?family=3DPT+Sans:ital,w=
+ght@0,400;0,700;1,400;1,700&amp;display=3Dswap" rel=3D"stylesheet">
+</head>
+<body style=3D"margin:0;padding:0;">
+<table width=3D"100%" bgcolor=3D"#E9E5FE" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0">
+    <tbody>
+    <tr>
+        <td align=3D"center">
+            <table style=3D"max-width: 600px; width: 100%; margin-top: 130p=
+x; margin-bottom: 145px; display: block;" bgcolor=3D"#FFFFFF" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" align=3D"center">
+                <tbody style=3D"max-width: 600px; display: block;">
+                <tr>
+                    <td style=3D"width: 100.8px; height: 65px; padding: 0 2=
+49.6px 0 249.6px; border-bottom: 1px solid #E9E5FE;">
+                        <a href=3D"http://email.mgeu.lumaly.de/c/eJwsyktqAz=
+EMANDT2MtBkuXPLLToZq5RHEtuDB5SknGhty-FrN9TiQaBvQnmmCBm2tHbWcf8HCoYApcC6O_SE=
+yfVGwXCnmvWzNj2vjcqBjsn9UMIKEIhxswYcItWTGPmRNQ4YnAM55etba6zzt9NzU-5X9f3y4UP=
+R4ej4y3tcTo6_FOe46qOofY-5qiXbbe5rD_aev0f_yP0FwAA__95QzfA" target=3D"_blank"=
+ style=3D"width: 100.8px;height: 36px;">
+                            <img src=3D"https://api.lumaly.de/img/flow/141/=
+logo-purple-fade.png?v=3D2" alt=3D"" width=3D"100.8px" height=3D"36px" styl=
+e=3D"width: 100.8px;height: 36px;display:block">
+                        </a>
+                    </td>
+                </tr>
+
+                <tr style=3D"text-align: center; display: block; max-width:=
+ 600px;">
+                    <td style=3D"display: block;">
+                        <img src=3D"https://api.lumaly.de/img/newsletter/20=
+25/august/background.jpg?v=3D1" alt=3D"" style=3D"width: 100%; display:bloc=
+k;">
+                    </td>
+                </tr>
+
+                <tr style=3D"text-align: center; display: block; max-width:=
+ 600px;">
+                    <td><img src=3D"https://api.lumaly.de/img/newsletter/20=
+25/august/welcome.jpg" alt=3D"" style=3D"width: 100%; display:block;"></td>
+                </tr>
+
+                <tr style=3D"width: 100%; display: inline-block;">
+                    <td style=3D"width: 100%; display: inline-block;">
+                        <table style=3D"max-width: 600px; width: 100%; disp=
+lay: block; background-color: #151515;">
+                            <tbody style=3D"width: 100%; display: inline-bl=
+ock;">
+
+                            <tr style=3D"width: 100%; display: inline-block=
+;">
+                                <td style=3D"width: 100%; display: inline-b=
+lock; padding: 0 0 40px;">
+                                    <div style=3D"padding: 20px; background=
+-color: #6F48FF;">
+                                        <span style=3D"font-family: EuclidS=
+quare,verdana,sans-serif; font-style: normal; font-weight: 500; font-size: =
+21px; line-height: 20px; text-align: center;  letter-spacing: -0.03em; colo=
+r: #fff; display: block;"> PARTNER DES MONATS </span>
+                                    </div>
+                                    <div>
+                                        <img src=3D"https://api.lumaly.de/i=
+mg/newsletter/2025/august/expedia.gif?v=3D2" alt=3D"Expedia" style=3D"width=
+: 100%; display: inherit;">
+                                        <p style=3D"margin: 0; padding: 10p=
+x 0; background-color: #2C1E63; color: #0CFD07; font-family: EuclidSquare,v=
+erdana,sans-serif; font-style: normal; font-weight: 400; font-size: 17px; l=
+ine-height: 20px; text-align: center; letter-spacing: -0.02em;"> +4,80% Cas=
+hback </p>
+                                        <span style=3D"font-family: EuclidS=
+quare,verdana,sans-serif; font-style: normal; font-weight: 400; font-size: =
+24px; line-height: 32px; text-align: center; letter-spacing: -0.03em; color=
+: #ffffff; display: block; padding: 14px 0 10px;"> Sichere dir jetzt bei Ex=
+pedia <br> bis zu 4,80% Cashback! </span>
+                                        <a href=3D"http://email.mgeu.lumaly=
+.de/c/eJwUxbFuxCAMANCvgRHZxoZkYLglv1FRYhpU6J0SclL_vur09iQKnq0mjBJAIq1odeTWP=
+9qe0HteFkB7JAbZQaQuuULBNSBG8SFgiL6suYptiYAEFmKMjB6d6KK7RA5EhQW9YRhfert-j9x_=
+3a62p2PO12X8w9BmaHud1R0_hrbSW_n-N49Tq_EPRIDOx3te9kxnm9kw5Fpbb3mq--y31me5L1e=
+ew74T_QUAAP__Iis-EA" target=3D"_blank" style=3D"font-family: EuclidSquare,v=
+erdana,sans-serif; font-style: normal; font-weight: 400; font-size: 16px; l=
+ine-height: 18px; text-align: center; color: #FFF; display: block; width: 1=
+65px; background: #6F48FF; border-radius: 100px; padding: 12px 0; text-deco=
+ration: none; margin: 20px auto 0;">zum Deal</a>
+                                    </div>
+                                </td>
+
+                                <td style=3D"width: 100%; display: inline-b=
+lock; padding: 0 0 40px;">
+                                    <div>
+                                        <img src=3D"https://api.lumaly.de/i=
+mg/newsletter/2025/august/hello-fresh.jpg?v=3D2" alt=3D"Hello Fresh" style=
+=3D"width: 100%; display: inherit;">
+                                        <p style=3D"margin: 0;padding: 10px=
+ 0;background-color: #2C1E63;color: #0CFD07;font-family: EuclidSquare,verda=
+na,sans-serif;font-style: normal;font-weight: 400;font-size: 17px;line-heig=
+ht: 20px;text-align: center;letter-spacing: -0.02em;"> +5=E2=82=AC Cashback=
+ </p>
+                                        <span style=3D"font-family: EuclidS=
+quare,verdana,sans-serif;font-style: normal;font-weight: 400;font-size: 22p=
+x;line-height: 32px;text-align: center;letter-spacing: -0.03em;color: #ffff=
+ff;display: block;padding: 14px 0 10px;">  Sichere dir 5% Cashback bei <br>=
+ deiner HelloFresh Bestellung! </span>
+                                        <a href=3D"http://email.mgeu.lumaly=
+.de/c/eJwEwE1u5SAMAODTwBJhGyewYDGaKifovuLHNEjkvSghlXr7fjWyWHJaIqy8WF4xgJYj9=
+fHVawQi570FvUdoUENFyUsNsuRULElC77NkCABN94gW2Xp0sDogMCxeKq9uQSyOgZSzx7c8ZjxH=
+Gr-mih5xn_O8Ff1TuCncSn2ZS2bqI9XbvGQq3GYx534q2qaiD2AgDv8R2QKtvOCnvuLVZ1LOptb=
+66GmKyeOR9i7Pbcr70D8R_wIAAP__pKxCxg" target=3D"_blank" style=3D"font-family=
+: EuclidSquare,verdana,sans-serif;font-style: normal;font-weight: 400;font-=
+size: 16px;line-height: 18px;text-align: center;color: #FFF;display: block;=
+width: 165px;background: #6F48FF;border-radius: 100px;padding: 12px 0;text-=
+decoration: none;margin: 20px auto 0;">zum Deal</a>
+                                    </div>
+                                </td>
+
+                                <td style=3D"width: 100%; display: inline-b=
+lock; padding: 0 0 40px;">
+                                    <div>
+                                        <img src=3D"https://api.lumaly.de/i=
+mg/newsletter/2025/august/renogy.jpg?v=3D2" alt=3D"Renogy" style=3D"width: =
+100%; display: inherit;">
+                                        <p style=3D"margin: 0;padding: 10px=
+ 0;background-color: #2C1E63;color: #0CFD07;font-family: EuclidSquare,verda=
+na,sans-serif;font-style: normal;font-weight: 400;font-size: 17px;line-heig=
+ht: 20px;text-align: center;letter-spacing: -0.02em;"> +3,60% Cashback </p>
+                                        <span style=3D"font-family: EuclidS=
+quare,verdana,sans-serif;font-style: normal;font-weight: 400;font-size: 24p=
+x;line-height: 32px;text-align: center;letter-spacing: -0.03em;color: #ffff=
+ff;display: block;padding: 14px 0 10px;"> Hol dir jetzt 3,60% Cashback <br>=
+ bei Renogy! </span>
+                                        <a href=3D"http://email.mgeu.lumaly=
+.de/c/eJwEwEtuxCAMANDTwBIZYw90waJSlSt0WRFsZqhI0-Yn5fZ9klkhkNXsIz-AI755q0vp4=
+6tL9iFQSuDtK5MEio1mDlpboZkqNwFmAmlzqmp7RkCGhOQj-eAda1LhSA_ESuyDIVieerpxLmXc=
+TtSO_DqO392Ed4OTwWnTn_V5u_37cn01OH3cKp9_dstbP4ohKK310cuhbh6ntrWeu6vrYq-M_wE=
+AAP__5Eo71g" target=3D"_blank" style=3D"font-family: EuclidSquare,verdana,s=
+ans-serif;font-style: normal;font-weight: 400;font-size: 16px;line-height: =
+18px;text-align: center;color: #FFF;display: block;width: 165px;background:=
+ #6F48FF;border-radius: 100px;padding: 12px 0;text-decoration: none;margin:=
+ 20px auto 0;">zum Deal</a>
+                                    </div>
+                                </td>
+
+                                <td style=3D"width: 100%; display: inline-b=
+lock; padding: 0 0 40px;">
+                                    <div>
+                                        <img src=3D"https://api.lumaly.de/i=
+mg/newsletter/2025/august/zalando.jpg?v=3D2" alt=3D"Zalando" style=3D"width=
+: 100%; display: inherit;">
+                                        <p style=3D"margin: 0;padding: 10px=
+ 0;background-color: #2C1E63;color: #0CFD07;font-family: EuclidSquare,verda=
+na,sans-serif;font-style: normal;font-weight: 400;font-size: 17px;line-heig=
+ht: 20px;text-align: center;letter-spacing: -0.02em;"> +7,20% Cashback </p>
+                                        <span style=3D"font-family: EuclidS=
+quare,verdana,sans-serif;font-style: normal;font-weight: 400;font-size: 22p=
+x;line-height: 32px;text-align: center;letter-spacing: -0.03em;color: #ffff=
+ff;display: block;padding: 14px 0 10px;"> Jetzt bis 7,20% Cashback sichern =
+<br> bei Lounge by Zalando! </span>
+                                        <a href=3D"http://email.mgeu.lumaly=
+.de/c/eJwczMturSAUANCvgSHZD54DBje58TcahG0lwR7j0Zr-fWOna7BadgJstWQMzoMLlFDLV=
+vr46C0js40RUK-ZaxILMyQqrroiRZKEuHh0yZPMoHsmIAeRLAaLjMZJlOaC9UTVOmRlYfuUy4xr=
+K-PHNNEjr-e5vxX_UzQpmu77NuXuX2jqa1M01UNKM_u6K54e33pT_B85xKTIP1KW5c-CZ_Coj3z=
+0sygLj49eTjHzuGR51ev9nPo7028AAAD___1DR3E" target=3D"_blank" style=3D"font-f=
+amily: EuclidSquare,verdana,sans-serif;font-style: normal;font-weight: 400;=
+font-size: 16px;line-height: 18px;text-align: center;color: #FFF;display: b=
+lock;width: 165px;background: #6F48FF;border-radius: 100px;padding: 12px 0;=
+text-decoration: none;margin: 20px auto 0;">zum Deal</a>
+                                    </div>
+                                </td>
+
+                                <td style=3D"width: 100%; display: inline-b=
+lock; padding: 0 0 40px;">
+                                    <div>
+                                        <img src=3D"https://api.lumaly.de/i=
+mg/newsletter/2025/august/paul-valentine.jpg?v=3D2" alt=3D"Paul Valentine" =
+style=3D"width: 100%; display: inherit;">
+                                        <p style=3D"margin: 0;padding: 10px=
+ 0;background-color: #2C1E63;color: #0CFD07;font-family: EuclidSquare,verda=
+na,sans-serif;font-style: normal;font-weight: 400;font-size: 17px;line-heig=
+ht: 20px;text-align: center;letter-spacing: -0.02em;"> +4,20% Cashback </p>
+                                        <span style=3D"font-family: EuclidS=
+quare,verdana,sans-serif;font-style: normal;font-weight: 400;font-size: 22p=
+x;line-height: 32px;text-align: center;letter-spacing: -0.03em;color: #ffff=
+ff;display: block;padding: 14px 0 10px;"> Sichere dir sofort 4,20% Cashback=
+ <br> bei Paul Valentine! </span>
+                                        <a href=3D"http://email.mgeu.lumaly=
+.de/c/eJwczM1qxCAQAOCnGW8VnfEvBw-FJa-xuHHSCOYHowvt05f2_vHlaFmRERy1t05Zj5MWv=
+KdSnyVHTWRCUFpsUTlvkzPKY6A8qWWdwpqJyU4ctPUvUSIqtCqg0d5o0tJy4Gy9cYiLsZrAqP2L=
+h6xjT_VbZhY1br1fN9An4Aw4Z071bunnbHI5d8D5Bpwb5-d4XjWVQ17bBTR3oEcujZcO6G6gB3p=
+ygC4DPa406sc7VT56OfivES220hMYlda11JI6y1cdvJ7LuP_BO-JvAAAA___leE8X" target=
+=3D"_blank" style=3D"font-family: EuclidSquare,verdana,sans-serif;font-styl=
+e: normal;font-weight: 400;font-size: 16px;line-height: 18px;text-align: ce=
+nter;color: #FFF;display: block;width: 165px;background: #6F48FF;border-rad=
+ius: 100px;padding: 12px 0;text-decoration: none;margin: 20px auto 0;">zum =
+Deal</a>
+                                    </div>
+                                </td>
+
+                                <td style=3D"width: 100%; display: inline-b=
+lock; padding: 0 0 40px;">
+                                    <div>
+                                        <img src=3D"https://api.lumaly.de/i=
+mg/newsletter/2025/august/rewe.jpg?v=3D2" alt=3D"Rewe" style=3D"width: 100%=
+; display: inherit;">
+                                        <p style=3D"margin: 0;padding: 10px=
+ 0;background-color: #2C1E63;color: #0CFD07;font-family: EuclidSquare,verda=
+na,sans-serif;font-style: normal;font-weight: 400;font-size: 17px;line-heig=
+ht: 20px;text-align: center;letter-spacing: -0.02em;"> +3% Cashback </p>
+                                        <span style=3D"font-family: EuclidS=
+quare,verdana,sans-serif;font-style: normal;font-weight: 400;font-size: 22p=
+x;line-height: 32px;text-align: center;letter-spacing: -0.03em;color: #ffff=
+ff;display: block;padding: 14px 0 10px;"> Erhalte 3% Cashback <br> bei Rewe=
+! </span>
+                                        <a href=3D"http://email.mgeu.lumaly=
+.de/c/eJwczDtuxCAQANDTQImYGX5bUESKfI0ID-MYCbKW146V20fe9hWvZi-WnJYM0QfrIz5Ay=
+yitf7WagcilZEGvmWfmMGO0MM_hkTwzV6CEEEMslVi3jBa9TeggOiAwXpJUH11AZOeBlLPjW07T=
+z1H6n6mie16PY3sp-lA4KZyu6zLlaj9g-DkUTrxLqWZbN0XT7aNVRZ8AwaPCcEtZlrfFQDaA3vP=
+ejqKcvb23coiZ-ynLk8_XferfjP8BAAD__xaJR4Y" target=3D"_blank" style=3D"font-f=
+amily: EuclidSquare,verdana,sans-serif;font-style: normal;font-weight: 400;=
+font-size: 16px;line-height: 18px;text-align: center;color: #FFF;display: b=
+lock;width: 165px;background: #6F48FF;border-radius: 100px;padding: 12px 0;=
+text-decoration: none;margin: 20px auto 0;">zum Deal</a>
+                                    </div>
+                                </td>
+
+                                <td style=3D"width: 100%; display: inline-b=
+lock; padding: 0 0 40px;">
+                                    <div>
+                                        <img src=3D"https://api.lumaly.de/i=
+mg/newsletter/2025/august/holodaycheck.jpg?v=3D2" alt=3D"Holodaycheck" styl=
+e=3D"width: 100%; display: inherit;">
+                                        <p style=3D"margin: 0;padding: 10px=
+ 0;background-color: #2C1E63;color: #0CFD07;font-family: EuclidSquare,verda=
+na,sans-serif;font-style: normal;font-weight: 400;font-size: 17px;line-heig=
+ht: 20px;text-align: center;letter-spacing: -0.02em;"> +3% Cashback </p>
+                                        <span style=3D"font-family: EuclidS=
+quare,verdana,sans-serif;font-style: normal;font-weight: 400;font-size: 22p=
+x;line-height: 32px;text-align: center;letter-spacing: -0.03em;color: #ffff=
+ff;display: block;padding: 14px 0 10px;"> Erhalte bis zu 3% Cashback <br> b=
+ei HolidayCheck! </span>
+                                        <a href=3D"http://email.mgeu.lumaly=
+.de/c/eJwczMtqrTAUANCvSYZhv_JwkMGFi79RotnWQOwRj1b698VO12DV7BVYrGaMPoCPNKDVr=
+bT-0WpGZkkJ0K658DThQFKnYQZIKUlSWHQACkloirZlAvKQSDAKMjqvSauPEohm8chGYPvUy_Vr=
+K_3HVbU9r-e5vw3_MzQaGu_7duVuX-jm12ZonA8t1e3rbnh8fGvV8H_kFKOh8EhZlj-LgSGgPfL=
+RzmIEHu-tnOqmfunymq_3c9rvTL8BAAD__5hHRt8" target=3D"_blank" style=3D"font-f=
+amily: EuclidSquare,verdana,sans-serif;font-style: normal;font-weight: 400;=
+font-size: 16px;line-height: 18px;text-align: center;color: #FFF;display: b=
+lock;width: 165px;background: #6F48FF;border-radius: 100px;padding: 12px 0;=
+text-decoration: none;margin: 20px auto 0;">zum Deal</a>
+                                    </div>
+                                </td>
+
+                                <td style=3D"width: 100%; display: inline-b=
+lock; padding: 0 0 40px;">
+                                    <div>
+                                        <img src=3D"https://api.lumaly.de/i=
+mg/newsletter/2025/august/sixt.jpg?v=3D2" alt=3D"Sixt" style=3D"width: 100%=
+; display: inherit;">
+                                        <p style=3D"margin: 0;padding: 10px=
+ 0;background-color: #2C1E63;color: #0CFD07;font-family: EuclidSquare,verda=
+na,sans-serif;font-style: normal;font-weight: 400;font-size: 17px;line-heig=
+ht: 20px;text-align: center;letter-spacing: -0.02em;"> +3% Cashback </p>
+                                        <span style=3D"font-family: EuclidS=
+quare,verdana,sans-serif;font-style: normal;font-weight: 400;font-size: 22p=
+x;line-height: 32px;text-align: center;letter-spacing: -0.03em;color: #ffff=
+ff;display: block;padding: 14px 0 10px;"> Sichere dir jetzt 3% Cashback <br=
+> bei SIXT! </span>
+                                        <a href=3D"http://email.mgeu.lumaly=
+.de/c/eJwczM1urSAQAOCngSVhZvhzweImN75Gg8NYSaDHeLSmb9_Y7bf4avZiyWnJEH2wPuIEW=
+kZp_aPVDEQuJQt6y2skYlxs4YUnAPQgnNYlSpzSVJh1y2jR24QOogMC4yVJ9dEFRHYeSDk7PuUy=
+_Rql_5gquuftPPe3on8KZ4Xzfd-m3O0LDL-GwpkPKdXs265ofny0qug_uBhAYXikrOufxUA2gD7=
+y0c6inH28t3KKWfol64uv93Pq74y_AQAA__86FkfE" target=3D"_blank" style=3D"font-=
+family: EuclidSquare,verdana,sans-serif;font-style: normal;font-weight: 400=
+;font-size: 16px;line-height: 18px;text-align: center;color: #FFF;display: =
+block;width: 165px;background: #6F48FF;border-radius: 100px;padding: 12px 0=
+;text-decoration: none;margin: 20px auto 0;">zum Deal</a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style=3D"max-width: 600px; display: block;">
+                    <td style=3D"display: block;">
+                        <a href=3D"http://email.mgeu.lumaly.de/c/eJw8yT1uwy=
+AUAODTwGjx_gweGCpVvkYEvEeDhJMqsSv19t06f5rFArG3DFHWIBE38HaUMW9DMxBxSgH8Pccuv=
+daqm4TGUmwFTYwQNPaEKt2PjAElJGSIDASLWDKVyCtiYwFyHI4vu5Z5HWX-Lmp-5vt5fr8dfTjc=
+He7_4nC38ZhF7eFof1m_DXX02ZGTaW_bZrzGyi0IQOmtRhORmtRKSWIUwkrQoJGQBmFCLlvHtPp=
+Xfo2zOA6l9zFHOW2p87L-bNd7ac_D_2T8CwAA__86qVAD" target=3D"_blank">
+                            <img src=3D"https://api.lumaly.de/img/newslette=
+r/2024/easter/referal.jpg?v=3D2" alt=3D"Lumaly Referal Program" style=3D"di=
+splay:block; margin: 0 auto;">
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table cellpadding=3D"0" cellspacing=3D"0" style=3D=
+"
+                                        background: #F3F4F8;
+                                        padding: 0;" width=3D"600px" height=
+=3D"192px">
+                            <tbody style=3D"max-width: 600px; display: bloc=
+k;">
+                            <tr>
+                                <td style=3D"width: 78.4px;padding: 28px 26=
+0.8px 0 260.8px;height: 28px;">
+                                    <a href=3D"http://email.mgeu.lumaly.de/=
+c/eJwsyktqAzEMANDT2MtBkuXPLLToZq5RHEtuDB5SknGhty-FrN9TiQaBvQnmmCBm2tHbWcf8H=
+CoYApcC6O_SEyfVGwXCnmvWzNj2vjcqBjsn9UMIKEIhxswYcItWTGPmRNQ4YnAM55etba6zzt9N=
+zU-5X9f3y4UPR4ej4y3tcTo6_FOe46qOofY-5qiXbbe5rD_aev0f_yP0FwAA__95QzfA" targe=
+t=3D"_blank">
+                                        <img src=3D"https://api.lumaly.de/i=
+mg/flow/141/logo-purple-fade.png?v=3D2" alt=3D"" width=3D"78.4px" height=3D=
+"28px" style=3D"width: 78.4px;height: 28px;display:block">
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=3D"width: 366px; text-align: cent=
+er;height: 22px;">
+                                    <span style=3D"font-family: EuclidSquar=
+e,verdana,sans-serif;font-style: normal;font-weight: 400;font-size: 14px;li=
+ne-height: 22px;text-align: center;letter-spacing: -0.02em;color: #151515;"=
+>
+                                        =C2=A9 2025 Lumaly, GmbH. All right=
+s reserved.
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align=3D"center" style=3D"width: 366px;=
+padding: 8px 0 0 0;height: 22px;">
+                                    <a href=3D"http://email.mgeu.lumaly.de/=
+c/eJx8j8Fq7DAMRb9GXgZZkuNk4cWDIb8xKIkyY7DflDgu9O9Lu5hll5fLgXP2FAxZnCUfw4gh0=
+uydVc3lnvfkmWWa0LtnYiZVPymysFqUWTESjRiQSdYwu5wIKeBE4qN49kOwyfYQZSTaJHgGwfqw=
+PpRetXwNu7mSntf10YD_AS1Ay_sBWvr_1te2nXn9WcDLrxTw7cyXgqAeRy5ZLxvW0u14bb0N26s=
+CjdVa04fd8w58exec6W_QfSb6DgAA__-Lk1DM" target=3D"_blank" style=3D"font-fami=
+ly: EuclidSquare,verdana,sans-serif;text-align: center;font-style: normal;f=
+ont-weight: 400;font-size: 14px;line-height: 22px;letter-spacing: -0.02em;t=
+ext-decoration-line: underline;color: #151515;">
+                                        E-Mails wie diese abbestellen</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style=3D"padding: 20px 290px 20px 290px=
+;width: 24px;height: 24px;">
+                                    <a href=3D"http://email.mgeu.lumaly.de/=
+c/eJw8yrFuxCAMANCvgRFhYwIZPHTJb1QOce6QoFclpFH_vupy-9s4qg9klSHFyceEM1jtUttn3=
+RhCoJw92CcD7bPkqYCElDQRliBF5imua_EAs62MHqPPSJAIArioWbeYaEIsFCEY8v2hl2tXl_br=
+NrWNn2N8nyZ8GFwMLvd9u_p1Dnkc0l15dYPLWxtc7MFHHWLIy77XVmWoW9ul-6tc57-3P4x_AQA=
+A___j4j6Y" target=3D"_blank" style=3D"width: 24px;height: 24px;">
+                                        <img style=3D"display: block;" src=
+=3D"https://api.lumaly.de/img/newsletter/btc_announcement/instagram.png?v=
+=3D2" alt=3D"" width=3D"24px" height=3D"24px">
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style=3D"text-align: center;">
+                                    <span style=3D"margin: 0 0 22px 0;displ=
+ay: inline-block;font-family: EuclidSquare,verdana,sans-serif;font-style: n=
+ormal;font-weight: 400;font-size: 14px;line-height: 22px;text-align: center=
+;letter-spacing: -0.02em;color: #151515;">
+                                        *Lumaly Guthaben ist begrenzt verf=
+=C3=BCgbar. <br> Angebote gelten bis zum 31. August.
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<img width=3D"1" height=3D"1" alt=3D"" src=3D"http://email.mgeu.lumaly.de/o=
+/eJwEwFFqxiAMAODT1EdJYqz2IWcZauImKIWuDnb7_1OJBoGdCaZ4Qkx0obNVxvwaKhgC5wzofq=
+ToBRmBUjULZzXNFalrwnCBNQI3hIAiZGJMjAF9tGwaE59EjSOGg2F92_ZzrzL_vZp75BlvORhK7=
+2OO8pqvc1u_2_717V7uT-gTAAD__63KLmE"></body>
+</html>

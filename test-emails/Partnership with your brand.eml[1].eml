@@ -1,0 +1,275 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5662702nji;
+        Mon, 25 Aug 2025 03:24:04 -0700 (PDT)
+X-Received: by 2002:a17:907:3d90:b0:ae3:f3c1:a5dd with SMTP id a640c23a62f3a-afe29709763mr1120452466b.61.1756117444447;
+        Mon, 25 Aug 2025 03:24:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756117444; cv=none;
+        d=google.com; s=arc-20240605;
+        b=BefAahEoLOXP+d2ZNpSuJXvXJfjI0jkpwUNhSBI0QhNoX3JsECVoZBK2waxqYyzvpR
+         LyuTWSJgW9cjZ4iRIvBu2RDMb6Vzx4P06uYqzX2HKmGjt1vttf1lmpE1YeetVQycca+F
+         NL1R9xseFQZWmie7RwjKVnWjsTZvWiyDivB4TLau9lEiD6NJHMgHzGqixnVdZxnlm0D3
+         fT07ufe7MiiZhBeGm3xmCsmzekOjeurQKQRupXT5IO3mW2R5t35kX1467tDJwARVN3p8
+         hC3y/70iCqkhAyg6z7NJEe/YwYp0MAVR/v7ptWmcgEnCTknX6CMroiG7CABMjYaWyr9C
+         oJnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=8yT0sWxTEXwOPSIMNQ9ISN4ohAMXMrpLoymbrD9vWaY=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=UjwUheZccR+6pI23tTh4y2x9al5LNXoEAhM2uoQW0ZlOFo1OX94VXdgCKdSi4VUgYt
+         bu/YDq94r3zhH31aFoxhtpcan5J6AOjKvBIlJ1U4pDyWacwP+7EyIml7h14T3sfJDqme
+         kGRgMerqLXPoOTKDZ8BhTqGFI65PpzqB6lxR8G7S7lbioPEdyI7RU309DAmU5tFRO+Oq
+         b7qXM0xgYnfq6ukm5IxGWdmrxetaFWqR8EQpj7e0l21+eoATOyrOXyPfZgkLC0Zsc/Ms
+         vZnvtnnJocbDgP6U1w4QEUUbrI29jvonOTisdKO6mhKQz/lwoF3oigdF29kDnX7NS4Rs
+         zhvQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@authentic-commerce.com header.s=google header.b=AQVwLGjp;
+       spf=pass (google.com: domain of malik.smouni@authentic-commerce.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=malik.smouni@authentic-commerce.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=authentic-commerce.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <malik.smouni@authentic-commerce.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id a640c23a62f3a-afe48a53be9sor203007766b.1.2025.08.25.03.24.04
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Mon, 25 Aug 2025 03:24:04 -0700 (PDT)
+Received-SPF: pass (google.com: domain of malik.smouni@authentic-commerce.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@authentic-commerce.com header.s=google header.b=AQVwLGjp;
+       spf=pass (google.com: domain of malik.smouni@authentic-commerce.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=malik.smouni@authentic-commerce.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=authentic-commerce.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=authentic-commerce.com; s=google; t=1756117443; x=1756722243; darn=affiliate.bluefocus.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8yT0sWxTEXwOPSIMNQ9ISN4ohAMXMrpLoymbrD9vWaY=;
+        b=AQVwLGjpc2oPdEJ9c9jmgpVpz3sM+xSsFmqyBGPkRQX/uGEUdlWZR9Xvq+KJVb8Gdb
+         aoVqnORWIdGz8QF0WyJUdutHnrxo1pAA0x0520eC/XFOszAIPNEBxKRrJxGHmsud56Kl
+         xBxH1FfIMcEu8kpqQZL1ebo9fvDDguRqNi0h6BMXdYyjTYV0flzEzH7d/6LupH6NHT1x
+         tr0b1CqOattTBrBrEHoG2m7dGOj89wTHGT+cRQZR/I5SbosxIF/DIGJPYWWX8zyahfsL
+         3LMaHnTasSmZ6XYwn1nhKmcRSNy2DJGCyvJjrsQJgB9Q57Zz1YKCzSK7FLMy5v1+RJpX
+         HYRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756117443; x=1756722243;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8yT0sWxTEXwOPSIMNQ9ISN4ohAMXMrpLoymbrD9vWaY=;
+        b=KWZWVGZrFfduRkEe5Ll0r5P7CcjL5VEzCHUnAbU5HNmGnynOBPQm6agBSY3u5SalzB
+         vYRw+Uuf/5X04mCBRTFD9YffLAllerh5scQJdvrUGrqH7/6HO4LFrr3j9jg2PKT+QFPI
+         4bBxdEvfCOq3+S9Nh4xRP9IYFmww+D29XDWbJWihck0e/fs4hc62k2mRVRRNc6XXJv6F
+         /THQOwck59W83fePMNRmK+ITnPNSUdqLyC6aTAOakjym6caQdRAEp2noSSr0XO3KxZx7
+         4cDlCiu3BS92gwOtbTGwgkbOwBajzwAVuXLs38eXXOJmmNarUg5yxfnhfCRWWK9ycp61
+         A7Eg==
+X-Gm-Message-State: AOJu0YysB6b7SmUBASeKwq2drUu1AgsdvvMi1E6Jt0Vbwkyk61buYiMv
+	6eajh338JPEjlLPYHtndPygK0dDQYUe6HTeYHQiwY0TkzoxkLBze+o/s/t0P3RdGKV/+yEk/NVY
+	oHpwX3EoKoeBA5MxWCg7mvpGNYQNQfKERrWVOO60knase9qr7fvkHHPvN3u+siJIGZV3rFOi5rg
+	obwfLg5KQPRT5bjKulZsd5kYeX3R0g2FCGMDr53R0C13eJER0Jkw==
+X-Gm-Gg: ASbGnctTrKTjyMCdgJAQrjWlLcPcOY0ZMjE4pY6DVltKW65Ib3R02aFvh6LBq2EuHLw
+	vWem5lMcMO9hD1eXs11hidczg+HDlxzL7nKrUKR/HPpCMvmeaFjvbykaxV4AhKqy0DUIXp4yUSL
+	qpUVTKzVGBFvScLObUPcmXWXxPgAFgknXmxub/nnlHxNTJYP+JxzIDP4BUKEMtJZ3DD8Je339fX
+	L2d4erHL2TRDCrLIVy/Nefjt/eHwJG0Lekp0pg=
+X-Google-Smtp-Source: AGHT+IG3H79vcXwVJwiPDN/gV+9PRcatFSsOwiKJ9nuTt0WjO34IRWT+eKaD2RbxGXFnFeRyfivYN12iNPZzsitubFQ=
+X-Received: by 2002:a17:906:eecc:b0:af9:3eea:3531 with SMTP id
+ a640c23a62f3a-afe295d2ac0mr1024980166b.35.1756117443194; Mon, 25 Aug 2025
+ 03:24:03 -0700 (PDT)
+From: Malik Smouni <malik.smouni@authentic-commerce.com>
+Date: Mon, 25 Aug 2025 12:23:52 +0200
+X-Gm-Features: Ac12FXwTeNijI9nGa_ifesu6pU2EMsUsjNaJy0oWdpAhg0zCrZxSsG9ED4_Fa6M
+Message-ID: <CAPTcZzPPpM1XGf7mZ1XUhORZXxYKKh1D_sBi7Sy=bBxw1SMX=Q@mail.gmail.com>
+Subject: Partnership with your brand
+To: rita@affiliate.bluefocus.com
+Content-Type: multipart/alternative; boundary="00000000000062c8a5063d2df4e8"
+MIME-Version: 1.0
+
+--00000000000062c8a5063d2df4e8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+we came across your brand and believe we can support your partnership
+strategy in a meaningful way.
+
+With authentic commerce, we enable campaigns where creators receive your
+product in exchange for authentic content such as unboxings, reviews or
+short videos. In addition, we link this with a CPA model, meaning you only
+pay when a purchase is made.
+
+This gives you access to real creator content and measurable performance
+without any upfront cost.
+
+Our platform connects your brand directly with matching creators. You
+create a campaign, receive applications and select the best fit. We take
+care of the process.
+
+If needed, we can also support CPC, CPM or budget-based campaigns.
+
+If that sounds interesting, I would be happy to hear from you.
+
+--=20
+Viele Gr=C3=BC=C3=9Fe,
+
+
+*Malik Smouni*Social Ad Manager
+
+*authentic commerce GmbH *
+Stefan-Heym-Platz 1
+D-10367 Berlin
+
+www.authentic-commerce.com
+malik.smouni@authentic-commerce.com
+
+--=20
+
+
+advanced store GmbH
+Stefan-Heym-Platz 1
+D-10367 Berlin
+
+www.advanced-store.com <http://www.advanced-store.com>
+
+Tel:=C2=A0+49 (0)30 577=20
+066 020
+
+Fax: +49 (0)30 577 066 029
+
+Gesellschaft mit beschr=C3=A4nkter Haftung
+
+mit Sitz in Berlin, Amtsgericht Charlottenburg
+Handelsregister: HRB 115601=20
+B
+UST ID: DE261726838
+
+Gesch=C3=A4ftsf=C3=BChrer: Marc Majewski
+
+
+VERTRAULICHKEITSHINWEIS: Diese Nachricht ist vertraulich. Sie darf=20
+ausschlie=C3=9Flich durch den vorgesehenen Empf=C3=A4nger und Adressaten ge=
+lesen,=20
+kopiert oder genutzt werden. Sollten Sie diese Nachricht versehentlich=20
+erhalten haben, bitten wir, den Absender (durch Antwort-E-Mail) hiervon=20
+unverz=C3=BCglich zu informieren und die Nachricht zu l=C3=B6schen. Jede Nu=
+tzung oder=20
+Weitergabe des Inhalts dieser Nachricht ist unzul=C3=A4ssig.
+
+
+CONFIDENTIALITY=20
+NOTICE: This message (including any attachments) is confidential and may be=
+=20
+privileged. It may be read, copied and used only by the intended recipient.=
+=20
+If you have received it in error please contact the sender (by return=20
+e-mail) immediately and delete this message. Any unauthorized use or=20
+dissemination of this message in whole or in part is strictly prohibited.
+
+
+
+--00000000000062c8a5063d2df4e8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><d=
+iv dir=3D"ltr"><div><span style=3D"background-color:transparent;color:rgb(0=
+,0,0);font-family:Arial,sans-serif;font-size:11pt">Hi,</span></div><div><sp=
+an id=3D"gmail-docs-internal-guid-495dcab3-7fff-3fa5-b1d5-acc14bc67bee"><p =
+dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><sp=
+an style=3D"font-size:11pt;font-family:Arial,sans-serif;color:rgb(0,0,0);ba=
+ckground-color:transparent;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;font-variant-alternates:normal;vertical-align:baseline">we came =
+across your brand and believe we can support your partnership strategy in a=
+ meaningful way.</span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;mar=
+gin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Ar=
+ial,sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-n=
+umeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal=
+;vertical-align:baseline">With authentic commerce, we enable campaigns wher=
+e creators receive your product in exchange for authentic content such as u=
+nboxings, reviews or short videos. In addition, we link this with a CPA mod=
+el, meaning you only pay when a purchase is made.</span></p><br><p dir=3D"l=
+tr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=
+=3D"font-size:11pt;font-family:Arial,sans-serif;color:rgb(0,0,0);background=
+-color:transparent;font-variant-numeric:normal;font-variant-east-asian:norm=
+al;font-variant-alternates:normal;vertical-align:baseline">This gives you a=
+ccess to real creator content and measurable performance without any upfron=
+t cost.</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;m=
+argin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial,sans-seri=
+f;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal=
+;font-variant-east-asian:normal;font-variant-alternates:normal;vertical-ali=
+gn:baseline">Our platform connects your brand directly with matching creato=
+rs. You create a campaign, receive applications and select the best fit. We=
+ take care of the process.</span></p><br><p dir=3D"ltr" style=3D"line-heigh=
+t:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font=
+-family:Arial,sans-serif;color:rgb(0,0,0);background-color:transparent;font=
+-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alterna=
+tes:normal;vertical-align:baseline">If needed, we can also support CPC, CPM=
+ or budget-based campaigns.</span></p><br><p dir=3D"ltr" style=3D"line-heig=
+ht:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;fon=
+t-family:Arial,sans-serif;color:rgb(0,0,0);background-color:transparent;fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;font-variant-altern=
+ates:normal;vertical-align:baseline">If that sounds interesting, I would be=
+ happy to hear from you.</span></p></span><br class=3D"gmail-Apple-intercha=
+nge-newline"></div><span class=3D"gmail_signature_prefix">-- </span><br><di=
+v dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature">=
+<div dir=3D"ltr"><div>Viele Gr=C3=BC=C3=9Fe,</div><div><br></div><div><b>Ma=
+lik Smouni<br></b>Social Ad Manager<br><br><b>authentic commerce&nbsp;GmbH&=
+nbsp;</b><br>Stefan-Heym-Platz 1<br>D-10367 Berlin<br><br><a href=3D"https:=
+//www.authentic-commerce.com/" rel=3D"noopener nofollow noreferrer" target=
+=3D"_blank">www.authentic-commerce.com</a></div><div><a href=3D"mailto:mali=
+k.smouni@authentic-commerce.com" target=3D"_blank">malik.smouni@authentic-c=
+ommerce.com</a><br></div><div><br></div><div><div style=3D"max-width:512px;=
+max-height:47px"><div title=3D""><img src=3D"https://ci3.googleusercontent.=
+com/mail-sig/AIorK4y06NXksLU5yD-1seLk8iiXgvtToK4y-Ng24UAinbku66OdUhdha9zQgG=
+hJ-Hq596fTUhFcOgs"></div></div></div><br></div></div></div>
+
+<br>
+<div><p style=3D"font-family:Arial,Helvetica,sans-serif;font-size:1.3em;mar=
+gin:0px;padding:0px;border:0px;font-stretch:inherit;line-height:22px;vertic=
+al-align:baseline;background-color:rgb(255,255,255)"><font face=3D"Arial" s=
+ize=3D"2"><span style=3D"font-weight:inherit;margin:0px;padding:0px;border:=
+0px;font-style:inherit;font-variant:inherit;font-stretch:inherit;line-heigh=
+t:inherit;vertical-align:baseline">advanced store GmbH</span><br>Stefan-Hey=
+m-Platz 1<br>D-10367 Berlin</font></p><p style=3D"font-family:Arial,Helveti=
+ca,sans-serif;font-size:1.3em;margin:0px;padding:0px;border:0px;font-stretc=
+h:inherit;line-height:22px;vertical-align:baseline;background-color:rgb(255=
+,255,255)"><font face=3D"Arial" size=3D"2"><a href=3D"http://www.advanced-s=
+tore.com" target=3D"_blank">www.advanced-store.com</a></font></p><p style=
+=3D"margin:0px;padding:0px;border:0px;font-stretch:inherit;line-height:22px=
+;vertical-align:baseline"><font face=3D"Arial" size=3D"2">Tel:&nbsp;+49 (0)=
+30 577 066 020</font></p><p style=3D"margin:0px;padding:0px;border:0px;font=
+-stretch:inherit;line-height:22px;vertical-align:baseline"><font face=3D"Ar=
+ial" size=3D"2">Fax: +49 (0)30 577 066 029</font></p><p style=3D"font-famil=
+y:Arial,Helvetica,sans-serif;font-size:1.3em;margin:0px;padding:0px;border:=
+0px;font-stretch:inherit;line-height:22px;vertical-align:baseline;backgroun=
+d-color:rgb(255,255,255)"><span style=3D"font-family:Arial;font-size:small"=
+>Gesellschaft mit beschr=C3=A4nkter Haftung</span></p><p style=3D"font-fami=
+ly:Arial,Helvetica,sans-serif;font-size:1.3em;margin:0px;padding:0px;border=
+:0px;font-stretch:inherit;line-height:22px;vertical-align:baseline;backgrou=
+nd-color:rgb(255,255,255)"><font face=3D"Arial" size=3D"2">mit Sitz in Berl=
+in, Amtsgericht Charlottenburg<br>Handelsregister: HRB 115601 B<br>UST ID: =
+DE261726838</font></p><p style=3D"font-family:Arial,Helvetica,sans-serif;fo=
+nt-size:1.3em;margin:0px;padding:0px;border:0px;font-stretch:inherit;line-h=
+eight:22px;vertical-align:baseline;background-color:rgb(255,255,255)"><font=
+ face=3D"Arial" size=3D"2">Gesch=C3=A4ftsf=C3=BChrer: Marc Majewski</font><=
+/p></div><div style=3D"font-family:Arial,Helvetica,sans-serif;font-size:1.3=
+em"><font face=3D"Arial" style=3D"background-color:white" size=3D"2"><br></=
+font></div><div style=3D"font-family:Arial,Helvetica,sans-serif;font-size:1=
+.3em"><font face=3D"Arial" style=3D"background-color:white" size=3D"2">VERT=
+RAULICHKEITSHINWEIS: Diese Nachricht ist vertraulich. Sie darf ausschlie=C3=
+=9Flich durch den vorgesehenen Empf=C3=A4nger und Adressaten gelesen, kopie=
+rt oder genutzt werden. Sollten Sie diese Nachricht versehentlich erhalten =
+haben, bitten wir, den Absender (durch Antwort-E-Mail) hiervon unverz=C3=BC=
+glich zu informieren und die Nachricht zu l=C3=B6schen. Jede Nutzung oder W=
+eitergabe des Inhalts dieser Nachricht ist unzul=C3=A4ssig.</font></div><di=
+v style=3D"font-family:Arial,Helvetica,sans-serif;font-size:1.3em"><font fa=
+ce=3D"Arial" style=3D"background-color:white" size=3D"2"><br></font></div><=
+div style=3D"font-family:Arial,Helvetica,sans-serif;font-size:1.3em"><font =
+face=3D"Arial" style=3D"background-color:white" size=3D"2">CONFIDENTIALITY =
+NOTICE: This message (including any attachments) is confidential and may be=
+ privileged. It may be read, copied and used only by the intended recipient=
+. If you have received it in error please contact the sender (by return e-m=
+ail) immediately and delete this message. Any unauthorized use or dissemina=
+tion of this message in whole or in part is strictly prohibited.</font></di=
+v><div style=3D"font-family:Arial,Helvetica,sans-serif;font-size:1.3em"><br=
+></div>=
+
+--00000000000062c8a5063d2df4e8--

@@ -1,0 +1,510 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5293901nji;
+        Sun, 24 Aug 2025 09:39:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG8++feQlYqaZFWvsmaGMnIwwkrBaTEqpD0/6B+xvGXrD0VZwc6ypEvDr88j0aHJ3AAvy0/
+X-Received: by 2002:a05:620a:2551:b0:7e8:2322:24b5 with SMTP id af79cd13be357-7ea10f87274mr1125532285a.3.1756053581903;
+        Sun, 24 Aug 2025 09:39:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756053581; cv=none;
+        d=google.com; s=arc-20240605;
+        b=U95Q1aoLFou50klvl/xGYoWVLkOeGV04T0NUtPJNef1dahHN6k6oJidD2PWFDJsEeK
+         HasrcyTq+i/D6MvpQ6sSMtzhMNRY4TZxxTTmr8eW3gcDPpOwMLHl9pA52ZIWFGtY0c0U
+         ZTM1ITohq/JkyIezJ1LEpoDW1rGPa4yZYlIZA1GCyh+y+JnEJe3ZSKhaQ3NoUiHFVt7q
+         CXn0f8ON5UMXLGw3Bsmg9AhaxXaD7M5l2psoeXdeDVEt3SzjdgiHU1UQ+EId5SM97+CN
+         6kTgnh0vIWSgRQSAvEMJ1s5LUHESg2rgvIkBHMIQ/7xIc+s81/G+DRywX/RL8LrUALG4
+         +sQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from
+         :feedback-id:date:dkim-signature;
+        bh=ah+uXC80xbtXzbtxISFUAbRzZcGg5Rjd/6+Ce7aYnGs=;
+        fh=skRwHcA08KKTfqd1Nx//9Ag4RSe7XVAgEnKl+4GCmdg=;
+        b=Ho5lGMkjHf9Qm2MLls9saVSueee0beFnP7G6wFXHK/Qi4Nju7hg0uY8A7waf3Vsg3L
+         9a+XVdSHLhmXqCzklg0phMZqZyqNtoML+QhTK+ZCw/j4LxLtHAaCZ6I0WplClnRoinWz
+         GBg9RUoyMvfw9TcxpzeQnwParCcHDPdE8lslJwU7b8/yeGOIDNF0Y/4zTDSjfpQo/XH4
+         2C4DZRdimUudYFsqvPPNVUcQMgYXYy+y16OC4QZqE8a2uMe/CwJerP4NGFaOmVaz7nEO
+         QdiL1VYqLPaU71FSp1QEoffKWFhHhGV9sIvCQb41hBK0Mkub75VvuwiIq0lWvngbdTX/
+         tqdA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@priceindanger.com header.s=titan1 header.b=lFjSUqg9;
+       spf=pass (google.com: domain of saifurrehman@priceindanger.com designates 3.216.99.48 as permitted sender) smtp.mailfrom=saifurrehman@priceindanger.com
+Return-Path: <saifurrehman@priceindanger.com>
+Received: from mail66.out.titan.email (mail66.out.titan.email. [3.216.99.48])
+        by mx.google.com with ESMTPS id af79cd13be357-7ebf3bb73fesi160615085a.1210.2025.08.24.09.39.41
+        for <rita@affiliate.bluefocus.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 24 Aug 2025 09:39:41 -0700 (PDT)
+Received-SPF: pass (google.com: domain of saifurrehman@priceindanger.com designates 3.216.99.48 as permitted sender) client-ip=3.216.99.48;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@priceindanger.com header.s=titan1 header.b=lFjSUqg9;
+       spf=pass (google.com: domain of saifurrehman@priceindanger.com designates 3.216.99.48 as permitted sender) smtp.mailfrom=saifurrehman@priceindanger.com
+Received: from localhost (localhost [127.0.0.1])
+	by smtp-out.flockmail.com (Postfix) with ESMTP id 9BA6660020
+	for <rita@affiliate.bluefocus.com>; Sun, 24 Aug 2025 16:39:41 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256; bh=ah+uXC80xbtXzbtxISFUAbRzZcGg5Rjd/6+Ce7aYnGs=;
+	c=relaxed/relaxed; d=priceindanger.com;
+	h=in-reply-to:references:date:to:message-id:mime-version:from:subject:from:to:subject:date:message-id:in-reply-to:references:cc:reply-to;
+	q=dns/txt; s=titan1; t=1756053581; v=1;
+	b=lFjSUqg9e5fj5gQOpF+gg+2jB5MMx6lteU0NJm5oX6d9rXQBRQGHWs9ms7Oz8LyxKyqYAz/V
+	uNwcUtveYzFR104Pvr8vwTk5M0Qq8XTYIuMeTJItL7XQuMxLzsD2n8luDekI96nB0CnKJ1k0GvP
+	KdKsn76PtTiuT3vuO8UMc6ks=
+Received: from webmail-out.titan.email (unknown [10.10.171.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp-out.flockmail.com (Postfix) with ESMTPSA id 79FCF6002A
+	for <rita@affiliate.bluefocus.com>; Sun, 24 Aug 2025 16:39:41 +0000 (UTC)
+Date: Sun, 24 Aug 2025 16:39:41 +0000 (GMT)
+Feedback-ID: :saifurrehman@priceindanger.com:priceindanger.com:flockmailId
+From: "Saif from Priceindanger.com" <saifurrehman@priceindanger.com>
+To: "rita@affiliate.bluefocus.com" <rita@affiliate.bluefocus.com>
+Message-ID: <186873825815015424.0.v2@titan.email>
+In-Reply-To: <186517396580052993.0.v2@titan.email>
+References: <186517396580052993.0.v2@titan.email>
+ <186873825815015424.0.v2@titan.email>
+Subject: Re:  Jackery Exclusive Code + PPC Permission for Priceindanger.com
+Content-Type: multipart/related;
+	boundary="----=_Part_2009500_1436075778.1756053581240"
+X-F-Verdict: SPFVALID
+X-Titan-Src-Out: 1756053581527154030.9701.8843458056633110064@prod-use1-smtp-out1001.
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.4 cv=U6doDfru c=1 sm=1 tr=0 ts=68ab404d
+	a=kQm9PJ0RgBYonhXvs/USIQ==:117 a=nuadozvdAAAA:8 a=1oJP67jkp3AA:10
+	a=CEWIc4RMnpUA:10 a=xBh4JgPmAAAA:8 a=mTLUI6cdAAAA:8
+	a=N0GZZyY9B9rvUwVN_GUA:9 a=pt2ORSNG9kTd_mNv:21 a=lqcHg5cX4UMA:10
+	a=QEXdDO2ut3YA:10 a=V7OfdV-MN-QA:10 a=ImwWUX5h3JJ3gRE9moBe:22
+	a=h20g8RcqdwTOcSiFc_-w:22 a=Z_60_2tg-voYcxSmnYWO:22
+MIME-Version: 1.0
+
+------=_Part_2009500_1436075778.1756053581240
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><d=
+iv id=3D"isPasted" fr-original-style=3D"" style=3D"user-select: inherit; sc=
+rollbar-color: var(--scrollbar-active-color) #0000; box-sizing: border-box;=
+">Hi,&nbsp;<br fr-original-style=3D"" style=3D"user-select: inherit; scroll=
+bar-color: var(--scrollbar-active-color) #0000; box-sizing: border-box;"><b=
+r fr-original-style=3D"" style=3D"user-select: inherit; scrollbar-color: va=
+r(--scrollbar-active-color) #0000; box-sizing: border-box;">Looking forward=
+ to your kind response.<br fr-original-style=3D"" style=3D"user-select: inh=
+erit; scrollbar-color: var(--scrollbar-active-color) #0000; box-sizing: bor=
+der-box;"><br fr-original-style=3D"" style=3D"user-select: inherit; scrollb=
+ar-color: var(--scrollbar-active-color) #0000; box-sizing: border-box;">Reg=
+ards,</div><div data-signature-parent=3D"sig-parent" translate=3D"no" fr-or=
+iginal-style=3D"" style=3D"user-select: inherit; scrollbar-color: var(--scr=
+ollbar-active-color) #0000; box-sizing: border-box;"><signature style=3D"di=
+splay: table; width: 100%; user-select: inherit; scrollbar-color: var(--scr=
+ollbar-active-color) #0000; box-sizing: border-box;" data-signature-id=3D"l=
+ocal-b10915b7-e4cb" fr-original-style=3D"display:table;width:100%;"><div fr=
+-original-style=3D"" style=3D"user-select: inherit; scrollbar-color: var(--=
+scrollbar-active-color) #0000; box-sizing: border-box;"><strong fr-original=
+-style=3D"" style=3D"user-select: inherit; scrollbar-color: var(--scrollbar=
+-active-color) #0000; font-weight: 700; box-sizing: border-box;"><em fr-ori=
+ginal-style=3D"" style=3D"user-select: inherit; scrollbar-color: var(--scro=
+llbar-active-color) #0000; box-sizing: border-box;">Saif Ur Rehman</em></st=
+rong></div><div fr-original-style=3D"" style=3D"user-select: inherit; scrol=
+lbar-color: var(--scrollbar-active-color) #0000; box-sizing: border-box;"><=
+strong fr-original-style=3D"" style=3D"user-select: inherit; scrollbar-colo=
+r: var(--scrollbar-active-color) #0000; font-weight: 700; box-sizing: borde=
+r-box;"><em fr-original-style=3D"" style=3D"user-select: inherit; scrollbar=
+-color: var(--scrollbar-active-color) #0000; box-sizing: border-box;"><a hr=
+ef=3D"Priceindanger.com" rel=3D"noopener noreferrer" target=3D"_blank" fr-o=
+riginal-style=3D"" style=3D"user-select: auto; scrollbar-color: var(--scrol=
+lbar-active-color) #0000; background: rgba(0, 0, 0, 0); box-sizing: border-=
+box; color: rgb(76, 140, 246);">Priceindanger.com</a><img src=3D"https://pe=
+rmanent-assets-download.flockmail.com/signature/4187672/2023-11-19_3253ce1d=
+8714326b62c0_12233" style=3D"width: 130px; display: block; vertical-align: =
+top; margin: 5px auto 5px 0px; max-width: calc(100% - 10px); text-align: le=
+ft; scrollbar-color: var(--scrollbar-active-color) #0000; border: 0px; curs=
+or: pointer; padding: unset; user-select: none; position: relative; box-siz=
+ing: border-box;" fr-original-style=3D"width: 130px; display: block; vertic=
+al-align: top; margin: 5px auto 5px 0px; max-width: calc(100% - 10px); text=
+-align: left;" fr-original-class=3D"fr-draggable fr-deletable"></em></stron=
+g></div></signature></div><br fr-original-style=3D"" style=3D"user-select: =
+inherit; scrollbar-color: var(--scrollbar-active-color) #0000; box-sizing: =
+border-box;"><img class=3D"flm-open" width=3D"0" height=3D"0" style=3D"bord=
+er:0;width:0;height:0;" src=3D"https://cdn-east.rootserverlink.com/dc/t/mo/=
+v2?t=3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJwIjoiMTAwMiA0MTg3NjcyIHJpdGF=
+AYWZmaWxpYXRlLmJsdWVmb2N1cy5jb20gMGE3ZjYzMmQ2MzBkNTEwZTFiZWJkY2FkMGMwZDg3Y2=
+IgNDA0ODE1NDAwMjE1MTgzMzggMSA_IiwiZXhwIjoxNzcxNjA1NTgxfQ.lj70jdW8RfApHSPkl-=
+Duj6qOwD5hJVBNqQaHgUM2D79q2g3anLqtkUwWOcIBEzsPHJaUEOOFAF5g8HocA94wzA&amp;re=
+questId=3Dw_24163919_SMR_61_409_3kgj"><div class=3D"fr-inner gmail_quote fl=
+ockmail-quote flockmail-quote-id-&lt;186517396580052993.0.v2@titan.email&gt=
+;">
+        <br>
+        <div dir=3D"ltr">
+          On Aug 20 2025, at 11:14 pm, Saif from Priceindanger.com &lt;Saif=
+UrRehman@priceindanger.com&gt; wrote:
+          <br>
+        </div>
+        <blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border=
+-left:1px #ccc solid;padding:initial;padding-left:1ex;color:inherit">
+           <p dir=3D"ltr" style=3D"display:block;-webkit-margin-before:1__q=
+em;-webkit-margin-after:1__qem;-webkit-margin-start:0;-webkit-margin-end:0;=
+line-height:1.38;margin-top:0pt;margin-bottom:0pt;user-select:inherit;scrol=
+lbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box" id=3D=
+"isPasted" fr-original-style=3D"line-height:1.38;margin-top:0pt;margin-bott=
+om:0pt;"><span style=3D"font-size:11pt;font-family:Arial, sans-serif;color:=
+rgb(0, 0, 0);background-color:transparent;font-weight:400;font-style:normal=
+;font-variant:normal;text-decoration:none;vertical-align:baseline;white-spa=
+ce:pre-wrap;user-select:inherit;scrollbar-color:var(--scrollbar-active-colo=
+r) #0000;box-sizing:border-box" fr-original-style=3D"font-size:11pt;font-fa=
+mily:Arial,sans-serif;color:#000000;background-color:transparent;font-weigh=
+t:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-a=
+lign:baseline;white-space:pre;white-space:pre-wrap;">Dear Rita,</span></p><=
+div fr-original-style=3D"" style=3D"display:block;user-select:inherit;scrol=
+lbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box"><br f=
+r-original-style=3D"" style=3D"user-select:inherit;scrollbar-color:var(--sc=
+rollbar-active-color) #0000;box-sizing:border-box"></div><p dir=3D"ltr" sty=
+le=3D"display:block;-webkit-margin-before:1__qem;-webkit-margin-after:1__qe=
+m;-webkit-margin-start:0;-webkit-margin-end:0;line-height:1.38;margin-top:0=
+pt;margin-bottom:0pt;user-select:inherit;scrollbar-color:var(--scrollbar-ac=
+tive-color) #0000;box-sizing:border-box" fr-original-style=3D"line-height:1=
+.38;margin-top:0pt;margin-bottom:0pt;"><span style=3D"font-size:11pt;font-f=
+amily:Arial, sans-serif;color:rgb(0, 0, 0);background-color:transparent;fon=
+t-weight:400;font-style:normal;font-variant:normal;text-decoration:none;ver=
+tical-align:baseline;white-space:pre-wrap;user-select:inherit;scrollbar-col=
+or:var(--scrollbar-active-color) #0000;box-sizing:border-box" fr-original-s=
+tyle=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgroun=
+d-color:transparent;font-weight:400;font-style:normal;font-variant:normal;t=
+ext-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre=
+-wrap;">I hope you are well. My name is Saif ur Rehman, representing&nbsp;<=
+/span><a href=3D"http://priceindanger.com" style=3D"text-decoration:none;sc=
+rollbar-color:var(--scrollbar-active-color) #0000;background:rgba(0, 0, 0, =
+0);user-select:auto;box-sizing:border-box;color:rgb(76, 140, 246)" target=
+=3D"_blank" fr-original-style=3D"text-decoration:none;"><span style=3D"font=
+-size:11pt;font-family:Arial, sans-serif;color:rgb(17, 85, 204);background-=
+color:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:underline;text-decoration-skip-ink:none;vertical-align:baselin=
+e;white-space:pre-wrap;user-select:inherit;scrollbar-color:var(--scrollbar-=
+active-color) #0000;box-sizing:border-box" fr-original-style=3D"font-size:1=
+1pt;font-family:Arial,sans-serif;color:#1155cc;background-color:transparent=
+;font-weight:400;font-style:normal;font-variant:normal;text-decoration:unde=
+rline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;verti=
+cal-align:baseline;white-space:pre;white-space:pre-wrap;">Priceindanger.com=
+</span></a><span style=3D"font-size:11pt;font-family:Arial, sans-serif;colo=
+r:rgb(0, 0, 0);background-color:transparent;font-weight:400;font-style:norm=
+al;font-variant:normal;text-decoration:none;vertical-align:baseline;white-s=
+pace:pre-wrap;user-select:inherit;scrollbar-color:var(--scrollbar-active-co=
+lor) #0000;box-sizing:border-box" fr-original-style=3D"font-size:11pt;font-=
+family:Arial,sans-serif;color:#000000;background-color:transparent;font-wei=
+ght:400;font-style:normal;font-variant:normal;text-decoration:none;vertical=
+-align:baseline;white-space:pre;white-space:pre-wrap;">, your valued affili=
+ate partner on Awin (ID: 1682559). We're reaching out today with two exciti=
+ng proposals designed to drive significant customer savings and increased b=
+rand awareness for Jackery .</span></p><div fr-original-style=3D"" style=3D=
+"display:block;user-select:inherit;scrollbar-color:var(--scrollbar-active-c=
+olor) #0000;box-sizing:border-box"><br fr-original-style=3D"" style=3D"user=
+-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-siz=
+ing:border-box"></div><p dir=3D"ltr" style=3D"display:block;-webkit-margin-=
+before:1__qem;-webkit-margin-after:1__qem;-webkit-margin-start:0;-webkit-ma=
+rgin-end:0;line-height:1.38;margin-top:0pt;margin-bottom:0pt;user-select:in=
+herit;scrollbar-color:var(--scrollbar-active-color) #0000;box-sizing:border=
+-box" fr-original-style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0p=
+t;"><span style=3D"font-size:11pt;font-family:Arial, sans-serif;color:rgb(0=
+, 0, 0);background-color:transparent;font-weight:400;font-style:normal;font=
+-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pr=
+e-wrap;user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0=
+000;box-sizing:border-box" fr-original-style=3D"font-size:11pt;font-family:=
+Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400=
+;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:=
+baseline;white-space:pre;white-space:pre-wrap;">Exclusive Discount code for=
+ Priceindanger.com Visitors</span></p><div fr-original-style=3D"" style=3D"=
+display:block;user-select:inherit;scrollbar-color:var(--scrollbar-active-co=
+lor) #0000;box-sizing:border-box"><br fr-original-style=3D"" style=3D"user-=
+select:inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-sizi=
+ng:border-box"></div><p dir=3D"ltr" style=3D"display:block;-webkit-margin-b=
+efore:1__qem;-webkit-margin-after:1__qem;-webkit-margin-start:0;-webkit-mar=
+gin-end:0;line-height:1.38;margin-top:0pt;margin-bottom:0pt;user-select:inh=
+erit;scrollbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-=
+box" fr-original-style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt=
+;"><span style=3D"font-size:11pt;font-family:Arial, sans-serif;color:rgb(0,=
+ 0, 0);background-color:transparent;font-weight:400;font-style:normal;font-=
+variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre=
+-wrap;user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #00=
+00;box-sizing:border-box" fr-original-style=3D"font-size:11pt;font-family:A=
+rial,sans-serif;color:#000000;background-color:transparent;font-weight:400;=
+font-style:normal;font-variant:normal;text-decoration:none;vertical-align:b=
+aseline;white-space:pre;white-space:pre-wrap;">We'd love to offer our visit=
+ors an exclusive discount on Jackery through a dedicated&nbsp;</span><span =
+style=3D"font-size:11pt;font-family:Arial, sans-serif;color:rgb(0, 0, 0);ba=
+ckground-color:transparent;font-weight:700;font-style:normal;font-variant:n=
+ormal;text-decoration:none;vertical-align:baseline;white-space:pre-wrap;use=
+r-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-si=
+zing:border-box" fr-original-style=3D"font-size:11pt;font-family:Arial,sans=
+-serif;color:#000000;background-color:transparent;font-weight:700;font-styl=
+e:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;w=
+hite-space:pre;white-space:pre-wrap;">coupon code as =E2=80=9CPriceindanger=
+=E2=80=9D</span><span style=3D"font-size:11pt;font-family:Arial, sans-serif=
+;color:rgb(0, 0, 0);background-color:transparent;font-weight:400;font-style=
+:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;wh=
+ite-space:pre-wrap;user-select:inherit;scrollbar-color:var(--scrollbar-acti=
+ve-color) #0000;box-sizing:border-box" fr-original-style=3D"font-size:11pt;=
+font-family:Arial,sans-serif;color:#000000;background-color:transparent;fon=
+t-weight:400;font-style:normal;font-variant:normal;text-decoration:none;ver=
+tical-align:baseline;white-space:pre;white-space:pre-wrap;">, which we will=
+ prominently displayed on our website. We believe this offer will attract n=
+ew customers to Jackery and incentivize existing ones to explore your exten=
+sive product range.</span></p><div fr-original-style=3D"" style=3D"display:=
+block;user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #00=
+00;box-sizing:border-box"><br fr-original-style=3D"" style=3D"user-select:i=
+nherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-sizing:borde=
+r-box"></div><p dir=3D"ltr" style=3D"display:block;-webkit-margin-before:1_=
+_qem;-webkit-margin-after:1__qem;-webkit-margin-start:0;-webkit-margin-end:=
+0;line-height:1.38;margin-top:0pt;margin-bottom:0pt;user-select:inherit;scr=
+ollbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box" fr-=
+original-style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span=
+ style=3D"font-size:11pt;font-family:Arial, sans-serif;color:rgb(0, 0, 0);b=
+ackground-color:transparent;font-weight:400;font-style:normal;font-variant:=
+normal;text-decoration:none;vertical-align:baseline;white-space:pre-wrap;us=
+er-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-s=
+izing:border-box" fr-original-style=3D"font-size:11pt;font-family:Arial,san=
+s-serif;color:#000000;background-color:transparent;font-weight:400;font-sty=
+le:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;=
+white-space:pre;white-space:pre-wrap;">Proposal 2: Collaborative Paid Per C=
+lick (PPC) Campaign</span></p><div fr-original-style=3D"" style=3D"display:=
+block;user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #00=
+00;box-sizing:border-box"><br fr-original-style=3D"" style=3D"user-select:i=
+nherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-sizing:borde=
+r-box"></div><p dir=3D"ltr" style=3D"display:block;-webkit-margin-before:1_=
+_qem;-webkit-margin-after:1__qem;-webkit-margin-start:0;-webkit-margin-end:=
+0;line-height:1.38;margin-top:0pt;margin-bottom:0pt;user-select:inherit;scr=
+ollbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box" fr-=
+original-style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span=
+ style=3D"font-size:11pt;font-family:Arial, sans-serif;color:rgb(0, 0, 0);b=
+ackground-color:transparent;font-weight:400;font-style:normal;font-variant:=
+normal;text-decoration:none;vertical-align:baseline;white-space:pre-wrap;us=
+er-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-s=
+izing:border-box" fr-original-style=3D"font-size:11pt;font-family:Arial,san=
+s-serif;color:#000000;background-color:transparent;font-weight:400;font-sty=
+le:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;=
+white-space:pre;white-space:pre-wrap;">To further amplify the reach of this=
+ exclusive discount, we propose a collaborative PPC campaign. We'd like you=
+r permission to run targeted ads using relevant keywords such as:</span></p=
+><div fr-original-style=3D"" style=3D"display:block;user-select:inherit;scr=
+ollbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box"><br=
+ fr-original-style=3D"" style=3D"user-select:inherit;scrollbar-color:var(--=
+scrollbar-active-color) #0000;box-sizing:border-box"></div><p dir=3D"ltr" s=
+tyle=3D"display:block;-webkit-margin-before:1__qem;-webkit-margin-after:1__=
+qem;-webkit-margin-start:0;-webkit-margin-end:0;line-height:1.38;margin-top=
+:0pt;margin-bottom:0pt;user-select:inherit;scrollbar-color:var(--scrollbar-=
+active-color) #0000;box-sizing:border-box" fr-original-style=3D"line-height=
+:1.38;margin-top:0pt;margin-bottom:0pt;"><span style=3D"font-size:11pt;font=
+-family:Arial, sans-serif;color:rgb(0, 0, 0);background-color:transparent;f=
+ont-weight:400;font-style:normal;font-variant:normal;text-decoration:none;v=
+ertical-align:baseline;white-space:pre-wrap;user-select:inherit;scrollbar-c=
+olor:var(--scrollbar-active-color) #0000;box-sizing:border-box" fr-original=
+-style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgro=
+und-color:transparent;font-weight:400;font-style:normal;font-variant:normal=
+;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:p=
+re-wrap;">[Jackery Gutscheincode]</span></p><p dir=3D"ltr" style=3D"display=
+:block;-webkit-margin-before:1__qem;-webkit-margin-after:1__qem;-webkit-mar=
+gin-start:0;-webkit-margin-end:0;line-height:1.38;margin-top:0pt;margin-bot=
+tom:0pt;user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #=
+0000;box-sizing:border-box" fr-original-style=3D"line-height:1.38;margin-to=
+p:0pt;margin-bottom:0pt;"><span style=3D"font-size:11pt;font-family:Arial, =
+sans-serif;color:rgb(0, 0, 0);background-color:transparent;font-weight:400;=
+font-style:normal;font-variant:normal;text-decoration:none;vertical-align:b=
+aseline;white-space:pre-wrap;user-select:inherit;scrollbar-color:var(--scro=
+llbar-active-color) #0000;box-sizing:border-box" fr-original-style=3D"font-=
+size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:trans=
+parent;font-weight:400;font-style:normal;font-variant:normal;text-decoratio=
+n:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">[Jack=
+ery Gutschein]</span></p><p dir=3D"ltr" style=3D"display:block;-webkit-marg=
+in-before:1__qem;-webkit-margin-after:1__qem;-webkit-margin-start:0;-webkit=
+-margin-end:0;line-height:1.38;margin-top:0pt;margin-bottom:0pt;user-select=
+:inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-sizing:bor=
+der-box" fr-original-style=3D"line-height:1.38;margin-top:0pt;margin-bottom=
+:0pt;"><span style=3D"font-size:11pt;font-family:Arial, sans-serif;color:rg=
+b(0, 0, 0);background-color:transparent;font-weight:400;font-style:normal;f=
+ont-variant:normal;text-decoration:none;vertical-align:baseline;white-space=
+:pre-wrap;user-select:inherit;scrollbar-color:var(--scrollbar-active-color)=
+ #0000;box-sizing:border-box" fr-original-style=3D"font-size:11pt;font-fami=
+ly:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:=
+400;font-style:normal;font-variant:normal;text-decoration:none;vertical-ali=
+gn:baseline;white-space:pre;white-space:pre-wrap;">[Jackery Rabatt]</span><=
+/p><p dir=3D"ltr" style=3D"display:block;-webkit-margin-before:1__qem;-webk=
+it-margin-after:1__qem;-webkit-margin-start:0;-webkit-margin-end:0;line-hei=
+ght:1.38;margin-top:0pt;margin-bottom:0pt;user-select:inherit;scrollbar-col=
+or:var(--scrollbar-active-color) #0000;box-sizing:border-box" fr-original-s=
+tyle=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt;"><span style=3D"=
+font-size:11pt;font-family:Arial, sans-serif;color:rgb(0, 0, 0);background-=
+color:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre-wrap;user-select:=
+inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-sizing:bord=
+er-box" fr-original-style=3D"font-size:11pt;font-family:Arial,sans-serif;co=
+lor:#000000;background-color:transparent;font-weight:400;font-style:normal;=
+font-variant:normal;text-decoration:none;vertical-align:baseline;white-spac=
+e:pre;white-space:pre-wrap;">[Jackery Rabattcode]</span></p><div fr-origina=
+l-style=3D"" style=3D"display:block;user-select:inherit;scrollbar-color:var=
+(--scrollbar-active-color) #0000;box-sizing:border-box"><br fr-original-sty=
+le=3D"" style=3D"user-select:inherit;scrollbar-color:var(--scrollbar-active=
+-color) #0000;box-sizing:border-box"></div><p dir=3D"ltr" style=3D"display:=
+block;-webkit-margin-before:1__qem;-webkit-margin-after:1__qem;-webkit-marg=
+in-start:0;-webkit-margin-end:0;line-height:1.38;margin-top:0pt;margin-bott=
+om:0pt;user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0=
+000;box-sizing:border-box" fr-original-style=3D"line-height:1.38;margin-top=
+:0pt;margin-bottom:0pt;"><span style=3D"font-size:11pt;font-family:Arial, s=
+ans-serif;color:rgb(0, 0, 0);background-color:transparent;font-weight:400;f=
+ont-style:normal;font-variant:normal;text-decoration:none;vertical-align:ba=
+seline;white-space:pre-wrap;user-select:inherit;scrollbar-color:var(--scrol=
+lbar-active-color) #0000;box-sizing:border-box" fr-original-style=3D"font-s=
+ize:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transp=
+arent;font-weight:400;font-style:normal;font-variant:normal;text-decoration=
+:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">Pricei=
+ndanger.com will cover all costs associated with this PPC campaign. We neve=
+r run any PPC without permission.</span><span style=3D"font-size:11pt;font-=
+family:Arial, sans-serif;color:rgb(0, 0, 0);background-color:transparent;fo=
+nt-weight:400;font-style:normal;font-variant:normal;text-decoration:none;ve=
+rtical-align:baseline;white-space:pre-wrap;user-select:inherit;scrollbar-co=
+lor:var(--scrollbar-active-color) #0000;box-sizing:border-box" fr-original-=
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;backgrou=
+nd-color:transparent;font-weight:400;font-style:normal;font-variant:normal;=
+text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pr=
+e-wrap;"><br fr-original-style=3D"" style=3D"user-select:inherit;scrollbar-=
+color:var(--scrollbar-active-color) #0000;box-sizing:border-box"></span><sp=
+an style=3D"font-size:11pt;font-family:Arial, sans-serif;color:rgb(0, 0, 0)=
+;background-color:transparent;font-weight:400;font-style:normal;font-varian=
+t:normal;text-decoration:none;vertical-align:baseline;white-space:pre-wrap;=
+user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box=
+-sizing:border-box" fr-original-style=3D"font-size:11pt;font-family:Arial,s=
+ans-serif;color:#000000;background-color:transparent;font-weight:400;font-s=
+tyle:normal;font-variant:normal;text-decoration:none;vertical-align:baselin=
+e;white-space:pre;white-space:pre-wrap;"><br fr-original-style=3D"" style=
+=3D"user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0000=
+;box-sizing:border-box"></span><span style=3D"font-size:11pt;font-family:Ar=
+ial, sans-serif;color:rgb(0, 0, 0);background-color:transparent;font-weight=
+:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-al=
+ign:baseline;white-space:pre-wrap;user-select:inherit;scrollbar-color:var(-=
+-scrollbar-active-color) #0000;box-sizing:border-box" fr-original-style=3D"=
+font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:=
+transparent;font-weight:400;font-style:normal;font-variant:normal;text-deco=
+ration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">=
+This combined approach leverages the power of a targeted discount with stra=
+tegic online advertising, maximizing customer acquisition and brand exposur=
+e for Jackery .&nbsp;</span><span style=3D"font-size:11pt;font-family:Arial=
+, sans-serif;color:rgb(0, 0, 0);background-color:transparent;font-weight:40=
+0;font-style:normal;font-variant:normal;text-decoration:none;vertical-align=
+:baseline;white-space:pre-wrap;user-select:inherit;scrollbar-color:var(--sc=
+rollbar-active-color) #0000;box-sizing:border-box" fr-original-style=3D"fon=
+t-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:tra=
+nsparent;font-weight:400;font-style:normal;font-variant:normal;text-decorat=
+ion:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"><br=
+ fr-original-style=3D"" style=3D"user-select:inherit;scrollbar-color:var(--=
+scrollbar-active-color) #0000;box-sizing:border-box"></span><span style=3D"=
+font-size:11pt;font-family:Arial, sans-serif;color:rgb(0, 0, 0);background-=
+color:transparent;font-weight:400;font-style:normal;font-variant:normal;tex=
+t-decoration:none;vertical-align:baseline;white-space:pre-wrap;user-select:=
+inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-sizing:bord=
+er-box" fr-original-style=3D"font-size:11pt;font-family:Arial,sans-serif;co=
+lor:#000000;background-color:transparent;font-weight:400;font-style:normal;=
+font-variant:normal;text-decoration:none;vertical-align:baseline;white-spac=
+e:pre;white-space:pre-wrap;"><br fr-original-style=3D"" style=3D"user-selec=
+t:inherit;scrollbar-color:var(--scrollbar-active-color) #0000;box-sizing:bo=
+rder-box"></span><span style=3D"font-size:11pt;font-family:Arial, sans-seri=
+f;color:rgb(0, 0, 0);background-color:transparent;font-weight:400;font-styl=
+e:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;w=
+hite-space:pre-wrap;user-select:inherit;scrollbar-color:var(--scrollbar-act=
+ive-color) #0000;box-sizing:border-box" fr-original-style=3D"font-size:11pt=
+;font-family:Arial,sans-serif;color:#000000;background-color:transparent;fo=
+nt-weight:400;font-style:normal;font-variant:normal;text-decoration:none;ve=
+rtical-align:baseline;white-space:pre;white-space:pre-wrap;">Moreover, we a=
+re ready to provide a FREE BIG &nbsp;HOMEPAGE BANNER PLACEMENT (1050X560) i=
+n exchange for exclusive code &amp; PPC.</span><span style=3D"font-size:11p=
+t;font-family:Arial, sans-serif;color:rgb(0, 0, 0);background-color:transpa=
+rent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:=
+none;vertical-align:baseline;white-space:pre-wrap;user-select:inherit;scrol=
+lbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box" fr-or=
+iginal-style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;b=
+ackground-color:transparent;font-weight:400;font-style:normal;font-variant:=
+normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-s=
+pace:pre-wrap;"><br fr-original-style=3D"" style=3D"user-select:inherit;scr=
+ollbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box"></s=
+pan><span style=3D"font-size:11pt;font-family:Arial, sans-serif;color:rgb(0=
+, 0, 0);background-color:transparent;font-weight:400;font-style:normal;font=
+-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pr=
+e-wrap;user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0=
+000;box-sizing:border-box" fr-original-style=3D"font-size:11pt;font-family:=
+Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400=
+;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:=
+baseline;white-space:pre;white-space:pre-wrap;"><br fr-original-style=3D"" =
+style=3D"user-select:inherit;scrollbar-color:var(--scrollbar-active-color) =
+#0000;box-sizing:border-box"></span><span style=3D"font-size:11pt;font-fami=
+ly:Arial, sans-serif;color:rgb(0, 0, 0);background-color:transparent;font-w=
+eight:400;font-style:normal;font-variant:normal;text-decoration:none;vertic=
+al-align:baseline;white-space:pre-wrap;user-select:inherit;scrollbar-color:=
+var(--scrollbar-active-color) #0000;box-sizing:border-box" fr-original-styl=
+e=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-c=
+olor:transparent;font-weight:400;font-style:normal;font-variant:normal;text=
+-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wr=
+ap;">Just provide the banner and we will live it. We're confident that thes=
+e proposals hold immense potential to benefit both Jackery and Priceindange=
+r.com. We'd be thrilled to discuss this further at your convenience.</span>=
+</p><div fr-original-style=3D"" style=3D"display:block;user-select:inherit;=
+scrollbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box">=
+<br fr-original-style=3D"" style=3D"user-select:inherit;scrollbar-color:var=
+(--scrollbar-active-color) #0000;box-sizing:border-box"></div><p dir=3D"ltr=
+" style=3D"display:block;-webkit-margin-before:1__qem;-webkit-margin-after:=
+1__qem;-webkit-margin-start:0;-webkit-margin-end:0;line-height:1.38;margin-=
+top:0pt;margin-bottom:0pt;user-select:inherit;scrollbar-color:var(--scrollb=
+ar-active-color) #0000;box-sizing:border-box" fr-original-style=3D"line-hei=
+ght:1.38;margin-top:0pt;margin-bottom:0pt;"><span style=3D"font-size:11pt;f=
+ont-family:Arial, sans-serif;color:rgb(0, 0, 0);background-color:transparen=
+t;font-weight:400;font-style:normal;font-variant:normal;text-decoration:non=
+e;vertical-align:baseline;white-space:pre-wrap;user-select:inherit;scrollba=
+r-color:var(--scrollbar-active-color) #0000;box-sizing:border-box" fr-origi=
+nal-style=3D"font-size:11pt;font-family:Arial,sans-serif;color:#000000;back=
+ground-color:transparent;font-weight:400;font-style:normal;font-variant:nor=
+mal;text-decoration:none;vertical-align:baseline;white-space:pre;white-spac=
+e:pre-wrap;">Thank you for your time and consideration.</span></p><div fr-o=
+riginal-style=3D"" style=3D"display:block;user-select:inherit;scrollbar-col=
+or:var(--scrollbar-active-color) #0000;box-sizing:border-box"><br fr-origin=
+al-style=3D"" style=3D"user-select:inherit;scrollbar-color:var(--scrollbar-=
+active-color) #0000;box-sizing:border-box"></div><p dir=3D"ltr" style=3D"di=
+splay:block;-webkit-margin-before:1__qem;-webkit-margin-after:1__qem;-webki=
+t-margin-start:0;-webkit-margin-end:0;line-height:1.38;margin-top:0pt;margi=
+n-bottom:0pt;user-select:inherit;scrollbar-color:var(--scrollbar-active-col=
+or) #0000;box-sizing:border-box" fr-original-style=3D"line-height:1.38;marg=
+in-top:0pt;margin-bottom:0pt;"><span style=3D"font-size:11pt;font-family:Ar=
+ial, sans-serif;color:rgb(0, 0, 0);background-color:transparent;font-weight=
+:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-al=
+ign:baseline;white-space:pre-wrap;user-select:inherit;scrollbar-color:var(-=
+-scrollbar-active-color) #0000;box-sizing:border-box" fr-original-style=3D"=
+font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:=
+transparent;font-weight:400;font-style:normal;font-variant:normal;text-deco=
+ration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">=
+Sincerely,</span></p><div data-signature-parent=3D"sig-parent" translate=3D=
+"no" fr-original-style=3D"" style=3D"display:block;user-select:inherit;scro=
+llbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box"><sig=
+nature style=3D"display:table;width:100%;user-select:inherit;scrollbar-colo=
+r:var(--scrollbar-active-color) #0000;box-sizing:border-box" data-signature=
+-id=3D"local-b10915b7-e4cb" fr-original-style=3D"display:table;width:100%;"=
+><div fr-original-style=3D"" style=3D"display:block;user-select:inherit;scr=
+ollbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box"><st=
+rong fr-original-style=3D"" style=3D"user-select:inherit;scrollbar-color:va=
+r(--scrollbar-active-color) #0000;font-weight:700;box-sizing:border-box"><e=
+m fr-original-style=3D"" style=3D"font-style:italic;user-select:inherit;scr=
+ollbar-color:var(--scrollbar-active-color) #0000;box-sizing:border-box">Sai=
+f Ur Rehman</em></strong></div><div fr-original-style=3D"" style=3D"display=
+:block;user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0=
+000;box-sizing:border-box"><strong fr-original-style=3D"" style=3D"user-sel=
+ect:inherit;scrollbar-color:var(--scrollbar-active-color) #0000;font-weight=
+:700;box-sizing:border-box"><em fr-original-style=3D"" style=3D"font-style:=
+italic;user-select:inherit;scrollbar-color:var(--scrollbar-active-color) #0=
+000;box-sizing:border-box"><a href=3D"Priceindanger.com" rel=3D"noopener no=
+referrer" target=3D"_blank" fr-original-style=3D"" style=3D"user-select:aut=
+o;scrollbar-color:var(--scrollbar-active-color) #0000;background:rgba(0, 0,=
+ 0, 0);box-sizing:border-box;color:rgb(76, 140, 246)">Priceindanger.com</a>=
+<img src=3D"https://permanent-assets-download.flockmail.com/signature/41876=
+72/2023-11-19_3253ce1d8714326b62c0_12233" style=3D"width:130px;display:bloc=
+k;vertical-align:top;margin:5px auto 5px 0px;max-width:calc(100% - 10px);te=
+xt-align:left;scrollbar-color:var(--scrollbar-active-color) #0000;border:0p=
+x;cursor:pointer;padding:unset;user-select:none;position:relative;box-sizin=
+g:border-box" fr-original-style=3D"width: 130px; display: block; vertical-a=
+lign: top; margin: 5px auto 5px 0px; max-width: calc(100% - 10px); text-ali=
+gn: left;" fr-original-class=3D"fr-draggable fr-deletable"></em></strong></=
+div></signature></div>
+        </blockquote>
+      </div>=
+
+------=_Part_2009500_1436075778.1756053581240--

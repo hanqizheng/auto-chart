@@ -1,0 +1,150 @@
+Delivered-To: rita@affiliate.bluefocus.com
+Received: by 2002:a17:504:26cb:b0:1d03:27cf:8dbe with SMTP id j11csp5501461nji;
+        Sun, 24 Aug 2025 20:33:31 -0700 (PDT)
+X-Received: by 2002:a05:6808:1a14:b0:408:fef8:9c6d with SMTP id 5614622812f47-437851ba003mr4556075b6e.19.1756092811083;
+        Sun, 24 Aug 2025 20:33:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1756092811; cv=none;
+        d=google.com; s=arc-20240605;
+        b=c/YiN8Kw3XHJ1yqT+QuGtz/mGokt5yZEwmbQpd6Ryxe2DhukvYKW4oHMAL7ktIqQ/e
+         sYbkuRXxMxKcWZgAmWbEO5hZ4RhiZRivIEhvrHOej622AAFKjRO6okaDUXmmpVME9asT
+         H/Vbz4Jr5WSxIjPd5B5nFXkifq5i3ShT3D2JA5kKxnx+sagiD2cU2vZtvEkffD7Jq5P2
+         yXtEtRKp5bOoOXlAeJ+4yidTcP4PDE54DX24aiMvUnb+0RFyqEx1fErbM3QgLETNh5mj
+         Fj167Mtmaf5T4OZ/Jra796UdACW+aTITM/jQSBjBkdcKo4zzSz8UciiEMh/1peGXNKb4
+         ZSWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=auto-submitted:precedence:content-disposition
+         :content-transfer-encoding:mime-version:subject:message-id:date:from
+         :to:dkim-signature;
+        bh=Pcl8VAJInLOJ+27HiyS/H/7RnmkJvUIXJ3aVQ8+38ko=;
+        fh=BoWp9SEckufSxyDV/s8RMYXVYKO3gLubFZtMHVUv8Tc=;
+        b=c6RgP6EOWxUf7G1jEfREa4+VI3yR7QVcnTAXTL9PHuSYnf8rQ9iiedZUJ/nmqhrUEM
+         0z+V0D9hFxEn/BeOeXxHBBw9beS8FB2tbqjtYi5Z24Yv9eXjMdm6KDi1keEtCA8FiKf4
+         I+RkBZ5L0lnI5mNtbv5p4SIfzO4b/JBZLMwZ78YwLa6u9x97VusYchGaqpXHh6oEmnh4
+         plOtPZvuUV34td1cBqYg7XBhWylkuXyzxa1HOI6SPgcu/vPr2A9hvrTZJ+84L1cULgWV
+         G348Sn/h18QT6g+zszS84q6vHPkjK7bkgzH/perwZICDYwMq+c1MHtXdpsIPxq1L3B1a
+         gRCQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@bravodeal.com header.s=webravo header.b=Rt1SvSi9;
+       spf=pass (google.com: domain of maria.vardanega@bravodeal.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=maria.vardanega@bravodeal.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=bravodeal.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+Return-Path: <maria.vardanega@bravodeal.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id 5614622812f47-437968e5abasor1331264b6e.12.2025.08.24.20.33.30
+        for <rita@affiliate.bluefocus.com>
+        (Google Transport Security);
+        Sun, 24 Aug 2025 20:33:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of maria.vardanega@bravodeal.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@bravodeal.com header.s=webravo header.b=Rt1SvSi9;
+       spf=pass (google.com: domain of maria.vardanega@bravodeal.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=maria.vardanega@bravodeal.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=bravodeal.com;
+       dara=pass header.i=@affiliate.bluefocus.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bravodeal.com; s=webravo; t=1756092810; x=1756697610; darn=affiliate.bluefocus.com;
+        h=auto-submitted:precedence:content-disposition
+         :content-transfer-encoding:mime-version:subject:message-id:date:from
+         :to:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pcl8VAJInLOJ+27HiyS/H/7RnmkJvUIXJ3aVQ8+38ko=;
+        b=Rt1SvSi9S/0iduo731FdMnAocZA46xbu9eIvmhaMIGkduamdPAnuxkT5HkzpU28QOa
+         8djZYjWwy72g9SjLZgwvirIgvFtjg98SsYgt+d0/D07VR9csKkLMooiEDt04DbcBTonT
+         is78Sm9nmLTsNC9ey/RHyRqeL4KIiRxOMA2Pk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756092810; x=1756697610;
+        h=auto-submitted:precedence:content-disposition
+         :content-transfer-encoding:mime-version:subject:message-id:date:from
+         :to:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pcl8VAJInLOJ+27HiyS/H/7RnmkJvUIXJ3aVQ8+38ko=;
+        b=l9Ew7yWcYfdStpXCvZ+wKplUwS2EN5se/1sHtaoPhEA6iBB9YKesXUXbUqjbTbUdmB
+         D/Twwvqgn8JlxigKleS9h92PNFz4AkJMb6QFqfjbUmTArS/GjMjtJL7PxmoEeaK5RmRT
+         wk5jM/Vipq6o3+uMGoqBLtnzZG50GQt5zYoEFViOkulI3bKhGb/nYstaUEZof8+Bu/Kg
+         B0S62WrEgAsZEnKG19WaGq/0pOIoLsbZMJbmkZNOZYMUBkqYnGG7JKD6nE676inTo5vw
+         wezbfDTfJY9E5Hj0LWON5KIw3iCaDpj1TcoMKPNXxQNvsiD35A9F/svnOfnU9Ss+AwFv
+         dAMA==
+X-Gm-Message-State: AOJu0Yz4/LLwQa4zCot+0QZ6yXP44JoNB7fBuhoqZaJ3kEorbYcxv6++
+	tD9oOLFBmVdu/Uuj/iVCXTP4+1y3gZN7tp0MPAJ8UK8fI8iFLG9+KhZvcLMN0WD06SfUwCI/2Ry
+	lYudm13B1PCyGz8vptoZaBigkWComYS8fVgrLGjAR+hgqwKDS9otNy/PM+u+aelTaiwxRbLwv0p
+	13/fz4bej+GtjyaMlAHFSlTlgHCTPJv8X2Y80yhEtyDZEvf/NshoNWezXnRRvx3A5CgVXUce1/A
+	qnEdKqPFOtOdqHterM7Tz3YVGXQ3Xnkg4cddjy9aLE6l34mckoI38F7yXf84VKWDlQCiI2nnEvx
+	QeAY6qZjka4+6fzvtwVlbVjsTO8=
+X-Gm-Gg: ASbGncvnYQTZdzxZuV+4WhQLIsTT58ILpoO68oKDQEoA5buasaeFYI00X1C8ZW7ytXz
+	IhZOHul0xO8+JdOiEfTAVoi1NVnR2e3WugXQ0f3+/DTqdoGs4qVtkFzvzcA0jnmRPcYAjhrTnlG
+	/nB767NaFgFamTnTn01T52W/yq+pVTTTxfRNKP8ulKAxtXkluaRw1XIcODiDsUY9pxVjyAPZ3mm
+	PZ5Ylvs6TXtSO6bxUjf7A==
+X-Google-Smtp-Source: AGHT+IFtqpcbLrnfHjVZlxnLXN2Ixg65Zs+sIrcfZB+LX04wl4zsY1RNioXD5S05eCCJrlW0gNDhjBScYfZYswKeuoyoPcm2rRpP84Ruql/L
+X-Received: by 2002:a05:6808:10d5:b0:437:7577:d45a with SMTP id 5614622812f47-4378528a1c5mr4150350b6e.46.1756092810220;
+        Sun, 24 Aug 2025 20:33:30 -0700 (PDT)
+To: rita@affiliate.bluefocus.com
+From: "Maria Vardanega" <maria.vardanega@bravodeal.com>
+Date: Sun, 24 Aug 2025 20:33:30 -0700
+Message-ID: <CAN=V1LbfT1S2M7+RB2vgBrCaT1AkZaTE6KrhJGuirREeCaCPNA@mail.gmail.com>
+Subject: OOO Re: Silksilky x bravodeal Q3 collaboration
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Precedence: bulk
+X-Autoreply: yes
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+
+Hello,
+Thank you for your email!
+
+I'm OOO and will have limited access to my email
+I'll reply when I'm back in the office on August, 27th
+
+For urgent matters please contact: usamteam@bravodeal.com
+
+Have a great day,
+
+
+Maria
+
+
+
+
+
+
+-- 
+
+
+
+Maria Vardanega <https://www.linkedin.com/in/mariavardanega/>
+
+Account Manager, US & CA
+
+Office: +1 (213) 547 6784
+
+Mobile:+1 (323) 594 6826
+
+www.bravodeal.com
+
+www.bravocoupons.ca
+
+
+US Headquarters
+
+777 S. Alameda St. 2nd floor
+
+Los Angeles, CA, 90021
+
+United States
+
+
+EU Headquarters
+
+Via Gramsci 446
+
+Sesto Fiorentino, FI, 50019
+
+Italy
+
+
+
+
+THIS MESSAGE IS INTENDED ONLY FOR THE USE OF THE INDIVIDUAL OR ENTITY TO
+
+ WHICH IT IS ADDRESSED AND MAY CONTAIN INFORMATION THAT IS PRIVILEGED,
+
+ CONFIDENTIAL, AND EXEMPT FROM DISCLOSURE UNDER APPLICABLE LAW
