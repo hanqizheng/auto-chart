@@ -1,6 +1,6 @@
 {
-  "batchId": "batch-1756971952889-m3q8op0bq",
-  "timestamp": "2025-09-04T07:48:19.716Z",
+  "batchId": "batch-1757306574846-cz3ufkygv",
+  "timestamp": "2025-09-08T04:45:24.572Z",
   "progress": {
     "totalFiles": 92,
     "processedFiles": 10,
@@ -8,7 +8,6 @@
     "totalBatches": 10,
     "completedBatches": 1,
     "failedFiles": [
-      "Absence - Out Of Office.eml[1].eml",
       "How would you rate the support you received_.eml[1].eml"
     ],
     "processedFileNames": [
@@ -23,14 +22,14 @@
       "Jackery DE x COUPONS4U August collab.eml[1].eml",
       "Jackery DE x Chip.de Q3 collab.eml[1].eml"
     ],
-    "startTime": "2025-09-04T07:43:26.900Z",
-    "lastUpdateTime": "2025-09-04T07:45:51.886Z",
+    "startTime": "2025-09-08T04:40:32.876Z",
+    "lastUpdateTime": "2025-09-08T04:42:53.837Z",
     "status": "processing"
   },
   "results": [
     {
-      "projectName": "Jackery DE",
-      "partnerName": "Rita",
+      "projectName": "Jackery",
+      "partnerName": "Atolls",
       "partnerEmail": "partnerships.de@atolls.com",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "creative-upload",
@@ -41,27 +40,26 @@
       "emailFrom": "partnerships.de@atolls.com",
       "confidence": 0.7625,
       "matchType": "ai_extracted",
-      "processingTime": 14905
+      "processingTime": 14736
     },
     {
-      "projectName": null,
-      "partnerName": "Saif from Priceindanger.com",
+      "projectName": "Jackery",
+      "partnerName": "Priceindanger",
       "partnerEmail": "saifurrehman@priceindanger.com",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "proposal-placement",
-      "success": false,
-      "errorReason": "项目名称未识别",
+      "success": true,
       "filename": "Jackery Exclusive Code + PPC Permission for Priceindanger.com.eml[1].eml",
       "emailSubject": "Re:  Jackery Exclusive Code + PPC Permission for Priceindanger.com",
       "emailDate": "2025-08-24T16:39:41.000Z",
       "emailFrom": "saifurrehman@priceindanger.com",
-      "confidence": 0.7833333333333333,
+      "confidence": 0.825,
       "matchType": "ai_extracted",
-      "processingTime": 13674
+      "processingTime": 15925
     },
     {
-      "projectName": "Jackery UK",
-      "partnerName": "Deals Daddy",
+      "projectName": "Jackery",
+      "partnerName": "Dealsdaddy",
       "partnerEmail": "admin@dealsdaddy.co.uk",
       "communicationStage": "after-service",
       "communicationSubStage": null,
@@ -72,11 +70,11 @@
       "emailFrom": "admin@dealsdaddy.co.uk",
       "confidence": 0.7999999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14537
+      "processingTime": 13925
     },
     {
-      "projectName": "OPPO",
-      "partnerName": "Matt Pique",
+      "projectName": "Jackery",
+      "partnerName": "Savoo",
       "partnerEmail": "mpique@savoo.co.uk",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "proposal-placement",
@@ -87,45 +85,43 @@
       "emailFrom": "mpique@savoo.co.uk",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 16293
+      "processingTime": 18061
     },
     {
-      "projectName": null,
-      "partnerName": "Paula Barker",
+      "projectName": "Jackery",
+      "partnerName": "Easyfundraising Org",
       "partnerEmail": "paula.barker@easyfundraising.org.uk",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "price-negotiation",
-      "success": false,
-      "errorReason": "项目名称未识别",
+      "success": true,
       "filename": "Jackery x easyfundraising Collaboration.eml[1].eml",
       "emailSubject": "RE: Jackery x easyfundraising Collaboration",
       "emailDate": "2025-08-28T12:41:34.000Z",
       "emailFrom": "paula.barker@easyfundraising.org.uk",
-      "confidence": 0.7666666666666666,
+      "confidence": 0.8125,
       "matchType": "ai_extracted",
-      "processingTime": 16892
+      "processingTime": 16464
     },
     {
-      "projectName": null,
-      "partnerName": "Shauna Cortazzo",
+      "projectName": "TikTok Lite",
+      "partnerName": "Dealnews",
       "partnerEmail": "scortazzo@dealnews.com",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "proposal-placement",
-      "success": false,
-      "errorReason": "项目名称未识别",
+      "success": true,
       "filename": "Meet Up at CJU & Unlock Special Deals with DealNews!.eml[1].eml",
       "emailSubject": "Meet Up at CJU & Unlock Special Deals with DealNews!",
       "emailDate": "2025-08-26T13:18:26.000Z",
       "emailFrom": "scortazzo@dealnews.com",
-      "confidence": 0.7833333333333333,
+      "confidence": 0.7875,
       "matchType": "ai_extracted",
-      "processingTime": 15932
+      "processingTime": 16814
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Maria Vardanega",
+      "partnerName": "Bravodeal",
       "partnerEmail": "maria.vardanega@bravodeal.com",
-      "communicationStage": "partnership-confirmed",
+      "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
       "success": true,
       "filename": "OOO Re_ Silksilky x bravodeal Q3 collaboration.eml[1].eml",
@@ -134,11 +130,11 @@
       "emailFrom": "maria.vardanega@bravodeal.com",
       "confidence": 0.7833333333333332,
       "matchType": "ai_extracted",
-      "processingTime": 13225
+      "processingTime": 13641
     },
     {
       "projectName": "Ugreen",
-      "partnerName": "Christian Holmgaard",
+      "partnerName": "Onskeskyen Dk",
       "partnerEmail": "ch@onskeskyen.dk",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -149,11 +145,11 @@
       "emailFrom": "ch@onskeskyen.dk",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 13684
+      "processingTime": 13524
     },
     {
       "projectName": "Ugreen",
-      "partnerName": "Benedikt Bücker",
+      "partnerName": "Atolls",
       "partnerEmail": "benedikt.buecker@atolls.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -164,11 +160,11 @@
       "emailFrom": "benedikt.buecker@atolls.com",
       "confidence": 0.7833333333333332,
       "matchType": "ai_extracted",
-      "processingTime": 14057
+      "processingTime": 13726
     },
     {
       "projectName": "Ugreen",
-      "partnerName": "Susana Laurentino",
+      "partnerName": "Yieldkit",
       "partnerEmail": "susana.laurentino@yieldkit.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -179,7 +175,7 @@
       "emailFrom": "susana.laurentino@yieldkit.com",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 13619
+      "processingTime": 12885
     }
   ],
   "config": {

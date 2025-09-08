@@ -1,6 +1,6 @@
 {
-  "batchId": "batch-1756971806902-wal8qkj03",
-  "timestamp": "2025-09-04T07:45:51.883Z",
+  "batchId": "batch-1757306432878-p3ikiv9bk",
+  "timestamp": "2025-09-08T04:42:53.825Z",
   "progress": {
     "totalFiles": 92,
     "processedFiles": 0,
@@ -9,30 +9,29 @@
     "completedBatches": 0,
     "failedFiles": [],
     "processedFileNames": [],
-    "startTime": "2025-09-04T07:43:26.900Z",
-    "lastUpdateTime": "2025-09-04T07:43:26.900Z",
+    "startTime": "2025-09-08T04:40:32.876Z",
+    "lastUpdateTime": "2025-09-08T04:40:32.876Z",
     "status": "processing"
   },
   "results": [
     {
-      "projectName": null,
+      "projectName": "Backend Testing Project 2025-06-18 - EDITED",
       "partnerName": "Fidelitix",
       "partnerEmail": "cynthia.belanger@fidelitix.ca",
       "communicationStage": "after-service",
       "communicationSubStage": null,
-      "success": false,
-      "errorReason": "项目名称未识别",
+      "success": true,
       "filename": "Absence - Out Of Office.eml[1].eml",
       "emailSubject": "Absence - Out Of Office",
       "emailDate": "2025-08-21T11:01:51.000Z",
       "emailFrom": "cynthia.belanger@fidelitix.ca",
-      "confidence": 0.8500000000000001,
+      "confidence": 0.6666666666666666,
       "matchType": "ai_extracted",
-      "processingTime": 20455
+      "processingTime": 17168
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Garcia, Sara",
+      "partnerName": "Rakuten",
       "partnerEmail": "sara.garcia@rakuten.com",
       "communicationStage": "after-service",
       "communicationSubStage": null,
@@ -43,11 +42,11 @@
       "emailFrom": "sara.garcia@rakuten.com",
       "confidence": 0.7833333333333332,
       "matchType": "ai_extracted",
-      "processingTime": 10897
+      "processingTime": 10915
     },
     {
       "projectName": "Ugreen",
-      "partnerName": "Garcia, Sara",
+      "partnerName": "Rakuten",
       "partnerEmail": "sara.garcia@rakuten.com",
       "communicationStage": "after-service",
       "communicationSubStage": null,
@@ -58,11 +57,11 @@
       "emailFrom": "sara.garcia@rakuten.com",
       "confidence": 0.7833333333333332,
       "matchType": "ai_extracted",
-      "processingTime": 12720
+      "processingTime": 11835
     },
     {
-      "projectName": "Jackery DE",
-      "partnerName": "Scherr Stephanie",
+      "projectName": "Jackery",
+      "partnerName": "Burda Forward",
       "partnerEmail": "stephanie.scherr@burda-forward.de",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -73,11 +72,11 @@
       "emailFrom": "Stephanie.Scherr@burda-forward.de",
       "confidence": 0.7833333333333332,
       "matchType": "ai_extracted",
-      "processingTime": 13588
+      "processingTime": 13539
     },
     {
-      "projectName": "PPX",
-      "partnerName": "Fiona von Lumaly",
+      "projectName": "Backend Testing Project 2025-06-18 - EDITED",
+      "partnerName": "Lumaly",
       "partnerEmail": "fiona@lumaly.de",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -86,13 +85,13 @@
       "emailSubject": "Heiße Sommer Deals bei Lumaly - jetzt sichern! ☀️",
       "emailDate": "2025-08-24T17:41:31.000Z",
       "emailFrom": "fiona@lumaly.de",
-      "confidence": 0.7999999999999999,
+      "confidence": 0.6833333333333332,
       "matchType": "ai_extracted",
-      "processingTime": 14109
+      "processingTime": 14711
     },
     {
       "projectName": null,
-      "partnerName": "Concierge",
+      "partnerName": "Avantstay",
       "partnerEmail": "concierge@avantstay.com",
       "communicationStage": "after-service",
       "communicationSubStage": null,
@@ -104,11 +103,11 @@
       "emailFrom": "concierge@avantstay.com",
       "confidence": 0.75,
       "matchType": "ai_extracted",
-      "processingTime": 13631
+      "processingTime": 14039
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Support",
+      "partnerName": "Mobilevikings Be",
       "partnerEmail": "secondline@mobilevikings.be",
       "communicationStage": "after-service",
       "communicationSubStage": null,
@@ -119,11 +118,11 @@
       "emailFrom": "secondline@mobilevikings.be",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 12689
+      "processingTime": 13733
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Support",
+      "partnerName": "Mobilevikings Be",
       "partnerEmail": "secondline@mobilevikings.be",
       "communicationStage": "after-service",
       "communicationSubStage": null,
@@ -134,11 +133,11 @@
       "emailFrom": "secondline@mobilevikings.be",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 14140
+      "processingTime": 12110
     },
     {
-      "projectName": "Jackery DE",
-      "partnerName": "Lara Elosge",
+      "projectName": "Jackery",
+      "partnerName": "Coupons4u",
       "partnerEmail": "lelosge@coupons4u.de",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "creative-upload",
@@ -149,11 +148,11 @@
       "emailFrom": "lelosge@coupons4u.de",
       "confidence": 0.7749999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 16217
+      "processingTime": 15873
     },
     {
-      "projectName": "Jackery DE",
-      "partnerName": "Scherr Stephanie",
+      "projectName": "Jackery",
+      "partnerName": "Burda Forward",
       "partnerEmail": "stephanie.scherr@burda-forward.de",
       "communicationStage": "after-service",
       "communicationSubStage": "compensation-placement",
@@ -164,7 +163,7 @@
       "emailFrom": "Stephanie.Scherr@burda-forward.de",
       "confidence": 0.825,
       "matchType": "ai_extracted",
-      "processingTime": 16526
+      "processingTime": 17021
     }
   ],
   "config": {

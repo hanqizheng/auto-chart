@@ -1,6 +1,6 @@
 {
-  "batchId": "batch-1756972847840-hmw1ji76v",
-  "timestamp": "2025-09-04T08:03:11.913Z",
+  "batchId": "batch-1757307492360-qskuvuoxt",
+  "timestamp": "2025-09-08T05:00:42.184Z",
   "progress": {
     "totalFiles": 92,
     "processedFiles": 70,
@@ -8,16 +8,9 @@
     "totalBatches": 10,
     "completedBatches": 7,
     "failedFiles": [
-      "Absence - Out Of Office.eml[1].eml",
       "How would you rate the support you received_.eml[1].eml",
-      "Jackery Exclusive Code + PPC Permission for Priceindanger.com.eml[1].eml",
-      "Jackery x easyfundraising Collaboration.eml[1].eml",
-      "Meet Up at CJU & Unlock Special Deals with DealNews!.eml[1].eml",
-      "Outstanding Balance - Second Reminder    [ ref_!00D800Khmy.!500Uj0eMg0C_ref ].eml[1].eml",
       "PACKAGES, MAILS AND MORE!.eml[1].eml",
-      "Partnership with your brand.eml[1].eml",
-      "ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital.eml[1].eml",
-      "Re_ ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital _ Follow Up.eml[1].eml"
+      "Partnership with your brand.eml[1].eml"
     ],
     "processedFileNames": [
       "Absence - Out Of Office.eml[1].eml",
@@ -91,14 +84,14 @@
       "Re_ [EXT] This Week Only_ SilkSilky Deals – Up to 70% Off!.eml[1].eml",
       "SilkSilky Limited-Time Deals_ Save Up to 64% Off!.eml[1].eml"
     ],
-    "startTime": "2025-09-04T07:43:26.900Z",
-    "lastUpdateTime": "2025-09-04T08:00:46.829Z",
+    "startTime": "2025-09-08T04:40:32.876Z",
+    "lastUpdateTime": "2025-09-08T04:58:11.357Z",
     "status": "processing"
   },
   "results": [
     {
       "projectName": "Silksilky",
-      "partnerName": "Migs Guerra",
+      "partnerName": "Joinhoney",
       "partnerEmail": "deals@joinhoney.com",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "creative-upload",
@@ -107,13 +100,13 @@
       "emailSubject": "Re: Silksilky X joinhoney Q3 Collab",
       "emailDate": "2025-09-01T18:15:18.000Z",
       "emailFrom": "deals@joinhoney.com",
-      "confidence": 0.8124999999999999,
+      "confidence": 0.825,
       "matchType": "ai_extracted",
-      "processingTime": 14688
+      "processingTime": 15865
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Grace",
+      "partnerName": "Couponchief",
       "partnerEmail": "grace@couponchief.com",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "creative-upload",
@@ -124,11 +117,11 @@
       "emailFrom": "grace@couponchief.com",
       "confidence": 0.825,
       "matchType": "ai_extracted",
-      "processingTime": 15176
+      "processingTime": 15063
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Rita",
+      "partnerName": "Rakuten",
       "partnerEmail": "advertisersupport@rakuten.com",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "proposal-placement",
@@ -139,11 +132,11 @@
       "emailFrom": "AdvertiserSupport@rakuten.com",
       "confidence": 0.825,
       "matchType": "ai_extracted",
-      "processingTime": 16598
+      "processingTime": 17236
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Shannon Kenny",
+      "partnerName": "Bravodeal",
       "partnerEmail": "shannon.kenny@bravodeal.com",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "creative-upload",
@@ -154,11 +147,11 @@
       "emailFrom": "shannon.kenny@bravodeal.com",
       "confidence": 0.8125,
       "matchType": "ai_extracted",
-      "processingTime": 15924
+      "processingTime": 15164
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Rachelle Sagun",
+      "partnerName": "Demand Io",
       "partnerEmail": "rachelle@demand.io",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "screenshot-feedback",
@@ -169,27 +162,26 @@
       "emailFrom": "rachelle@demand.io",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14000
+      "processingTime": 14323
     },
     {
-      "projectName": null,
-      "partnerName": "Benedikt Bücker über Docusign",
+      "projectName": "Backend Testing Project 2025-06-18 - EDITED",
+      "partnerName": "Docusign",
       "partnerEmail": "dse@eumail.docusign.net",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "io-signing",
-      "success": false,
-      "errorReason": "项目名称未识别",
+      "success": true,
       "filename": "Storniert_ Documents for your DocuSign Signature.eml[1].eml",
       "emailSubject": "Storniert: Documents for your DocuSign Signature",
       "emailDate": "2025-08-27T08:51:43.000Z",
       "emailFrom": "dse@eumail.docusign.net",
-      "confidence": 0.7666666666666666,
+      "confidence": 0.75,
       "matchType": "ai_extracted",
-      "processingTime": 14834
+      "processingTime": 15453
     },
     {
-      "projectName": "OPPO",
-      "partnerName": "Shannon Fiander",
+      "projectName": "Backend Testing Project 2025-06-18 - EDITED",
+      "partnerName": "Levanta Io",
       "partnerEmail": "shannon@levanta.io",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "price-negotiation",
@@ -198,13 +190,13 @@
       "emailSubject": "Re: Termination of Partnership with Levanta Platform",
       "emailDate": "2025-08-22T18:31:18.000Z",
       "emailFrom": "shannon@levanta.io",
-      "confidence": 0.825,
+      "confidence": 0.7374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14122
+      "processingTime": 15206
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Loftie",
+      "partnerName": "Byloftie",
       "partnerEmail": "hello@byloftie.com",
       "communicationStage": "after-service",
       "communicationSubStage": null,
@@ -215,11 +207,11 @@
       "emailFrom": "hello@byloftie.com",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 12823
+      "processingTime": 13105
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Starter Story Support",
+      "partnerName": "Starterstory",
       "partnerEmail": "support@starterstory.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -230,11 +222,11 @@
       "emailFrom": "support@starterstory.com",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 12064
+      "processingTime": 12135
     },
     {
       "projectName": "Ugreen",
-      "partnerName": "Amy Zuspan",
+      "partnerName": "Atolls",
       "partnerEmail": "amy.zuspan@atolls.com",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "invoice-prepay",
@@ -245,7 +237,7 @@
       "emailFrom": "rita@affiliate.bluefocus.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 13830
+      "processingTime": 16250
     }
   ],
   "config": {

@@ -1,6 +1,6 @@
 {
-  "batchId": "batch-1756972100722-sluz47cg9",
-  "timestamp": "2025-09-04T07:50:57.082Z",
+  "batchId": "batch-1757306725586-h5woxgstm",
+  "timestamp": "2025-09-08T04:48:03.751Z",
   "progress": {
     "totalFiles": 92,
     "processedFiles": 20,
@@ -8,11 +8,7 @@
     "totalBatches": 10,
     "completedBatches": 2,
     "failedFiles": [
-      "Absence - Out Of Office.eml[1].eml",
-      "How would you rate the support you received_.eml[1].eml",
-      "Jackery Exclusive Code + PPC Permission for Priceindanger.com.eml[1].eml",
-      "Jackery x easyfundraising Collaboration.eml[1].eml",
-      "Meet Up at CJU & Unlock Special Deals with DealNews!.eml[1].eml"
+      "How would you rate the support you received_.eml[1].eml"
     ],
     "processedFileNames": [
       "Absence - Out Of Office.eml[1].eml",
@@ -36,30 +32,29 @@
       "Out of Office Re_ UGREEN 2025 Q2&Q3 Invoices Request _ Atolls.eml[1].eml",
       "Out of Office Re_ UGREEN x YieldKit GmbH_ Request to Create Charging & NAS Store Pages + Bonus for Extra Exposure.eml[1].eml"
     ],
-    "startTime": "2025-09-04T07:43:26.900Z",
-    "lastUpdateTime": "2025-09-04T07:48:19.719Z",
+    "startTime": "2025-09-08T04:40:32.876Z",
+    "lastUpdateTime": "2025-09-08T04:45:24.578Z",
     "status": "processing"
   },
   "results": [
     {
-      "projectName": null,
-      "partnerName": "Groupon Recoveries",
+      "projectName": "Jackery",
+      "partnerName": "Groupon",
       "partnerEmail": "recoveries@groupon.com",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "payment-proof",
-      "success": false,
-      "errorReason": "项目名称未识别",
+      "success": true,
       "filename": "Outstanding Balance - Second Reminder    [ ref_!00D800Khmy.!500Uj0eMg0C_ref ].eml[1].eml",
       "emailSubject": "Outstanding Balance - Second Reminder    [ ref:!00D800Khmy.!500Uj0eMg0C:ref ]",
       "emailDate": "2025-08-29T11:09:24.000Z",
       "emailFrom": "recoveries@groupon.com",
-      "confidence": 0.7999999999999999,
+      "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14974
+      "processingTime": 15957
     },
     {
       "projectName": null,
-      "partnerName": "Paula Barker",
+      "partnerName": "Easyfundraising Org",
       "partnerEmail": "paula.barker@easyfundraising.org.uk",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "proposal-placement",
@@ -71,11 +66,11 @@
       "emailFrom": "paula.barker@easyfundraising.org.uk",
       "confidence": 0.7833333333333333,
       "matchType": "ai_extracted",
-      "processingTime": 17479
+      "processingTime": 16734
     },
     {
       "projectName": null,
-      "partnerName": "Malik Smouni",
+      "partnerName": "Authentic Commerce",
       "partnerEmail": "malik.smouni@authentic-commerce.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
@@ -87,11 +82,11 @@
       "emailFrom": "malik.smouni@authentic-commerce.com",
       "confidence": 0.7833333333333333,
       "matchType": "ai_extracted",
-      "processingTime": 14738
+      "processingTime": 16057
     },
     {
-      "projectName": "Dreame",
-      "partnerName": "Sara Wojcik via Docusign",
+      "projectName": "Backend Testing Project 2025-06-18 - EDITED",
+      "partnerName": "Docusign",
       "partnerEmail": "dse_na2@docusign.net",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "io-signing",
@@ -100,13 +95,13 @@
       "emailSubject": "Quote Document Dreame_RR_USSilverLaunch",
       "emailDate": "2025-08-22T17:13:28.000Z",
       "emailFrom": "dse_na2@docusign.net",
-      "confidence": 0.8499999999999999,
+      "confidence": 0.7625,
       "matchType": "ai_extracted",
-      "processingTime": 13564
+      "processingTime": 14483
     },
     {
-      "projectName": "Jackery DE",
-      "partnerName": "Platform Services IntOps",
+      "projectName": "Jackery",
+      "partnerName": "Awin",
       "partnerEmail": "intops@awin.com",
       "communicationStage": "after-service",
       "communicationSubStage": null,
@@ -117,11 +112,11 @@
       "emailFrom": "intops@awin.com",
       "confidence": 0.7999999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 13386
+      "processingTime": 15380
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Jake Channon",
+      "partnerName": "Digi Reach",
       "partnerEmail": "jake.channon@digi-reach.co.uk",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "mediakit-request",
@@ -132,11 +127,11 @@
       "emailFrom": "rita@affiliate.bluefocus.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 13986
+      "processingTime": 14565
     },
     {
-      "projectName": "OPPO",
-      "partnerName": "PanelPlace",
+      "projectName": "Ugreen",
+      "partnerName": "Panelplace",
       "partnerEmail": "advertise@panelplace.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
@@ -147,23 +142,22 @@
       "emailFrom": "advertise@panelplace.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 15035
+      "processingTime": 14653
     },
     {
-      "projectName": null,
-      "partnerName": "Sahejdeep Choudhary",
+      "projectName": "Silksilky",
+      "partnerName": "Nomadzdigital",
       "partnerEmail": "sahejdeep.choudhary@nomadzdigital.com",
       "communicationStage": "initial-inquiry",
-      "communicationSubStage": "mediakit-request",
-      "success": false,
-      "errorReason": "项目名称未识别",
+      "communicationSubStage": "account-invitation",
+      "success": true,
       "filename": "ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital.eml[1].eml",
       "emailSubject": "ROI-Driven Strategic Partnership | Silk Silky X Nomadz Digital",
       "emailDate": "2025-08-21T19:07:31.000Z",
       "emailFrom": "sahejdeep.choudhary@nomadzdigital.com",
-      "confidence": 0.7333333333333334,
+      "confidence": 0.7999999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 16522
+      "processingTime": 18489
     },
     {
       "projectName": "Ugreen",
@@ -176,13 +170,13 @@
       "emailSubject": "Re: Rakuten Creative Request | Category Page: Carousel Banner, 9/1/2025 to 9/7/2025 | Ugreen",
       "emailDate": "2025-08-26T09:13:47.000Z",
       "emailFrom": "rita@affiliate.bluefocus.com",
-      "confidence": 0.9,
+      "confidence": 0.825,
       "matchType": "ai_extracted",
-      "processingTime": 21071
+      "processingTime": 15210
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "GovX Shopify Support",
+      "partnerName": "Govx",
       "partnerEmail": "shopify@govx.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
@@ -193,7 +187,7 @@
       "emailFrom": "shopify@govx.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 15595
+      "processingTime": 16633
     }
   ],
   "config": {

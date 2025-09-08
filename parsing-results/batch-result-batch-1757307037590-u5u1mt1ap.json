@@ -1,6 +1,6 @@
 {
-  "batchId": "batch-1756972409090-qy50bec02",
-  "timestamp": "2025-09-04T07:55:49.611Z",
+  "batchId": "batch-1757307037590-u5u1mt1ap",
+  "timestamp": "2025-09-08T04:53:01.078Z",
   "progress": {
     "totalFiles": 92,
     "processedFiles": 40,
@@ -8,16 +8,9 @@
     "totalBatches": 10,
     "completedBatches": 4,
     "failedFiles": [
-      "Absence - Out Of Office.eml[1].eml",
       "How would you rate the support you received_.eml[1].eml",
-      "Jackery Exclusive Code + PPC Permission for Priceindanger.com.eml[1].eml",
-      "Jackery x easyfundraising Collaboration.eml[1].eml",
-      "Meet Up at CJU & Unlock Special Deals with DealNews!.eml[1].eml",
-      "Outstanding Balance - Second Reminder    [ ref_!00D800Khmy.!500Uj0eMg0C_ref ].eml[1].eml",
       "PACKAGES, MAILS AND MORE!.eml[1].eml",
-      "Partnership with your brand.eml[1].eml",
-      "ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital.eml[1].eml",
-      "Re_ ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital _ Follow Up.eml[1].eml"
+      "Partnership with your brand.eml[1].eml"
     ],
     "processedFileNames": [
       "Absence - Out Of Office.eml[1].eml",
@@ -61,14 +54,14 @@
       "Re_ SilkSilky Limited-Time Deals_ Save Up to 64% Off!.eml[1][1].eml",
       "Re_ SilkSilky Limited-Time Deals_ Save Up to 64% Off!.eml[2][1] copy.eml"
     ],
-    "startTime": "2025-09-04T07:43:26.900Z",
-    "lastUpdateTime": "2025-09-04T07:53:28.082Z",
+    "startTime": "2025-09-08T04:40:32.876Z",
+    "lastUpdateTime": "2025-09-08T04:50:36.588Z",
     "status": "processing"
   },
   "results": [
     {
       "projectName": "Silksilky",
-      "partnerName": "Tomas",
+      "partnerName": "Alittlesparkofjoy",
       "partnerEmail": "info@alittlesparkofjoy.com",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "price-negotiation",
@@ -79,11 +72,11 @@
       "emailFrom": "info@alittlesparkofjoy.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14711
+      "processingTime": 15901
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Chris Städtler",
+      "partnerName": "Nunami Ai",
       "partnerEmail": "chris@nunami.ai",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": null,
@@ -92,13 +85,13 @@
       "emailSubject": "Re: SilkSilky Limited-Time Deals: Save Up to 64% Off!",
       "emailDate": "2025-08-22T07:05:32.000Z",
       "emailFrom": "chris@nunami.ai",
-      "confidence": 0.7999999999999999,
+      "confidence": 0.7833333333333332,
       "matchType": "ai_extracted",
-      "processingTime": 13507
+      "processingTime": 13371
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Hannah Brusven",
+      "partnerName": "Theswishcompany",
       "partnerEmail": "hannah@theswishcompany.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
@@ -107,13 +100,13 @@
       "emailSubject": "Re: SilkSilky Limited-Time Deals: Save Up to 64% Off!",
       "emailDate": "2025-08-26T12:58:19.000Z",
       "emailFrom": "hannah@theswishcompany.com",
-      "confidence": 0.825,
+      "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14611
+      "processingTime": 14947
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Daniel Doli",
+      "partnerName": "Xaria World",
       "partnerEmail": "daniel@xaria.world",
       "communicationStage": null,
       "communicationSubStage": null,
@@ -124,7 +117,7 @@
       "emailFrom": "daniel@xaria.world",
       "confidence": 0.7749999999999999,
       "matchType": "exact",
-      "processingTime": 8060
+      "processingTime": 8679
     },
     {
       "projectName": "Silksilky",
@@ -139,7 +132,7 @@
       "emailFrom": "cbdwellnessblog@gmail.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14340
+      "processingTime": 14750
     },
     {
       "projectName": "Silksilky",
@@ -154,11 +147,11 @@
       "emailFrom": "lainey.tmtg@gmail.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 15221
+      "processingTime": 15635
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Kevin Carney",
+      "partnerName": "Adscendmedia",
       "partnerEmail": "kevin@adscendmedia.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -169,11 +162,11 @@
       "emailFrom": "rita@affiliate.bluefocus.com",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 15551
+      "processingTime": 14750
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Lyndsey Fish",
+      "partnerName": "Joinyaw",
       "partnerEmail": "lyndsey@joinyaw.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
@@ -182,13 +175,13 @@
       "emailSubject": "Re: SilkSilky Limited-Time Deals: Save Up to 64% Off!",
       "emailDate": "2025-08-21T17:12:19.000Z",
       "emailFrom": "lyndsey@joinyaw.com",
-      "confidence": 0.8374999999999999,
+      "confidence": 0.7874999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 16580
+      "processingTime": 15654
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Chris",
+      "partnerName": "Affiliate Watch",
       "partnerEmail": "chris@affiliate.watch",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
@@ -199,11 +192,11 @@
       "emailFrom": "chris@affiliate.watch",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14392
+      "processingTime": 15454
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Ula Gulenok",
+      "partnerName": "Theiris Io",
       "partnerEmail": "ula@theiris.io",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "mediakit-request",
@@ -212,9 +205,9 @@
       "emailSubject": "Re: SilkSilky Limited-Time Deals: Save Up to 64% Off!",
       "emailDate": "2025-08-21T14:10:03.000Z",
       "emailFrom": "ula@theiris.io",
-      "confidence": 0.7874999999999999,
+      "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 13534
+      "processingTime": 14339
     }
   ],
   "config": {

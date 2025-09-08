@@ -1,6 +1,6 @@
 {
-  "batchId": "batch-1756972992925-po2ke1lsm",
-  "timestamp": "2025-09-04T08:05:39.934Z",
+  "batchId": "batch-1757307643188-o1kse6v3u",
+  "timestamp": "2025-09-08T05:03:17.140Z",
   "progress": {
     "totalFiles": 92,
     "processedFiles": 80,
@@ -8,17 +8,9 @@
     "totalBatches": 10,
     "completedBatches": 8,
     "failedFiles": [
-      "Absence - Out Of Office.eml[1].eml",
       "How would you rate the support you received_.eml[1].eml",
-      "Jackery Exclusive Code + PPC Permission for Priceindanger.com.eml[1].eml",
-      "Jackery x easyfundraising Collaboration.eml[1].eml",
-      "Meet Up at CJU & Unlock Special Deals with DealNews!.eml[1].eml",
-      "Outstanding Balance - Second Reminder    [ ref_!00D800Khmy.!500Uj0eMg0C_ref ].eml[1].eml",
       "PACKAGES, MAILS AND MORE!.eml[1].eml",
-      "Partnership with your brand.eml[1].eml",
-      "ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital.eml[1].eml",
-      "Re_ ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital _ Follow Up.eml[1].eml",
-      "Storniert_ Documents for your DocuSign Signature.eml[1].eml"
+      "Partnership with your brand.eml[1].eml"
     ],
     "processedFileNames": [
       "Absence - Out Of Office.eml[1].eml",
@@ -102,14 +94,14 @@
       "Ticket Received - This Week Only_ SilkSilky Deals – Up to 70% Off!.eml[1].eml",
       "UGREEN 2025 Q3 Invoices Request _ Coupons.eml[1].eml"
     ],
-    "startTime": "2025-09-04T07:43:26.900Z",
-    "lastUpdateTime": "2025-09-04T08:03:11.919Z",
+    "startTime": "2025-09-08T04:40:32.876Z",
+    "lastUpdateTime": "2025-09-08T05:00:42.186Z",
     "status": "processing"
   },
   "results": [
     {
       "projectName": "Ugreen",
-      "partnerName": "Will Senesac",
+      "partnerName": "Digitaltrends",
       "partnerEmail": "wsenesac@digitaltrends.com",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "budget-commission",
@@ -120,11 +112,11 @@
       "emailFrom": "wsenesac@digitaltrends.com",
       "confidence": 0.825,
       "matchType": "ai_extracted",
-      "processingTime": 14007
+      "processingTime": 14055
     },
     {
       "projectName": "Ugreen",
-      "partnerName": "Katharina Hansen",
+      "partnerName": "Topcashback",
       "partnerEmail": "katharina.hansen@topcashback.com",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "screenshot-feedback",
@@ -135,11 +127,11 @@
       "emailFrom": "katharina.hansen@topcashback.com",
       "confidence": 0.825,
       "matchType": "ai_extracted",
-      "processingTime": 15580
+      "processingTime": 15731
     },
     {
-      "projectName": "Silksilky",
-      "partnerName": "Kim Lohrberg",
+      "projectName": "Ugreen",
+      "partnerName": "Fmtc Co",
       "partnerEmail": "kim.lohrberg@fmtc.co",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
@@ -150,11 +142,11 @@
       "emailFrom": "kim.lohrberg@fmtc.co",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14475
+      "processingTime": 15491
     },
     {
       "projectName": null,
-      "partnerName": "DoubleBlind Mag",
+      "partnerName": "Doubleblindmag",
       "partnerEmail": "sales@doubleblindmag.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -166,11 +158,11 @@
       "emailFrom": "sales@doubleblindmag.com",
       "confidence": 0.7,
       "matchType": "ai_extracted",
-      "processingTime": 15223
+      "processingTime": 16485
     },
     {
       "projectName": null,
-      "partnerName": "DoubleBlind Mag",
+      "partnerName": "Doubleblindmag",
       "partnerEmail": "sales@doubleblindmag.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -182,11 +174,11 @@
       "emailFrom": "sales@doubleblindmag.com",
       "confidence": 0.7,
       "matchType": "ai_extracted",
-      "processingTime": 13267
+      "processingTime": 14954
     },
     {
       "projectName": null,
-      "partnerName": "Propeller",
+      "partnerName": "Propeller La",
       "partnerEmail": "hello@propeller.la",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -198,7 +190,7 @@
       "emailFrom": "hello@propeller.la",
       "confidence": 0.75,
       "matchType": "ai_extracted",
-      "processingTime": 13626
+      "processingTime": 15986
     },
     {
       "projectName": "Silksilky",
@@ -213,7 +205,7 @@
       "emailFrom": "no-reply@awin.com",
       "confidence": 0.7874999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 15058
+      "processingTime": 16910
     },
     {
       "projectName": "Silksilky",
@@ -228,11 +220,11 @@
       "emailFrom": "no-reply@awin.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 16479
+      "processingTime": 15316
     },
     {
-      "projectName": "Jackery DE",
-      "partnerName": "Michael Blum",
+      "projectName": "Jackery",
+      "partnerName": "Upsellit",
       "partnerEmail": "mblum@upsellit.com",
       "communicationStage": "partnership-confirmed",
       "communicationSubStage": "creative-upload",
@@ -241,13 +233,13 @@
       "emailSubject": "Re: [URGENT] Upsellit Launching Pause",
       "emailDate": "2025-08-26T19:20:01.000Z",
       "emailFrom": "mblum@upsellit.com",
-      "confidence": 0.8125,
+      "confidence": 0.7625,
       "matchType": "ai_extracted",
-      "processingTime": 16454
+      "processingTime": 14841
     },
     {
       "projectName": "Ugreen",
-      "partnerName": "Support",
+      "partnerName": "Capitaloneshopping",
       "partnerEmail": "partners@capitaloneshopping.com",
       "communicationStage": "after-service",
       "communicationSubStage": null,
@@ -258,7 +250,7 @@
       "emailFrom": "partners@capitaloneshopping.com",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 12835
+      "processingTime": 14176
     }
   ],
   "config": {

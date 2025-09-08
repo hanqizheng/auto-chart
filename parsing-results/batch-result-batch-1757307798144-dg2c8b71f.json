@@ -1,6 +1,6 @@
 {
-  "batchId": "batch-1756973140939-kmcte4szu",
-  "timestamp": "2025-09-04T08:06:09.765Z",
+  "batchId": "batch-1757307798144-dg2c8b71f",
+  "timestamp": "2025-09-08T05:03:50.534Z",
   "progress": {
     "totalFiles": 92,
     "processedFiles": 90,
@@ -8,17 +8,9 @@
     "totalBatches": 10,
     "completedBatches": 9,
     "failedFiles": [
-      "Absence - Out Of Office.eml[1].eml",
       "How would you rate the support you received_.eml[1].eml",
-      "Jackery Exclusive Code + PPC Permission for Priceindanger.com.eml[1].eml",
-      "Jackery x easyfundraising Collaboration.eml[1].eml",
-      "Meet Up at CJU & Unlock Special Deals with DealNews!.eml[1].eml",
-      "Outstanding Balance - Second Reminder    [ ref_!00D800Khmy.!500Uj0eMg0C_ref ].eml[1].eml",
       "PACKAGES, MAILS AND MORE!.eml[1].eml",
       "Partnership with your brand.eml[1].eml",
-      "ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital.eml[1].eml",
-      "Re_ ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital _ Follow Up.eml[1].eml",
-      "Storniert_ Documents for your DocuSign Signature.eml[1].eml",
       "[Message received!].eml[1][1].eml",
       "[Message received!].eml[2].eml",
       "[Request received].eml[1].eml"
@@ -115,14 +107,14 @@
       "[URGENT] Upsellit Launching Pause.eml[1].eml",
       "[[External Sender] UGREEN DH4300 Plus Relaunch Campaign – Limited-Time 20% Off!] Share your feedback with us.eml[1].eml"
     ],
-    "startTime": "2025-09-04T07:43:26.900Z",
-    "lastUpdateTime": "2025-09-04T08:05:39.938Z",
+    "startTime": "2025-09-08T04:40:32.876Z",
+    "lastUpdateTime": "2025-09-08T05:03:17.142Z",
     "status": "processing"
   },
   "results": [
     {
       "projectName": "Silksilky",
-      "partnerName": "Merchant Support",
+      "partnerName": "Igive",
       "partnerEmail": "merchantnewsletters@igive.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -133,7 +125,7 @@
       "emailFrom": "merchantnewsletters@igive.com",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 14351
+      "processingTime": 14965
     },
     {
       "projectName": "Silksilky",
@@ -148,7 +140,7 @@
       "emailFrom": "rita@affiliate.bluefocus.com",
       "confidence": 0.7749999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14472
+      "processingTime": 17419
     }
   ],
   "config": {

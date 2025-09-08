@@ -1,6 +1,6 @@
 {
-  "batchId": "batch-1756972258111-conzbxs06",
-  "timestamp": "2025-09-04T07:53:28.079Z",
+  "batchId": "batch-1757306884756-m0hkcj0ag",
+  "timestamp": "2025-09-08T04:50:36.584Z",
   "progress": {
     "totalFiles": 92,
     "processedFiles": 30,
@@ -8,15 +8,9 @@
     "totalBatches": 10,
     "completedBatches": 3,
     "failedFiles": [
-      "Absence - Out Of Office.eml[1].eml",
       "How would you rate the support you received_.eml[1].eml",
-      "Jackery Exclusive Code + PPC Permission for Priceindanger.com.eml[1].eml",
-      "Jackery x easyfundraising Collaboration.eml[1].eml",
-      "Meet Up at CJU & Unlock Special Deals with DealNews!.eml[1].eml",
-      "Outstanding Balance - Second Reminder    [ ref_!00D800Khmy.!500Uj0eMg0C_ref ].eml[1].eml",
       "PACKAGES, MAILS AND MORE!.eml[1].eml",
-      "Partnership with your brand.eml[1].eml",
-      "ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital.eml[1].eml"
+      "Partnership with your brand.eml[1].eml"
     ],
     "processedFileNames": [
       "Absence - Out Of Office.eml[1].eml",
@@ -50,30 +44,29 @@
       "Rakuten Creative Request _ Category Page_ Carousel Banner, 9_1_2025 to 9_7_2025 _ Ugreen.eml[1].eml",
       "Re_ GOVX Partner Support - SilkSilky Limited-Time Deals_ Save Up to 64% Off!.eml[1].eml"
     ],
-    "startTime": "2025-09-04T07:43:26.900Z",
-    "lastUpdateTime": "2025-09-04T07:50:57.108Z",
+    "startTime": "2025-09-08T04:40:32.876Z",
+    "lastUpdateTime": "2025-09-08T04:48:03.754Z",
     "status": "processing"
   },
   "results": [
     {
-      "projectName": null,
-      "partnerName": "Sahejdeep Choudhary",
+      "projectName": "Silksilky",
+      "partnerName": "Nomadzdigital",
       "partnerEmail": "sahejdeep.choudhary@nomadzdigital.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
-      "success": false,
-      "errorReason": "项目名称未识别",
+      "success": true,
       "filename": "Re_ ROI-Driven Strategic Partnership _ Silk Silky X Nomadz Digital _ Follow Up.eml[1].eml",
       "emailSubject": "Re: ROI-Driven Strategic Partnership | Silk Silky X Nomadz Digital | Follow Up",
       "emailDate": "2025-08-22T18:12:16.000Z",
       "emailFrom": "sahejdeep.choudhary@nomadzdigital.com",
-      "confidence": 0.7333333333333334,
+      "confidence": 0.75,
       "matchType": "ai_extracted",
-      "processingTime": 16880
+      "processingTime": 16211
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Barry Liang",
+      "partnerName": "Hicapitalize",
       "partnerEmail": "barry@hicapitalize.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -84,11 +77,11 @@
       "emailFrom": "barry@hicapitalize.com",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 14567
+      "processingTime": 15385
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Anne Reyes",
+      "partnerName": "Adswapper Co",
       "partnerEmail": "gieanner@adswapper.co",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -99,11 +92,11 @@
       "emailFrom": "gieanner@adswapper.co",
       "confidence": 0.8166666666666665,
       "matchType": "ai_extracted",
-      "processingTime": 14425
+      "processingTime": 14976
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Rachel Timmerman",
+      "partnerName": "Theanalyticalmommy",
       "partnerEmail": "rachel@theanalyticalmommy.com",
       "communicationStage": "proposal-discussion",
       "communicationSubStage": "price-negotiation",
@@ -114,11 +107,11 @@
       "emailFrom": "rachel@theanalyticalmommy.com",
       "confidence": 0.8125,
       "matchType": "ai_extracted",
-      "processingTime": 14195
+      "processingTime": 15071
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Paola Gammardella",
+      "partnerName": "Widilo",
       "partnerEmail": "paola@widilo.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "mediakit-request",
@@ -129,11 +122,11 @@
       "emailFrom": "paola@widilo.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 15050
+      "processingTime": 15833
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Merchant Ops Account Management (MOAM)",
+      "partnerName": "Joinhoney",
       "partnerEmail": "honeypartnersupport@joinhoney.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": null,
@@ -144,11 +137,11 @@
       "emailFrom": "honeypartnersupport@joinhoney.com",
       "confidence": 0.7999999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 15014
+      "processingTime": 14484
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Jannah Anderson",
+      "partnerName": "Junkeemedia",
       "partnerEmail": "jannah.anderson@junkeemedia.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "mediakit-request",
@@ -159,11 +152,11 @@
       "emailFrom": "rita@affiliate.bluefocus.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 16266
+      "processingTime": 14040
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "The Lowdown",
+      "partnerName": "Thelowdown",
       "partnerEmail": "hello@thelowdown.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
@@ -174,11 +167,11 @@
       "emailFrom": "hello@thelowdown.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14617
+      "processingTime": 14655
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Shauna Cortazzo",
+      "partnerName": "Dealnews",
       "partnerEmail": "scortazzo@dealnews.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "account-invitation",
@@ -189,11 +182,11 @@
       "emailFrom": "scortazzo@dealnews.com",
       "confidence": 0.8374999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14108
+      "processingTime": 15807
     },
     {
       "projectName": "Silksilky",
-      "partnerName": "Ariadna Torné",
+      "partnerName": "Kosmos Marketing",
       "partnerEmail": "atorne@kosmos-marketing.com",
       "communicationStage": "initial-inquiry",
       "communicationSubStage": "mediakit-request",
@@ -202,9 +195,9 @@
       "emailSubject": "Re: SilkSilky Limited-Time Deals: Save Up to 64% Off!",
       "emailDate": "2025-08-22T10:33:29.000Z",
       "emailFrom": "atorne@kosmos-marketing.com",
-      "confidence": 0.7749999999999999,
+      "confidence": 0.7874999999999999,
       "matchType": "ai_extracted",
-      "processingTime": 14833
+      "processingTime": 15362
     }
   ],
   "config": {

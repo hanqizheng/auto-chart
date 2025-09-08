@@ -1,9 +1,16 @@
 {
   "projects": [
     {
+      "id": "90",
+      "name": "Jackery",
+      "aliases": ["jackery"],
+      "description": "/",
+      "status": "active"
+    },
+    {
       "id": "89",
       "name": "Silksilky",
-      "aliases": ["silksilky"],
+      "aliases": ["silksilky", "Silk Silky"],
       "description": "Silksilky联盟代运营",
       "status": "active"
     },
@@ -213,7 +220,7 @@
     {
       "id": "62",
       "name": "Ugreen",
-      "aliases": ["ugreen"],
+      "aliases": ["ugreen", "UGREEN", "Ugreen"],
       "description": "Ugreen US&DE AMZ、Ugreen DTC的项目邀约和数据分析",
       "status": "active"
     },
