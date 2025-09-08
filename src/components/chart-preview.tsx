@@ -11,7 +11,7 @@ import {
   RotateCcw,
   Share,
 } from "lucide-react";
-import { useChartExport } from "@/hooks/use-chart-export";
+import { useSimpleExport } from "@/hooks/use-simple-export";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
@@ -35,19 +35,14 @@ interface ChartPreviewProps {
 export function ChartPreview({ chartData, onExport, onRefresh }: ChartPreviewProps) {
   const [selectedType, setSelectedType] = useState<ChartType>(CHART_TYPES.BAR);
   const chartContainerRef = useRef<HTMLDivElement>(null);
-  const { exportChart, isExporting, error } = useChartExport();
+  const { exportChart, isExporting, error } = useSimpleExport();
   const t = useTranslations();
 
   const handleExport = async () => {
     if (chartContainerRef.current) {
       try {
-        const filename = chartData?.title?.replace(/[^a-z0-9]/gi, "_") || "chart";
-        await exportChart(chartContainerRef.current, {
-          filename,
-          format: "png",
-          scale: 2, // 高清导出
-          backgroundColor: "#ffffff",
-        });
+        const filename = `${chartData?.title?.replace(/[^a-z0-9]/gi, "_") || "chart"}.png`;
+        await exportChart(chartContainerRef.current, filename);
       } catch (error) {
         console.error("Export failed:", error);
       }

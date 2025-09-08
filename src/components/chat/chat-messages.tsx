@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Bot, User, Loader2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { ChatMessage } from "@/types/chat";
+import { MessageAttachments } from "@/components/chat/message-attachment";
 
 interface ChatMessagesProps {
   messages: ChatMessage[];
@@ -62,21 +63,46 @@ export function ChatMessages({ messages, isLoading = false }: ChatMessagesProps)
             {/* Message Content */}
             <div className="flex flex-col space-y-1">
               <Card
-                className={`p-3 ${
+                className={`${
                   message.type === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
+                } ${
+                  // 如果只有附件没有文本，减少内边距
+                  (!message.content || message.content.trim() === "") &&
+                  message.files &&
+                  message.files.length > 0
+                    ? "p-2"
+                    : "p-3"
                 }`}
               >
-                <div className="text-sm whitespace-pre-wrap">
-                  {message.content}
+                {/* 文本内容 */}
+                {message.content && message.content.trim() !== "" && (
+                  <div className="text-sm whitespace-pre-wrap">{message.content}</div>
+                )}
 
-                  {/* Loading indicator for AI messages */}
-                  {message.isLoading && (
-                    <div className="mt-2 flex items-center">
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      <span className="text-xs opacity-70">{t("chat.aiThinking")}</span>
-                    </div>
-                  )}
-                </div>
+                {/* 附件显示 - 永远在底部 */}
+                {message.files && message.files.length > 0 && (
+                  <div className={message.content && message.content.trim() !== "" ? "mt-2" : ""}>
+                    <MessageAttachments
+                      files={message.files}
+                      isUserMessage={message.type === "user"}
+                    />
+                  </div>
+                )}
+
+                {/* Loading indicator for AI messages */}
+                {message.isLoading && (
+                  <div
+                    className={`flex items-center ${
+                      (message.content && message.content.trim() !== "") ||
+                      (message.files && message.files.length > 0)
+                        ? "mt-2"
+                        : ""
+                    }`}
+                  >
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <span className="text-xs opacity-70">{t("chat.aiThinking")}</span>
+                  </div>
+                )}
               </Card>
 
               {/* Timestamp */}
