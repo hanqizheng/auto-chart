@@ -2,6 +2,8 @@
 export * from "./chart";
 export * from "./data";
 export * from "./agent";
+export * from "./processing";
+export * from "./message";
 
 // 应用全局常量
 export const APP_CONFIG = {

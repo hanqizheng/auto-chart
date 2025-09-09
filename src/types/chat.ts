@@ -18,6 +18,7 @@ export interface UploadedFile {
   type: string;
   url?: string;
   data?: any;
+  uploadedAt?: Date;
 }
 
 export interface ChatState {

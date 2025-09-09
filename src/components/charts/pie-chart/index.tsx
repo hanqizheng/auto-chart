@@ -192,53 +192,47 @@ export function BeautifulPieChart({
           <div className="text-muted-foreground text-sm font-normal">饼图</div>
         </CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
-
-
       </CardHeader>
 
       <CardContent>
         <ChartContainer config={config}>
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                innerRadius={innerRadius}
-                outerRadius={outerRadius}
-                paddingAngle={PIE_CHART_DEFAULTS.paddingAngle}
-                dataKey="value"
-                startAngle={PIE_CHART_DEFAULTS.startAngle}
-                endAngle={PIE_CHART_DEFAULTS.endAngle}
-                label={
-                  showPercentage ? entry => formatPercentageLabel(entry, analysis.total) : undefined
-                }
-                labelLine={PIE_CHART_DEFAULTS.showConnectorLine}
-              >
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              {showLegend && (
-                <Legend
-                  verticalAlign="bottom"
-                  height={36}
-                  formatter={(value, entry) => (
-                    <span className="text-sm">
-                      {value} (
-                      {entry?.payload
-                        ? ((entry.payload.value / analysis.total) * 100).toFixed(1)
-                        : "0"}
-                      %)
-                    </span>
-                  )}
-                />
-              )}
-            </PieChart>
-          </ResponsiveContainer>
+          <PieChart width={600} height={400}>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              innerRadius={innerRadius}
+              outerRadius={outerRadius}
+              paddingAngle={PIE_CHART_DEFAULTS.paddingAngle}
+              dataKey="value"
+              startAngle={PIE_CHART_DEFAULTS.startAngle}
+              endAngle={PIE_CHART_DEFAULTS.endAngle}
+              label={
+                showPercentage ? entry => formatPercentageLabel(entry, analysis.total) : undefined
+              }
+              labelLine={PIE_CHART_DEFAULTS.showConnectorLine}
+            >
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+            {showLegend && (
+              <Legend
+                verticalAlign="bottom"
+                height={36}
+                formatter={(value, entry) => (
+                  <span className="text-sm">
+                    {value} (
+                    {entry?.payload
+                      ? ((entry.payload.value / analysis.total) * 100).toFixed(1)
+                      : "0"}
+                    %)
+                  </span>
+                )}
+              />
+            )}
+          </PieChart>
         </ChartContainer>
-
-
       </CardContent>
     </Card>
   );

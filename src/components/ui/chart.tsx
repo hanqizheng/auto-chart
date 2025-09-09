@@ -66,7 +66,12 @@ function ChartContainer({
 }
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(([, config]) => config.theme || config.color);
+  // Guard against undefined/null config
+  if (!config || typeof config !== "object") {
+    return null;
+  }
+
+  const colorConfig = Object.entries(config).filter(([, config]) => config?.theme || config?.color);
 
   if (!colorConfig.length) {
     return null;
