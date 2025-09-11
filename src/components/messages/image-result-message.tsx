@@ -169,7 +169,14 @@ export function ImageResultMessage({
         <CardContent className="p-0">
           {/* 图片容器 */}
           <div className="relative bg-gray-50 dark:bg-gray-900">
-            {imageError ? (
+            {!imageUrl ? (
+              <div className="bg-muted flex aspect-video items-center justify-center">
+                <div className="space-y-2 text-center">
+                  <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
+                  <p className="text-muted-foreground text-sm">图片生成中...</p>
+                </div>
+              </div>
+            ) : imageError ? (
               <div className="bg-muted flex aspect-video items-center justify-center">
                 <div className="space-y-2 text-center">
                   <BarChart3 className="text-muted-foreground mx-auto h-12 w-12" />
@@ -177,34 +184,36 @@ export function ImageResultMessage({
                 </div>
               </div>
             ) : (
-              <img
-                src={imageUrl}
-                alt={metadata.title || "生成的图表"}
-                className={cn(
-                  "h-auto max-h-[400px] w-full cursor-pointer object-contain transition-opacity",
-                  isImageLoading ? "opacity-0" : "opacity-100"
+              <>
+                <img
+                  src={imageUrl}
+                  alt={metadata.title || "生成的图表"}
+                  className={cn(
+                    "h-auto max-h-[400px] w-full cursor-pointer object-contain transition-opacity",
+                    isImageLoading ? "opacity-0" : "opacity-100"
+                  )}
+                  onLoad={() => setIsImageLoading(false)}
+                  onError={() => {
+                    setImageError(true);
+                    setIsImageLoading(false);
+                  }}
+                  onClick={onImageClick}
+                />
+                
+                {/* 图片加载状态（仅当有URL但图片未加载完成时） */}
+                {isImageLoading && (
+                  <div className="bg-muted/80 absolute inset-0 flex items-center justify-center backdrop-blur-sm">
+                    <div className="space-y-2 text-center">
+                      <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
+                      <p className="text-muted-foreground text-sm">图片加载中...</p>
+                    </div>
+                  </div>
                 )}
-                onLoad={() => setIsImageLoading(false)}
-                onError={() => {
-                  setImageError(true);
-                  setIsImageLoading(false);
-                }}
-                onClick={onImageClick}
-              />
-            )}
-
-            {/* 加载状态 */}
-            {isImageLoading && (
-              <div className="bg-muted absolute inset-0 flex animate-pulse items-center justify-center">
-                <div className="space-y-2 text-center">
-                  <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
-                  <p className="text-muted-foreground text-sm">图片加载中...</p>
-                </div>
-              </div>
+              </>
             )}
 
             {/* 图片操作悬浮按钮 */}
-            {!isImageLoading && !imageError && (
+            {imageUrl && !isImageLoading && !imageError && (
               <div className="absolute top-2 right-2 opacity-0 transition-opacity group-hover:opacity-100">
                 <Button
                   variant="outline"

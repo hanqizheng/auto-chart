@@ -6,6 +6,7 @@
 import { EXPORT_FORMATS } from "@/constants";
 import { UploadStatus } from "./data";
 import { ChartType } from "./chart";
+import { SerializableChatSession } from "./message";
 
 /**
  * 本地图片信息
@@ -21,6 +22,11 @@ export interface LocalImageInfo {
     height: number;
   };
   createdAt: Date;
+
+  // 存储相关字段
+  storageType?: 'blob' | 'indexeddb' | 'demo_static';
+  storageKey?: string; // IndexedDB 存储键
+  staticPath?: string; // 静态文件路径（Demo用）
 
   // 未来扩展字段
   cloudUrl?: string;
@@ -80,4 +86,34 @@ export interface StorageService {
   // 未来云存储方法
   uploadToCloud?(imageInfo: LocalImageInfo): Promise<LocalImageInfo>;
   downloadFromCloud?(cloudUrl: string): Promise<Blob>;
+}
+
+/**
+ * 会话存储服务接口
+ */
+export interface SessionStorageService {
+  // 会话管理
+  saveSession(sessionId: string, sessionData: any): Promise<void>;
+  getSession(sessionId: string): Promise<any | null>;
+  deleteSession(sessionId: string): Promise<boolean>;
+  listSessions(): Promise<string[]>;
+  
+  // 文件存储（IndexedDB）
+  saveFile(key: string, file: File | Blob): Promise<void>;
+  getFile(key: string): Promise<File | Blob | null>;
+  deleteFile(key: string): Promise<boolean>;
+  
+  // 图片存储
+  saveChart(key: string, imageBlob: Blob): Promise<void>;
+  getChart(key: string): Promise<Blob | null>;
+  deleteChart(key: string): Promise<boolean>;
+  
+  // 数据清理
+  clearExpiredSessions(maxAge: number): Promise<number>;
+  getStorageStats(): Promise<{
+    sessionsCount: number;
+    filesCount: number;
+    chartsCount: number;
+    totalSize: number;
+  }>;
 }

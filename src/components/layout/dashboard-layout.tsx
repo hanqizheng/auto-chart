@@ -24,6 +24,13 @@ export function DashboardLayout() {
   };
 
   /**
+   * 处理图表更新事件（如导出完成后）
+   */
+  const handleChartUpdated = (updatedChart: ChartResultContent) => {
+    setCurrentChart(updatedChart);
+  };
+
+  /**
    * 处理关闭图表显示
    */
   const handleCloseChart = () => {
@@ -58,7 +65,11 @@ export function DashboardLayout() {
         {/* 图表展示区域 - 滑出动画 */}
         {isChartVisible && (
           <div className="bg-muted/10 border-border/50 animate-slide-in w-1/2 border-l">
-            <ChartDisplayArea chart={currentChart} onClose={handleCloseChart} />
+            <ChartDisplayArea 
+              chart={currentChart} 
+              onClose={handleCloseChart}
+              onChartUpdated={handleChartUpdated}
+            />
           </div>
         )}
       </div>

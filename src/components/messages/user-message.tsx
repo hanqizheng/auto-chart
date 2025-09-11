@@ -8,6 +8,38 @@ import { File, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+/**
+ * 根据文件名推断MIME类型
+ */
+function getFileTypeFromName(filename: string): string {
+  const extension = filename.toLowerCase().split('.').pop();
+  
+  switch (extension) {
+    case 'xlsx':
+    case 'xls':
+      return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    case 'csv':
+      return 'text/csv';
+    case 'json':
+      return 'application/json';
+    case 'txt':
+      return 'text/plain';
+    case 'pdf':
+      return 'application/pdf';
+    case 'png':
+      return 'image/png';
+    case 'jpg':
+    case 'jpeg':
+      return 'image/jpeg';
+    case 'gif':
+      return 'image/gif';
+    case 'webp':
+      return 'image/webp';
+    default:
+      return 'application/octet-stream';
+  }
+}
+
 interface UserMessageProps {
   message: UserMessageType;
   className?: string;
@@ -28,7 +60,7 @@ export function UserMessage({
       id: attachment.id,
       name: attachment.name,
       size: attachment.size,
-      type: attachment.file.type || "application/octet-stream",
+      type: attachment.file?.type || getFileTypeFromName(attachment.name),
     })) || [];
 
   return (

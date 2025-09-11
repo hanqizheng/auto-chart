@@ -1,21 +1,100 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { X, Download, Share2, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ChartResultContent } from "@/types";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
 import { cn } from "@/lib/utils";
+import { AutoExportService } from "@/services/auto-export-service";
 
 interface ChartDisplayAreaProps {
   chart: ChartResultContent | null;
   onClose: () => void;
+  onChartUpdated?: (updatedChart: ChartResultContent) => void;
 }
 
 /**
  * 简化的图表展示区域组件
  * 仅用于展示生成的图表，无配置功能
  */
-export function ChartDisplayArea({ chart, onClose }: ChartDisplayAreaProps) {
+export function ChartDisplayArea({ chart, onClose, onChartUpdated }: ChartDisplayAreaProps) {
+  const chartRef = useRef<HTMLDivElement>(null);
+  const exportServiceRef = useRef<AutoExportService | null>(null);
+  const [isAutoExporting, setIsAutoExporting] = useState(false);
+  const [hasAutoExported, setHasAutoExported] = useState(false);
+
+  // 初始化导出服务
+  useEffect(() => {
+    if (!exportServiceRef.current) {
+      exportServiceRef.current = new AutoExportService();
+    }
+  }, []);
+
+  // 自动导出图表
+  useEffect(() => {
+    if (chart && chartRef.current && !hasAutoExported && !isAutoExporting) {
+      const autoExportChart = async () => {
+        try {
+          setIsAutoExporting(true);
+          setHasAutoExported(true);
+          
+          console.log("🎯 [ChartDisplay] 开始自动导出图表:", chart.title);
+          
+          // 等待一小段时间确保图表完全渲染
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+          if (!exportServiceRef.current || !chartRef.current) {
+            throw new Error("导出服务或图表元素不可用");
+          }
+
+          // 生成文件名
+          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+          const filename = `${chart.title}_${timestamp}.png`;
+          
+          // 执行导出
+          const blob = await exportServiceRef.current.exportChart(chartRef.current, filename);
+          
+          // 创建本地 URL
+          const localUrl = URL.createObjectURL(blob);
+          
+          // 更新图表信息
+          const updatedChart: ChartResultContent = {
+            ...chart,
+            imageInfo: {
+              filename,
+              localBlobUrl: localUrl,
+              size: blob.size,
+              format: 'png',
+              dimensions: { width: 800, height: 600 },
+              createdAt: new Date(),
+            },
+          };
+          
+          console.log("✅ [ChartDisplay] 自动导出完成:", {
+            filename,
+            size: blob.size,
+            url: localUrl,
+          });
+          
+          // 通知父组件图表已更新
+          onChartUpdated?.(updatedChart);
+          
+        } catch (error) {
+          console.error("❌ [ChartDisplay] 自动导出失败:", error);
+        } finally {
+          setIsAutoExporting(false);
+        }
+      };
+
+      autoExportChart();
+    }
+  }, [chart, hasAutoExported, isAutoExporting, onChartUpdated]);
+
+  // 重置导出状态当图表变化时
+  useEffect(() => {
+    setHasAutoExported(false);
+  }, [chart?.title, chart?.chartType]);
   if (!chart) {
     return (
       <div className="flex h-full items-center justify-center p-8">
@@ -43,14 +122,38 @@ export function ChartDisplayArea({ chart, onClose }: ChartDisplayAreaProps) {
   }
 
   /**
-   * 处理图表导出
+   * 处理手动图表导出
    */
   const handleExport = async () => {
+    if (!chart || !chartRef.current || !exportServiceRef.current) return;
+    
     try {
-      // TODO: 实现图表导出功能
-      console.log("导出图表:", chart.title);
+      console.log("🎯 [ChartDisplay] 开始手动导出图表:", chart.title);
+      
+      // 生成文件名
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const filename = `${chart.title}_${timestamp}.png`;
+      
+      // 执行导出
+      const blob = await exportServiceRef.current.exportChart(chartRef.current, filename);
+      
+      // 手动下载
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.style.display = "none";
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // 清理 URL 对象
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+      
+      console.log("✅ [ChartDisplay] 手动导出完成:", filename);
     } catch (error) {
-      console.error("导出失败:", error);
+      console.error("❌ [ChartDisplay] 手动导出失败:", error);
     }
   };
 
@@ -95,10 +198,13 @@ export function ChartDisplayArea({ chart, onClose }: ChartDisplayAreaProps) {
             variant="outline"
             size="sm"
             onClick={handleExport}
+            disabled={isAutoExporting}
             className="flex items-center space-x-1"
           >
-            <Download className="h-4 w-4" />
-            <span className="hidden sm:inline">导出</span>
+            <Download className={cn("h-4 w-4", isAutoExporting && "animate-pulse")} />
+            <span className="hidden sm:inline">
+              {isAutoExporting ? "导出中..." : hasAutoExported ? "再次导出" : "导出"}
+            </span>
           </Button>
 
           {/* 分享按钮 */}
@@ -138,7 +244,10 @@ export function ChartDisplayArea({ chart, onClose }: ChartDisplayAreaProps) {
       {/* 图表展示区域 */}
       <div className="flex-1 overflow-auto">
         <div className="p-6">
-          <div className="bg-background border-border/50 w-full rounded-lg border p-4">
+          <div 
+            ref={chartRef}
+            className="bg-background border-border/50 w-full rounded-lg border p-4"
+          >
             <EnhancedChart
               type={chart.chartType}
               data={chart.chartData}

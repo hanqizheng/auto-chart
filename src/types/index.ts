@@ -51,7 +51,14 @@ export type {
   ChartResultContent,
   MessageContent,
   FileAttachment,
+  SerializableFileAttachment,
   SingleChatSession,
+  SerializableChatSession,
+  SerializableChatMessage,
+  AutoTriggerConfig,
+  DemoReplayConfig,
+  DemoReplayStep,
+  SessionStorageInfo,
   MessageListState,
   MessageActions,
   MessageHelpers,
@@ -86,6 +93,7 @@ export type {
   ImageMetadata,
   StorageConfig,
   StorageService,
+  SessionStorageService,
 } from "./storage";
 
 // 通用类型

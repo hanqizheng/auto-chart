@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { ChartResultContent, ChatMessage, SingleChatSession, ProcessingStep } from "@/types";
 import { NewChatInput } from "@/components/chat/new-chat-input";
@@ -9,6 +9,9 @@ import { useChatSession } from "@/hooks/use-chat-session";
 import { AutoChartService } from "@/services/auto-chart-service";
 import { PROCESSING_STEPS } from "@/constants/processing";
 import { ProcessingFlow } from "@/types";
+import { useSecurityValidation } from "@/lib/security";
+import { useToast } from "@/components/ui/use-toast";
+import { autoTriggerHandler } from "@/lib/auto-trigger-handler";
 
 interface CenteredChatPanelProps {
   onChartGenerated: (chart: ChartResultContent) => void;
@@ -35,10 +38,76 @@ export function CenteredChatPanel({
     toggleProcessingExpanded,
     clearMessages,
     setLoadingState,
+    loadSessionFromData,
+    handleAutoTrigger,
+    startDemoReplay,
+    generateAndUpdateTitle,
   } = useChatSession();
 
   // 创建 AutoChartService 实例
   const [autoChartService] = useState(() => new AutoChartService());
+  
+  // 安全验证hook
+  const { validateRequest, resetSession } = useSecurityValidation();
+  const { toast } = useToast();
+  
+  // 标记是否已经处理过首页输入，避免重复处理
+  const hasProcessedHomepageInput = useRef(false);
+  // 存储loadSessionFromData函数的引用
+  const loadSessionRef = useRef(loadSessionFromData);
+  loadSessionRef.current = loadSessionFromData;
+
+  // 检查并处理自动触发的会话（首页跳转、Demo等）
+  useEffect(() => {
+    if (hasProcessedHomepageInput.current) return;
+    
+    const processAutoTrigger = async () => {
+      try {
+        console.log("🔍 [CenteredChatPanel] 检查自动触发会话");
+        
+        // 立即设置标志防止重复执行
+        hasProcessedHomepageInput.current = true;
+        
+        const result = await handleAutoTrigger();
+        
+        if (result.sessionRestored) {
+          console.log("✅ [CenteredChatPanel] 会话恢复成功");
+          
+          // 检查是否有图表结果需要显示
+          if (result.chartResult) {
+            console.log("📊 [CenteredChatPanel] 自动触发生成了图表，触发显示:", result.chartResult.title);
+            onChartGenerated(result.chartResult);
+          }
+          
+          // 如果有Demo重放配置，开始重放
+          if (session._demoReplay?.enabled) {
+            console.log("🎬 [CenteredChatPanel] 开始Demo重放");
+            setTimeout(() => {
+              startDemoReplay();
+            }, 1000); // 1秒延迟开始重放
+          }
+          
+          // 如果没有标题，生成标题
+          if (!session.title && session.messages.length > 0) {
+            setTimeout(() => {
+              generateAndUpdateTitle();
+            }, 2000);
+          }
+        } else if (result.error) {
+          console.error("❌ [CenteredChatPanel] 自动触发失败:", result.error);
+          toast({
+            title: "⚠️ 会话恢复失败",
+            description: "无法恢复之前的会话，将创建新会话",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error("❌ [CenteredChatPanel] 自动触发处理失败:", error);
+      }
+    };
+    
+    processAutoTrigger();
+  }, []); // 移除会在自动触发过程中变化的依赖，只在组件挂载时执行一次
 
   /**
    * 处理用户消息提交
@@ -46,6 +115,52 @@ export function CenteredChatPanel({
   const handleMessageSubmit = async (text: string, files?: File[]) => {
     try {
       setLoadingState(true);
+
+      // 0. 安全验证 - 将文件转换为FileAttachment格式进行验证
+      const fileAttachments = files?.map(file => ({
+        id: `${Date.now()}_${Math.random()}`,
+        name: file.name,
+        size: file.size,
+        type: getFileAttachmentType(file),
+        file: file,
+        uploadedAt: new Date(),
+      })) || [];
+
+      console.log("🔐 [Security] 开始安全验证:", { 
+        messageLength: text.length, 
+        fileCount: fileAttachments.length 
+      });
+
+      const securityResult = await validateRequest(text, fileAttachments);
+      
+      if (!securityResult.isAllowed) {
+        setLoadingState(false);
+        
+        // 显示安全限制提示
+        let toastMessage = securityResult.reason || '请求被安全系统阻止';
+        let toastDescription = '';
+        
+        if (securityResult.retryAfter) {
+          const minutes = Math.ceil(securityResult.retryAfter / 60);
+          toastDescription = `请等待 ${minutes} 分钟后重试`;
+        }
+        
+        if (securityResult.requiresCaptcha) {
+          toastDescription = '检测到异常活动，建议稍后再试或联系支持';
+        }
+
+        toast({
+          title: "🔒 安全限制",
+          description: `${toastMessage}${toastDescription ? '\n' + toastDescription : ''}`,
+          variant: "destructive",
+          duration: 5000,
+        });
+
+        console.warn("🚨 [Security] 请求被阻止:", securityResult);
+        return;
+      }
+
+      console.log("✅ [Security] 安全验证通过");
 
       // 1. 添加用户消息
       const userMessageId = addUserMessage(text, files);
@@ -203,4 +318,29 @@ function CenteredEmptyState() {
       </div>
     </div>
   );
+}
+
+/**
+ * 根据文件确定附件类型
+ */
+function getFileAttachmentType(file: File): 'excel' | 'csv' | 'json' | 'image' {
+  const extension = file.name.toLowerCase().split(".").pop();
+
+  switch (extension) {
+    case "xlsx":
+    case "xls":
+      return "excel";
+    case "csv":
+      return "csv";
+    case "json":
+      return "json";
+    case "png":
+    case "jpg":
+    case "jpeg":
+    case "gif":
+    case "webp":
+      return "image";
+    default:
+      return "excel"; // 默认类型
+  }
 }
