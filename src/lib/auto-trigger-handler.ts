@@ -414,6 +414,7 @@ class AutoTriggerHandler {
    */
   async executeAutoProcessing(
     session: SingleChatSession,
+    processingMessageId: string,
     onProgressUpdate: (messageId: string, updates: Partial<ProcessingMessageContent>) => void,
     onChartResult: (result: ChartResultContent) => void
   ): Promise<boolean> {
@@ -433,11 +434,7 @@ class AutoTriggerHandler {
         throw new Error("找不到触发消息");
       }
 
-      // 构造处理步骤用于UI更新
-      const processingMessageId = session.messages[session.messages.length - 1]?.id;
-      if (!processingMessageId) {
-        throw new Error("找不到处理消息ID");
-      }
+      console.log("📋 [AutoTrigger] 使用处理消息ID:", processingMessageId);
 
       // 初始化处理流程
       const flow = {
@@ -454,7 +451,7 @@ class AutoTriggerHandler {
         id: `step_1_${Date.now()}`,
         type: 'data_analysis',
         title: '分析输入数据',
-        status: 'in_progress',
+        status: 'running',
         startTime: new Date(),
       });
       flow.currentStepIndex = 0;
@@ -484,9 +481,9 @@ class AutoTriggerHandler {
       console.log("🎯 [AutoTrigger] 步骤2: 意图分析");
       flow.steps.push({
         id: `step_2_${Date.now()}`,
-        type: 'intent_analysis',
+        type: 'chart_type_detection',
         title: '分析图表类型需求',
-        status: 'in_progress',
+        status: 'running',
         startTime: new Date(),
       });
       flow.currentStepIndex = 1;
@@ -508,7 +505,7 @@ class AutoTriggerHandler {
         id: `step_3_${Date.now()}`,
         type: 'chart_generation',
         title: '生成图表配置',
-        status: 'in_progress',
+        status: 'running',
         startTime: new Date(),
       });
       flow.currentStepIndex = 2;
@@ -546,7 +543,7 @@ class AutoTriggerHandler {
         id: `step_4_${Date.now()}`,
         type: 'image_export',
         title: '导出图表图片',
-        status: 'in_progress',
+        status: 'running',
         startTime: new Date(),
       });
       flow.currentStepIndex = 3;

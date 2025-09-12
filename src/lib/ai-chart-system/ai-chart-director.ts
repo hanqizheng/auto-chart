@@ -95,19 +95,32 @@ export class AIChartDirector implements IAIChartDirector {
       const unifiedData = await this.extractAndUnifyData(scenario, input);
       console.log('✅ [AIChartDirector] 数据提取完成:', {
         rows: unifiedData.data.length,
-        fields: unifiedData.schema.fields.length
+        fields: unifiedData.schema.fields.length,
+        sampleData: unifiedData.data.slice(0, 3), // 显示前3行数据样本
+        dataSchema: unifiedData.schema
       });
 
       // 步骤3: 分析用户意图
       const chartIntent = await this.analyzeIntent(scenario, input, unifiedData);
       console.log('✅ [AIChartDirector] 意图分析完成:', {
         chartType: chartIntent.chartType,
-        confidence: chartIntent.confidence
+        confidence: chartIntent.confidence,
+        reasoning: chartIntent.reasoning || '未提供推理过程',
+        suggestedTitle: chartIntent.suggestedTitle || '未提供标题建议'
       });
 
       // 步骤4: 验证数据兼容性
       const compatibility = this.intentAnalyzer.validateDataCompatibility(chartIntent, unifiedData);
+      console.log('🔍 [AIChartDirector] 数据兼容性检查:', {
+        isCompatible: compatibility.isCompatible,
+        reason: compatibility.reason,
+        chartType: chartIntent.chartType,
+        dataRows: unifiedData.data.length,
+        dataFields: unifiedData.schema.fields.length
+      });
+      
       if (!compatibility.isCompatible) {
+        console.error('❌ [AIChartDirector] 数据兼容性验证失败:', compatibility);
         throw new AIChartError(
           'intent_analysis',
           'INVALID_REQUEST',
@@ -117,7 +130,14 @@ export class AIChartDirector implements IAIChartDirector {
       }
 
       // 步骤5: 生成图表
+      console.log('🎨 [AIChartDirector] 开始生成图表...');
       const result = await this.chartGenerator.generateChart(chartIntent, unifiedData);
+      console.log('📊 [AIChartDirector] 图表生成器返回结果:', {
+        success: result.success,
+        chartType: result.success ? result.chartType : 'failed',
+        dataLength: result.success ? result.data.length : 0,
+        configKeys: result.success ? Object.keys(result.config) : []
+      });
       
       const totalTime = Date.now() - startTime;
       console.log('🎉 [AIChartDirector] 图表生成成功:', {

@@ -12,6 +12,7 @@ import { ProcessingFlow } from "@/types";
 import { useSecurityValidation } from "@/lib/security";
 import { useToast } from "@/components/ui/use-toast";
 import { autoTriggerHandler } from "@/lib/auto-trigger-handler";
+import { globalChartManager } from "@/lib/global-chart-manager";
 
 interface CenteredChatPanelProps {
   onChartGenerated: (chart: ChartResultContent) => void;
@@ -34,6 +35,7 @@ export function CenteredChatPanel({
     addUserMessage,
     addProcessingMessage,
     addChartResultMessage,
+    updateChartResultMessage,
     updateProcessingMessage,
     toggleProcessingExpanded,
     clearMessages,
@@ -56,6 +58,15 @@ export function CenteredChatPanel({
   // 存储loadSessionFromData函数的引用
   const loadSessionRef = useRef(loadSessionFromData);
   loadSessionRef.current = loadSessionFromData;
+
+  // 设置全局图表更新处理器
+  useEffect(() => {
+    globalChartManager.setUpdateHandler(updateChartResultMessage);
+    
+    return () => {
+      globalChartManager.clearHandlers();
+    };
+  }, [updateChartResultMessage]);
 
   // 检查并处理自动触发的会话（首页跳转、Demo等）
   useEffect(() => {

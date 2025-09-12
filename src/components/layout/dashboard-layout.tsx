@@ -6,6 +6,7 @@ import { CenteredChatPanel } from "./centered-chat-panel";
 import { ChartDisplayArea } from "./chart-display-area";
 import { Button } from "@/components/ui/button";
 import { Settings, X } from "lucide-react";
+import { useChartExport } from "@/contexts/chart-export-context";
 
 /**
  * 主仪表板布局组件
@@ -13,21 +14,23 @@ import { Settings, X } from "lucide-react";
  */
 export function DashboardLayout() {
   const [isChartVisible, setIsChartVisible] = useState(false);
-  const [currentChart, setCurrentChart] = useState<ChartResultContent | null>(null);
+  const [localChart, setLocalChart] = useState<ChartResultContent | null>(null);
+  const { currentChart } = useChartExport();
+
+  // 优先使用 ChartExportContext 中的图表，如果没有则使用本地图表
+  const displayChart = currentChart || localChart;
 
   /**
    * 处理图表生成完成事件
    */
   const handleChartGenerated = (chart: ChartResultContent) => {
-    setCurrentChart(chart);
+    console.log("📊 [DashboardLayout] 图表生成完成:", {
+      title: chart.title,
+      chartType: chart.chartType
+    });
+    
+    setLocalChart(chart);
     setIsChartVisible(true);
-  };
-
-  /**
-   * 处理图表更新事件（如导出完成后）
-   */
-  const handleChartUpdated = (updatedChart: ChartResultContent) => {
-    setCurrentChart(updatedChart);
   };
 
   /**
@@ -42,7 +45,7 @@ export function DashboardLayout() {
    * 处理打开图表显示
    */
   const handleOpenChart = () => {
-    if (currentChart) {
+    if (displayChart) {
       setIsChartVisible(true);
     }
   };
@@ -63,19 +66,18 @@ export function DashboardLayout() {
         </div>
 
         {/* 图表展示区域 - 滑出动画 */}
-        {isChartVisible && (
+        {isChartVisible && displayChart && (
           <div className="bg-muted/10 border-border/50 animate-slide-in w-1/2 border-l">
-            <ChartDisplayArea 
-              chart={currentChart} 
+            <ChartDisplayArea
+              chart={displayChart}
               onClose={handleCloseChart}
-              onChartUpdated={handleChartUpdated}
             />
           </div>
         )}
       </div>
 
       {/* 配置面板开关按钮 */}
-      {!isChartVisible && currentChart && (
+      {!isChartVisible && displayChart && (
         <div className="animate-fade-in fixed top-1/2 right-0 z-50 -translate-y-1/2">
           <Button
             onClick={handleOpenChart}

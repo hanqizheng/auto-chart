@@ -168,11 +168,26 @@ export function EnhancedChart({
   outerRadius = ENHANCED_CHART_DEFAULTS.outerRadius,
   showPercentage = ENHANCED_CHART_DEFAULTS.showPercentage,
   showLegend = ENHANCED_CHART_DEFAULTS.showLegend,
+  exportMode = false,
 }: EnhancedChartProps) {
+  console.log("📊 [EnhancedChart] 组件渲染开始:", {
+    type,
+    title,
+    description,
+    dataLength: data?.length || 0,
+    dataFirstItem: data?.[0] || null,
+    configKeys: config ? Object.keys(config) : [],
+    className,
+    stacked,
+    fillOpacity,
+  });
+
   // 验证数据兼容性
   const validation = validateChartTypeCompatibility(data, type);
+  console.log("🔍 [EnhancedChart] 数据验证结果:", validation);
 
   if (!validation.isValid) {
+    console.error("❌ [EnhancedChart] 数据验证失败，显示错误信息:", validation.errors);
     return (
       <div className={className}>
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/20">
@@ -188,8 +203,10 @@ export function EnhancedChart({
   }
 
   // 渲染对应的图表组件
+  console.log("🎨 [EnhancedChart] 开始渲染图表类型:", type);
   switch (type) {
     case "bar":
+      console.log("📊 [EnhancedChart] 渲染柱状图，数据:", data);
       return (
         <BeautifulBarChart
           data={data as StandardChartData}
@@ -200,6 +217,7 @@ export function EnhancedChart({
       );
 
     case "line":
+      console.log("📈 [EnhancedChart] 渲染折线图，数据:", data);
       return (
         <BeautifulLineChart
           data={data as StandardChartData}
@@ -210,18 +228,23 @@ export function EnhancedChart({
       );
 
     case "pie":
+      console.log("🥧 [EnhancedChart] 处理饼图数据转换...");
       // 数据格式转换处理
       let pieData: PieChartData;
       if (Array.isArray(data) && data.length > 0) {
         const firstItem = data[0];
         if ("name" in firstItem && "value" in firstItem) {
           // 已经是饼图格式
+          console.log("✅ [EnhancedChart] 数据已是饼图格式:", data);
           pieData = data as PieChartData;
         } else {
           // 转换标准数据为饼图格式
+          console.log("🔄 [EnhancedChart] 转换标准数据为饼图格式，原始数据:", data);
           pieData = transformToPieData(data as StandardChartData);
+          console.log("✅ [EnhancedChart] 转换完成，饼图数据:", pieData);
         }
       } else {
+        console.warn("⚠️ [EnhancedChart] 饼图数据为空或无效:", data);
         pieData = [];
       }
 
@@ -239,6 +262,7 @@ export function EnhancedChart({
       );
 
     case "area":
+      console.log("🌄 [EnhancedChart] 渲染面积图，数据:", data);
       return (
         <BeautifulAreaChart
           data={data as StandardChartData}
@@ -251,6 +275,7 @@ export function EnhancedChart({
       );
 
     default:
+      console.error("❌ [EnhancedChart] 不支持的图表类型:", type);
       return (
         <div className="bg-muted rounded-lg border p-4">
           <p className="text-muted-foreground text-sm">不支持的图表类型: {type}</p>

@@ -1,100 +1,60 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { X, Download, Share2, Maximize2 } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { X, Download, Share2, Maximize2, AlertCircle, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { ChartResultContent } from "@/types";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
 import { cn } from "@/lib/utils";
-import { AutoExportService } from "@/services/auto-export-service";
+import { useChartExport, useChartExportStatus } from "@/contexts/chart-export-context";
 
 interface ChartDisplayAreaProps {
   chart: ChartResultContent | null;
   onClose: () => void;
-  onChartUpdated?: (updatedChart: ChartResultContent) => void;
 }
 
 /**
- * 简化的图表展示区域组件
- * 仅用于展示生成的图表，无配置功能
+ * 重构的图表展示区域组件
+ * 只负责图表渲染，导出由 GlobalChartManager 统一管理
  */
-export function ChartDisplayArea({ chart, onClose, onChartUpdated }: ChartDisplayAreaProps) {
+export function ChartDisplayArea({ chart, onClose }: ChartDisplayAreaProps) {
   const chartRef = useRef<HTMLDivElement>(null);
-  const exportServiceRef = useRef<AutoExportService | null>(null);
-  const [isAutoExporting, setIsAutoExporting] = useState(false);
-  const [hasAutoExported, setHasAutoExported] = useState(false);
+  const { registerChart } = useChartExport();
+  const chartIdRef = useRef<string>("");
 
-  // 初始化导出服务
+  // 生成稳定的图表ID
   useEffect(() => {
-    if (!exportServiceRef.current) {
-      exportServiceRef.current = new AutoExportService();
+    if (chart) {
+      chartIdRef.current = `${chart.title.replace(/[^a-zA-Z0-9]/g, '_')}_${chart.chartType}_${chart.chartData.length}`;
     }
-  }, []);
+  }, [chart]);
 
-  // 自动导出图表
+  // 获取导出状态
+  const { isExporting, progress, stage, error, retry } = useChartExportStatus(chartIdRef.current);
+
+  // 图表渲染完成后注册到全局管理器
   useEffect(() => {
-    if (chart && chartRef.current && !hasAutoExported && !isAutoExporting) {
-      const autoExportChart = async () => {
-        try {
-          setIsAutoExporting(true);
-          setHasAutoExported(true);
-          
-          console.log("🎯 [ChartDisplay] 开始自动导出图表:", chart.title);
-          
-          // 等待一小段时间确保图表完全渲染
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          
-          if (!exportServiceRef.current || !chartRef.current) {
-            throw new Error("导出服务或图表元素不可用");
-          }
+    if (chart && chartRef.current && chartIdRef.current) {
+      console.log("📊 [ChartDisplayArea] 注册图表到全局管理器:", {
+        chartId: chartIdRef.current,
+        title: chart.title
+      });
 
-          // 生成文件名
-          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-          const filename = `${chart.title}_${timestamp}.png`;
-          
-          // 执行导出
-          const blob = await exportServiceRef.current.exportChart(chartRef.current, filename);
-          
-          // 创建本地 URL
-          const localUrl = URL.createObjectURL(blob);
-          
-          // 更新图表信息
-          const updatedChart: ChartResultContent = {
-            ...chart,
-            imageInfo: {
-              filename,
-              localBlobUrl: localUrl,
-              size: blob.size,
-              format: 'png',
-              dimensions: { width: 800, height: 600 },
-              createdAt: new Date(),
-            },
-          };
-          
-          console.log("✅ [ChartDisplay] 自动导出完成:", {
-            filename,
-            size: blob.size,
-            url: localUrl,
-          });
-          
-          // 通知父组件图表已更新
-          onChartUpdated?.(updatedChart);
-          
-        } catch (error) {
-          console.error("❌ [ChartDisplay] 自动导出失败:", error);
-        } finally {
-          setIsAutoExporting(false);
+      // 等待图表完全渲染后注册
+      const timer = setTimeout(() => {
+        if (chartRef.current) {
+          registerChart(chartIdRef.current, chartRef.current, chart);
         }
+      }, 800);
+
+      return () => {
+        clearTimeout(timer);
       };
-
-      autoExportChart();
     }
-  }, [chart, hasAutoExported, isAutoExporting, onChartUpdated]);
+  }, [chart, registerChart]);
 
-  // 重置导出状态当图表变化时
-  useEffect(() => {
-    setHasAutoExported(false);
-  }, [chart?.title, chart?.chartType]);
   if (!chart) {
     return (
       <div className="flex h-full items-center justify-center p-8">
@@ -124,37 +84,11 @@ export function ChartDisplayArea({ chart, onClose, onChartUpdated }: ChartDispla
   /**
    * 处理手动图表导出
    */
-  const handleExport = async () => {
-    if (!chart || !chartRef.current || !exportServiceRef.current) return;
+  const handleManualExport = () => {
+    if (!chart || !chartRef.current) return;
     
-    try {
-      console.log("🎯 [ChartDisplay] 开始手动导出图表:", chart.title);
-      
-      // 生成文件名
-      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const filename = `${chart.title}_${timestamp}.png`;
-      
-      // 执行导出
-      const blob = await exportServiceRef.current.exportChart(chartRef.current, filename);
-      
-      // 手动下载
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = filename;
-      link.style.display = "none";
-      
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // 清理 URL 对象
-      setTimeout(() => URL.revokeObjectURL(url), 100);
-      
-      console.log("✅ [ChartDisplay] 手动导出完成:", filename);
-    } catch (error) {
-      console.error("❌ [ChartDisplay] 手动导出失败:", error);
-    }
+    // TODO: 实现手动导出
+    console.log("🎯 [ChartDisplay] 手动导出图表:", chart.title);
   };
 
   /**
@@ -186,24 +120,65 @@ export function ChartDisplayArea({ chart, onClose, onChartUpdated }: ChartDispla
       {/* 顶部工具栏 */}
       <div className="bg-muted/20 flex items-center justify-between border-b p-4">
         <div className="min-w-0 flex-1">
-          <h2 className="text-foreground truncate text-lg font-semibold">{chart.title}</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-foreground truncate text-lg font-semibold">{chart.title}</h2>
+            
+            {/* 导出状态指示器 */}
+            {isExporting && (
+              <Badge variant="secondary" className="flex items-center gap-1">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-blue-500" />
+                {stage === 'preparing' && '准备中'}
+                {stage === 'capturing' && '截图中'}
+                {stage === 'processing' && '处理中'}
+                {progress > 0 && `${progress}%`}
+              </Badge>
+            )}
+            
+            {error && (
+              <Badge variant="destructive" className="flex items-center gap-1">
+                <AlertCircle className="h-3 w-3" />
+                导出失败
+              </Badge>
+            )}
+          </div>
+          
           {chart.description && (
-            <p className="text-muted-foreground truncate text-sm">{chart.description}</p>
+            <p className="text-muted-foreground truncate text-sm mt-1">{chart.description}</p>
+          )}
+          
+          {/* 进度条 */}
+          {isExporting && progress > 0 && (
+            <div className="mt-2">
+              <Progress value={progress} className="h-1" />
+            </div>
           )}
         </div>
 
         <div className="ml-4 flex items-center space-x-2">
+          {/* 重试按钮 */}
+          {error && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => retry()}
+              className="flex items-center space-x-1"
+            >
+              <RotateCcw className="h-4 w-4" />
+              <span className="hidden sm:inline">重试</span>
+            </Button>
+          )}
+          
           {/* 导出按钮 */}
           <Button
             variant="outline"
             size="sm"
-            onClick={handleExport}
-            disabled={isAutoExporting}
+            onClick={handleManualExport}
+            disabled={isExporting}
             className="flex items-center space-x-1"
           >
-            <Download className={cn("h-4 w-4", isAutoExporting && "animate-pulse")} />
+            <Download className={cn("h-4 w-4", isExporting && "animate-pulse")} />
             <span className="hidden sm:inline">
-              {isAutoExporting ? "导出中..." : hasAutoExported ? "再次导出" : "导出"}
+              {isExporting ? "导出中..." : "导出"}
             </span>
           </Button>
 
@@ -212,6 +187,7 @@ export function ChartDisplayArea({ chart, onClose, onChartUpdated }: ChartDispla
             variant="outline"
             size="sm"
             onClick={handleShare}
+            disabled={isExporting}
             className="flex items-center space-x-1"
           >
             <Share2 className="h-4 w-4" />
@@ -270,12 +246,23 @@ export function ChartDisplayArea({ chart, onClose, onChartUpdated }: ChartDispla
                 尺寸: {chart.imageInfo.dimensions.width} × {chart.imageInfo.dimensions.height}
               </span>
             )}
+            {isExporting && (
+              <span className="flex items-center gap-1">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-blue-500" />
+                正在导出...
+              </span>
+            )}
           </div>
-          <div>
-            生成时间:{" "}
-            {chart.imageInfo?.createdAt
-              ? new Date(chart.imageInfo.createdAt).toLocaleTimeString()
-              : "刚刚"}
+          <div className="flex items-center space-x-4">
+            {error && (
+              <span className="text-red-500">导出失败: {error}</span>
+            )}
+            <span>
+              生成时间:{" "}
+              {chart.imageInfo?.createdAt
+                ? new Date(chart.imageInfo.createdAt).toLocaleTimeString()
+                : "刚刚"}
+            </span>
           </div>
         </div>
       </div>

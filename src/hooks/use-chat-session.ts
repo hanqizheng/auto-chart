@@ -149,6 +149,66 @@ export function useChatSession() {
   }, []);
 
   /**
+   * 更新图表结果消息
+   */
+  const updateChartResultMessage = useCallback((updatedChart: ChartResultContent) => {
+    console.log("📝 [ChatSession] 收到图表消息更新请求:", {
+      title: updatedChart.title,
+      chartType: updatedChart.chartType,
+      hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl,
+      imageUrl: updatedChart.imageInfo?.localBlobUrl?.substring(0, 50) + "..."
+    });
+
+    setSession(prev => {
+      console.log("🔍 [ChatSession] 当前所有消息:", prev.messages.map(msg => ({
+        id: msg.id,
+        type: msg.type,
+        title: msg.type === MESSAGE_TYPES.CHART_RESULT ? msg.content.title : '非图表消息',
+        chartType: msg.type === MESSAGE_TYPES.CHART_RESULT ? msg.content.chartType : '非图表消息'
+      })));
+      
+      const updatedMessages = prev.messages.map(msg => {
+        if (msg.type === MESSAGE_TYPES.CHART_RESULT) {
+          console.log("🔍 [ChatSession] 检查图表消息匹配:", {
+            messageTitle: msg.content.title,
+            updateTitle: updatedChart.title,
+            messageChartType: msg.content.chartType,
+            updateChartType: updatedChart.chartType,
+            titleMatch: msg.content.title === updatedChart.title,
+            chartTypeMatch: msg.content.chartType === updatedChart.chartType
+          });
+          
+          if (msg.content.title === updatedChart.title &&
+              msg.content.chartType === updatedChart.chartType) {
+            console.log("✅ [ChatSession] 找到匹配的图表消息，正在更新");
+            return {
+              ...msg,
+              content: updatedChart,
+              timestamp: new Date(),
+            };
+          }
+        }
+        return msg;
+      });
+      
+      const hasUpdated = updatedMessages.some((msg, index) => 
+        msg !== prev.messages[index] && msg.type === MESSAGE_TYPES.CHART_RESULT
+      );
+      
+      if (!hasUpdated) {
+        console.warn("⚠️ [ChatSession] 没有找到匹配的图表消息进行更新");
+      }
+
+      return {
+        ...prev,
+        messages: updatedMessages,
+        currentChart: updatedChart,
+        lastActivity: new Date(),
+      };
+    });
+  }, []);
+
+  /**
    * 更新处理消息
    */
   const updateProcessingMessage = useCallback(
@@ -369,6 +429,7 @@ export function useChatSession() {
           
           const success = await autoTriggerHandler.executeAutoProcessing(
             result.restoredSession,
+            processingId,
             (messageId, updates) => updateProcessingMessage(messageId, updates),
             (chartResult) => {
               addChartResultMessage(chartResult);
@@ -511,6 +572,7 @@ export function useChatSession() {
     addUserMessage,
     addProcessingMessage,
     addChartResultMessage,
+    updateChartResultMessage,
     updateProcessingMessage,
     toggleProcessingExpanded,
     clearMessages,
