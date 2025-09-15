@@ -17,6 +17,7 @@
     "clean": "rm -rf .next out dist node_modules/.cache"
   },
   "dependencies": {
+    "@eslint/js": "^9.35.0",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-switch": "^1.2.6",

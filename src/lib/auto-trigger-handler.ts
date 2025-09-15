@@ -4,10 +4,10 @@
  * 支持首页跳转和Demo重放场景
  */
 
-import { 
-  SingleChatSession, 
-  AutoTriggerConfig, 
-  DemoReplayConfig, 
+import {
+  SingleChatSession,
+  AutoTriggerConfig,
+  DemoReplayConfig,
   DemoReplayStep,
   ChatMessage,
   UserMessage,
@@ -15,8 +15,11 @@ import {
   ChartResultContent,
   FileAttachment,
   SerializableFileAttachment,
+  ProcessingFlow,
+  ProcessingStep,
 } from "@/types";
 import { MESSAGE_TYPES } from "@/constants/message";
+import { PROCESSING_STEPS, STEP_STATUS } from "@/constants/processing";
 import { getSessionStorageService, TEMP_STORAGE_KEYS } from "./session-storage";
 import { deserializeSession } from "./session-serializer";
 import { generateChart } from "./ai-chart-system/ai-chart-director";
@@ -70,7 +73,7 @@ class DemoReplayController {
     this.onComplete = callbacks.onComplete;
 
     try {
-      if (config.mode === 'instant') {
+      if (config.mode === "instant") {
         // 立即执行所有步骤
         await this.executeAllStepsInstantly();
       } else {
@@ -118,15 +121,15 @@ class DemoReplayController {
 
     for (let i = 0; i < this.replayConfig.predefinedSteps.length; i++) {
       const step = this.replayConfig.predefinedSteps[i];
-      
+
       // 等待步骤延迟
       if (step.delay > 0) {
         await new Promise(resolve => setTimeout(resolve, step.delay));
       }
-      
+
       // 等待配置的步骤间隔
       if (i > 0 && this.replayConfig && this.replayConfig.stepDelay > 0) {
-        await new Promise(resolve => setTimeout(resolve, this.replayConfig.stepDelay));
+        await new Promise(resolve => setTimeout(resolve, this.replayConfig!.stepDelay));
       }
 
       if (!this.isReplaying) break; // 检查是否被停止
@@ -144,7 +147,9 @@ class DemoReplayController {
    * 执行单个步骤
    */
   private async executeStep(step: DemoReplayStep, stepIndex: number): Promise<void> {
-    console.log(`🎬 [AutoTrigger] 执行Demo步骤 ${stepIndex + 1}/${this.replayConfig?.predefinedSteps.length}: ${step.type}`);
+    console.log(
+      `🎬 [AutoTrigger] 执行Demo步骤 ${stepIndex + 1}/${this.replayConfig?.predefinedSteps.length}: ${step.type}`
+    );
 
     try {
       // 通知外部更新
@@ -152,16 +157,16 @@ class DemoReplayController {
 
       // 根据步骤类型执行相应操作
       switch (step.type) {
-        case 'add_processing_message':
+        case "add_processing_message":
           // 这个操作需要通过回调函数由外部的Hook来执行
           // 因为我们不能直接操作Hook状态
           break;
 
-        case 'update_processing_step':
+        case "update_processing_step":
           // 同样需要通过回调函数执行
           break;
 
-        case 'add_chart_result':
+        case "add_chart_result":
           // 同样需要通过回调函数执行
           break;
 
@@ -198,8 +203,8 @@ class DemoReplayController {
       isReplaying: this.isReplaying,
       currentStep: this.currentStep,
       totalSteps: this.replayConfig?.predefinedSteps.length || 0,
-      progress: this.replayConfig 
-        ? (this.currentStep / this.replayConfig.predefinedSteps.length) * 100 
+      progress: this.replayConfig
+        ? (this.currentStep / this.replayConfig.predefinedSteps.length) * 100
         : 0,
     };
   }
@@ -284,11 +289,11 @@ class AutoTriggerHandler {
    * 检查URL参数
    */
   private checkUrlParams(): AutoTriggerResult | null {
-    if (typeof window === 'undefined') return null;
+    if (typeof window === "undefined") return null;
 
     const urlParams = new URLSearchParams(window.location.search);
-    const sessionId = urlParams.get('session');
-    const demoId = urlParams.get('demo');
+    const sessionId = urlParams.get("session");
+    const demoId = urlParams.get("demo");
 
     if (sessionId) {
       console.log(`🔗 [AutoTrigger] URL参数中发现会话ID: ${sessionId}`);
@@ -324,19 +329,19 @@ class AutoTriggerHandler {
     try {
       // 反序列化会话数据
       const session = await deserializeSession(sessionData);
-      
+
       // 清理临时存储
       localStorage.removeItem(TEMP_STORAGE_KEYS.PENDING_SESSION);
-      
+
       // 检查是否需要自动触发
       if (session._autoTrigger?.enabled) {
         console.log("⚡ [AutoTrigger] 准备执行自动AI处理");
-        
+
         // 查找触发消息
         const triggerMessage = session.messages.find(
           msg => msg.id === session._autoTrigger?.triggerMessage
         );
-        
+
         if (triggerMessage && triggerMessage.type === MESSAGE_TYPES.USER) {
           return {
             success: true,
@@ -360,7 +365,7 @@ class AutoTriggerHandler {
       console.error("❌ [AutoTrigger] 首页会话处理失败:", error);
       // 清理损坏的数据
       localStorage.removeItem(TEMP_STORAGE_KEYS.PENDING_SESSION);
-      
+
       return {
         success: false,
         sessionRestored: false,
@@ -379,27 +384,30 @@ class AutoTriggerHandler {
     try {
       // 反序列化会话数据
       const session = await deserializeSession(sessionData);
-      
+
       // 清理临时存储
       localStorage.removeItem(TEMP_STORAGE_KEYS.DEMO_SESSION);
-      
+
       // 清理URL参数
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         const url = new URL(window.location.href);
-        url.searchParams.delete('demo');
-        window.history.replaceState({}, '', url.toString());
+        url.searchParams.delete("demo");
+        window.history.replaceState({}, "", url.toString());
       }
+
+      // 检查是否需要自动触发AI处理
+      const shouldTrigger = Boolean(session._autoTrigger?.enabled && session._autoTrigger?.triggerMessage);
 
       return {
         success: true,
         sessionRestored: true,
-        triggerExecuted: false, // Demo重放需要单独启动
+        triggerExecuted: shouldTrigger, // 如果配置了自动触发则返回true
         restoredSession: session,
       };
     } catch (error) {
       console.error("❌ [AutoTrigger] Demo会话处理失败:", error);
       localStorage.removeItem(TEMP_STORAGE_KEYS.DEMO_SESSION);
-      
+
       return {
         success: false,
         sessionRestored: false,
@@ -437,33 +445,37 @@ class AutoTriggerHandler {
       console.log("📋 [AutoTrigger] 使用处理消息ID:", processingMessageId);
 
       // 初始化处理流程
-      const flow = {
+      const flow: ProcessingFlow = {
         id: `flow_${Date.now()}`,
         steps: [],
         totalSteps: 4,
         currentStepIndex: 0,
+        startTime: new Date(),
         isCompleted: false,
+        hasError: false,
       };
 
       // 步骤1：数据分析
       console.log("📊 [AutoTrigger] 步骤1: 数据分析");
-      flow.steps.push({
+      const step1: ProcessingStep = {
         id: `step_1_${Date.now()}`,
-        type: 'data_analysis',
-        title: '分析输入数据',
-        status: 'running',
+        type: PROCESSING_STEPS.DATA_ANALYSIS,
+        title: "分析输入数据",
+        description: "正在分析输入数据",
+        status: STEP_STATUS.RUNNING,
         startTime: new Date(),
-      });
+      };
+      flow.steps.push(step1);
       flow.currentStepIndex = 0;
       onProgressUpdate(processingMessageId, {
         title: "正在分析您的数据...",
         flow: { ...flow },
       });
-      
+
       // 模拟数据分析延迟
       await new Promise(resolve => setTimeout(resolve, 800));
-      
-      flow.steps[0].status = 'completed';
+
+      flow.steps[0].status = STEP_STATUS.COMPLETED;
       flow.steps[0].endTime = new Date();
       onProgressUpdate(processingMessageId, { flow: { ...flow } });
 
@@ -472,20 +484,29 @@ class AutoTriggerHandler {
       if (triggerMessage.content.attachments) {
         for (const attachment of triggerMessage.content.attachments) {
           if (attachment.file) {
+            // 直接的File对象
             restoredFiles.push(attachment.file);
+          } else {
+            // SerializableFileAttachment，需要恢复为File对象
+            const restoredFile = await restoreFileFromAttachment(attachment as any);
+            if (restoredFile) {
+              restoredFiles.push(restoredFile);
+            }
           }
         }
       }
 
       // 步骤2：意图分析
       console.log("🎯 [AutoTrigger] 步骤2: 意图分析");
-      flow.steps.push({
+      const step2: ProcessingStep = {
         id: `step_2_${Date.now()}`,
-        type: 'chart_type_detection',
-        title: '分析图表类型需求',
-        status: 'running',
+        type: PROCESSING_STEPS.CHART_TYPE_DETECTION,
+        title: "分析图表类型需求",
+        description: "正在分析图表类型需求",
+        status: STEP_STATUS.RUNNING,
         startTime: new Date(),
-      });
+      };
+      flow.steps.push(step2);
       flow.currentStepIndex = 1;
       onProgressUpdate(processingMessageId, {
         title: "正在分析图表类型...",
@@ -494,20 +515,22 @@ class AutoTriggerHandler {
 
       // 模拟意图分析延迟
       await new Promise(resolve => setTimeout(resolve, 600));
-      
-      flow.steps[1].status = 'completed';
+
+      flow.steps[1].status = STEP_STATUS.COMPLETED;
       flow.steps[1].endTime = new Date();
       onProgressUpdate(processingMessageId, { flow: { ...flow } });
 
       // 步骤3：图表生成
       console.log("🎨 [AutoTrigger] 步骤3: 图表生成");
-      flow.steps.push({
+      const step3: ProcessingStep = {
         id: `step_3_${Date.now()}`,
-        type: 'chart_generation',
-        title: '生成图表配置',
-        status: 'running',
+        type: PROCESSING_STEPS.CHART_GENERATION,
+        title: "生成图表配置",
+        description: "正在生成图表配置",
+        status: STEP_STATUS.RUNNING,
         startTime: new Date(),
-      });
+      };
+      flow.steps.push(step3);
       flow.currentStepIndex = 2;
       onProgressUpdate(processingMessageId, {
         title: "正在生成图表...",
@@ -524,28 +547,31 @@ class AutoTriggerHandler {
       const result = await generateChart(request);
 
       if (!result.success) {
-        flow.steps[2].status = 'error';
+        flow.steps[2].status = STEP_STATUS.ERROR;
         flow.steps[2].endTime = new Date();
-        onProgressUpdate(processingMessageId, { 
+        flow.hasError = true;
+        onProgressUpdate(processingMessageId, {
           title: "图表生成失败",
           flow: { ...flow },
         });
         throw new Error(result.error?.message || "AI处理失败");
       }
 
-      flow.steps[2].status = 'completed';
+      flow.steps[2].status = STEP_STATUS.COMPLETED;
       flow.steps[2].endTime = new Date();
       onProgressUpdate(processingMessageId, { flow: { ...flow } });
 
       // 步骤4：图片导出
       console.log("📸 [AutoTrigger] 步骤4: 图片导出");
-      flow.steps.push({
+      const step4: ProcessingStep = {
         id: `step_4_${Date.now()}`,
-        type: 'image_export',
-        title: '导出图表图片',
-        status: 'running',
+        type: PROCESSING_STEPS.IMAGE_EXPORT,
+        title: "导出图表图片",
+        description: "正在导出图表图片",
+        status: STEP_STATUS.RUNNING,
         startTime: new Date(),
-      });
+      };
+      flow.steps.push(step4);
       flow.currentStepIndex = 3;
       onProgressUpdate(processingMessageId, {
         title: "正在导出图片...",
@@ -555,16 +581,27 @@ class AutoTriggerHandler {
       // 模拟图片导出延迟（实际导出将在图表显示区域进行）
       await new Promise(resolve => setTimeout(resolve, 500));
 
-      flow.steps[3].status = 'completed';
+      flow.steps[3].status = STEP_STATUS.COMPLETED;
       flow.steps[3].endTime = new Date();
       flow.isCompleted = true;
-      
+      flow.endTime = new Date();
+
       onProgressUpdate(processingMessageId, {
         title: "处理完成",
         flow: { ...flow },
       });
 
       // 构造图表结果
+      console.log("📊 [AutoTrigger] AI图表生成结果检查:", {
+        hasData: !!result.data,
+        dataLength: result.data?.length || 0,
+        dataType: Array.isArray(result.data) ? "array" : typeof result.data,
+        sampleData: result.data?.slice(0, 2),
+        hasConfig: !!result.config,
+        chartType: result.chartType,
+        title: result.title,
+      });
+
       const chartResult: ChartResultContent = {
         chartData: result.data,
         chartConfig: result.config,
@@ -573,9 +610,9 @@ class AutoTriggerHandler {
         description: result.description,
         imageInfo: {
           filename: `chart_${Date.now()}.png`,
-          localBlobUrl: '', // 需要在图表生成后设置
+          localBlobUrl: "", // 需要在图表生成后设置
           size: 0,
-          format: 'png',
+          format: "png",
           dimensions: { width: 800, height: 600 },
           createdAt: new Date(),
         },
@@ -584,7 +621,6 @@ class AutoTriggerHandler {
       onChartResult(chartResult);
       console.log("✅ [AutoTrigger] AI自动处理完成");
       return true;
-      
     } catch (error) {
       console.error("❌ [AutoTrigger] AI自动处理失败:", error);
       return false;
@@ -629,25 +665,43 @@ export async function restoreFileFromAttachment(
 ): Promise<File | null> {
   if (!attachment) return null;
 
+  console.log("🔄 [FileRestore] 开始恢复文件:", {
+    name: attachment.name,
+    type: attachment.type,
+    size: attachment.size,
+    storageType: attachment.storageType,
+    hasDataUrl: !!attachment.dataUrl,
+    dataUrlPrefix: attachment.dataUrl?.substring(0, 50) + "...",
+  });
+
   try {
-    if (attachment.storageType === 'base64' && attachment.dataUrl) {
+    if (attachment.storageType === "base64" && attachment.dataUrl) {
       // 从Base64恢复
-      const arr = attachment.dataUrl.split(',');
-      const mime = arr[0].match(/:(.*?);/)?.[1] || 'application/octet-stream';
+      const arr = attachment.dataUrl.split(",");
+      const mime = arr[0].match(/:(.*?);/)?.[1] || "application/octet-stream";
       const bstr = atob(arr[1]);
       let n = bstr.length;
       const u8arr = new Uint8Array(n);
-      
+
       while (n--) {
         u8arr[n] = bstr.charCodeAt(n);
       }
-      
-      return new File([u8arr], attachment.name, { type: mime });
-    } else if (attachment.storageType === 'indexeddb' && attachment.storageKey) {
+
+      const restoredFile = new File([u8arr], attachment.name, { type: mime });
+
+      console.log("✅ [FileRestore] 文件恢复成功:", {
+        name: restoredFile.name,
+        size: restoredFile.size,
+        type: restoredFile.type,
+        originalSize: attachment.size,
+      });
+
+      return restoredFile;
+    } else if (attachment.storageType === "indexeddb" && attachment.storageKey) {
       // 从IndexedDB恢复
       const storageService = getSessionStorageService();
       if (!storageService) {
-        console.warn('存储服务在当前环境中不可用');
+        console.warn("存储服务在当前环境中不可用");
         return null;
       }
       const fileData = await storageService.getFile(attachment.storageKey);
