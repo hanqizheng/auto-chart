@@ -12,6 +12,7 @@ import {
   AreaSeriesAnalysis,
   AREA_CHART_DEFAULTS,
 } from "./types";
+import { useChartTheme } from "@/contexts/chart-theme-context";
 
 /**
  * 计算面积图系列分析
@@ -178,6 +179,7 @@ export function BeautifulAreaChart({
   showGrowthRate = AREA_CHART_DEFAULTS.showGrowthRate,
   fillOpacity = AREA_CHART_DEFAULTS.fillOpacity,
 }: AreaChartProps) {
+  const { getSeriesColor, palette } = useChartTheme();
   // 数据验证
   const validation = validateAreaChartData(data);
 
@@ -249,16 +251,12 @@ export function BeautifulAreaChart({
               bottom: 40,
             }}
           >
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="hsl(var(--muted-foreground))"
-              opacity={0.3}
-            />
+            <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.35} />
             <XAxis
               dataKey={xAxisKey}
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: palette.neutralStrong }}
               angle={-45}
               textAnchor="end"
               height={60}
@@ -266,7 +264,7 @@ export function BeautifulAreaChart({
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: palette.neutralStrong }}
               tickFormatter={value => value.toLocaleString()}
             />
 
@@ -274,7 +272,7 @@ export function BeautifulAreaChart({
             {showTotalLine && (
               <ReferenceLine
                 y={totalAverage}
-                stroke="hsl(var(--muted-foreground))"
+                stroke={palette.neutral}
                 strokeDasharray="5 5"
                 opacity={0.5}
               />
@@ -287,8 +285,8 @@ export function BeautifulAreaChart({
                 type="monotone"
                 dataKey={key}
                 stackId={stacked ? "1" : undefined}
-                stroke={`var(--color-${key})`}
-                fill={`var(--color-${key})`}
+                stroke={getSeriesColor(key, index)}
+                fill={getSeriesColor(key, index)}
                 fillOpacity={fillOpacity}
                 strokeWidth={AREA_CHART_DEFAULTS.strokeWidth}
                 name={String(config[key]?.label || key)}

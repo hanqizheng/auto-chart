@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Toaster } from "@/components/ui/toast";
+import { ChartExportProvider } from "@/contexts/chart-export-context";
+import { ThemeProvider } from "@/components/theme-provider";
 
 import "./globals.css";
 
@@ -29,8 +32,13 @@ export default async function RootLayout({
 
   return (
     <html lang="zh">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
+        <ThemeProvider defaultTheme="light">
+          <ChartExportProvider>
+            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+          </ChartExportProvider>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

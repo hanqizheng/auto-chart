@@ -85,17 +85,28 @@ export class ChartIntentAgent implements AIAgent {
 
   constructor(aiService?: AIService) {
     // 如果没有提供 AI 服务，使用环境变量创建默认服务
-    this.aiService = aiService || createServiceFromEnv("deepseek");
+    // 注意：在客户端代码中可能无法访问环境变量，需要预先配置
+    if (aiService) {
+      this.aiService = aiService;
+    } else {
+      // 延迟初始化，在需要时再创建服务
+      this.aiService = null as any;
+    }
   }
 
   async execute(request: ChartGenerationRequest): Promise<ChartGenerationResult> {
     console.log("🔍 [AI-Agents] 开始处理请求:", {
       prompt: request.prompt,
       hasFile: !!request.uploadedFile,
-      contextLength: request.context?.length || 0
+      contextLength: request.context?.length || 0,
     });
 
     try {
+      // 初始化AI服务（如果还未初始化）
+      if (!this.aiService) {
+        throw new Error("AI服务未初始化，请提供预配置的AI服务实例");
+      }
+
       // 步骤1: 分析意图
       console.log("📊 [AI-Agents] 步骤1: 分析图表意图...");
       const intent = await this.analyzeIntent(request.prompt);
@@ -108,7 +119,7 @@ export class ChartIntentAgent implements AIAgent {
         dataType: dataMapping.dataType,
         structure: dataMapping.structure,
         dataLength: dataMapping.mappedData.length,
-        sampleData: dataMapping.mappedData.slice(0, 2)
+        sampleData: dataMapping.mappedData.slice(0, 2),
       });
 
       // 步骤3: 生成元数据
@@ -129,14 +140,17 @@ export class ChartIntentAgent implements AIAgent {
       console.log("✅ [AI-Agents] 图表生成成功:", {
         chartType: result.chartType,
         dataCount: result.data.length,
-        title: result.title
+        title: result.title,
       });
 
       return result;
     } catch (error) {
       console.error("❌ [AI-Agents] 图表生成失败:", error);
-      console.error("❌ [AI-Agents] 错误堆栈:", error instanceof Error ? error.stack : "无堆栈信息");
-      
+      console.error(
+        "❌ [AI-Agents] 错误堆栈:",
+        error instanceof Error ? error.stack : "无堆栈信息"
+      );
+
       return {
         success: false,
         chartType: "bar",
@@ -155,7 +169,7 @@ export class ChartIntentAgent implements AIAgent {
    */
   private async analyzeIntent(prompt: string): Promise<ChartIntentResult> {
     console.log("🤖 [Intent] 开始分析用户意图, prompt:", prompt);
-    
+
     const systemPrompt = `你是一个图表类型推荐专家。根据用户的描述，判断最适合的图表类型。
 
 支持的图表类型：
@@ -187,17 +201,17 @@ export class ChartIntentAgent implements AIAgent {
 
       // 解析 AI 响应，移除可能的 markdown 代码块标记
       let content = response.content.trim();
-      if (content.startsWith('```json')) {
-        content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-      } else if (content.startsWith('```')) {
-        content = content.replace(/^```\s*/, '').replace(/\s*```$/, '');
+      if (content.startsWith("```json")) {
+        content = content.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+      } else if (content.startsWith("```")) {
+        content = content.replace(/^```\s*/, "").replace(/\s*```$/, "");
       }
-      
+
       console.log("🤖 [Intent] 清理后的JSON内容:", content);
-      
+
       const result = JSON.parse(content);
       console.log("🤖 [Intent] 解析后的结果:", result);
-      
+
       return {
         chartType: result.chartType || "bar",
         confidence: result.confidence || 0.5,
@@ -218,10 +232,64 @@ export class ChartIntentAgent implements AIAgent {
 
     // 图表类型关键词映射
     const chartKeywords = {
-      line: ["趋势", "trend", "变化", "时间", "time", "增长", "下降", "over time", "走势"],
-      pie: ["分布", "distribution", "比例", "proportion", "占比", "份额", "share", "构成"],
-      area: ["累积", "cumulative", "容量", "volume", "堆叠", "stacked", "总量"],
-      bar: ["比较", "compare", "对比", "排名", "ranking", "分类", "category"],
+      line: [
+        "趋势",
+        "trend",
+        "变化",
+        "时间",
+        "time",
+        "增长",
+        "下降",
+        "over time",
+        "走势",
+        "折线图",
+        "线图",
+        "折线",
+        "line chart",
+      ],
+      pie: [
+        "分布",
+        "distribution",
+        "比例",
+        "proportion",
+        "占比",
+        "份额",
+        "share",
+        "构成",
+        "饼图",
+        "饼状图",
+        "圆饼图",
+        "pie chart",
+        "pie",
+      ],
+      area: [
+        "累积",
+        "cumulative",
+        "容量",
+        "volume",
+        "堆叠",
+        "stacked",
+        "总量",
+        "面积图",
+        "区域图",
+        "area chart",
+        "面积",
+      ],
+      bar: [
+        "比较",
+        "compare",
+        "对比",
+        "排名",
+        "ranking",
+        "分类",
+        "category",
+        "柱状图",
+        "柱图",
+        "条形图",
+        "bar chart",
+        "柱状",
+        "条形",
+      ],
     };
 
     let bestMatch: { type: ChartType; score: number; keywords: string[] } = {
@@ -267,7 +335,7 @@ export class ChartIntentAgent implements AIAgent {
     chartType: ChartType
   ): Promise<DataMappingResult> {
     console.log("🔧 [DataMapping] 开始数据映射, chartType:", chartType);
-    
+
     // 尝试从用户提示中提取数据
     const extractedData = await this.extractDataFromPrompt(request.prompt, chartType);
     if (extractedData) {
@@ -290,9 +358,12 @@ export class ChartIntentAgent implements AIAgent {
   /**
    * 从用户提示中提取数据
    */
-  private async extractDataFromPrompt(prompt: string, chartType: ChartType): Promise<DataMappingResult | null> {
+  private async extractDataFromPrompt(
+    prompt: string,
+    chartType: ChartType
+  ): Promise<DataMappingResult | null> {
     console.log("📊 [DataExtraction] 尝试从prompt提取数据...");
-    
+
     // 使用AI来解析用户提供的数据
     const systemPrompt = `你是一个数据解析专家。从用户的描述中提取结构化数据，并转换为图表所需的格式。
 
@@ -338,14 +409,14 @@ export class ChartIntentAgent implements AIAgent {
 
       // 清理和解析JSON响应
       let content = response.content.trim();
-      if (content.startsWith('```json')) {
-        content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-      } else if (content.startsWith('```')) {
-        content = content.replace(/^```\s*/, '').replace(/\s*```$/, '');
+      if (content.startsWith("```json")) {
+        content = content.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+      } else if (content.startsWith("```")) {
+        content = content.replace(/^```\s*/, "").replace(/\s*```$/, "");
       }
 
       console.log("📊 [DataExtraction] 清理后的JSON:", content);
-      
+
       const parsed = JSON.parse(content);
       console.log("📊 [DataExtraction] 解析结果:", parsed);
 
@@ -369,10 +440,9 @@ export class ChartIntentAgent implements AIAgent {
           totalPoints: parsed.data.length,
         },
       };
-
     } catch (error) {
       console.error("📊 [DataExtraction] AI数据解析失败:", error);
-      
+
       // 降级方案：使用正则表达式尝试提取简单的数据格式
       return this.fallbackDataExtraction(prompt, chartType);
     }
@@ -383,15 +453,18 @@ export class ChartIntentAgent implements AIAgent {
    */
   private fallbackDataExtraction(prompt: string, chartType: ChartType): DataMappingResult | null {
     console.log("📊 [FallbackExtraction] 尝试正则表达式提取数据...");
-    
+
     // 尝试匹配类似 "北京[22, 23, 21, 25, 30]" 的格式
     const cityDataPattern = /([^[\]]+)\[([^\]]+)\]/g;
     const matches: Array<{ city: string; values: number[] }> = [];
     let match;
-    
+
     while ((match = cityDataPattern.exec(prompt)) !== null) {
       const cityName = match[1].trim();
-      const values = match[2].split(',').map(v => parseFloat(v.trim())).filter(v => !isNaN(v));
+      const values = match[2]
+        .split(",")
+        .map(v => parseFloat(v.trim()))
+        .filter(v => !isNaN(v));
       if (values.length > 0) {
         matches.push({ city: cityName, values });
       }
@@ -404,14 +477,16 @@ export class ChartIntentAgent implements AIAgent {
     }
 
     // 提取日期信息（星期一到星期五）
-    const dayPattern = /星期[一二三四五六日]|周[一二三四五六日]|monday|tuesday|wednesday|thursday|friday|saturday|sunday/gi;
+    const dayPattern =
+      /星期[一二三四五六日]|周[一二三四五六日]|monday|tuesday|wednesday|thursday|friday|saturday|sunday/gi;
     const dayMatches = prompt.match(dayPattern) || [];
-    
+
     // 构建数据结构
     const maxLength = Math.max(...matches.map(m => m.values.length));
-    const days = dayMatches.length > 0 ? 
-      ['星期一', '星期二', '星期三', '星期四', '星期五'].slice(0, maxLength) :
-      Array.from({ length: maxLength }, (_, i) => `第${i + 1}天`);
+    const days =
+      dayMatches.length > 0
+        ? ["星期一", "星期二", "星期三", "星期四", "星期五"].slice(0, maxLength)
+        : Array.from({ length: maxLength }, (_, i) => `第${i + 1}天`);
 
     console.log("📊 [FallbackExtraction] 推断的时间轴:", days);
 
@@ -538,12 +613,12 @@ export class ChartIntentAgent implements AIAgent {
 
       // 解析 AI 响应，移除可能的 markdown 代码块标记
       let content = response.content.trim();
-      if (content.startsWith('```json')) {
-        content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-      } else if (content.startsWith('```')) {
-        content = content.replace(/^```\s*/, '').replace(/\s*```$/, '');
+      if (content.startsWith("```json")) {
+        content = content.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+      } else if (content.startsWith("```")) {
+        content = content.replace(/^```\s*/, "").replace(/\s*```$/, "");
       }
-      
+
       const result = JSON.parse(content);
 
       return {
@@ -709,8 +784,8 @@ export const aiDirector = {
     }
     return _aiDirector;
   },
-  
+
   generateChart: (request: ChartGenerationRequest): Promise<ChartGenerationResult> => {
     return aiDirector.instance.generateChart(request);
-  }
+  },
 };

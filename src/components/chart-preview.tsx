@@ -15,6 +15,7 @@ import { useSimpleExport } from "@/hooks/use-simple-export";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
+import { ChartThemeProvider } from "@/contexts/chart-theme-context";
 import { ChartType } from "@/types/chart";
 import { ExportFormat } from "@/types/common";
 import { CHART_TYPES } from "@/constants/chart";
@@ -170,13 +171,19 @@ export function ChartPreview({ chartData, onExport, onRefresh }: ChartPreviewPro
 
         <CardContent className="h-full">
           <div ref={chartContainerRef} className="h-[400px] w-full">
-            <EnhancedChart
-              type={currentChartType}
-              data={chartData.data}
-              title={chartData.title}
-              className="h-full w-full"
-              config={{}}
-            />
+            <ChartThemeProvider
+              chartType={currentChartType}
+              chartData={chartData.data}
+              chartConfig={{}}
+            >
+              <EnhancedChart
+                type={currentChartType}
+                data={chartData.data}
+                title={chartData.title}
+                className="h-full w-full"
+                config={{}}
+              />
+            </ChartThemeProvider>
           </div>
         </CardContent>
       </div>

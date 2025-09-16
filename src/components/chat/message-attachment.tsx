@@ -60,7 +60,7 @@ export function MessageAttachment({ file, isUserMessage = false }: MessageAttach
     // 默认文件图标 - 灰色
     return {
       icon: <File className="h-3 w-3" />,
-      color: "text-gray-600 dark:text-gray-400",
+      color: "text-muted-foreground",
     };
   };
 

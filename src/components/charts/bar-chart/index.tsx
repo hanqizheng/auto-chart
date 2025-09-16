@@ -3,6 +3,7 @@
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
+import { useChartTheme } from "@/contexts/chart-theme-context";
 import { BarChartProps, BarChartValidationResult, BarChartData } from "./types";
 
 /**
@@ -77,6 +78,7 @@ export function validateBarChartData(data: BarChartData): BarChartValidationResu
  * 专为静态图像导出设计，显示完整的数据信息和统计分析
  */
 export function BeautifulBarChart({ data, config, title, description, className }: BarChartProps) {
+  const { getSeriesColor, palette } = useChartTheme();
   // 数据验证
   const validation = validateBarChartData(data);
   
@@ -133,16 +135,12 @@ export function BeautifulBarChart({ data, config, title, description, className 
               bottom: 40,
             }}
           >
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="hsl(var(--muted-foreground))"
-              opacity={0.3}
-            />
+            <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.35} />
             <XAxis
               dataKey={categoryKey}
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: palette.neutralStrong }}
               angle={-45}
               textAnchor="end"
               height={60}
@@ -150,14 +148,14 @@ export function BeautifulBarChart({ data, config, title, description, className 
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: palette.neutralStrong }}
               tickFormatter={value => value.toLocaleString()}
             />
             {valueKeys.map(key => (
               <Bar
                 key={key}
                 dataKey={key}
-                fill={`var(--color-${key})`}
+                fill={getSeriesColor(key)}
                 radius={[4, 4, 0, 0]}
                 name={String(config[key]?.label || key)}
               >
@@ -166,7 +164,7 @@ export function BeautifulBarChart({ data, config, title, description, className 
                   position="top"
                   style={{
                     fontSize: "11px",
-                    fill: "#333",
+                    fill: palette.neutralStrong,
                     fontWeight: "600",
                   }}
                   formatter={(value: number) => value.toLocaleString()}

@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
+import { ChartThemeProvider } from "@/contexts/chart-theme-context";
 import { SimpleChart } from "@/components/charts/simple-chart";
 import { useSimpleExport } from "@/hooks/use-simple-export";
 import { mockTestData } from "@/lib/mock-chart-data";
@@ -67,13 +68,19 @@ export default function TestExportPage() {
               onExport={handleExport}
               isExporting={isExporting}
             >
-              <EnhancedChart
-                type="bar"
-                data={mockTestData.enhanced.bar.data}
-                config={mockTestData.enhanced.bar.config}
-                title="月度销售分析"
-                description="2024年上半年销售、利润、成本对比"
-              />
+              <ChartThemeProvider
+                chartType="bar"
+                chartData={mockTestData.enhanced.bar.data}
+                chartConfig={mockTestData.enhanced.bar.config}
+              >
+                <EnhancedChart
+                  type="bar"
+                  data={mockTestData.enhanced.bar.data}
+                  config={mockTestData.enhanced.bar.config}
+                  title="月度销售分析"
+                  description="2024年上半年销售、利润、成本对比"
+                />
+              </ChartThemeProvider>
             </TestChartCard>
 
             {/* 折线图 */}
@@ -84,13 +91,19 @@ export default function TestExportPage() {
               onExport={handleExport}
               isExporting={isExporting}
             >
-              <EnhancedChart
-                type="line"
-                data={mockTestData.enhanced.line.data}
-                config={mockTestData.enhanced.line.config}
-                title="网站访问趋势"
-                description="过去一周的访问量、转化率、点击量变化"
-              />
+              <ChartThemeProvider
+                chartType="line"
+                chartData={mockTestData.enhanced.line.data}
+                chartConfig={mockTestData.enhanced.line.config}
+              >
+                <EnhancedChart
+                  type="line"
+                  data={mockTestData.enhanced.line.data}
+                  config={mockTestData.enhanced.line.config}
+                  title="网站访问趋势"
+                  description="过去一周的访问量、转化率、点击量变化"
+                />
+              </ChartThemeProvider>
             </TestChartCard>
 
             {/* 面积图 */}
@@ -101,14 +114,20 @@ export default function TestExportPage() {
               onExport={handleExport}
               isExporting={isExporting}
             >
-              <EnhancedChart
-                type="area"
-                data={mockTestData.enhanced.area.data}
-                config={mockTestData.enhanced.area.config}
-                title="季度财务报告"
-                description="2024年各季度收入、支出、净利润情况"
-                stacked={true}
-              />
+              <ChartThemeProvider
+                chartType="area"
+                chartData={mockTestData.enhanced.area.data}
+                chartConfig={mockTestData.enhanced.area.config}
+              >
+                <EnhancedChart
+                  type="area"
+                  data={mockTestData.enhanced.area.data}
+                  config={mockTestData.enhanced.area.config}
+                  title="季度财务报告"
+                  description="2024年各季度收入、支出、净利润情况"
+                  stacked={true}
+                />
+              </ChartThemeProvider>
             </TestChartCard>
 
             {/* 饼图 */}
@@ -119,15 +138,21 @@ export default function TestExportPage() {
               onExport={handleExport}
               isExporting={isExporting}
             >
-              <EnhancedChart
-                type="pie"
-                data={mockTestData.enhanced.pie.data}
-                config={mockTestData.enhanced.pie.config}
-                title="访问设备分布"
-                description="不同设备类型的访问占比统计"
-                showPercentage={true}
-                showLegend={true}
-              />
+              <ChartThemeProvider
+                chartType="pie"
+                chartData={mockTestData.enhanced.pie.data}
+                chartConfig={mockTestData.enhanced.pie.config}
+              >
+                <EnhancedChart
+                  type="pie"
+                  data={mockTestData.enhanced.pie.data}
+                  config={mockTestData.enhanced.pie.config}
+                  title="访问设备分布"
+                  description="不同设备类型的访问占比统计"
+                  showPercentage={true}
+                  showLegend={true}
+                />
+              </ChartThemeProvider>
             </TestChartCard>
           </div>
         </TabsContent>
