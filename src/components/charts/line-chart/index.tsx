@@ -218,13 +218,13 @@ export function BeautifulLineChart({
                   fill: config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 50%)`,
                   strokeWidth: 2,
                   r: 6,
-                  stroke: "#fff",
+                  stroke: "hsl(var(--background))",
                 }}
                 activeDot={{
                   r: 8,
                   stroke: config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 50%)`,
                   strokeWidth: 2,
-                  fill: "#fff",
+                  fill: "hsl(var(--background))",
                 }}
                 name={String(config[key]?.label || key)}
                 animationBegin={index * 200}

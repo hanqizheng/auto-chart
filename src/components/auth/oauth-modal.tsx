@@ -23,7 +23,7 @@ const OAUTH_PROVIDERS: OAuthProvider[] = [
     id: "github",
     name: "GitHub",
     icon: "⚫",
-    color: "bg-gray-800 hover:bg-gray-900",
+    color: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
   },
   {
     id: "microsoft",

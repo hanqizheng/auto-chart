@@ -38,12 +38,12 @@ export function ThinkingStepComponent({
         <div
           className={`mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full ${
             step.status === "completed"
-              ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+              ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
               : step.status === "error"
-                ? "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"
+                ? "bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive"
                 : step.status === "running"
-                  ? "animate-pulse bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
-                  : "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+                  ? "animate-pulse bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary"
+                  : "bg-muted text-muted-foreground"
           } `}
         >
           <Brain className="h-4 w-4" />

@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Toaster } from "@/components/ui/toast";
 import { ChartExportProvider } from "@/contexts/chart-export-context";
+import { ThemeProvider } from "@/components/theme-provider";
 
 import "./globals.css";
 
@@ -30,12 +31,14 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang="zh" className="dark">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ChartExportProvider>
-          <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
-        </ChartExportProvider>
-        <Toaster />
+    <html lang="zh">
+      <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
+        <ThemeProvider defaultTheme="light">
+          <ChartExportProvider>
+            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+          </ChartExportProvider>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

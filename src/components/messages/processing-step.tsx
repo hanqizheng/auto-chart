@@ -65,12 +65,12 @@ export function ProcessingStep({
             className={cn(
               "mt-1 h-4 w-0.5 transition-colors",
               status === "completed"
-                ? "bg-green-200 dark:bg-green-800"
+                ? "bg-emerald-500/20 dark:bg-emerald-500/20"
                 : status === "running"
-                  ? "bg-blue-200 dark:bg-blue-800"
+                  ? "bg-primary/20 dark:bg-primary/20"
                   : status === "error"
-                    ? "bg-red-200 dark:bg-red-800"
-                    : "bg-gray-200 dark:bg-gray-700"
+                    ? "bg-destructive/20 dark:bg-destructive/20"
+                    : "bg-muted dark:bg-muted"
             )}
           />
         )}

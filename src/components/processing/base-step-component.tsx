@@ -77,10 +77,10 @@ export function BaseStepComponent({
             step.status === "completed"
               ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
               : step.status === "error"
-                ? "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"
+                ? "bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive"
                 : step.status === "running"
                   ? `${colors.icon} animate-pulse`
-                  : "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+                  : "bg-muted text-muted-foreground"
           } `}
         >
           <Icon className="h-4 w-4" />

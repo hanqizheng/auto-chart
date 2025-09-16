@@ -60,12 +60,12 @@ function DefaultStepComponent({ step, isActive }: { step: ProcessingStep; isActi
       <div
         className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium ${
           step.status === "completed"
-            ? "bg-green-500 text-white"
+            ? "bg-emerald-500 text-white dark:bg-emerald-600"
             : step.status === "error"
-              ? "bg-red-500 text-white"
+              ? "bg-destructive text-destructive-foreground"
               : step.status === "running"
-                ? "animate-pulse bg-blue-500 text-white"
-                : "bg-gray-300 text-gray-600"
+                ? "animate-pulse bg-primary text-primary-foreground"
+                : "bg-muted text-muted-foreground"
         } `}
       >
         {step.status === "completed" && "✓"}
@@ -82,7 +82,7 @@ function DefaultStepComponent({ step, isActive }: { step: ProcessingStep; isActi
             <div className="flex items-center space-x-1">
               <div className="bg-muted h-1 w-16 overflow-hidden rounded-full">
                 <div
-                  className="h-full bg-blue-500 transition-all duration-300"
+                  className="h-full bg-primary transition-all duration-300"
                   style={{ width: `${step.progress}%` }}
                 />
               </div>

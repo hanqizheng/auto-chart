@@ -275,7 +275,7 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
               const html2canvas = (await import("html2canvas-pro")).default;
 
               const canvas = await html2canvas(chartContainer, {
-                backgroundColor: "#ffffff",
+                backgroundColor: "transparent",
                 scale: 2,
                 useCORS: true,
                 allowTaint: true,
@@ -328,12 +328,12 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
             // 处理导出错误 - 使用降级SVG图片
             const svgContent = `
               <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
-                <rect width="600" height="400" fill="#f8fafc"/>
+                <rect width="600" height="400" fill="hsl(var(--background))"/>
                 <text x="300" y="50" text-anchor="middle" font-size="20" font-weight="bold">Chart Generated</text>
-                <rect x="100" y="100" width="60" height="150" fill="#3b82f6"/>
-                <rect x="200" y="120" width="60" height="130" fill="#10b981"/>
-                <rect x="300" y="80" width="60" height="170" fill="#f59e0b"/>
-                <rect x="400" y="140" width="60" height="110" fill="#ef4444"/>
+                <rect x="100" y="100" width="60" height="150" fill="hsl(var(--chart-1))"/>
+                <rect x="200" y="120" width="60" height="130" fill="hsl(var(--chart-2))"/>
+                <rect x="300" y="80" width="60" height="170" fill="hsl(var(--chart-3))"/>
+                <rect x="400" y="140" width="60" height="110" fill="hsl(var(--chart-4))"/>
                 <text x="300" y="300" text-anchor="middle" font-size="14">Chart Preview</text>
               </svg>
             `.trim();

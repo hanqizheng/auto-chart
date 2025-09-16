@@ -242,7 +242,7 @@ export function ImageResultMessage({
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           {/* 图片容器 */}
-          <div className="relative bg-gray-50 dark:bg-gray-900">
+          <div className="relative bg-muted/30">
             {shouldShowLoading && (
               <div className="bg-muted flex aspect-video items-center justify-center">
                 <div className="space-y-2 text-center">

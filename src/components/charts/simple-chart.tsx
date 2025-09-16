@@ -68,17 +68,17 @@ export function SimpleChart({
               bottom: 60,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis
               dataKey={xAxisKey}
-              tick={{ fontSize: 12, fill: "#666" }}
-              tickLine={{ stroke: "#666" }}
-              axisLine={{ stroke: "#666" }}
+              tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
+              tickLine={{ stroke: "hsl(var(--muted-foreground))" }}
+              axisLine={{ stroke: "hsl(var(--muted-foreground))" }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: "#666" }}
-              tickLine={{ stroke: "#666" }}
-              axisLine={{ stroke: "#666" }}
+              tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
+              tickLine={{ stroke: "hsl(var(--muted-foreground))" }}
+              axisLine={{ stroke: "hsl(var(--muted-foreground))" }}
             />
             <Legend
               verticalAlign="bottom"
@@ -101,7 +101,7 @@ export function SimpleChart({
                   position="top"
                   style={{
                     fontSize: "12px",
-                    fill: "#333",
+                    fill: "hsl(var(--foreground))",
                     fontWeight: "600",
                   }}
                 />
@@ -124,17 +124,17 @@ export function SimpleChart({
               bottom: 60,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis
               dataKey={xAxisKey}
-              tick={{ fontSize: 12, fill: "#666" }}
-              tickLine={{ stroke: "#666" }}
-              axisLine={{ stroke: "#666" }}
+              tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
+              tickLine={{ stroke: "hsl(var(--muted-foreground))" }}
+              axisLine={{ stroke: "hsl(var(--muted-foreground))" }}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: "#666" }}
-              tickLine={{ stroke: "#666" }}
-              axisLine={{ stroke: "#666" }}
+              tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
+              tickLine={{ stroke: "hsl(var(--muted-foreground))" }}
+              axisLine={{ stroke: "hsl(var(--muted-foreground))" }}
             />
             <Legend
               verticalAlign="bottom"
@@ -155,7 +155,7 @@ export function SimpleChart({
                   position="top"
                   style={{
                     fontSize: "12px",
-                    fill: "#333",
+                    fill: "hsl(var(--foreground))",
                     fontWeight: "600",
                   }}
                 />
@@ -177,7 +177,7 @@ export function SimpleChart({
           <button
             onClick={handleChartExport}
             disabled={isExporting}
-            className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:bg-blue-600/50"
+            className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:bg-primary/50"
             title="Export chart as PNG image"
           >
             {isExporting ? (
@@ -207,7 +207,7 @@ export function SimpleChart({
           <CardHeader>
             {title && <CardTitle className="mb-2 text-center text-xl font-bold">{title}</CardTitle>}
             {/* Data Summary */}
-            <div className="mb-4 text-center text-sm text-gray-600">
+            <div className="mb-4 text-center text-sm text-muted-foreground">
               <div className="flex flex-col justify-center gap-1">
                 <div>Data Points: {data.length}</div>
                 <div>Series: {Object.keys(config).length}</div>

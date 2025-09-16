@@ -166,7 +166,7 @@ export function BeautifulBarChart({ data, config, title, description, className 
                   position="top"
                   style={{
                     fontSize: "11px",
-                    fill: "#333",
+                    fill: "hsl(var(--foreground))",
                     fontWeight: "600",
                   }}
                   formatter={(value: number) => value.toLocaleString()}

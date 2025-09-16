@@ -13,6 +13,7 @@ import { TEMP_STORAGE_KEYS } from "@/lib/session-storage";
 import { fileToBase64 } from "@/lib/session-serializer";
 import { v4 as uuidv4 } from "uuid";
 import { DEMO_SESSION_LIST, getDemoSession } from "@/data/demo-sessions";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
   const router = useRouter();
@@ -248,6 +249,7 @@ export default function HomePage() {
             <Button variant="outline" size="sm" onClick={() => scrollToSection(section1Ref)}>
               开始使用
             </Button>
+            <ThemeToggle />
           </div>
         </div>
       </header>
