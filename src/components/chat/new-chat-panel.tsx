@@ -13,6 +13,7 @@ import { generateChart } from "@/lib/ai-chart-system";
 import { useSimpleExport } from "@/hooks/use-simple-export";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
 import { cn } from "@/lib/utils";
+import { SecurityVerificationPayload } from "@/types/security";
 
 interface NewChatPanelProps {
   className?: string;
@@ -38,7 +39,7 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
 
   // 处理消息发送
   const handleSendMessage = useCallback(
-    async (content: string, files: UploadedFile[]) => {
+    async (content: string, files: UploadedFile[], _security?: SecurityVerificationPayload) => {
       // 1. 添加用户消息
       addUserMessage(content, files);
 

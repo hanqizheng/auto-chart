@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { NewChatInput } from "@/components/chat/new-chat-input";
 import { FileAttachment, SerializableChatSession, AutoTriggerConfig } from "@/types";
+import { SecurityVerificationPayload } from "@/types/security";
 import { MESSAGE_TYPES, MESSAGE_STATUS, USER_MESSAGE_SUBTYPES } from "@/constants/message";
 import { useSecurityValidation } from "@/lib/security";
 import { useToast } from "@/components/ui/use-toast";
@@ -44,7 +45,11 @@ export default function HomePage() {
   }, []);
 
   // 处理输入提交
-  const handleMessageSubmit = async (message: string, files: FileAttachment[]) => {
+  const handleMessageSubmit = async (
+    message: string,
+    files: FileAttachment[],
+    _security?: SecurityVerificationPayload
+  ) => {
     try {
       // 安全验证
       console.log("🔐 [Homepage Security] 开始安全验证:", {
@@ -141,6 +146,12 @@ export default function HomePage() {
         title: undefined, // 稍后自动生成
         version: "1.0",
         source: "homepage",
+        _security: _security?.turnstileToken
+          ? {
+              turnstileToken: _security.turnstileToken,
+              issuedAt: new Date().toISOString(),
+            }
+          : undefined,
         messages: [
           {
             id: messageId,
@@ -390,18 +401,6 @@ export default function HomePage() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-8">
-              <Button
-                variant="ghost"
-                size="lg"
-                onClick={() => scrollToSection(section3Ref)}
-                className="group"
-              >
-                了解更多功能
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
             </div>
           </div>
         </div>
