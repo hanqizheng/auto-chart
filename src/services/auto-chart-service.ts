@@ -13,6 +13,8 @@ import {
   DEFAULT_CHART_BASE_COLOR,
   mapSeriesKeysToColors,
 } from "@/lib/colors";
+import { SecurityVerificationPayload } from "@/types/security";
+import { getClientTurnstileToken } from "@/lib/security-context";
 
 /**
  * 自动图表生成服务
@@ -33,7 +35,8 @@ export class AutoChartService {
   async processUserInput(
     input: string,
     files?: File[],
-    onStepUpdate?: (flow: ProcessingFlow) => void
+    onStepUpdate?: (flow: ProcessingFlow) => void,
+    security?: SecurityVerificationPayload
   ): Promise<{
     processingFlow: ProcessingFlow;
     chartResult: ChartResultContent;
@@ -49,7 +52,8 @@ export class AutoChartService {
         input,
         files,
         processingFlow,
-        onStepUpdate
+        onStepUpdate,
+        security
       );
 
       // 3. 生成图表并导出
@@ -97,7 +101,8 @@ export class AutoChartService {
     input: string,
     files: File[] | undefined,
     flow: ProcessingFlow,
-    onStepUpdate?: (flow: ProcessingFlow) => void
+    onStepUpdate?: (flow: ProcessingFlow) => void,
+    security?: SecurityVerificationPayload
   ): Promise<any> {
     // 步骤1: AI思考分析
     const thinkingStep = this.addProcessingStep(flow, {
@@ -171,12 +176,19 @@ export class AutoChartService {
       };
 
       // 调用服务端API
+      const latestToken = getClientTurnstileToken();
+      const resolvedSecurity =
+        security ?? (latestToken ? { turnstileToken: latestToken } : undefined);
+
       const response = await fetch("/api/chart/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestData),
+        body: JSON.stringify({
+          ...requestData,
+          security: resolvedSecurity,
+        }),
       });
 
       if (!response.ok) {

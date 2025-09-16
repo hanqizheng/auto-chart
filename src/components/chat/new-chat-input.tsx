@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { FileAttachment } from "@/types";
 import { Send, Paperclip, X, FileSpreadsheet, Loader2 } from "lucide-react";
@@ -9,9 +9,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
+import { Turnstile } from "@marsidev/react-turnstile";
+import { SecurityVerificationPayload } from "@/types/security";
+import { setClientTurnstileToken } from "@/lib/security-context";
 
 interface NewChatInputProps {
-  onSendMessage: (message: string, files: FileAttachment[]) => void;
+  onSendMessage: (
+    message: string,
+    files: FileAttachment[],
+    security?: SecurityVerificationPayload
+  ) => void;
   onCancel?: () => void;
   isLoading?: boolean;
   isCancelling?: boolean;
@@ -36,19 +43,54 @@ export function NewChatInput({
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState<FileAttachment[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [isComposing, setIsComposing] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileKey, setTurnstileKey] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const turnstileEnabled = useMemo(() => process.env.NEXT_PUBLIC_ENABLE_TURNSTILE === "true", []);
+  const hasTurnstile = useMemo(
+    () => turnstileEnabled && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+    [turnstileEnabled]
+  );
   const { toast } = useToast();
 
   const handleSend = useCallback(() => {
     if (!message.trim() && files.length === 0) return;
 
-    onSendMessage(message.trim(), files);
+    if (hasTurnstile && !turnstileToken) {
+      toast({
+        title: "请先完成人机验证",
+        description: "点击下方验证后再发送消息",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    onSendMessage(message.trim(), files, {
+      turnstileToken: turnstileToken || undefined,
+    });
     setMessage("");
     setFiles([]);
-  }, [message, files, onSendMessage]);
+    if (hasTurnstile) {
+      setTurnstileToken(null);
+      setClientTurnstileToken(null);
+      setTurnstileKey(prev => prev + 1);
+    }
+  }, [
+    message,
+    files,
+    onSendMessage,
+    hasTurnstile,
+    turnstileToken,
+    toast,
+  ]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (isComposing || e.nativeEvent.isComposing) {
+      return;
+    }
+
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       if (!isLoading && !disabled) {
@@ -186,6 +228,8 @@ export function NewChatInput({
             value={message}
             onChange={e => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
+            onCompositionStart={() => setIsComposing(true)}
+            onCompositionEnd={() => setIsComposing(false)}
             placeholder={placeholder}
             disabled={disabled || isLoading}
             className="max-h-[200px] min-h-[60px] resize-none border-0 p-0 focus-visible:ring-0"
@@ -195,7 +239,7 @@ export function NewChatInput({
 
         {/* 输入工具栏 */}
         <div className="flex items-center justify-between p-3 pt-0">
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-wrap items-center gap-2">
             {/* 文件上传按钮 */}
             <Button
               variant="ghost"
@@ -215,7 +259,35 @@ export function NewChatInput({
             )}
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {hasTurnstile && (
+              <div className="min-w-[150px]">
+                <Turnstile
+                  key={turnstileKey}
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                  onSuccess={token => {
+                    setTurnstileToken(token);
+                    setClientTurnstileToken(token);
+                  }}
+                  onExpire={() => {
+                    setTurnstileToken(null);
+                    setClientTurnstileToken(null);
+                  }}
+                  onError={() => {
+                    setTurnstileToken(null);
+                    setClientTurnstileToken(null);
+                    toast({
+                      title: "人机验证失败",
+                      description: "请刷新验证组件后再试",
+                      variant: "destructive",
+                    });
+                  }}
+                  options={{
+                    appearance: "interaction-only",
+                  }}
+                />
+              </div>
+            )}
             {/* 取消按钮 */}
             {isLoading && onCancel && (
               <Button
@@ -232,7 +304,12 @@ export function NewChatInput({
             {/* 发送按钮 */}
             <Button
               onClick={handleSend}
-              disabled={disabled || isLoading || (!message.trim() && files.length === 0)}
+              disabled={
+                disabled ||
+                isLoading ||
+                (!message.trim() && files.length === 0) ||
+                (hasTurnstile && !turnstileToken)
+              }
               size="sm"
               className="h-8"
             >
