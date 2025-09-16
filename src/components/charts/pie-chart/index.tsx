@@ -8,9 +8,9 @@ import {
   PieChartValidationResult,
   PieChartData,
   PieChartAnalysis,
-  PIE_CHART_COLORS,
   PIE_CHART_DEFAULTS,
 } from "./types";
+import { useChartTheme } from "@/contexts/chart-theme-context";
 
 /**
  * 分析饼图数据分布
@@ -148,6 +148,7 @@ export function BeautifulPieChart({
   innerRadius = PIE_CHART_DEFAULTS.innerRadius,
   outerRadius = PIE_CHART_DEFAULTS.outerRadius,
 }: PieChartProps) {
+  const { pieSliceColors, palette } = useChartTheme();
   // 数据验证
   const validation = validatePieChartData(data);
 
@@ -181,7 +182,7 @@ export function BeautifulPieChart({
   // 准备图表数据并分配颜色
   const chartData = validData.map((item, index) => ({
     ...item,
-    color: item.color || PIE_CHART_COLORS[index % PIE_CHART_COLORS.length],
+    color: pieSliceColors[index % pieSliceColors.length] || palette.series[index % palette.series.length] || palette.primary,
   }));
 
   return (
@@ -196,11 +197,11 @@ export function BeautifulPieChart({
 
       <CardContent>
         <ChartContainer config={config}>
-          <PieChart width={600} height={400}>
-            <Pie
-              data={chartData}
-              cx="50%"
-              cy="50%"
+            <PieChart width={600} height={400}>
+              <Pie
+                data={chartData}
+                cx="50%"
+                cy="50%"
               innerRadius={innerRadius}
               outerRadius={outerRadius}
               paddingAngle={PIE_CHART_DEFAULTS.paddingAngle}
@@ -221,7 +222,7 @@ export function BeautifulPieChart({
                 verticalAlign="bottom"
                 height={36}
                 formatter={(value, entry) => (
-                  <span className="text-sm">
+                  <span className="text-sm" style={{ color: palette.neutralStrong }}>
                     {value} (
                     {entry?.payload
                       ? ((entry.payload.value / analysis.total) * 100).toFixed(1)

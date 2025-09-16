@@ -55,7 +55,7 @@ export function ImageResultMessage({
   const [imageLoadError, setImageLoadError] = useState(false);
 
   const { content, timestamp } = message;
-  const { chartData, chartType, title, description, imageInfo } = content;
+  const { chartData, chartType, title, description, imageInfo, chartConfig, theme } = content;
   
   // 优先使用当前图表的图片信息，如果没有则使用消息中的信息
   const currentImageInfo = currentChart?.imageInfo || imageInfo;
@@ -91,6 +91,34 @@ export function ImageResultMessage({
   };
   
   const downloadUrl = currentImageInfo.localBlobUrl;
+
+  const palettePreview = theme
+    ? [
+        { label: "主色", color: theme.palette.primary },
+        { label: "强调", color: theme.palette.accent },
+        { label: "背景", color: theme.palette.background },
+      ]
+    : [];
+
+  const seriesPalette = theme
+    ? (() => {
+        const configKeys = chartConfig ? Object.keys(chartConfig) : [];
+
+        if (configKeys.length === 0 && chartType === "pie") {
+          return (chartData || []).map((item: any, index: number) => ({
+            label: item?.name ?? `类别${index + 1}`,
+            color:
+              theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
+          }));
+        }
+
+        return configKeys.map((key, index) => ({
+          label: String(chartConfig?.[key]?.label || key),
+          color:
+            theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
+        }));
+      })()
+    : [];
 
   const handleDownload = async () => {
     try {
@@ -377,6 +405,26 @@ export function ImageResultMessage({
                     </div>
                   )}
                 </div>
+                {theme && (
+                  <div className="mt-3 space-y-2 text-xs">
+                    <div className="text-muted-foreground flex items-center gap-2">
+                      <Palette className="h-3 w-3" />
+                      <span>主题配色</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      {palettePreview.map(swatch => (
+                        <ColorBadge key={swatch.label} label={swatch.label} color={swatch.color} subtle />
+                      ))}
+                    </div>
+                    {seriesPalette.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-2">
+                        {seriesPalette.map(swatch => (
+                          <ColorBadge key={swatch.label} label={swatch.label} color={swatch.color} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </>
             )}
 
@@ -433,5 +481,25 @@ export function ImageResultMessage({
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+interface ColorBadgeProps {
+  label: string;
+  color: string;
+  subtle?: boolean;
+}
+
+function ColorBadge({ label, color, subtle }: ColorBadgeProps) {
+  return (
+    <span
+      className={`flex items-center gap-2 rounded-full border px-2 py-1 ${
+        subtle ? "border-border/70 bg-muted/40" : "border-border bg-background"
+      }`}
+      title={`${label}: ${color}`}
+    >
+      <span className="h-3 w-3 rounded-full border" style={{ backgroundColor: color, borderColor: color }} />
+      <span className="text-muted-foreground text-xs">{label}</span>
+    </span>
   );
 }

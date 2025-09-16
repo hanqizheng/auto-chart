@@ -33,6 +33,10 @@ export function DashboardLayout() {
     setIsChartVisible(true);
   };
 
+  const handleChartUpdated = (chart: ChartResultContent) => {
+    setLocalChart(chart);
+  };
+
   /**
    * 处理关闭图表显示
    */
@@ -71,6 +75,7 @@ export function DashboardLayout() {
             <ChartDisplayArea
               chart={displayChart}
               onClose={handleCloseChart}
+              onUpdateChart={handleChartUpdated}
             />
           </div>
         )}

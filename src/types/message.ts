@@ -11,6 +11,7 @@ import {
   USER_MESSAGE_SUBTYPES,
 } from "@/constants/message";
 import { ProcessingFlow } from "./processing";
+import { ChartTheme } from "./chart-theme";
 import { LocalImageInfo } from "./storage";
 
 /**
@@ -80,6 +81,7 @@ export interface ChartResultContent {
   title: string;
   description?: string;
   imageInfo: LocalImageInfo;
+  theme?: ChartTheme;
 }
 
 /**

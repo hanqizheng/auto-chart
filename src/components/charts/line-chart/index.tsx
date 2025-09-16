@@ -4,6 +4,7 @@ import { Minus, TrendingDown, TrendingUp } from "lucide-react";
 import { CartesianGrid, LabelList, Line, LineChart, ReferenceLine, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
+import { useChartTheme } from "@/contexts/chart-theme-context";
 import { LineChartProps, LineChartValidationResult, LineChartData, TrendAnalysis } from "./types";
 
 /**
@@ -116,6 +117,7 @@ export function BeautifulLineChart({
   referenceValue,
   referenceLabel,
 }: LineChartProps) {
+  const { getSeriesColor, palette } = useChartTheme();
   // 数据验证
   const validation = validateLineChartData(data);
   
@@ -174,16 +176,12 @@ export function BeautifulLineChart({
               bottom: 40,
             }}
           >
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="hsl(var(--muted-foreground))"
-              opacity={0.3}
-            />
+            <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.4} />
             <XAxis
               dataKey={xAxisKey}
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: palette.neutralStrong }}
               angle={-45}
               textAnchor="end"
               height={60}
@@ -191,7 +189,7 @@ export function BeautifulLineChart({
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: palette.neutralStrong }}
               tickFormatter={value => value.toLocaleString()}
             />
 
@@ -199,9 +197,9 @@ export function BeautifulLineChart({
             {showReferenceLine && (
               <ReferenceLine
                 y={overallAverage}
-                stroke="hsl(var(--muted-foreground))"
+                stroke={palette.neutral}
                 strokeDasharray="5 5"
-                opacity={0.5}
+                opacity={0.6}
               />
             )}
 
@@ -211,20 +209,20 @@ export function BeautifulLineChart({
                 key={key}
                 type="monotone"
                 dataKey={key}
-                stroke={config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 50%)`}
+                stroke={getSeriesColor(key, index)}
                 strokeWidth={3}
                 strokeOpacity={1}
                 dot={{
-                  fill: config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 50%)`,
+                  fill: palette.background,
                   strokeWidth: 2,
                   r: 6,
-                  stroke: "hsl(var(--background))",
+                  stroke: getSeriesColor(key, index),
                 }}
                 activeDot={{
                   r: 8,
-                  stroke: config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 50%)`,
+                  stroke: getSeriesColor(key, index),
                   strokeWidth: 2,
-                  fill: "hsl(var(--background))",
+                  fill: palette.background,
                 }}
                 name={String(config[key]?.label || key)}
                 animationBegin={index * 200}
@@ -242,7 +240,7 @@ export function BeautifulLineChart({
                   position="top"
                   style={{
                     fontSize: "9px",
-                    fill: config[key]?.color || `hsl(${(index * 137.5) % 360}, 70%, 45%)`,
+                    fill: getSeriesColor(key, index),
                     fontWeight: "700",
                     textShadow: "0 1px 2px rgba(255,255,255,0.8)",
                   }}

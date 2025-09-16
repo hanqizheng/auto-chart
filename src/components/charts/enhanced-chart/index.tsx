@@ -11,6 +11,7 @@ import {
   ENHANCED_CHART_DEFAULTS,
 } from "./types";
 import { PieChartData } from "../pie-chart/types";
+import { useChartTheme } from "@/contexts/chart-theme-context";
 
 /**
  * 验证数据与图表类型的兼容性
@@ -170,6 +171,8 @@ export function EnhancedChart({
   showLegend = ENHANCED_CHART_DEFAULTS.showLegend,
   exportMode = false,
 }: EnhancedChartProps) {
+  const { themedConfig } = useChartTheme();
+  const activeConfig = Object.keys(themedConfig || {}).length ? themedConfig : config;
   console.log("📊 [EnhancedChart] 组件渲染开始:", {
     type,
     title,
@@ -210,7 +213,7 @@ export function EnhancedChart({
       return (
         <BeautifulBarChart
           data={data as StandardChartData}
-          config={config}
+          config={activeConfig}
           title={title}
           description={description}
         />
@@ -221,7 +224,7 @@ export function EnhancedChart({
       return (
         <BeautifulLineChart
           data={data as StandardChartData}
-          config={config}
+          config={activeConfig}
           title={title}
           description={description}
         />
@@ -251,7 +254,7 @@ export function EnhancedChart({
       return (
         <BeautifulPieChart
           data={pieData}
-          config={config}
+          config={activeConfig}
           title={title}
           description={description}
           showPercentage={showPercentage}
@@ -266,7 +269,7 @@ export function EnhancedChart({
       return (
         <BeautifulAreaChart
           data={data as StandardChartData}
-          config={config}
+          config={activeConfig}
           title={title}
           description={description}
           stacked={stacked}

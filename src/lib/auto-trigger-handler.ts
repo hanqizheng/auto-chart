@@ -23,6 +23,7 @@ import { PROCESSING_STEPS, STEP_STATUS } from "@/constants/processing";
 import { getSessionStorageService, TEMP_STORAGE_KEYS } from "./session-storage";
 import { deserializeSession } from "./session-serializer";
 import { generateChart } from "./ai-chart-system/ai-chart-director";
+import { createChartTheme } from "@/lib/colors";
 
 /**
  * 自动触发处理结果
@@ -602,6 +603,24 @@ class AutoTriggerHandler {
         title: result.title,
       });
 
+      const seriesCount = (() => {
+        if (!Array.isArray(result.data) || result.data.length === 0) {
+          return 1;
+        }
+
+        if (result.chartType === "pie") {
+          return result.data.length || 1;
+        }
+
+        const firstItem = result.data[0];
+        if (firstItem && typeof firstItem === "object") {
+          const keys = Object.keys(firstItem).filter(key => key !== "name");
+          return keys.length || 1;
+        }
+
+        return 1;
+      })();
+
       const chartResult: ChartResultContent = {
         chartData: result.data,
         chartConfig: result.config,
@@ -616,6 +635,7 @@ class AutoTriggerHandler {
           dimensions: { width: 800, height: 600 },
           createdAt: new Date(),
         },
+        theme: createChartTheme("#3b82f6", seriesCount),
       };
 
       onChartResult(chartResult);

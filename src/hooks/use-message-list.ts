@@ -23,6 +23,7 @@ import {
 import { ProcessingStep, StepUpdateParams, ProcessingFlow } from "@/types/processing";
 import { LocalImageInfo } from "@/types/storage";
 import { UploadedFile } from "@/types/chat";
+import { createChartTheme } from "@/lib/colors";
 
 interface UseMessageListProps {
   initialMessages?: ChatMessage[];
@@ -173,10 +174,29 @@ export function useMessageList({
     ): string => {
       const id = generateId();
 
+      const inferredType = (metadata.chartType as ChartType) || "bar";
+      const seriesCount = (() => {
+        if (!Array.isArray(chartData) || chartData.length === 0) {
+          return 1;
+        }
+
+        if (inferredType === "pie") {
+          return chartData.length || 1;
+        }
+
+        const firstItem = chartData[0];
+        if (firstItem && typeof firstItem === "object") {
+          const keys = Object.keys(firstItem).filter(key => key !== "name");
+          return keys.length || 1;
+        }
+
+        return 1;
+      })();
+
       const chartResultContent: ChartResultContent = {
         chartData,
         chartConfig: {}, // Empty for now, could be populated based on chart type
-        chartType: (metadata.chartType as any) || "bar", // Default to bar chart
+        chartType: inferredType,
         title: metadata.title,
         description: metadata.description,
         imageInfo: {
@@ -192,6 +212,7 @@ export function useMessageList({
             exportMethod: "screenshot",
           },
         },
+        theme: createChartTheme("#3b82f6", seriesCount),
       };
 
       const chartMessage: ChartResultMessage = {

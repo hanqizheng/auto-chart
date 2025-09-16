@@ -8,6 +8,7 @@ import { chartExportService, ExportState } from "@/services/chart-export-service
 
 type ChartUpdateHandler = (updatedChart: ChartResultContent) => void;
 type ExportStatusHandler = (chartId: string, status: ExportState) => void;
+type ChartAppendHandler = (chart: ChartResultContent) => void;
 
 interface ChartRenderInfo {
   chartId: string;
@@ -22,6 +23,7 @@ interface ChartRenderInfo {
 class GlobalChartManager {
   private updateHandler: ChartUpdateHandler | null = null;
   private exportStatusHandler: ExportStatusHandler | null = null;
+  private appendHandler: ChartAppendHandler | null = null;
   private renderingCharts = new Map<string, ChartRenderInfo>();
   private pendingExports = new Set<string>();
 
@@ -31,6 +33,14 @@ class GlobalChartManager {
   setUpdateHandler(handler: ChartUpdateHandler) {
     this.updateHandler = handler;
     console.log("🌐 [GlobalChartManager] 设置更新处理器");
+  }
+
+  /**
+   * 设置图表追加处理器
+   */
+  setAppendHandler(handler: ChartAppendHandler) {
+    this.appendHandler = handler;
+    console.log("🌐 [GlobalChartManager] 设置追加处理器");
   }
 
   /**
@@ -239,6 +249,22 @@ class GlobalChartManager {
   }
 
   /**
+   * 追加新的图表消息
+   */
+  appendChart(chart: ChartResultContent) {
+    console.log("➕ [GlobalChartManager] 追加图表:", {
+      title: chart.title,
+      hasHandler: !!this.appendHandler
+    });
+
+    if (this.appendHandler) {
+      this.appendHandler(chart);
+    } else {
+      console.warn("⚠️ [GlobalChartManager] 没有设置追加处理器");
+    }
+  }
+
+  /**
    * 手动重试导出
    */
   retryExport(chartId: string) {
@@ -295,6 +321,7 @@ class GlobalChartManager {
   clearHandlers() {
     this.updateHandler = null;
     this.exportStatusHandler = null;
+    this.appendHandler = null;
     console.log("🧹 [GlobalChartManager] 清除所有处理器");
   }
 

@@ -62,11 +62,12 @@ export function CenteredChatPanel({
   // 设置全局图表更新处理器
   useEffect(() => {
     globalChartManager.setUpdateHandler(updateChartResultMessage);
+    globalChartManager.setAppendHandler(addChartResultMessage);
 
     return () => {
       globalChartManager.clearHandlers();
     };
-  }, [updateChartResultMessage]);
+  }, [updateChartResultMessage, addChartResultMessage]);
 
   // 检查并处理自动触发的会话（首页跳转、Demo等）
   useEffect(() => {

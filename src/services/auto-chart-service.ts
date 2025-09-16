@@ -1,12 +1,18 @@
 "use client";
 
-import { ChartResultContent, ProcessingFlow, ProcessingStep, ChartType } from "@/types";
+import { ChartResultContent, ProcessingFlow, ProcessingStep, ChartType, ChartTheme } from "@/types";
 import { PROCESSING_STEPS } from "@/constants/processing";
 import { AutoExportService } from "./auto-export-service";
 import { LocalStorageService } from "./local-storage-service";
 import { createRoot } from "react-dom/client";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
 import { aiDirector, ChartGenerationRequest } from "@/lib/ai-agents";
+import { ChartThemeProvider } from "@/contexts/chart-theme-context";
+import {
+  createChartTheme,
+  DEFAULT_CHART_BASE_COLOR,
+  mapSeriesKeysToColors,
+} from "@/lib/colors";
 
 /**
  * 自动图表生成服务
@@ -228,6 +234,7 @@ export class AutoChartService {
         chartData: fallbackData.data,
         chartType: fallbackData.chartType,
         chartConfig: fallbackData.config,
+        theme: fallbackData.theme,
         title: fallbackData.title,
         description: "AI处理失败，使用模拟数据生成图表",
         isFallback: true,
@@ -256,7 +263,10 @@ export class AutoChartService {
     await this.simulateStepProgress(generationStep, 1200);
 
     // 创建图表配置
-    const chartConfig = this.generateChartConfig(processedData.chartData);
+    const { config: chartConfig, theme } = this.generateChartConfig(
+      processedData.chartData,
+      processedData.theme?.baseColor
+    );
 
     this.completeStep(generationStep, {
       chartType: processedData.chartType,
@@ -286,6 +296,7 @@ export class AutoChartService {
       chartType: processedData.chartType,
       chartData: processedData.chartData,
       chartConfig,
+      theme,
       title: processedData.title,
       exportStep,
     });
@@ -309,6 +320,7 @@ export class AutoChartService {
       title: processedData.title,
       description: `基于${processedData.files?.length ? "上传数据" : "用户需求"}生成的${this.getChartTypeLabel(processedData.chartType)}`,
       imageInfo,
+      theme,
     };
   }
 
@@ -319,10 +331,11 @@ export class AutoChartService {
     chartType: ChartType;
     chartData: any[];
     chartConfig: any;
+    theme: ChartTheme;
     title: string;
     exportStep: ProcessingStep;
   }): Promise<{ imageInfo: any }> {
-    const { chartType, chartData, chartConfig, title, exportStep } = params;
+    const { chartType, chartData, chartConfig, theme, title, exportStep } = params;
 
     // 创建隐藏容器
     const container = this.exportService.createHiddenContainer();
@@ -336,6 +349,7 @@ export class AutoChartService {
         type: chartType,
         data: chartData,
         config: chartConfig,
+        theme,
         title,
       });
 
@@ -383,7 +397,16 @@ export class AutoChartService {
         // 使用 React 渲染图表
         import("react").then(React => {
           const root = createRoot(chartDiv);
-          root.render(React.createElement(EnhancedChart, chartProps));
+          const { theme, ...restProps } = chartProps;
+          const element = React.createElement(ChartThemeProvider, {
+            chartType: restProps.type,
+            chartData: restProps.data,
+            chartConfig: restProps.config,
+            theme,
+            children: React.createElement(EnhancedChart, restProps),
+          });
+
+          root.render(element);
 
           // 等待渲染完成 - 增加等待时间确保图表完全渲染
           setTimeout(() => {
@@ -476,6 +499,7 @@ export class AutoChartService {
     chartType: ChartType;
     config: any;
     title: string;
+    theme: ChartTheme;
   } {
     console.log("🔄 [AutoChartService] 使用降级方案生成图表");
 
@@ -500,10 +524,10 @@ export class AutoChartService {
     }
 
     const data = this.generateMockDataByType(chartType);
-    const config = this.generateChartConfig(data);
+    const { config, theme } = this.generateChartConfig(data);
     const title = `${this.getChartTypeLabel(chartType)} - ${lowerInput.includes("excel") || lowerInput.includes("数据") ? "数据分析" : "示例图表"}`;
 
-    return { data, chartType, config, title };
+    return { data, chartType, config, title, theme };
   }
 
   /**
@@ -544,25 +568,33 @@ export class AutoChartService {
     }
   }
 
-  private generateChartConfig(data: any[]): any {
-    if (!data || data.length === 0) return {};
+  private generateChartConfig(
+    data: any[],
+    baseColor: string | undefined = DEFAULT_CHART_BASE_COLOR
+  ): { config: Record<string, any>; theme: ChartTheme } {
+    if (!Array.isArray(data) || data.length === 0) {
+      return { config: {}, theme: createChartTheme(baseColor || DEFAULT_CHART_BASE_COLOR, 1) };
+    }
 
-    const keys = Object.keys(data[0]).filter(k => k !== "name");
-    const config: any = {};
+    const firstItem = data[0] || {};
+    const candidateKeys = Object.keys(firstItem).filter(key => key !== "name");
+    const numericKeys = candidateKeys.filter(key => typeof firstItem[key] === "number");
 
-    keys.forEach((key, index) => {
-      config[key] = {
+    const seriesKeys = numericKeys.length > 0 ? numericKeys : candidateKeys;
+    const effectiveKeys = seriesKeys.length > 0 ? seriesKeys : ["value"];
+    const theme = createChartTheme(baseColor || DEFAULT_CHART_BASE_COLOR, Math.max(effectiveKeys.length, 1));
+    const colorMap = mapSeriesKeysToColors(effectiveKeys, theme.palette);
+
+    const config = effectiveKeys.reduce<Record<string, any>>((acc, key, index) => {
+      acc[key] = {
         label: key,
-        color: this.getColorByIndex(index),
+        color:
+          colorMap[key] || theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
       };
-    });
+      return acc;
+    }, {});
 
-    return config;
-  }
-
-  private getColorByIndex(index: number): string {
-    const colors = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"];
-    return colors[index % colors.length];
+    return { config, theme };
   }
 
   private getChartTypeLabel(chartType: string): string {

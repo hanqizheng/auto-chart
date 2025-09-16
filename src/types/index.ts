@@ -14,6 +14,9 @@ export type {
   ChartIndicatorType,
 } from "./chart";
 
+// 图表主题相关类型
+export type { ChartTheme, ChartPalette } from "./chart-theme";
+
 // 数据处理相关类型
 export type {
   UploadStatus,
