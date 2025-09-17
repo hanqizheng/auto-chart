@@ -1,6 +1,6 @@
 /**
- * 全局图表管理器
- * 统一管理图表的渲染、导出、状态更新
+ * Global Chart Manager
+ * Unified management of chart rendering, export, and status updates
  */
 
 import { ChartResultContent } from "@/types";
@@ -21,49 +21,62 @@ interface ChartRenderInfo {
 }
 
 class GlobalChartManager {
-  private updateHandler: ChartUpdateHandler | null = null;
+  private updateHandlers = new Set<ChartUpdateHandler>();
   private exportStatusHandler: ExportStatusHandler | null = null;
   private appendHandler: ChartAppendHandler | null = null;
   private renderingCharts = new Map<string, ChartRenderInfo>();
   private pendingExports = new Set<string>();
 
   /**
-   * 设置图表更新处理器
+   * Set chart update handler
    */
   setUpdateHandler(handler: ChartUpdateHandler) {
-    this.updateHandler = handler;
-    console.log("🌐 [GlobalChartManager] 设置更新处理器");
+    this.updateHandlers.add(handler);
+    console.log("🌐 [GlobalChartManager] Registered update handler:", {
+      handlersCount: this.updateHandlers.size,
+    });
   }
 
   /**
-   * 设置图表追加处理器
+   * Remove chart update handler
    */
-  setAppendHandler(handler: ChartAppendHandler) {
+  removeUpdateHandler(handler: ChartUpdateHandler) {
+    if (this.updateHandlers.delete(handler)) {
+      console.log("🧹 [GlobalChartManager] Removed update handler:", {
+        handlersCount: this.updateHandlers.size,
+      });
+    }
+  }
+
+  /**
+   * Set chart append handler
+   */
+  setAppendHandler(handler: ChartAppendHandler | null) {
     this.appendHandler = handler;
-    console.log("🌐 [GlobalChartManager] 设置追加处理器");
+    console.log("🌐 [GlobalChartManager] Set append handler:", {
+      hasHandler: !!handler,
+    });
   }
 
   /**
-   * 设置导出状态处理器
+   * Set export status handler
    */
-  setExportStatusHandler(handler: ExportStatusHandler) {
+  setExportStatusHandler(handler: ExportStatusHandler | null) {
     this.exportStatusHandler = handler;
-    console.log("🌐 [GlobalChartManager] 设置导出状态处理器");
+    console.log("🌐 [GlobalChartManager] 设置导出状态处理器:", {
+      hasHandler: !!handler,
+    });
   }
 
   /**
-   * 注册图表渲染
-   * 图表组件渲染完成后调用此方法
+   * Register chart rendering
+   * Called when chart component rendering is completed
    */
-  registerChartRender(
-    chartId: string, 
-    element: HTMLElement, 
-    chartData: ChartResultContent
-  ) {
+  registerChartRender(chartId: string, element: HTMLElement, chartData: ChartResultContent) {
     console.log("📊 [GlobalChartManager] 注册图表渲染:", {
       chartId,
       title: chartData.title,
-      hasElement: !!element
+      hasElement: !!element,
     });
 
     const renderInfo: ChartRenderInfo = {
@@ -72,12 +85,12 @@ class GlobalChartManager {
       chartData,
       isRendered: true,
       renderTime: new Date(),
-      exportAttempts: 0
+      exportAttempts: 0,
     };
 
     this.renderingCharts.set(chartId, renderInfo);
 
-    // 自动触发导出
+    // Auto-trigger export
     this.scheduleExport(chartId);
   }
 
@@ -91,10 +104,10 @@ class GlobalChartManager {
     }
 
     this.pendingExports.add(chartId);
-    
-    console.log("⏰ [GlobalChartManager] 安排导出任务:", { 
-      chartId, 
-      delay 
+
+    console.log("⏰ [GlobalChartManager] 安排导出任务:", {
+      chartId,
+      delay,
     });
 
     setTimeout(async () => {
@@ -107,7 +120,7 @@ class GlobalChartManager {
    */
   private async executeExport(chartId: string) {
     const renderInfo = this.renderingCharts.get(chartId);
-    
+
     if (!renderInfo) {
       console.warn("⚠️ [GlobalChartManager] 找不到图表渲染信息:", { chartId });
       this.pendingExports.delete(chartId);
@@ -117,7 +130,7 @@ class GlobalChartManager {
     console.log("🚀 [GlobalChartManager] 开始执行导出:", {
       chartId,
       title: renderInfo.chartData.title,
-      attempts: renderInfo.exportAttempts + 1
+      attempts: renderInfo.exportAttempts + 1,
     });
 
     renderInfo.exportAttempts++;
@@ -127,7 +140,7 @@ class GlobalChartManager {
       this.notifyExportStatus(chartId, {
         isExporting: true,
         progress: 0,
-        stage: 'preparing'
+        stage: "preparing",
       });
 
       // 执行导出
@@ -145,7 +158,7 @@ class GlobalChartManager {
             filename: result.filename,
             localBlobUrl: result.blobUrl,
             size: result.size,
-            format: 'png',
+            format: "png",
             dimensions: result.dimensions,
             createdAt: new Date(),
           },
@@ -155,26 +168,25 @@ class GlobalChartManager {
           chartId,
           filename: result.filename,
           size: result.size,
-          url: result.blobUrl.substring(0, 50) + "..."
+          url: result.blobUrl.substring(0, 50) + "...",
         });
 
         // 通知导出完成
         this.notifyExportStatus(chartId, {
           isExporting: false,
           progress: 100,
-          stage: 'completed'
+          stage: "completed",
         });
 
         // 更新图表
         this.updateChart(updatedChart);
-
       } else {
         // 导出失败
         console.error("❌ [GlobalChartManager] 导出失败:", {
           chartId,
           error: result.error,
           details: result.details,
-          attempts: renderInfo.exportAttempts
+          attempts: renderInfo.exportAttempts,
         });
 
         renderInfo.lastExportError = result.error;
@@ -183,8 +195,8 @@ class GlobalChartManager {
         this.notifyExportStatus(chartId, {
           isExporting: false,
           progress: 0,
-          stage: 'error',
-          error: result.error
+          stage: "error",
+          error: result.error,
         });
 
         // 重试逻辑
@@ -193,29 +205,29 @@ class GlobalChartManager {
           console.log("🔄 [GlobalChartManager] 准备重试导出:", {
             chartId,
             attempt: renderInfo.exportAttempts + 1,
-            delay: retryDelay
+            delay: retryDelay,
           });
-          
+
           setTimeout(() => {
             this.scheduleExport(chartId);
           }, retryDelay);
-          
+
           return; // 不移除 pending 状态
         }
       }
     } catch (error) {
       console.error("💥 [GlobalChartManager] 导出过程异常:", {
         chartId,
-        error: error instanceof Error ? error.message : error
+        error: error instanceof Error ? error.message : error,
       });
 
-      renderInfo.lastExportError = error instanceof Error ? error.message : '未知错误';
-      
+      renderInfo.lastExportError = error instanceof Error ? error.message : "未知错误";
+
       this.notifyExportStatus(chartId, {
         isExporting: false,
         progress: 0,
-        stage: 'error',
-        error: renderInfo.lastExportError
+        stage: "error",
+        error: renderInfo.lastExportError,
       });
     } finally {
       this.pendingExports.delete(chartId);
@@ -237,12 +249,12 @@ class GlobalChartManager {
   updateChart(updatedChart: ChartResultContent) {
     console.log("🔄 [GlobalChartManager] 更新图表:", {
       title: updatedChart.title,
-      hasHandler: !!this.updateHandler,
-      hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl
+      handlersCount: this.updateHandlers.size,
+      hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl,
     });
-    
-    if (this.updateHandler) {
-      this.updateHandler(updatedChart);
+
+    if (this.updateHandlers.size > 0) {
+      this.updateHandlers.forEach(handler => handler(updatedChart));
     } else {
       console.warn("⚠️ [GlobalChartManager] 没有设置更新处理器");
     }
@@ -254,7 +266,7 @@ class GlobalChartManager {
   appendChart(chart: ChartResultContent) {
     console.log("➕ [GlobalChartManager] 追加图表:", {
       title: chart.title,
-      hasHandler: !!this.appendHandler
+      hasHandler: !!this.appendHandler,
     });
 
     if (this.appendHandler) {
@@ -283,11 +295,11 @@ class GlobalChartManager {
     console.log("🚫 [GlobalChartManager] 取消导出:", { chartId });
     this.pendingExports.delete(chartId);
     chartExportService.cancelExport(chartId);
-    
+
     this.notifyExportStatus(chartId, {
       isExporting: false,
       progress: 0,
-      stage: 'idle'
+      stage: "idle",
     });
   }
 
@@ -319,7 +331,7 @@ class GlobalChartManager {
    * 清除所有处理器
    */
   clearHandlers() {
-    this.updateHandler = null;
+    this.updateHandlers.clear();
     this.exportStatusHandler = null;
     this.appendHandler = null;
     console.log("🧹 [GlobalChartManager] 清除所有处理器");
@@ -332,8 +344,8 @@ class GlobalChartManager {
     return {
       renderingCharts: this.renderingCharts.size,
       pendingExports: this.pendingExports.size,
-      hasUpdateHandler: !!this.updateHandler,
-      hasExportStatusHandler: !!this.exportStatusHandler
+      hasUpdateHandler: this.updateHandlers.size > 0,
+      hasExportStatusHandler: !!this.exportStatusHandler,
     };
   }
 }

@@ -30,40 +30,40 @@ export function TestExportClientPage() {
   return (
     <div className="container mx-auto space-y-6 p-6">
       <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold">图表导出测试页面</h1>
+        <h1 className="mb-2 text-3xl font-bold">Chart Export Test Page</h1>
         <p className="text-muted-foreground">
-          使用 Mock 数据测试各种图表类型的导出功能，避免频繁调用 AI API
+          Test various chart type export functions using Mock data to avoid frequent AI API calls
         </p>
 
         {/* 全局状态显示 */}
         {error && (
           <Alert className="mt-4" variant="destructive">
             <AlertCircle className="h-4 w-4" />
-            <AlertDescription>导出失败: {error}</AlertDescription>
+            <AlertDescription>Export failed: {error}</AlertDescription>
           </Alert>
         )}
 
         {lastExported && !isExporting && (
           <Alert className="mt-4">
             <Download className="h-4 w-4" />
-            <AlertDescription>✅ 成功导出: {lastExported}</AlertDescription>
+            <AlertDescription>✅ Successfully exported: {lastExported}</AlertDescription>
           </Alert>
         )}
       </div>
 
       <Tabs defaultValue="enhanced" className="space-y-6">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="enhanced">增强图表 (EnhancedChart)</TabsTrigger>
-          <TabsTrigger value="simple">简单图表 (SimpleChart)</TabsTrigger>
+          <TabsTrigger value="enhanced">Enhanced Charts (EnhancedChart)</TabsTrigger>
+          <TabsTrigger value="simple">Simple Charts (SimpleChart)</TabsTrigger>
         </TabsList>
 
         <TabsContent value="enhanced" className="space-y-6">
           <div className="grid gap-6 lg:grid-cols-2">
             {/* 柱状图 */}
             <TestChartCard
-              title="柱状图测试"
-              description="月度销售数据柱状图"
-              filename="月度销售分析.png"
+              title="Bar Chart Test"
+              description="Monthly sales data bar chart"
+              filename="Monthly Sales Analysis.png"
               onExport={handleExport}
               isExporting={isExporting}
             >
@@ -76,17 +76,17 @@ export function TestExportClientPage() {
                   type="bar"
                   data={mockTestData.enhanced.bar.data}
                   config={mockTestData.enhanced.bar.config}
-                  title="月度销售分析"
-                  description="2024年上半年销售、利润、成本对比"
+                  title="Monthly Sales Analysis"
+                  description="2024 H1 sales, profit, cost comparison"
                 />
               </ChartThemeProvider>
             </TestChartCard>
 
             {/* 折线图 */}
             <TestChartCard
-              title="折线图测试"
-              description="一周访问数据趋势"
-              filename="网站访问趋势.png"
+              title="Line Chart Test"
+              description="One week access data trend"
+              filename="Website Access Trend.png"
               onExport={handleExport}
               isExporting={isExporting}
             >
@@ -99,17 +99,17 @@ export function TestExportClientPage() {
                   type="line"
                   data={mockTestData.enhanced.line.data}
                   config={mockTestData.enhanced.line.config}
-                  title="网站访问趋势"
-                  description="过去一周的访问量、转化率、点击量变化"
+                  title="Website Access Trend"
+                  description="Changes in visits, conversion rate, clicks over the past week"
                 />
               </ChartThemeProvider>
             </TestChartCard>
 
             {/* 面积图 */}
             <TestChartCard
-              title="面积图测试"
-              description="季度财务数据"
-              filename="季度财务报告.png"
+              title="Area Chart Test"
+              description="Quarterly financial data"
+              filename="Quarterly Financial Report.png"
               onExport={handleExport}
               isExporting={isExporting}
             >
@@ -122,8 +122,8 @@ export function TestExportClientPage() {
                   type="area"
                   data={mockTestData.enhanced.area.data}
                   config={mockTestData.enhanced.area.config}
-                  title="季度财务报告"
-                  description="2024年各季度收入、支出、净利润情况"
+                  title="Quarterly Financial Report"
+                  description="2024 quarterly income, expense, and net profit situation"
                   stacked={true}
                 />
               </ChartThemeProvider>
@@ -131,9 +131,9 @@ export function TestExportClientPage() {
 
             {/* 饼图 */}
             <TestChartCard
-              title="饼图测试"
-              description="设备访问占比"
-              filename="访问设备分布.png"
+              title="Pie Chart Test"
+              description="Device access proportion"
+              filename="Device Access Distribution.png"
               onExport={handleExport}
               isExporting={isExporting}
             >
@@ -146,8 +146,8 @@ export function TestExportClientPage() {
                   type="pie"
                   data={mockTestData.enhanced.pie.data}
                   config={mockTestData.enhanced.pie.config}
-                  title="访问设备分布"
-                  description="不同设备类型的访问占比统计"
+                  title="Device Access Distribution"
+                  description="Access proportion statistics for different device types"
                   showPercentage={true}
                   showLegend={true}
                 />
@@ -160,9 +160,9 @@ export function TestExportClientPage() {
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Simple 柱状图 */}
             <TestChartCard
-              title="简单柱状图测试"
-              description="产品销售数据"
-              filename="产品销售排行.png"
+              title="Simple Bar Chart Test"
+              description="Product sales data"
+              filename="Product Sales Ranking.png"
               onExport={handleExport}
               isExporting={isExporting}
             >
@@ -170,16 +170,16 @@ export function TestExportClientPage() {
                 type="bar"
                 data={mockTestData.simple.bar.data}
                 config={mockTestData.simple.bar.config}
-                title="产品销售排行"
+                title="Product Sales Ranking"
                 showExportButton={false}
               />
             </TestChartCard>
 
             {/* Simple 折线图 */}
             <TestChartCard
-              title="简单折线图测试"
-              description="温湿度监测数据"
-              filename="温湿度监测.png"
+              title="Simple Line Chart Test"
+              description="Temperature and humidity monitoring data"
+              filename="Temperature and Humidity Monitoring.png"
               onExport={handleExport}
               isExporting={isExporting}
             >
@@ -187,7 +187,7 @@ export function TestExportClientPage() {
                 type="line"
                 data={mockTestData.simple.line.data}
                 config={mockTestData.simple.line.config}
-                title="温湿度监测"
+                title="Temperature and Humidity Monitoring"
                 showExportButton={false}
               />
             </TestChartCard>
@@ -198,21 +198,28 @@ export function TestExportClientPage() {
       {/* 快速测试说明 */}
       <Card className="border-dashed">
         <CardHeader>
-          <CardTitle>快速测试指南</CardTitle>
-          <CardDescription>使用以下步骤快速验证导出功能</CardDescription>
+          <CardTitle>Quick Test Guide</CardTitle>
+          <CardDescription>
+            Use the following steps to quickly verify export functionality
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <ol className="list-decimal space-y-2 pl-6">
-            <li>选择一个图表，点击预览区域右上角的导出按钮</li>
-            <li>等待导出完成，查看浏览器下载记录中的 PNG 文件</li>
-            <li>重新点击导出按钮验证多次导出是否正常</li>
-            <li>切换到 SimpleChart 标签页测试基础图表导出</li>
+            <li>
+              Select a chart, click the export button in the top right corner of the preview area
+            </li>
+            <li>
+              Wait for the export to complete, check the PNG file in the browser download history
+            </li>
+            <li>Click the export button again to verify that multiple exports work properly</li>
+            <li>Switch to the SimpleChart tab to test basic chart export</li>
           </ol>
 
           <Alert>
             <RefreshCw className="h-4 w-4" />
             <AlertDescription>
-              如需重置状态，请刷新页面。此页面仅用于本地开发和测试环境。
+              To reset the state, please refresh the page. This page is only for local development
+              and testing environment.
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -254,7 +261,7 @@ function TestChartCard({
         </div>
         <Button variant="outline" size="sm" onClick={handleExport} disabled={isExporting}>
           <Download className="mr-2 h-4 w-4" />
-          {isExporting ? "导出中..." : "导出 PNG"}
+          {isExporting ? "Exporting..." : "Export PNG"}
         </Button>
       </CardHeader>
       <CardContent>{children}</CardContent>

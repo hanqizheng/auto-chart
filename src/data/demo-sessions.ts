@@ -1,17 +1,17 @@
 /**
- * Demo会话数据配置
- * 预设的完整会话数据，用于展示应用功能
+ * Demo session data configuration
+ * Preset complete session data for showcasing app functionality
  */
 
 import { SerializableChatSession } from "@/types";
 import { MESSAGE_TYPES, MESSAGE_STATUS, USER_MESSAGE_SUBTYPES } from "@/constants/message";
 
 /**
- * 销售数据分析Demo - 触发真实AI流程
+ * Sales data analysis demo - triggers real AI process
  */
 export const SALES_ANALYSIS_DEMO: SerializableChatSession = {
   id: "demo_sales_analysis_2024",
-  title: undefined, // 让系统自动生成
+  title: undefined, // Let the system generate automatically
   version: "1.0",
   source: "demo",
   createdAt: new Date("2024-01-15T10:00:00.000Z"),
@@ -22,7 +22,7 @@ export const SALES_ANALYSIS_DEMO: SerializableChatSession = {
       id: "demo_sales_user_msg",
       type: MESSAGE_TYPES.USER,
       content: {
-        text: "帮我分析这个销售数据，生成一个折线图显示月度趋势",
+        text: "Help me analyze this sales data and generate a line chart showing monthly trends",
         subtype: USER_MESSAGE_SUBTYPES.MIXED,
         attachments: [
           {
@@ -54,7 +54,7 @@ export const SALES_ANALYSIS_DEMO: SerializableChatSession = {
     },
   ],
 
-  // 配置自动触发，让Demo走真实的AI处理流程
+  // Configure auto-trigger to let demo follow real AI processing flow
   _autoTrigger: {
     enabled: true,
     type: "ai_processing",
@@ -77,11 +77,11 @@ export const SALES_ANALYSIS_DEMO: SerializableChatSession = {
 };
 
 /**
- * 产品占比分析Demo - 触发真实AI流程
+ * Product share analysis demo - triggers real AI process
  */
 export const PRODUCT_SHARE_DEMO: SerializableChatSession = {
   id: "demo_product_share_2024",
-  title: undefined, // 让系统自动生成
+  title: undefined, // Let the system generate automatically
   version: "1.0",
   source: "demo",
   createdAt: new Date("2024-01-10T14:30:00.000Z"),
@@ -92,7 +92,7 @@ export const PRODUCT_SHARE_DEMO: SerializableChatSession = {
       id: "demo_product_user_msg",
       type: MESSAGE_TYPES.USER,
       content: {
-        text: "生成一个饼图显示各产品的销售占比",
+        text: "Generate a pie chart showing the sales share of each product",
         subtype: USER_MESSAGE_SUBTYPES.MIXED,
         attachments: [
           {
@@ -124,7 +124,7 @@ export const PRODUCT_SHARE_DEMO: SerializableChatSession = {
     },
   ],
 
-  // 配置自动触发，让Demo走真实的AI处理流程
+  // Configure auto-trigger to let demo follow real AI processing flow
   _autoTrigger: {
     enabled: true,
     type: "ai_processing",
@@ -147,11 +147,11 @@ export const PRODUCT_SHARE_DEMO: SerializableChatSession = {
 };
 
 /**
- * 地区收入对比Demo - 触发真实AI流程
+ * Regional revenue comparison demo - triggers real AI process
  */
 export const REGIONAL_REVENUE_DEMO: SerializableChatSession = {
   id: "demo_regional_revenue_2024",
-  title: undefined, // 让系统自动生成
+  title: undefined, // Let the system generate automatically
   version: "1.0",
   source: "demo",
   createdAt: new Date("2024-01-20T16:15:00.000Z"),
@@ -162,7 +162,7 @@ export const REGIONAL_REVENUE_DEMO: SerializableChatSession = {
       id: "demo_regional_user_msg",
       type: MESSAGE_TYPES.USER,
       content: {
-        text: "创建一个柱状图比较北京、上海、深圳三个城市的收入情况",
+        text: "Create a bar chart comparing the revenue of Beijing, Shanghai, and Shenzhen",
         subtype: USER_MESSAGE_SUBTYPES.MIXED,
         attachments: [
           {
@@ -194,7 +194,7 @@ export const REGIONAL_REVENUE_DEMO: SerializableChatSession = {
     },
   ],
 
-  // 配置自动触发，让Demo走真实的AI处理流程
+  // Configure auto-trigger to let demo follow real AI processing flow
   _autoTrigger: {
     enabled: true,
     type: "ai_processing",
@@ -217,7 +217,7 @@ export const REGIONAL_REVENUE_DEMO: SerializableChatSession = {
 };
 
 /**
- * Demo会话映射表
+ * Demo session mapping table
  */
 export const DEMO_SESSIONS = {
   sales_analysis: SALES_ANALYSIS_DEMO,
@@ -226,54 +226,54 @@ export const DEMO_SESSIONS = {
 } as const;
 
 /**
- * Demo会话列表（用于首页展示）
+ * Demo session list (for homepage display)
  */
 export const DEMO_SESSION_LIST = [
   {
     id: "sales_analysis",
-    title: "销售数据趋势分析",
-    description: "上传Excel文件，生成销售趋势折线图",
-    category: "数据分析",
+    title: "Sales Data Trend Analysis",
+    description: "Upload Excel file to generate sales trend line chart",
+    category: "Data Analysis",
     chartType: "line",
-    features: ["文件上传", "趋势分析", "对比展示"],
-    estimatedTime: "30秒",
+    features: ["File Upload", "Trend Analysis", "Comparison Display"],
+    estimatedTime: "30 seconds",
   },
   {
     id: "product_share",
-    title: "产品销售占比分析",
-    description: "快速生成产品占比饼图",
-    category: "市场分析",
+    title: "Product Sales Share Analysis",
+    description: "Quickly generate product share pie chart",
+    category: "Market Analysis",
     chartType: "pie",
-    features: ["AI生成数据", "占比分析", "交互图表"],
-    estimatedTime: "15秒",
+    features: ["AI Generated Data", "Share Analysis", "Interactive Charts"],
+    estimatedTime: "15 seconds",
   },
   {
     id: "regional_revenue",
-    title: "地区收入对比分析",
-    description: "多城市收入数据柱状图对比",
-    category: "地域分析",
+    title: "Regional Revenue Comparison Analysis",
+    description: "Multi-city revenue data bar chart comparison",
+    category: "Regional Analysis",
     chartType: "bar",
-    features: ["多维对比", "数据洞察", "专业图表"],
-    estimatedTime: "20秒",
+    features: ["Multi-dimensional Comparison", "Data Insights", "Professional Charts"],
+    estimatedTime: "20 seconds",
   },
 ] as const;
 
 /**
- * 获取Demo会话数据
+ * Get demo session data
  */
 export function getDemoSession(demoId: string): SerializableChatSession | null {
   return DEMO_SESSIONS[demoId as keyof typeof DEMO_SESSIONS] || null;
 }
 
 /**
- * 获取所有Demo会话ID列表
+ * Get all demo session ID list
  */
 export function getDemoSessionIds(): string[] {
   return Object.keys(DEMO_SESSIONS);
 }
 
 /**
- * 验证Demo ID是否有效
+ * Validate if demo ID is valid
  */
 export function isValidDemoId(demoId: string): boolean {
   return demoId in DEMO_SESSIONS;

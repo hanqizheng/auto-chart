@@ -10,8 +10,8 @@ import { ChartGenerationStepComponent } from "./chart-generation-step";
 import { ImageExportStepComponent } from "./image-export-step";
 
 /**
- * 处理步骤组件映射表
- * 通过步骤类型动态渲染对应的组件
+ * Processing Step Component Mapping Table
+ * Dynamically render corresponding components by step type
  */
 const STEP_COMPONENTS = {
   [PROCESSING_STEPS.THINKING]: ThinkingStepComponent,
@@ -20,7 +20,7 @@ const STEP_COMPONENTS = {
   [PROCESSING_STEPS.CHART_TYPE_DETECTION]: ChartTypeDetectionStepComponent,
   [PROCESSING_STEPS.CHART_GENERATION]: ChartGenerationStepComponent,
   [PROCESSING_STEPS.IMAGE_EXPORT]: ImageExportStepComponent,
-  [PROCESSING_STEPS.COMPLETED]: () => null, // 完成状态不需要特殊组件
+  [PROCESSING_STEPS.COMPLETED]: () => null, // Completed status doesn't need special component
 } as const;
 
 interface StepRendererProps {
@@ -30,8 +30,8 @@ interface StepRendererProps {
 }
 
 /**
- * 处理步骤渲染器
- * 根据步骤类型动态渲染对应的组件
+ * Processing Step Renderer
+ * Dynamically render corresponding components based on step type
  */
 export function StepRenderer({ step, isActive = false, showDetails = true }: StepRendererProps) {
   const Component = STEP_COMPONENTS[step.type as keyof typeof STEP_COMPONENTS];
@@ -44,8 +44,8 @@ export function StepRenderer({ step, isActive = false, showDetails = true }: Ste
 }
 
 /**
- * 默认步骤组件
- * 用于未知或未实现的步骤类型
+ * Default Step Component
+ * Used for unknown or unimplemented step types
  */
 function DefaultStepComponent({ step, isActive }: { step: ProcessingStep; isActive: boolean }) {
   return (
@@ -64,7 +64,7 @@ function DefaultStepComponent({ step, isActive }: { step: ProcessingStep; isActi
             : step.status === "error"
               ? "bg-destructive text-destructive-foreground"
               : step.status === "running"
-                ? "animate-pulse bg-primary text-primary-foreground"
+                ? "bg-primary text-primary-foreground animate-pulse"
                 : "bg-muted text-muted-foreground"
         } `}
       >
@@ -82,7 +82,7 @@ function DefaultStepComponent({ step, isActive }: { step: ProcessingStep; isActi
             <div className="flex items-center space-x-1">
               <div className="bg-muted h-1 w-16 overflow-hidden rounded-full">
                 <div
-                  className="h-full bg-primary transition-all duration-300"
+                  className="bg-primary h-full transition-all duration-300"
                   style={{ width: `${step.progress}%` }}
                 />
               </div>
@@ -98,7 +98,7 @@ function DefaultStepComponent({ step, isActive }: { step: ProcessingStep; isActi
         {/* 时间信息 */}
         {step.duration && (
           <p className="text-muted-foreground mt-1 text-xs">
-            耗时: {formatDuration(step.duration)}
+            Duration: {formatDuration(step.duration)}
           </p>
         )}
       </div>
@@ -107,7 +107,7 @@ function DefaultStepComponent({ step, isActive }: { step: ProcessingStep; isActi
 }
 
 /**
- * 格式化持续时间
+ * Format duration
  */
 function formatDuration(ms: number): string {
   if (ms < 1000) {

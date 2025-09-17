@@ -44,9 +44,9 @@ export function ProcessingMessage({
   };
 
   const getStatusText = () => {
-    if (hasErrors) return "处理出错";
-    if (isCompleted) return "处理完成";
-    return "处理中";
+    if (hasErrors) return "Processing error";
+    if (isCompleted) return "Processing completed";
+    return "Processing";
   };
 
   const getStatusColor = () => {
@@ -84,9 +84,9 @@ export function ProcessingMessage({
               {/* 完成时的统计信息 */}
               {isCompleted && (
                 <div className="text-muted-foreground mt-1 text-xs">
-                  已完成 {completedSteps} 个步骤
+                  Completed {completedSteps} step{completedSteps !== 1 ? "s" : ""}
                   {steps.length > 0 && (
-                    <span className="ml-2">耗时 {calculateTotalDuration(steps)}</span>
+                    <span className="ml-2">Duration: {calculateTotalDuration(steps)}</span>
                   )}
                 </div>
               )}
@@ -132,7 +132,7 @@ export function ProcessingMessage({
           <div className="border-border bg-background/50 border-t p-4">
             <div className="text-muted-foreground text-center text-sm">
               <Clock className="mx-auto mb-2 h-8 w-8 opacity-50" />
-              正在初始化处理步骤...
+              Initializing processing steps...
             </div>
           </div>
         )}
@@ -142,7 +142,7 @@ export function ProcessingMessage({
 }
 
 /**
- * 计算总耗时
+ * Calculate total duration
  */
 function calculateTotalDuration(steps: ProcessingFlow["steps"]): string {
   const totalMs = steps.reduce((total, step) => {

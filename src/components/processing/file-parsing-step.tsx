@@ -11,8 +11,8 @@ interface FileParsingStepProps {
 }
 
 /**
- * 文件解析步骤组件
- * 显示文件解析的进度和结果
+ * File Parsing Step Component
+ * Display file parsing progress and results
  */
 export function FileParsingStepComponent({
   step,
@@ -90,17 +90,17 @@ export function FileParsingStepComponent({
           {/* 文件基本信息 */}
           {data && (
             <div className="text-muted-foreground mt-2 flex items-center space-x-4 text-xs">
-              <span>文件: {data.fileName}</span>
-              <span>大小: {formatFileSize(data.fileSize)}</span>
-              <span>类型: {data.fileType}</span>
+              <span>File: {data.fileName}</span>
+              <span>Size: {formatFileSize(data.fileSize)}</span>
+              <span>Type: {data.fileType}</span>
             </div>
           )}
 
           {/* 时间和状态信息 */}
           <div className="text-muted-foreground mt-1 flex items-center space-x-4 text-xs">
-            {step.duration && <span>耗时: {formatDuration(step.duration)}</span>}
-            {data?.parseTime && <span>解析耗时: {formatDuration(data.parseTime)}</span>}
-            {step.error && <span className="text-red-500">错误: {step.error}</span>}
+            {step.duration && <span>Duration: {formatDuration(step.duration)}</span>}
+            {data?.parseTime && <span>Parse time: {formatDuration(data.parseTime)}</span>}
+            {step.error && <span className="text-red-500">Error: {step.error}</span>}
           </div>
 
           {/* 详细内容 */}
@@ -110,28 +110,28 @@ export function FileParsingStepComponent({
                 {/* 解析结果统计 */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <h5 className="text-foreground text-sm font-medium">数据规模</h5>
+                    <h5 className="text-foreground text-sm font-medium">Data Scale</h5>
                     <div className="text-muted-foreground space-y-1 text-sm">
                       <div className="flex justify-between">
-                        <span>行数:</span>
+                        <span>Rows:</span>
                         <span className="font-mono">{data.rowCount.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>列数:</span>
+                        <span>Columns:</span>
                         <span className="font-mono">{data.columnCount}</span>
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <h5 className="text-foreground text-sm font-medium">文件信息</h5>
+                    <h5 className="text-foreground text-sm font-medium">File Information</h5>
                     <div className="text-muted-foreground space-y-1 text-sm">
                       <div className="flex justify-between">
-                        <span>格式:</span>
+                        <span>Format:</span>
                         <span className="font-mono">{data.fileType.toUpperCase()}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>大小:</span>
+                        <span>Size:</span>
                         <span className="font-mono">{formatFileSize(data.fileSize)}</span>
                       </div>
                     </div>
@@ -143,7 +143,7 @@ export function FileParsingStepComponent({
                   <div>
                     <h5 className="text-foreground mb-2 flex items-center space-x-1 text-sm font-medium">
                       <AlertCircle className="h-4 w-4 text-amber-500" />
-                      <span>解析警告</span>
+                      <span>Parsing Warnings</span>
                     </h5>
                     <div className="space-y-1">
                       {data.errors.map((error, index) => (
@@ -162,7 +162,7 @@ export function FileParsingStepComponent({
                     <div className="flex h-4 w-4 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
                       <span className="text-xs">✓</span>
                     </div>
-                    <span>文件解析成功，数据已准备就绪</span>
+                    <span>File parsing successful, data is ready</span>
                   </div>
                 )}
               </div>
@@ -175,7 +175,7 @@ export function FileParsingStepComponent({
 }
 
 /**
- * 格式化文件大小
+ * Format file size
  */
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 B";
@@ -188,7 +188,7 @@ function formatFileSize(bytes: number): string {
 }
 
 /**
- * 格式化持续时间
+ * Format duration
  */
 function formatDuration(ms: number): string {
   if (ms < 1000) {

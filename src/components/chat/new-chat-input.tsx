@@ -35,7 +35,7 @@ export function NewChatInput({
   isLoading = false,
   isCancelling = false,
   disabled = false,
-  placeholder = "描述你想要的图表或上传数据文件...",
+  placeholder = "Describe the chart you want or upload a data file...",
   maxFiles = 3,
   acceptedFileTypes = [".xlsx", ".xls", ".csv"],
   className,
@@ -60,8 +60,8 @@ export function NewChatInput({
 
     if (hasTurnstile && !turnstileToken) {
       toast({
-        title: "请先完成人机验证",
-        description: "点击下方验证后再发送消息",
+        title: "Please complete human verification first",
+        description: "Click the verification below before sending the message",
         variant: "destructive",
       });
       return;
@@ -77,14 +77,7 @@ export function NewChatInput({
       setClientTurnstileToken(null);
       setTurnstileKey(prev => prev + 1);
     }
-  }, [
-    message,
-    files,
-    onSendMessage,
-    hasTurnstile,
-    turnstileToken,
-    toast,
-  ]);
+  }, [message, files, onSendMessage, hasTurnstile, turnstileToken, toast]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (isComposing || e.nativeEvent.isComposing) {
@@ -111,8 +104,8 @@ export function NewChatInput({
       const extension = "." + file.name.split(".").pop()?.toLowerCase();
       if (!acceptedFileTypes.includes(extension)) {
         toast({
-          title: "文件类型不支持",
-          description: `请选择 ${acceptedFileTypes.join(", ")} 格式的文件`,
+          title: "File type not supported",
+          description: `Please select files in ${acceptedFileTypes.join(", ")} format`,
           variant: "destructive",
         });
         continue;
@@ -121,8 +114,8 @@ export function NewChatInput({
       // 检查文件大小 (10MB限制)
       if (file.size > 10 * 1024 * 1024) {
         toast({
-          title: "文件过大",
-          description: "文件大小不能超过 10MB",
+          title: "File too large",
+          description: "File size cannot exceed 10MB",
           variant: "destructive",
         });
         continue;
@@ -141,8 +134,8 @@ export function NewChatInput({
     if (newFiles.length > 0) {
       setFiles(prev => [...prev, ...newFiles]);
       toast({
-        title: "文件上传成功",
-        description: `已添加 ${newFiles.length} 个文件`,
+        title: "File uploaded successfully",
+        description: `Added ${newFiles.length} file${newFiles.length > 1 ? "s" : ""}`,
       });
     }
 
@@ -277,8 +270,8 @@ export function NewChatInput({
                     setTurnstileToken(null);
                     setClientTurnstileToken(null);
                     toast({
-                      title: "人机验证失败",
-                      description: "请刷新验证组件后再试",
+                      title: "Human verification failed",
+                      description: "Please refresh the verification component and try again",
                       variant: "destructive",
                     });
                   }}
@@ -297,7 +290,7 @@ export function NewChatInput({
                 disabled={isCancelling}
                 className="h-8"
               >
-                {isCancelling ? <Loader2 className="h-4 w-4 animate-spin" /> : "取消"}
+                {isCancelling ? <Loader2 className="h-4 w-4 animate-spin" /> : "Cancel"}
               </Button>
             )}
 
@@ -318,7 +311,7 @@ export function NewChatInput({
               ) : (
                 <>
                   <Send className="mr-1 h-4 w-4" />
-                  发送
+                  Send
                 </>
               )}
             </Button>
@@ -341,9 +334,9 @@ export function NewChatInput({
         <div className="bg-primary/10 border-primary pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg border-2 border-dashed">
           <div className="text-center">
             <FileSpreadsheet className="text-primary mx-auto mb-2 h-8 w-8" />
-            <p className="text-primary text-sm font-medium">释放文件以上传</p>
+            <p className="text-primary text-sm font-medium">Release files to upload</p>
             <p className="text-muted-foreground text-xs">
-              支持 {acceptedFileTypes.join(", ")} 格式
+              Supports {acceptedFileTypes.join(", ")} formats
             </p>
           </div>
         </div>

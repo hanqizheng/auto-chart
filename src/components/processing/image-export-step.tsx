@@ -11,7 +11,7 @@ interface ImageExportStepProps {
 }
 
 /**
- * 图片导出步骤组件
+ * Image Export Step Component
  */
 export function ImageExportStepComponent(props: ImageExportStepProps) {
   const data = props.step.data as ImageExportData | undefined;
@@ -24,36 +24,36 @@ export function ImageExportStepComponent(props: ImageExportStepProps) {
         {/* 文件信息 */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <h5 className="text-foreground mb-2 text-sm font-medium">文件信息</h5>
+            <h5 className="text-foreground mb-2 text-sm font-medium">File Information</h5>
             <div className="space-y-1 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">文件名:</span>
+                <span className="text-muted-foreground">File name:</span>
                 <span className="font-mono text-xs">{data.fileName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">格式:</span>
+                <span className="text-muted-foreground">Format:</span>
                 <span className="font-mono">{data.format.toUpperCase()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">大小:</span>
+                <span className="text-muted-foreground">Size:</span>
                 <span className="font-mono">{formatFileSize(data.size)}</span>
               </div>
             </div>
           </div>
 
           <div>
-            <h5 className="text-foreground mb-2 text-sm font-medium">图片规格</h5>
+            <h5 className="text-foreground mb-2 text-sm font-medium">Image Specifications</h5>
             <div className="space-y-1 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">宽度:</span>
+                <span className="text-muted-foreground">Width:</span>
                 <span className="font-mono">{data.dimensions.width}px</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">高度:</span>
+                <span className="text-muted-foreground">Height:</span>
                 <span className="font-mono">{data.dimensions.height}px</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">导出耗时:</span>
+                <span className="text-muted-foreground">Export duration:</span>
                 <span className="font-mono">{formatDuration(data.exportTime)}</span>
               </div>
             </div>
@@ -63,7 +63,7 @@ export function ImageExportStepComponent(props: ImageExportStepProps) {
         {/* 本地路径 */}
         {data.localPath && (
           <div>
-            <h5 className="text-foreground mb-2 text-sm font-medium">存储位置</h5>
+            <h5 className="text-foreground mb-2 text-sm font-medium">Storage Location</h5>
             <div className="bg-muted/50 rounded p-2 font-mono text-xs break-all">
               {data.localPath}
             </div>
@@ -74,7 +74,7 @@ export function ImageExportStepComponent(props: ImageExportStepProps) {
         {props.step.status === "completed" && (
           <div className="flex items-center space-x-2 rounded bg-green-50 p-3 text-sm text-green-600 dark:bg-green-900/20 dark:text-green-400">
             <Download className="h-4 w-4" />
-            <span>图片已成功导出并保存到本地</span>
+            <span>Image successfully exported and saved locally</span>
           </div>
         )}
       </div>
@@ -92,7 +92,7 @@ export function ImageExportStepComponent(props: ImageExportStepProps) {
 }
 
 /**
- * 格式化文件大小
+ * Format file size
  */
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 B";
@@ -105,7 +105,7 @@ function formatFileSize(bytes: number): string {
 }
 
 /**
- * 格式化持续时间
+ * Format duration
  */
 function formatDuration(ms: number): string {
   if (ms < 1000) {

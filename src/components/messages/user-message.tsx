@@ -9,34 +9,34 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 /**
- * 根据文件名推断MIME类型
+ * Infer MIME type from filename
  */
 function getFileTypeFromName(filename: string): string {
-  const extension = filename.toLowerCase().split('.').pop();
-  
+  const extension = filename.toLowerCase().split(".").pop();
+
   switch (extension) {
-    case 'xlsx':
-    case 'xls':
-      return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-    case 'csv':
-      return 'text/csv';
-    case 'json':
-      return 'application/json';
-    case 'txt':
-      return 'text/plain';
-    case 'pdf':
-      return 'application/pdf';
-    case 'png':
-      return 'image/png';
-    case 'jpg':
-    case 'jpeg':
-      return 'image/jpeg';
-    case 'gif':
-      return 'image/gif';
-    case 'webp':
-      return 'image/webp';
+    case "xlsx":
+    case "xls":
+      return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    case "csv":
+      return "text/csv";
+    case "json":
+      return "application/json";
+    case "txt":
+      return "text/plain";
+    case "pdf":
+      return "application/pdf";
+    case "png":
+      return "image/png";
+    case "jpg":
+    case "jpeg":
+      return "image/jpeg";
+    case "gif":
+      return "image/gif";
+    case "webp":
+      return "image/webp";
     default:
-      return 'application/octet-stream';
+      return "application/octet-stream";
   }
 }
 
@@ -120,7 +120,7 @@ export function UserMessage({
                 variant="secondary"
                 className="bg-primary-foreground/20 text-primary-foreground text-xs"
               >
-                {files.length} 个文件
+                {files.length} file{files.length > 1 ? "s" : ""}
               </Badge>
             </div>
           )}
@@ -131,7 +131,7 @@ export function UserMessage({
 }
 
 /**
- * 格式化文件大小
+ * Format file size
  */
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 B";
@@ -144,7 +144,7 @@ function formatFileSize(bytes: number): string {
 }
 
 /**
- * 获取文件类型标签
+ * Get file type label
  */
 function getFileTypeLabel(mimeType: string): string {
   const typeMap: Record<string, string> = {
@@ -152,11 +152,11 @@ function getFileTypeLabel(mimeType: string): string {
     "application/vnd.ms-excel": "Excel",
     "text/csv": "CSV",
     "application/json": "JSON",
-    "text/plain": "文本",
+    "text/plain": "Text",
     "image/png": "PNG",
     "image/jpeg": "JPG",
     "application/pdf": "PDF",
   };
 
-  return typeMap[mimeType] || mimeType.split("/")[1]?.toUpperCase() || "文件";
+  return typeMap[mimeType] || mimeType.split("/")[1]?.toUpperCase() || "File";
 }
