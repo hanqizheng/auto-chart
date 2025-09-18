@@ -6,7 +6,6 @@ import { BarChart, TrendingUp, Sparkles, FileSpreadsheet, ChevronDown } from "lu
 import { Button } from "@/components/ui/button";
 import { NewChatInput } from "@/components/chat/new-chat-input";
 import { FileAttachment, SerializableChatSession, AutoTriggerConfig } from "@/types";
-import { SecurityVerificationPayload } from "@/types/security";
 import { MESSAGE_TYPES, MESSAGE_STATUS, USER_MESSAGE_SUBTYPES } from "@/constants/message";
 import { useSecurityValidation } from "@/lib/security";
 import { useToast } from "@/components/ui/use-toast";
@@ -39,11 +38,7 @@ export default function HomePage() {
   }, []);
 
   // 处理输入提交
-  const handleMessageSubmit = async (
-    message: string,
-    files: FileAttachment[],
-    _security?: SecurityVerificationPayload
-  ) => {
+  const handleMessageSubmit = async (message: string, files: FileAttachment[]) => {
     try {
       // 安全验证
       console.log("🔐 [Homepage Security] 开始安全验证:", {
@@ -141,12 +136,6 @@ export default function HomePage() {
         title: undefined, // 稍后自动生成
         version: "1.0",
         source: "homepage",
-        _security: _security?.turnstileToken
-          ? {
-              turnstileToken: _security.turnstileToken,
-              issuedAt: new Date().toISOString(),
-            }
-          : undefined,
         messages: [
           {
             id: messageId,

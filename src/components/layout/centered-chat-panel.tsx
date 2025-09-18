@@ -10,7 +10,6 @@ import { AutoChartService } from "@/services/auto-chart-service";
 import { PROCESSING_STEPS } from "@/constants/processing";
 import { ProcessingFlow } from "@/types";
 import { useSecurityValidation } from "@/lib/security";
-import { SecurityVerificationPayload } from "@/types/security";
 import { useToast } from "@/components/ui/use-toast";
 import { autoTriggerHandler } from "@/lib/auto-trigger-handler";
 import { globalChartManager } from "@/lib/global-chart-manager";
@@ -123,11 +122,7 @@ export function CenteredChatPanel({
   /**
    * 处理用户消息提交
    */
-  const handleMessageSubmit = async (
-    text: string,
-    files?: File[],
-    security?: SecurityVerificationPayload
-  ) => {
+  const handleMessageSubmit = async (text: string, files?: File[]) => {
     try {
       setLoadingState(true);
 
@@ -204,8 +199,7 @@ export function CenteredChatPanel({
       const { processingFlow, chartResult } = await autoChartService.processUserInput(
         text,
         files,
-        onStepUpdate,
-        security
+        onStepUpdate
       );
 
       // 4. 更新处理消息以显示详细步骤
@@ -264,11 +258,10 @@ export function CenteredChatPanel({
       >
         <div className="mx-auto max-w-4xl">
           <NewChatInput
-            onSendMessage={(message, files, security) =>
+            onSendMessage={(message, files) =>
               handleMessageSubmit(
                 message,
-                files.map(f => f.file),
-                security
+                files.map(f => f.file)
               )
             }
             isLoading={isLoading}

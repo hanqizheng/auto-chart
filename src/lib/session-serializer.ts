@@ -323,7 +323,6 @@ export async function deserializeSession(
     _demoReplay: serializableSession._demoReplay,
     _storage: serializableSession._storage,
     _pendingProcessing: serializableSession._pendingProcessing,
-    _security: serializableSession._security,
   };
 
   console.log(`✅ [Serializer] 会话反序列化完成:`, {

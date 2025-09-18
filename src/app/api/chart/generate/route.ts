@@ -1,30 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ChartIntentAgent } from "@/lib/ai-agents";
 import { createServiceFromEnv } from "@/lib/ai/service-factory";
-import { verifyTurnstileToken } from "@/lib/turnstile";
 
 export async function POST(req: NextRequest) {
   try {
-    const { prompt, files, security } = await req.json();
-
-    const forwardedFor = req.headers.get("x-forwarded-for");
-    const clientIp = forwardedFor?.split(",")[0]?.trim() || null;
-
-    const verification = await verifyTurnstileToken(security?.turnstileToken, clientIp);
-
-    if (!verification.success) {
-      console.warn("🚫 [API] Turnstile 验证失败", verification.errorCodes);
-      return NextResponse.json(
-        {
-          success: false,
-          error: "人机验证失败，请重试",
-          details: {
-            errorCodes: verification.errorCodes,
-          },
-        },
-        { status: 403 }
-      );
-    }
+    const { prompt, files } = await req.json();
 
     console.log("🚀 [API] 开始处理图表生成请求:", {
       prompt: prompt?.substring(0, 100) + "...",

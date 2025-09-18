@@ -1,29 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceFromEnv } from "@/lib/ai/service-factory";
-import { verifyTurnstileToken } from "@/lib/turnstile";
 
 export async function POST(req: NextRequest) {
   try {
-    const { prompt, dataStructure, security } = await req.json();
-
-    const forwardedFor = req.headers.get("x-forwarded-for");
-    const clientIp = forwardedFor?.split(",")[0]?.trim() || null;
-
-    const verification = await verifyTurnstileToken(security?.turnstileToken, clientIp);
-
-    if (!verification.success) {
-      console.warn("🚫 [API] Turnstile 验证失败(意图分析)", verification.errorCodes);
-      return NextResponse.json(
-        {
-          success: false,
-          error: "人机验证失败，请重试",
-          details: {
-            errorCodes: verification.errorCodes,
-          },
-        },
-        { status: 403 }
-      );
-    }
+    const { prompt, dataStructure } = await req.json();
 
     // 在服务端创建AI服务（可以访问环境变量）
     const aiService = createServiceFromEnv("deepseek");

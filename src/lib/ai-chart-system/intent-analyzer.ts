@@ -4,7 +4,6 @@
 import { ChartType } from "@/types/chart";
 import { AIService } from "@/lib/ai/types";
 import { createServiceFromEnv } from "@/lib/ai/service-factory";
-import { getClientTurnstileToken } from "@/lib/security-context";
 import {
   ChartIntent,
   CompatibilityResult,
@@ -321,8 +320,6 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
     dataStructure: UnifiedDataStructure
   ): Promise<ChartIntent | null> {
     try {
-      const token = getClientTurnstileToken();
-
       const response = await fetch("/api/ai/analyze-intent", {
         method: "POST",
         headers: {
@@ -331,7 +328,6 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
         body: JSON.stringify({
           prompt,
           dataStructure,
-          security: token ? { turnstileToken: token } : undefined,
         }),
       });
 

@@ -24,7 +24,6 @@ import { getSessionStorageService, TEMP_STORAGE_KEYS } from "./session-storage";
 import { deserializeSession } from "./session-serializer";
 import { generateChart } from "./ai-chart-system/ai-chart-director";
 import { createChartTheme } from "@/lib/colors";
-import { setClientTurnstileToken } from "@/lib/security-context";
 
 /**
  * 自动触发处理结果
@@ -448,10 +447,6 @@ class AutoTriggerHandler {
 
       console.log("📋 [AutoTrigger] Using processing message ID:", processingMessageId);
 
-      if (session._security?.turnstileToken) {
-        setClientTurnstileToken(session._security.turnstileToken);
-      }
-
       // 初始化处理流程
       const flow: ProcessingFlow = {
         id: `flow_${Date.now()}`,
@@ -647,11 +642,9 @@ class AutoTriggerHandler {
 
       onChartResult(chartResult);
       console.log("✅ [AutoTrigger] AI自动处理完成");
-      setClientTurnstileToken(null);
       return true;
     } catch (error) {
       console.error("❌ [AutoTrigger] AI自动处理失败:", error);
-      setClientTurnstileToken(null);
       return false;
     }
   }
