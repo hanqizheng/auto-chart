@@ -212,7 +212,7 @@ export function useMessageList({
             exportMethod: "screenshot",
           },
         },
-        theme: createChartTheme("#3b82f6", seriesCount),
+        theme: createChartTheme("#22c55e", seriesCount),
       };
 
       const chartMessage: ChartResultMessage = {

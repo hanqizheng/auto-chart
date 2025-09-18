@@ -11,7 +11,7 @@ interface DataAnalysisStepProps {
 }
 
 /**
- * 数据分析步骤组件
+ * Data Analysis Step Component
  */
 export function DataAnalysisStepComponent(props: DataAnalysisStepProps) {
   const data = props.step.data as DataAnalysisData | undefined;
@@ -23,24 +23,24 @@ export function DataAnalysisStepComponent(props: DataAnalysisStepProps) {
       <div className="space-y-4">
         {/* 数据源信息 */}
         <div>
-          <h5 className="text-foreground mb-2 text-sm font-medium">数据源</h5>
+          <h5 className="text-foreground mb-2 text-sm font-medium">Data Source</h5>
           <p className="text-muted-foreground text-sm">
             {data.dataSource === "file"
-              ? "文件数据"
+              ? "File data"
               : data.dataSource === "prompt"
-                ? "用户描述"
-                : "混合数据"}
+                ? "User description"
+                : "Mixed data"}
           </p>
         </div>
 
         {/* 数据规模 */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <span className="text-muted-foreground text-sm">数据行数:</span>
+            <span className="text-muted-foreground text-sm">Row count:</span>
             <span className="ml-2 font-mono text-sm">{data.rowCount.toLocaleString()}</span>
           </div>
           <div>
-            <span className="text-muted-foreground text-sm">数据列数:</span>
+            <span className="text-muted-foreground text-sm">Column count:</span>
             <span className="ml-2 font-mono text-sm">{data.columnCount}</span>
           </div>
         </div>

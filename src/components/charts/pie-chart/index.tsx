@@ -1,7 +1,6 @@
 "use client";
 
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from "recharts";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Cell, Legend, Pie, PieChart } from "recharts";
 import { ChartContainer } from "@/components/ui/chart";
 import {
   PieChartProps,
@@ -11,6 +10,7 @@ import {
   PIE_CHART_DEFAULTS,
 } from "./types";
 import { useChartTheme } from "@/contexts/chart-theme-context";
+import { cn } from "@/lib/utils";
 
 /**
  * 分析饼图数据分布
@@ -149,25 +149,23 @@ export function BeautifulPieChart({
   outerRadius = PIE_CHART_DEFAULTS.outerRadius,
 }: PieChartProps) {
   const { pieSliceColors, palette } = useChartTheme();
+  const outerClasses = cn("flex h-full w-full flex-col", className);
+
   // 数据验证
   const validation = validatePieChartData(data);
 
   if (!validation.isValid) {
     return (
-      <Card className={className}>
-        <CardHeader>
-          <CardTitle className="text-red-600">数据格式错误</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-1 text-red-600">
-            {validation.errors.map((error, index) => (
-              <p key={index} className="text-sm">
-                • {error}
-              </p>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className={outerClasses}>
+        <h3 className="text-lg font-semibold mb-2 text-red-600">数据格式错误</h3>
+        <div className="space-y-1 text-red-600">
+          {validation.errors.map((error, index) => (
+            <p key={index} className="text-sm">
+              • {error}
+            </p>
+          ))}
+        </div>
+      </div>
     );
   }
 
@@ -185,25 +183,30 @@ export function BeautifulPieChart({
     color: pieSliceColors[index % pieSliceColors.length] || palette.series[index % palette.series.length] || palette.primary,
   }));
 
-  return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>{title}</span>
-          <div className="text-muted-foreground text-sm font-normal">饼图</div>
-        </CardTitle>
-        {description && <CardDescription>{description}</CardDescription>}
-      </CardHeader>
+  const effectiveOuterRadius = typeof outerRadius === "number" ? Math.min(outerRadius, 96) : outerRadius;
 
-      <CardContent>
-        <ChartContainer config={config}>
-            <PieChart width={600} height={400}>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
+  return (
+    <div className={outerClasses}>
+      {(title || description) && (
+        <div className="mb-4">
+          {title && (
+            <h3 className="text-lg font-semibold mb-2">{title}</h3>
+          )}
+          {description && (
+            <p className="text-sm text-muted-foreground">{description}</p>
+          )}
+        </div>
+      )}
+
+      <div className="flex-1 py-2">
+        <ChartContainer config={config} className="!aspect-auto h-full w-full">
+          <PieChart>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
               innerRadius={innerRadius}
-              outerRadius={outerRadius}
+              outerRadius={effectiveOuterRadius}
               paddingAngle={PIE_CHART_DEFAULTS.paddingAngle}
               dataKey="value"
               startAngle={PIE_CHART_DEFAULTS.startAngle}
@@ -234,8 +237,8 @@ export function BeautifulPieChart({
             )}
           </PieChart>
         </ChartContainer>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

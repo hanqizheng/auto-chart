@@ -10,7 +10,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   // Ensure that a valid locale is used
   if (!locale || !locales.includes(locale as Locale)) {
-    locale = "zh"; // Default to Chinese
+    locale = "en"; // Default to English
   }
 
   try {

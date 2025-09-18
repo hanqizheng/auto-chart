@@ -2,14 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import {
-  BarChart,
-  TrendingUp,
-  Sparkles,
-  FileSpreadsheet,
-  ChevronDown,
-  ArrowRight,
-} from "lucide-react";
+import { BarChart, TrendingUp, Sparkles, FileSpreadsheet, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewChatInput } from "@/components/chat/new-chat-input";
 import { FileAttachment, SerializableChatSession, AutoTriggerConfig } from "@/types";
@@ -22,14 +15,15 @@ import { fileToBase64 } from "@/lib/session-serializer";
 import { v4 as uuidv4 } from "uuid";
 import { DEMO_SESSION_LIST, getDemoSession } from "@/data/demo-sessions";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { HorizontalDemoSection } from "@/components/horizontal-demo-section";
+import { CustomizableChartSection } from "@/components/customizable-chart-section";
+import TextType from "@/components/ui/TextType";
 
 export default function HomePage() {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const section1Ref = useRef<HTMLDivElement>(null);
   const section2Ref = useRef<HTMLDivElement>(null);
-  const section3Ref = useRef<HTMLDivElement>(null);
-  const section4Ref = useRef<HTMLDivElement>(null);
 
   // 安全验证hook
   const { validateRequest } = useSecurityValidation();
@@ -61,20 +55,21 @@ export default function HomePage() {
 
       if (!securityResult.isAllowed) {
         // 显示安全限制提示
-        let toastMessage = securityResult.reason || "请求被安全系统阻止";
+        let toastMessage = securityResult.reason || "Request blocked by security system";
         let toastDescription = "";
 
         if (securityResult.retryAfter) {
           const minutes = Math.ceil(securityResult.retryAfter / 60);
-          toastDescription = `请等待 ${minutes} 分钟后重试`;
+          toastDescription = `Please wait ${minutes} minute${minutes > 1 ? "s" : ""} before retrying`;
         }
 
         if (securityResult.requiresCaptcha) {
-          toastDescription = "检测到异常活动，建议稍后再试或联系支持";
+          toastDescription =
+            "Abnormal activity detected, please try again later or contact support";
         }
 
         toast({
-          title: "🔒 安全限制",
+          title: "🔒 Security Restriction",
           description: `${toastMessage}${toastDescription ? "\n" + toastDescription : ""}`,
           variant: "destructive",
           duration: 5000,
@@ -208,8 +203,8 @@ export default function HomePage() {
     } catch (error) {
       console.error("❌ [Homepage Security] 安全验证失败:", error);
       toast({
-        title: "❌ 处理失败",
-        description: "请稍后重试",
+        title: "❌ Processing failed",
+        description: "Please try again later",
         variant: "destructive",
       });
     }
@@ -226,8 +221,8 @@ export default function HomePage() {
       const demoSession = getDemoSession(demoId);
       if (!demoSession) {
         toast({
-          title: "⚠️ Demo不存在",
-          description: "请选择其他Demo或使用手动输入",
+          title: "⚠️ Demo not found",
+          description: "Please select another demo or use manual input",
           variant: "destructive",
         });
         return;
@@ -243,8 +238,8 @@ export default function HomePage() {
     } catch (error) {
       console.error("❌ [Homepage] Demo启动失败:", error);
       toast({
-        title: "❌ Demo加载失败",
-        description: "请稍后重试",
+        title: "❌ Demo loading failed",
+        description: "Please try again later",
         variant: "destructive",
       });
     }
@@ -275,6 +270,7 @@ export default function HomePage() {
       {/* 第一个 Section：输入框和标题 */}
       <section
         ref={section1Ref}
+        data-section="input"
         className="relative flex min-h-screen items-center justify-center px-6 py-16"
       >
         <div className="container mx-auto max-w-4xl">
@@ -295,35 +291,31 @@ export default function HomePage() {
 
               <div className="space-y-6">
                 <h1 className="text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-                  AI 驱动的
-                  <br />
-                  <span className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-transparent">
-                    图表生成器
-                  </span>
+                  <TextType
+                    text={["AI-Powered", "Chart Generator", "Data Visualization"]}
+                    typingSpeed={75}
+                    pauseDuration={1500}
+                    showCursor={true}
+                    cursorCharacter="|"
+                    as="span"
+                    className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-transparent"
+                  />
                 </h1>
 
                 <p className="text-muted-foreground mx-auto max-w-2xl text-lg leading-relaxed md:text-xl">
-                  用自然语言描述需求，或上传数据文件，AI 立即为您生成专业的可视化图表
+                  Describe your needs in natural language, or upload data files, and AI will
+                  instantly generate professional visualization charts for you
                 </p>
               </div>
             </div>
 
             {/* 输入框区域 */}
             <div className="mx-auto max-w-2xl">
-              <div className="mb-6">
-                <h3 className="mb-2 text-lg font-medium">现在就开始创建您的图表</h3>
-                <p className="text-muted-foreground text-sm">
-                  描述您想要的图表类型和数据，或者上传 Excel 文件
-                </p>
-              </div>
-
-              <div className="bg-card/50 rounded-2xl border p-2 backdrop-blur">
-                <NewChatInput
-                  onSendMessage={handleMessageSubmit}
-                  placeholder="例如：生成一个显示2023年各月份销售额的柱状图，或上传您的数据文件..."
-                  className="border-0 bg-transparent p-2"
-                />
-              </div>
+              <NewChatInput
+                onSendMessage={handleMessageSubmit}
+                placeholder="Example: Generate a bar chart depending on [data], or upload your data file..."
+                className="border-0 bg-transparent p-2"
+              />
             </div>
           </div>
         </div>
@@ -336,75 +328,21 @@ export default function HomePage() {
             className="text-muted-foreground hover:text-foreground flex flex-col items-center space-y-1"
             onClick={() => scrollToSection(section2Ref)}
           >
-            <span className="text-xs">查看样例</span>
+            <div className="text-xs">View examples</div>
             <ChevronDown className="h-4 w-4" />
           </Button>
         </div>
       </section>
 
-      {/* 第二个 Section：Demo展示 */}
-      <section
-        ref={section2Ref}
-        className="bg-muted/20 relative flex min-h-screen items-center justify-center px-6 py-16"
-      >
-        <div className="container mx-auto max-w-6xl">
-          <div className="space-y-12 text-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold md:text-5xl">功能演示</h2>
-              <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-                体验AI图表生成的强大功能，点击下方Demo立即查看效果
-              </p>
-            </div>
+      {/* 横向滚动 Demo 展示区域 */}
+      <HorizontalDemoSection
+        heading="Chart Types"
+        subheading="Explore different visualization types to bring your data to life"
+        demos={DEMO_SESSION_LIST}
+        onTryDemo={handleDemoClick}
+      />
 
-            {/* Demo展示卡片 */}
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {DEMO_SESSION_LIST.map(demo => (
-                <div
-                  key={demo.id}
-                  className="bg-card rounded-2xl border p-6 transition-shadow hover:shadow-lg"
-                >
-                  <div className="space-y-4">
-                    {/* Demo图标 */}
-                    <div className="bg-primary/10 mx-auto flex h-12 w-12 items-center justify-center rounded-full">
-                      {demo.chartType === "line" && <TrendingUp className="text-primary h-6 w-6" />}
-                      {demo.chartType === "pie" && <Sparkles className="text-primary h-6 w-6" />}
-                      {demo.chartType === "bar" && <BarChart className="text-primary h-6 w-6" />}
-                    </div>
-
-                    {/* Demo标题和描述 */}
-                    <div>
-                      <h3 className="mb-2 text-xl font-semibold">{demo.title}</h3>
-                      <p className="text-muted-foreground mb-4 text-sm">{demo.description}</p>
-                    </div>
-
-                    {/* Demo特性 */}
-                    <div className="mb-4 flex flex-wrap justify-center gap-2">
-                      {demo.features.map((feature, index) => (
-                        <span
-                          key={index}
-                          className="bg-muted text-muted-foreground rounded px-2 py-1 text-xs"
-                        >
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Demo按钮 */}
-                    <Button
-                      onClick={() => handleDemoClick(demo.id)}
-                      className="w-full"
-                      variant="outline"
-                    >
-                      体验Demo ({demo.estimatedTime})
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <CustomizableChartSection />
 
       {/* Footer */}
       <footer className="bg-muted/30 border-t py-12">
@@ -419,36 +357,38 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold">Auto Chart</h3>
               </div>
               <p className="text-muted-foreground max-w-md">
-                AI
-                驱动的图表生成工具，让数据可视化变得简单高效。无需复杂操作，用自然语言即可生成专业图表。
+                AI-powered chart generation tool that makes data visualization simple and efficient.
+                No complex operations required, generate professional charts using natural language.
               </p>
             </div>
 
             {/* 功能特色 */}
             <div className="space-y-3">
-              <h4 className="font-semibold">核心功能</h4>
+              <h4 className="font-semibold">Core Features</h4>
               <ul className="text-muted-foreground space-y-2 text-sm">
-                <li>自然语言描述</li>
-                <li>Excel 文件上传</li>
-                <li>多种图表类型</li>
-                <li>高质量导出</li>
+                <li>Natural language description</li>
+                <li>Excel file upload</li>
+                <li>Multiple chart types</li>
+                <li>High-quality export</li>
               </ul>
             </div>
 
             {/* 技术支持 */}
             <div className="space-y-3">
-              <h4 className="font-semibold">技术支持</h4>
+              <h4 className="font-semibold">Technical Support</h4>
               <ul className="text-muted-foreground space-y-2 text-sm">
-                <li>AI 智能分析</li>
-                <li>实时图表生成</li>
-                <li>响应式设计</li>
-                <li>数据安全保护</li>
+                <li>AI intelligent analysis</li>
+                <li>Real-time chart generation</li>
+                <li>Responsive design</li>
+                <li>Data security protection</li>
               </ul>
             </div>
           </div>
 
           <div className="text-muted-foreground border-t pt-8 text-center text-sm">
-            <p>&copy; 2024 Auto Chart. 基于 AI 技术的专业数据可视化工具。</p>
+            <p>
+              &copy; 2024 Auto Chart. Professional data visualization tool based on AI technology.
+            </p>
           </div>
         </div>
       </footer>

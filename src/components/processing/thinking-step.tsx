@@ -12,8 +12,8 @@ interface ThinkingStepProps {
 }
 
 /**
- * 思考步骤组件
- * 显示 AI 的思考过程和推理
+ * Thinking Step Component
+ * Display AI's thinking process and reasoning
  */
 export function ThinkingStepComponent({
   step,
@@ -42,7 +42,7 @@ export function ThinkingStepComponent({
               : step.status === "error"
                 ? "bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive"
                 : step.status === "running"
-                  ? "animate-pulse bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary"
+                  ? "bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary animate-pulse"
                   : "bg-muted text-muted-foreground"
           } `}
         >
@@ -91,9 +91,9 @@ export function ThinkingStepComponent({
 
           {/* 时间和状态信息 */}
           <div className="text-muted-foreground mt-2 flex items-center space-x-4 text-xs">
-            {step.duration && <span>耗时: {formatDuration(step.duration)}</span>}
-            {step.startTime && <span>开始: {step.startTime.toLocaleTimeString()}</span>}
-            {step.error && <span className="text-red-500">错误: {step.error}</span>}
+            {step.duration && <span>Duration: {formatDuration(step.duration)}</span>}
+            {step.startTime && <span>Started: {step.startTime.toLocaleTimeString()}</span>}
+            {step.error && <span className="text-red-500">Error: {step.error}</span>}
           </div>
 
           {/* 详细内容 */}
@@ -103,7 +103,7 @@ export function ThinkingStepComponent({
                 {/* 推理过程 */}
                 {data.reasoning && (
                   <div>
-                    <h5 className="text-foreground mb-2 text-sm font-medium">推理过程</h5>
+                    <h5 className="text-foreground mb-2 text-sm font-medium">Reasoning Process</h5>
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       {data.reasoning}
                     </p>
@@ -113,7 +113,7 @@ export function ThinkingStepComponent({
                 {/* 考虑因素 */}
                 {data.considerations && data.considerations.length > 0 && (
                   <div>
-                    <h5 className="text-foreground mb-2 text-sm font-medium">考虑因素</h5>
+                    <h5 className="text-foreground mb-2 text-sm font-medium">Considerations</h5>
                     <ul className="space-y-1">
                       {data.considerations.map((consideration, index) => (
                         <li
@@ -131,7 +131,7 @@ export function ThinkingStepComponent({
                 {/* 结论 */}
                 {data.conclusion && (
                   <div>
-                    <h5 className="text-foreground mb-2 text-sm font-medium">结论</h5>
+                    <h5 className="text-foreground mb-2 text-sm font-medium">Conclusion</h5>
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       {data.conclusion}
                     </p>
@@ -147,7 +147,7 @@ export function ThinkingStepComponent({
 }
 
 /**
- * 格式化持续时间
+ * Format duration
  */
 function formatDuration(ms: number): string {
   if (ms < 1000) {

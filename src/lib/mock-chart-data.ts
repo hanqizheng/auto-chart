@@ -129,7 +129,7 @@ export const mockSimpleBarData = [
 export const mockSimpleBarConfig: ChartConfig = {
   sales: {
     label: "销售额",
-    color: "#3b82f6",
+    color: "#22c55e",
   },
   profit: {
     label: "利润",

@@ -37,7 +37,7 @@ export class ChartGenerator implements IChartGenerator {
     "#f59e0b", // Amber
     "#ef4444", // Red
     "#10b981", // Emerald
-    "#6366f1", // Indigo
+    "#22c55e", // Green
     "#f97316", // Orange
     "#ec4899", // Pink
   ];

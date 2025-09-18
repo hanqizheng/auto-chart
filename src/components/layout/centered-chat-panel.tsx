@@ -66,7 +66,8 @@ export function CenteredChatPanel({
     globalChartManager.setAppendHandler(addChartResultMessage);
 
     return () => {
-      globalChartManager.clearHandlers();
+      globalChartManager.removeUpdateHandler(updateChartResultMessage);
+      globalChartManager.setAppendHandler(null);
     };
   }, [updateChartResultMessage, addChartResultMessage]);
 
@@ -106,8 +107,8 @@ export function CenteredChatPanel({
         } else if (result.error) {
           console.error("❌ [CenteredChatPanel] 自动触发失败:", result.error);
           toast({
-            title: "⚠️ 会话恢复失败",
-            description: "无法恢复之前的会话，将创建新会话",
+            title: "⚠️ Session recovery failed",
+            description: "Unable to recover previous session, creating new session",
             variant: "destructive",
           });
         }
@@ -152,20 +153,21 @@ export function CenteredChatPanel({
         setLoadingState(false);
 
         // 显示安全限制提示
-        let toastMessage = securityResult.reason || "请求被安全系统阻止";
+        let toastMessage = securityResult.reason || "Request blocked by security system";
         let toastDescription = "";
 
         if (securityResult.retryAfter) {
           const minutes = Math.ceil(securityResult.retryAfter / 60);
-          toastDescription = `请等待 ${minutes} 分钟后重试`;
+          toastDescription = `Please wait ${minutes} minute${minutes > 1 ? "s" : ""} before retrying`;
         }
 
         if (securityResult.requiresCaptcha) {
-          toastDescription = "检测到异常活动，建议稍后再试或联系支持";
+          toastDescription =
+            "Abnormal activity detected, please try again later or contact support";
         }
 
         toast({
-          title: "🔒 安全限制",
+          title: "🔒 Security Restriction",
           description: `${toastMessage}${toastDescription ? "\n" + toastDescription : ""}`,
           variant: "destructive",
           duration: 5000,
@@ -181,7 +183,7 @@ export function CenteredChatPanel({
       const userMessageId = addUserMessage(text, files);
 
       // 2. 开始处理流程
-      const processingMessageId = addProcessingMessage("正在分析您的请求...");
+      const processingMessageId = addProcessingMessage("Analyzing your request...");
 
       // 3. 使用 AutoChartService 处理输入
       console.log("🚀 [CenteredChatPanel] 调用 AutoChartService 处理请求:", {
@@ -192,7 +194,7 @@ export function CenteredChatPanel({
       // 创建处理步骤更新回调
       const onStepUpdate = (flow: ProcessingFlow) => {
         updateProcessingMessage(processingMessageId, {
-          title: flow.isCompleted ? "处理完成" : "正在处理...",
+          title: flow.isCompleted ? "Processing completed" : "Processing...",
           flow: flow,
         });
         // 如果有外部更新回调，也调用它
@@ -208,7 +210,7 @@ export function CenteredChatPanel({
 
       // 4. 更新处理消息以显示详细步骤
       updateProcessingMessage(processingMessageId, {
-        title: "处理完成",
+        title: "Processing completed",
         flow: processingFlow,
       });
 
@@ -226,7 +228,7 @@ export function CenteredChatPanel({
       console.error("❌ [CenteredChatPanel] 处理消息失败:", error);
 
       // 添加错误处理消息
-      addProcessingMessage("处理失败，请重试");
+      addProcessingMessage("Processing failed, please try again");
 
       // TODO: 添加更详细的错误处理UI
     } finally {
@@ -273,8 +275,8 @@ export function CenteredChatPanel({
             disabled={isLoading}
             placeholder={
               session.messages.length === 0
-                ? "描述您想要的图表，或上传数据文件..."
-                : "继续对话或上传新的数据..."
+                ? "Describe the chart you want, or upload a data file..."
+                : "Continue the conversation or upload new data..."
             }
           />
         </div>
@@ -309,11 +311,11 @@ function CenteredEmptyState() {
 
         {/* 标题和描述 */}
         <div className="space-y-3">
-          <h3 className="text-foreground text-xl font-semibold">开始创建图表</h3>
+          <h3 className="text-foreground text-xl font-semibold">Start Creating Charts</h3>
           <p className="text-muted-foreground leading-relaxed">
-            发送消息描述您的需求，或上传数据文件，
+            Send a message describing your needs, or upload a data file,
             <br />
-            AI 会为您生成专业的数据可视化图表。
+            and AI will generate professional data visualization charts for you.
           </p>
         </div>
 
@@ -321,15 +323,15 @@ function CenteredEmptyState() {
         <div className="grid grid-cols-1 gap-3 text-sm">
           <div className="text-muted-foreground flex items-center justify-center space-x-2">
             <div className="h-2 w-2 rounded-full bg-blue-400" />
-            <span>智能数据分析</span>
+            <span>Smart Data Analysis</span>
           </div>
           <div className="text-muted-foreground flex items-center justify-center space-x-2">
             <div className="h-2 w-2 rounded-full bg-green-400" />
-            <span>多种图表类型</span>
+            <span>Multiple Chart Types</span>
           </div>
           <div className="text-muted-foreground flex items-center justify-center space-x-2">
             <div className="h-2 w-2 rounded-full bg-purple-400" />
-            <span>高质量图片导出</span>
+            <span>High-Quality Image Export</span>
           </div>
         </div>
       </div>

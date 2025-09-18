@@ -640,7 +640,7 @@ class AutoTriggerHandler {
           dimensions: { width: 800, height: 600 },
           createdAt: new Date(),
         },
-        theme: createChartTheme("#3b82f6", seriesCount),
+        theme: createChartTheme("#22c55e", seriesCount),
       };
 
       onChartResult(chartResult);

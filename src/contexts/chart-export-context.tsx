@@ -58,18 +58,17 @@ export function ChartExportProvider({ children }: { children: React.ReactNode })
 
     console.log("🔧 [ChartExportContext] 初始化");
 
-    // 设置图表更新处理器
-    globalChartManager.setUpdateHandler((updatedChart: ChartResultContent) => {
+    const updateHandler = (updatedChart: ChartResultContent) => {
       console.log("📊 [ChartExportContext] 收到图表更新:", {
         title: updatedChart.title,
         hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl
       });
       
       setCurrentChart(updatedChart);
-    });
+    };
+    globalChartManager.setUpdateHandler(updateHandler);
 
-    // 设置导出状态处理器
-    globalChartManager.setExportStatusHandler((chartId: string, status: ExportState) => {
+    const exportStatusHandler = (chartId: string, status: ExportState) => {
       console.log("📈 [ChartExportContext] 导出状态变化:", {
         chartId,
         stage: status.stage,
@@ -86,12 +85,14 @@ export function ChartExportProvider({ children }: { children: React.ReactNode })
         });
         return newMap;
       });
-    });
+    };
+    globalChartManager.setExportStatusHandler(exportStatusHandler);
 
     // 清理函数
     return () => {
       console.log("🧹 [ChartExportContext] 清理");
-      globalChartManager.clearHandlers();
+      globalChartManager.removeUpdateHandler(updateHandler);
+      globalChartManager.setExportStatusHandler(null);
     };
   }, []);
 

@@ -1,111 +1,58 @@
 "use client";
 
 import * as React from "react";
+import * as SliderPrimitive from "@radix-ui/react-slider";
+
 import { cn } from "@/lib/utils";
 
-interface SliderProps {
-  value: number[];
-  onValueChange: (value: number[]) => void;
-  min?: number;
-  max?: number;
-  step?: number;
-  disabled?: boolean;
-  className?: string;
-}
-
-export function Slider({
+function Slider({
+  className,
+  defaultValue,
   value,
-  onValueChange,
   min = 0,
   max = 100,
-  step = 1,
-  disabled = false,
-  className,
-}: SliderProps) {
-  const [isDragging, setIsDragging] = React.useState(false);
-  const sliderRef = React.useRef<HTMLDivElement>(null);
-
-  const percentage = ((value[0] - min) / (max - min)) * 100;
-
-  const handleMouseDown = React.useCallback(
-    (e: React.MouseEvent) => {
-      if (disabled) return;
-
-      e.preventDefault();
-      setIsDragging(true);
-
-      const rect = sliderRef.current?.getBoundingClientRect();
-      if (!rect) return;
-
-      const clickX = e.clientX - rect.left;
-      const clickPercentage = clickX / rect.width;
-      const newValue = min + (max - min) * clickPercentage;
-      const steppedValue = Math.round(newValue / step) * step;
-      const clampedValue = Math.max(min, Math.min(max, steppedValue));
-
-      onValueChange([clampedValue]);
-    },
-    [disabled, min, max, step, onValueChange]
+  ...props
+}: React.ComponentProps<typeof SliderPrimitive.Root>) {
+  const _values = React.useMemo(
+    () => (Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]),
+    [value, defaultValue, min, max]
   );
-
-  React.useEffect(() => {
-    if (!isDragging) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = sliderRef.current?.getBoundingClientRect();
-      if (!rect) return;
-
-      const clickX = e.clientX - rect.left;
-      const clickPercentage = Math.max(0, Math.min(1, clickX / rect.width));
-      const newValue = min + (max - min) * clickPercentage;
-      const steppedValue = Math.round(newValue / step) * step;
-      const clampedValue = Math.max(min, Math.min(max, steppedValue));
-
-      onValueChange([clampedValue]);
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging, min, max, step, onValueChange]);
 
   return (
-    <div
-      ref={sliderRef}
+    <SliderPrimitive.Root
+      data-slot="slider"
+      defaultValue={defaultValue}
+      value={value}
+      min={min}
+      max={max}
       className={cn(
-        "relative flex h-5 w-full cursor-pointer touch-none items-center select-none",
-        disabled && "cursor-not-allowed opacity-50",
+        "relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col",
         className
       )}
-      onMouseDown={handleMouseDown}
+      {...props}
     >
-      {/* Track */}
-      <div className="bg-secondary relative h-1.5 w-full grow overflow-hidden rounded-full">
-        {/* Progress */}
-        <div
-          className="bg-primary absolute h-full transition-all"
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
-
-      {/* Thumb */}
-      <div
+      <SliderPrimitive.Track
+        data-slot="slider-track"
         className={cn(
-          "border-primary bg-background absolute h-4 w-4 rounded-full border-2 shadow transition-colors",
-          "focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
-          disabled ? "cursor-not-allowed" : "cursor-grab",
-          isDragging && "scale-110 cursor-grabbing"
+          "bg-muted relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5"
         )}
-        style={{ left: `${percentage}%`, transform: "translateX(-50%)" }}
-      />
-    </div>
+      >
+        <SliderPrimitive.Range
+          data-slot="slider-range"
+          className={cn(
+            "bg-primary absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
+          )}
+        />
+      </SliderPrimitive.Track>
+      {Array.from({ length: _values.length }, (_, index) => (
+        <SliderPrimitive.Thumb
+          data-slot="slider-thumb"
+          key={index}
+          className="border-primary bg-background ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
+        />
+      ))}
+    </SliderPrimitive.Root>
   );
 }
+
+export { Slider };
