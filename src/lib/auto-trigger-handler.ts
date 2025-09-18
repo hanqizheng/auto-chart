@@ -398,7 +398,9 @@ class AutoTriggerHandler {
       }
 
       // 检查是否需要自动触发AI处理
-      const shouldTrigger = Boolean(session._autoTrigger?.enabled && session._autoTrigger?.triggerMessage);
+      const shouldTrigger = Boolean(
+        session._autoTrigger?.enabled && session._autoTrigger?.triggerMessage
+      );
 
       return {
         success: true,
@@ -429,11 +431,11 @@ class AutoTriggerHandler {
     onChartResult: (result: ChartResultContent) => void
   ): Promise<boolean> {
     if (!session._autoTrigger?.enabled) {
-      console.warn("⚠️ [AutoTrigger] 会话未启用自动触发");
+      console.warn("⚠️ [AutoTrigger] Auto trigger disabled for this session");
       return false;
     }
 
-    console.log("⚡ [AutoTrigger] 执行AI自动处理");
+    console.log("⚡ [AutoTrigger] Executing AI auto processing");
 
     try {
       const triggerMessage = session.messages.find(
@@ -441,10 +443,10 @@ class AutoTriggerHandler {
       ) as UserMessage;
 
       if (!triggerMessage) {
-        throw new Error("找不到触发消息");
+        throw new Error("Trigger message not found");
       }
 
-      console.log("📋 [AutoTrigger] 使用处理消息ID:", processingMessageId);
+      console.log("📋 [AutoTrigger] Using processing message ID:", processingMessageId);
 
       if (session._security?.turnstileToken) {
         setClientTurnstileToken(session._security.turnstileToken);
@@ -462,19 +464,19 @@ class AutoTriggerHandler {
       };
 
       // 步骤1：数据分析
-      console.log("📊 [AutoTrigger] 步骤1: 数据分析");
+      console.log("📊 [AutoTrigger] Step 1: data analysis");
       const step1: ProcessingStep = {
         id: `step_1_${Date.now()}`,
         type: PROCESSING_STEPS.DATA_ANALYSIS,
-        title: "分析输入数据",
-        description: "正在分析输入数据",
+        title: "Analyze input data",
+        description: "Analyzing the provided data",
         status: STEP_STATUS.RUNNING,
         startTime: new Date(),
       };
       flow.steps.push(step1);
       flow.currentStepIndex = 0;
       onProgressUpdate(processingMessageId, {
-        title: "正在分析您的数据...",
+        title: "Analyzing your data...",
         flow: { ...flow },
       });
 
@@ -503,19 +505,19 @@ class AutoTriggerHandler {
       }
 
       // 步骤2：意图分析
-      console.log("🎯 [AutoTrigger] 步骤2: 意图分析");
+      console.log("🎯 [AutoTrigger] Step 2: intent analysis");
       const step2: ProcessingStep = {
         id: `step_2_${Date.now()}`,
         type: PROCESSING_STEPS.CHART_TYPE_DETECTION,
-        title: "分析图表类型需求",
-        description: "正在分析图表类型需求",
+        title: "Determine chart requirements",
+        description: "Analyzing required chart types",
         status: STEP_STATUS.RUNNING,
         startTime: new Date(),
       };
       flow.steps.push(step2);
       flow.currentStepIndex = 1;
       onProgressUpdate(processingMessageId, {
-        title: "正在分析图表类型...",
+        title: "Determining chart type...",
         flow: { ...flow },
       });
 
@@ -527,19 +529,19 @@ class AutoTriggerHandler {
       onProgressUpdate(processingMessageId, { flow: { ...flow } });
 
       // 步骤3：图表生成
-      console.log("🎨 [AutoTrigger] 步骤3: 图表生成");
+      console.log("🎨 [AutoTrigger] Step 3: chart generation");
       const step3: ProcessingStep = {
         id: `step_3_${Date.now()}`,
         type: PROCESSING_STEPS.CHART_GENERATION,
-        title: "生成图表配置",
-        description: "正在生成图表配置",
+        title: "Generate chart configuration",
+        description: "Building chart configuration",
         status: STEP_STATUS.RUNNING,
         startTime: new Date(),
       };
       flow.steps.push(step3);
       flow.currentStepIndex = 2;
       onProgressUpdate(processingMessageId, {
-        title: "正在生成图表...",
+        title: "Generating chart...",
         flow: { ...flow },
       });
 
@@ -557,10 +559,10 @@ class AutoTriggerHandler {
         flow.steps[2].endTime = new Date();
         flow.hasError = true;
         onProgressUpdate(processingMessageId, {
-          title: "图表生成失败",
+          title: "Chart generation failed",
           flow: { ...flow },
         });
-        throw new Error(result.error?.message || "AI处理失败");
+        throw new Error(result.error?.message || "AI processing failed");
       }
 
       flow.steps[2].status = STEP_STATUS.COMPLETED;
@@ -568,19 +570,19 @@ class AutoTriggerHandler {
       onProgressUpdate(processingMessageId, { flow: { ...flow } });
 
       // 步骤4：图片导出
-      console.log("📸 [AutoTrigger] 步骤4: 图片导出");
+      console.log("📸 [AutoTrigger] Step 4: image export");
       const step4: ProcessingStep = {
         id: `step_4_${Date.now()}`,
         type: PROCESSING_STEPS.IMAGE_EXPORT,
-        title: "导出图表图片",
-        description: "正在导出图表图片",
+        title: "Export chart image",
+        description: "Exporting chart preview",
         status: STEP_STATUS.RUNNING,
         startTime: new Date(),
       };
       flow.steps.push(step4);
       flow.currentStepIndex = 3;
       onProgressUpdate(processingMessageId, {
-        title: "正在导出图片...",
+        title: "Exporting image...",
         flow: { ...flow },
       });
 
@@ -593,12 +595,12 @@ class AutoTriggerHandler {
       flow.endTime = new Date();
 
       onProgressUpdate(processingMessageId, {
-        title: "处理完成",
+        title: "Processing complete",
         flow: { ...flow },
       });
 
       // 构造图表结果
-      console.log("📊 [AutoTrigger] AI图表生成结果检查:", {
+      console.log("📊 [AutoTrigger] AI chart generation result:", {
         hasData: !!result.data,
         dataLength: result.data?.length || 0,
         dataType: Array.isArray(result.data) ? "array" : typeof result.data,

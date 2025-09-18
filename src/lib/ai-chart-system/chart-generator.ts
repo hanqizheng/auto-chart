@@ -69,12 +69,15 @@ export class ChartGenerator implements IChartGenerator {
       // 生成洞察
       const insights = await this.generateInsights(processedData, intent);
 
+      const resultData =
+        intent.chartType === "pie" ? this.normalizePieResult(processedData, intent) : processedData;
+
       const processingTime = Date.now() - startTime;
 
       const result: ChartGenerationResult = {
         success: true,
         chartType: intent.chartType,
-        data: processedData,
+        data: resultData,
         config,
         title: intent.suggestions.title,
         description: intent.suggestions.description,
@@ -286,6 +289,37 @@ export class ChartGenerator implements IChartGenerator {
     });
 
     return cleanedData;
+  }
+
+  private normalizePieResult(data: DataRow[], intent: ChartIntent): DataRow[] {
+    const xField = intent.visualMapping.xAxis;
+    const yField = intent.visualMapping.yAxis[0];
+
+    if (!xField || !yField) {
+      return data;
+    }
+
+    return data
+      .map(row => {
+        const name = row[xField];
+        const rawValue = row[yField];
+        const value =
+          typeof rawValue === "number"
+            ? rawValue
+            : typeof rawValue === "string"
+              ? this.parseNumericValue(rawValue)
+              : null;
+
+        if (name == null || value == null || isNaN(value)) {
+          return null;
+        }
+
+        return {
+          name: String(name),
+          value,
+        } as DataRow;
+      })
+      .filter((row): row is DataRow => row !== null);
   }
 
   /**

@@ -46,13 +46,8 @@ export function ChartDisplayArea({ chart, onClose, onUpdateChart }: ChartDisplay
 
   // 图表渲染完成后注册到全局管理器
   useEffect(() => {
-    if (
-      chart &&
-      chartRef.current &&
-      chartIdRef.current &&
-      !chart.imageInfo?.localBlobUrl
-    ) {
-      console.log("📊 [ChartDisplayArea] 注册图表到全局管理器:", {
+    if (chart && chartRef.current && chartIdRef.current && !chart.imageInfo?.localBlobUrl) {
+      console.log("📊 [ChartDisplayArea] Register chart with global manager:", {
         chartId: chartIdRef.current,
         title: chart.title,
       });
@@ -89,8 +84,10 @@ export function ChartDisplayArea({ chart, onClose, onUpdateChart }: ChartDisplay
               />
             </svg>
           </div>
-          <h3 className="text-muted-foreground text-lg font-semibold">等待图表生成</h3>
-          <p className="text-muted-foreground text-sm">图表生成完成后将在这里显示</p>
+          <h3 className="text-muted-foreground text-lg font-semibold">Waiting for chart</h3>
+          <p className="text-muted-foreground text-sm">
+            The generated chart will appear here once it is ready.
+          </p>
         </div>
       </div>
     );
@@ -122,16 +119,16 @@ export function ChartDisplayArea({ chart, onClose, onUpdateChart }: ChartDisplay
 }
 
 /**
- * 获取图表类型的中文标签
+ * 获取图表类型的标签
  */
 function getChartTypeLabel(chartType: string): string {
   const labels: Record<string, string> = {
-    bar: "柱状图",
-    line: "折线图",
-    area: "面积图",
-    pie: "饼图",
-    scatter: "散点图",
-    radar: "雷达图",
+    bar: "Bar chart",
+    line: "Line chart",
+    area: "Area chart",
+    pie: "Pie chart",
+    scatter: "Scatter chart",
+    radar: "Radar chart",
   };
 
   return labels[chartType] || chartType;
@@ -211,7 +208,7 @@ function ThemedChartContent({
 
   const applyHexInput = useCallback(() => {
     if (!HEX_INPUT_PATTERN.test(hexInput.trim())) {
-      setHexError("请输入有效的十六进制颜色值");
+      setHexError("Please enter a valid hex color value");
       return;
     }
     const normalized = normalizeHexColor(hexInput);
@@ -242,7 +239,7 @@ function ThemedChartContent({
 
       if (!result.success) {
         toast({
-          title: "重新生成失败",
+          title: "Regeneration failed",
           description: result.error,
           variant: "destructive",
         });
@@ -275,26 +272,36 @@ function ThemedChartContent({
       globalChartManager.appendChart(updatedChart);
 
       toast({
-        title: "图表已更新",
-        description: "新的主题配色已生成并添加到对话中。",
+        title: "Chart updated",
+        description: "A refreshed theme palette has been added to the conversation.",
       });
     } catch (error) {
-      console.error("❌ [ChartDisplayArea] 重新导出失败:", error);
+      console.error("❌ [ChartDisplayArea] Failed to regenerate export:", error);
       toast({
-        title: "重新生成失败",
-        description: error instanceof Error ? error.message : "无法重新导出图表",
+        title: "Regeneration failed",
+        description: error instanceof Error ? error.message : "Unable to regenerate the chart",
         variant: "destructive",
       });
     } finally {
       setIsRegenerating(false);
     }
-  }, [chart, chartId, chartRef, isRegenerating, setIsRegenerating, themedConfig, theme, onUpdateChart, toast]);
+  }, [
+    chart,
+    chartId,
+    chartRef,
+    isRegenerating,
+    setIsRegenerating,
+    themedConfig,
+    theme,
+    onUpdateChart,
+    toast,
+  ]);
 
   const palettePreview = [
-    { label: "主色", color: palette.primary },
-    { label: "强调", color: palette.accent },
-    { label: "背景", color: palette.background },
-    { label: "网格", color: palette.grid },
+    { label: "Primary", color: palette.primary },
+    { label: "Accent", color: palette.accent },
+    { label: "Background", color: palette.background },
+    { label: "Grid", color: palette.grid },
   ];
 
   const seriesEntries = seriesKeys.length
@@ -309,13 +316,17 @@ function ThemedChartContent({
         color,
       }));
 
-  const pieEntries = chart.chartType === "pie"
-    ? (chart.chartData || []).map((item: any, index: number) => ({
-        key: `${item?.name ?? `slice-${index + 1}`}`,
-        label: item?.name ?? `类别 ${index + 1}`,
-        color: pieSliceColors[index % pieSliceColors.length] || palette.series[index % palette.series.length] || palette.primary,
-      }))
-    : [];
+  const pieEntries =
+    chart.chartType === "pie"
+      ? (chart.chartData || []).map((item: any, index: number) => ({
+          key: `${item?.name ?? `slice-${index + 1}`}`,
+          label: item?.name ?? `Category ${index + 1}`,
+          color:
+            pieSliceColors[index % pieSliceColors.length] ||
+            palette.series[index % palette.series.length] ||
+            palette.primary,
+        }))
+      : [];
 
   return (
     <div className="bg-background flex h-full flex-col">
@@ -328,9 +339,9 @@ function ThemedChartContent({
             {isExporting && (
               <Badge variant="secondary" className="flex items-center gap-1">
                 <div className="h-2 w-2 animate-pulse rounded-full bg-blue-500" />
-                {stage === "preparing" && "准备中"}
-                {stage === "capturing" && "截图中"}
-                {stage === "processing" && "处理中"}
+                {stage === "preparing" && "Preparing"}
+                {stage === "capturing" && "Capturing"}
+                {stage === "processing" && "Processing"}
                 {progress > 0 && `${progress}%`}
               </Badge>
             )}
@@ -338,7 +349,7 @@ function ThemedChartContent({
             {exportError && (
               <Badge variant="destructive" className="flex items-center gap-1">
                 <AlertCircle className="h-3 w-3" />
-                导出失败
+                Export failed
               </Badge>
             )}
           </div>
@@ -356,9 +367,14 @@ function ThemedChartContent({
 
         <div className="ml-4 flex items-center space-x-2">
           {exportError && (
-            <Button variant="outline" size="sm" onClick={() => onRetry()} className="flex items-center space-x-1">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onRetry()}
+              className="flex items-center space-x-1"
+            >
               <RotateCcw className="h-4 w-4" />
-              <span className="hidden sm:inline">重试</span>
+              <span className="hidden sm:inline">Retry</span>
             </Button>
           )}
 
@@ -374,19 +390,19 @@ function ThemedChartContent({
       </div>
 
       {/* 主题控制 */}
-      <div className="bg-muted/10 border-b px-4 py-3 space-y-3">
+      <div className="bg-muted/10 space-y-3 border-b px-4 py-3">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap items-center gap-3">
             <span className="text-muted-foreground flex items-center gap-2 text-sm font-medium">
               <PaletteIcon className="h-4 w-4" />
-              主题色
+              Theme color
             </span>
             <input
               type="color"
               value={baseColor}
               onChange={event => handleColorPickerChange(event.target.value)}
-              className="h-9 w-9 cursor-pointer rounded border border-border"
-              aria-label="选择主题色"
+              className="border-border h-9 w-9 cursor-pointer rounded border"
+              aria-label="Select theme color"
             />
             <Input
               value={hexInput}
@@ -415,7 +431,7 @@ function ThemedChartContent({
               className="flex items-center gap-1"
             >
               <RefreshCcw className={`h-4 w-4 ${isRegenerating ? "animate-spin" : ""}`} />
-              <span>{isRegenerating ? "生成中..." : "重新生成图片"}</span>
+              <span>{isRegenerating ? "Rendering..." : "Regenerate image"}</span>
             </Button>
           </div>
         </div>
@@ -438,7 +454,10 @@ function ThemedChartContent({
       {/* 图表展示区域 */}
       <div className="flex-1 overflow-auto">
         <div className="p-6">
-          <div ref={chartRef} className="bg-background border-border/50 w-full rounded-lg border p-4">
+          <div
+            ref={chartRef}
+            className="bg-background border-border/50 w-full rounded-lg border p-4"
+          >
             <EnhancedChart
               type={chart.chartType}
               data={chart.chartData}
@@ -454,27 +473,27 @@ function ThemedChartContent({
       <div className="bg-muted/10 border-t px-4 py-3">
         <div className="text-muted-foreground flex items-center justify-between text-xs">
           <div className="flex flex-wrap items-center gap-4">
-            <span>类型: {getChartTypeLabel(chart.chartType)}</span>
-            <span>数据量: {chart.chartData.length} 条</span>
+            <span>Type: {getChartTypeLabel(chart.chartType)}</span>
+            <span>Rows: {chart.chartData.length}</span>
             {chart.imageInfo && (
               <span>
-                尺寸: {chart.imageInfo.dimensions.width} × {chart.imageInfo.dimensions.height}
+                Size: {chart.imageInfo.dimensions.width} × {chart.imageInfo.dimensions.height}
               </span>
             )}
             {isExporting && (
               <span className="flex items-center gap-1">
                 <div className="h-2 w-2 animate-pulse rounded-full bg-blue-500" />
-                正在导出...
+                Exporting...
               </span>
             )}
           </div>
           <div className="flex items-center gap-4">
-            {exportError && <span className="text-red-500">导出失败: {exportError}</span>}
+            {exportError && <span className="text-red-500">Export failed: {exportError}</span>}
             <span>
-              生成时间:
+              Generated:
               {chart.imageInfo?.createdAt
                 ? new Date(chart.imageInfo.createdAt).toLocaleTimeString()
-                : "刚刚"}
+                : "just now"}
             </span>
           </div>
         </div>
@@ -491,8 +510,13 @@ interface ColorChipProps {
 
 function ColorChip({ label, color, subdued }: ColorChipProps) {
   return (
-    <span className={`flex items-center gap-2 rounded-full border px-2 py-1 text-xs ${subdued ? "border-border/70 bg-muted/40" : "border-border bg-background"}`}>
-      <span className="h-3 w-3 rounded-full border" style={{ backgroundColor: color, borderColor: color }} />
+    <span
+      className={`flex items-center gap-2 rounded-full border px-2 py-1 text-xs ${subdued ? "border-border/70 bg-muted/40" : "border-border bg-background"}`}
+    >
+      <span
+        className="h-3 w-3 rounded-full border"
+        style={{ backgroundColor: color, borderColor: color }}
+      />
       <span className="text-muted-foreground">{label}</span>
     </span>
   );

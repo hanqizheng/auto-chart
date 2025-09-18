@@ -14,14 +14,14 @@ export class AutoExportService {
    */
   async exportChart(element: HTMLElement, filename: string = "chart.png"): Promise<Blob> {
     if (this.isExporting) {
-      throw new Error("正在进行其他导出操作，请稍候重试");
+      throw new Error("Another export is in progress. Please try again shortly.");
     }
 
     this.isExporting = true;
     let originalStyles: Array<{ element: HTMLElement; property: string; value: string }> = [];
 
     try {
-      console.log("🎯 [AutoExport] 开始导出图表:", filename);
+      console.log("🎯 [AutoExport] Starting chart export:", filename);
 
       // 1. 临时移除高度限制，让内容完全展开
       originalStyles = this.temporarilyRemoveHeightConstraints(element);
@@ -32,7 +32,7 @@ export class AutoExportService {
       // 3. 智能计算元素的真实内容尺寸
       const elementDimensions = this.getElementContentDimensions(element);
 
-      console.log("📐 [AutoExport] 元素尺寸信息:", {
+      console.log("📐 [AutoExport] Element dimension details:", {
         offset: { width: element.offsetWidth, height: element.offsetHeight },
         scroll: { width: element.scrollWidth, height: element.scrollHeight },
         client: { width: element.clientWidth, height: element.clientHeight },
@@ -58,7 +58,7 @@ export class AutoExportService {
         windowHeight: elementDimensions.height,
       });
 
-      console.log("✅ [AutoExport] html2canvas-pro 渲染完成");
+      console.log("✅ [AutoExport] html2canvas-pro render finished");
 
       // 5. 恢复原始样式
       this.restoreOriginalStyles(element, originalStyles);
@@ -66,7 +66,7 @@ export class AutoExportService {
       // 6. 转换为 blob
       const blob = await this.canvasToBlob(canvas);
 
-      console.log("✅ [AutoExport] 图表导出完成:", {
+      console.log("✅ [AutoExport] Chart export complete:", {
         filename,
         size: blob.size,
         type: blob.type,
@@ -79,8 +79,10 @@ export class AutoExportService {
         this.restoreOriginalStyles(element, originalStyles);
       }
 
-      console.error("❌ [AutoExport] 导出失败:", error);
-      throw new Error(`图表导出失败: ${error instanceof Error ? error.message : "未知错误"}`);
+      console.error("❌ [AutoExport] Export failed:", error);
+      throw new Error(
+        `Chart export failed: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
     } finally {
       this.isExporting = false;
     }
@@ -126,8 +128,8 @@ export class AutoExportService {
       const module = await import("html2canvas-pro");
       return module.default;
     } catch (error) {
-      console.error("❌ [AutoExport] 无法导入 html2canvas-pro:", error);
-      throw new Error("图表导出库加载失败");
+      console.error("❌ [AutoExport] Unable to import html2canvas-pro:", error);
+      throw new Error("Failed to load chart export library");
     }
   }
 
@@ -141,7 +143,7 @@ export class AutoExportService {
           if (blob) {
             resolve(blob);
           } else {
-            reject(new Error("Canvas 转换为 Blob 失败"));
+            reject(new Error("Failed to convert canvas to Blob"));
           }
         },
         "image/png",
@@ -193,7 +195,7 @@ export class AutoExportService {
       }
     });
 
-    console.log(`🔧 [AutoExport] 临时移除了 ${originalStyles.length} 个样式约束`);
+    console.log(`🔧 [AutoExport] Temporarily removed ${originalStyles.length} style constraints`);
     return originalStyles;
   }
 
@@ -212,7 +214,7 @@ export class AutoExportService {
       }
     });
 
-    console.log(`🔄 [AutoExport] 恢复了 ${originalStyles.length} 个样式`);
+    console.log(`🔄 [AutoExport] Restored ${originalStyles.length} styles`);
   }
 
   /**

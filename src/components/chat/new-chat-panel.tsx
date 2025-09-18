@@ -44,15 +44,15 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
       addUserMessage(content, files);
 
       // 2. 创建处理过程消息
-      const processingId = addProcessingMessage("AI 正在分析您的请求...");
+      const processingId = addProcessingMessage("AI is analyzing your request...");
 
       try {
         // 3. 添加第一个处理步骤
         const step1Id = addProcessingStep(processingId, {
           type: "thinking",
-          title: "验证输入内容",
-          description: "正在分析您的请求和上传的文件...",
-          content: "正在分析您的请求和上传的文件...",
+          title: "Validate input",
+          description: "Reviewing your request and uploaded files...",
+          content: "Reviewing your request and uploaded files...",
           status: "running",
           startTime: new Date(),
         });
@@ -68,8 +68,8 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
               status: "completed",
               content:
                 files.length > 0
-                  ? `输入验证完成，发现 ${files.length} 个文件`
-                  : "输入验证完成，将从描述中提取数据",
+                  ? `Input validation complete. Detected ${files.length} file${files.length > 1 ? "s" : ""}.`
+                  : "Input validation complete. Extracting data from the description.",
               endTime: new Date(),
             },
           });
@@ -77,9 +77,9 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
           // 添加数据分析步骤
           const step2Id = addProcessingStep(processingId, {
             type: "data_analysis",
-            title: "解析数据结构",
-            description: "正在分析数据格式和内容...",
-            content: "正在分析数据格式和内容...",
+            title: "Parse data structure",
+            description: "Assessing data format and content...",
+            content: "Assessing data format and content...",
             status: "running",
             startTime: new Date(),
           });
@@ -109,7 +109,10 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
           stepId: dataStepId,
           updates: {
             status: "completed",
-            content: files.length > 0 ? "文件数据解析完成" : "从描述中提取数据完成",
+            content:
+              files.length > 0
+                ? "File data parsed successfully."
+                : "Data extracted from the description.",
             endTime: new Date(),
             metadata: {
               dataCount: files.length > 0 ? 50 : 10,
@@ -122,9 +125,9 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
         // 添加意图分析步骤
         const step3Id = addProcessingStep(processingId, {
           type: "thinking",
-          title: "分析图表需求",
-          description: "正在理解您想要的图表类型和样式...",
-          content: "正在理解您想要的图表类型和样式...",
+          title: "Analyze chart requirements",
+          description: "Identifying the chart type and styling that fit your needs...",
+          content: "Identifying the chart type and styling that fit your needs...",
           status: "running",
           startTime: new Date(),
         });
@@ -135,13 +138,13 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
             stepId: step3Id,
             updates: {
               status: "completed",
-              content: "图表类型分析完成，推荐使用柱状图",
+              content: "Chart type analysis complete. Recommending a bar chart.",
               endTime: new Date(),
               metadata: {
                 considerations: [
-                  "分析了用户的描述内容",
-                  "检测到对比类数据特征",
-                  "选择柱状图最适合展示",
+                  "Reviewed the user prompt",
+                  "Detected comparative numeric data",
+                  "Selected a bar chart as the clearest option",
                 ],
               },
             },
@@ -150,9 +153,9 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
           // 添加图表生成步骤
           const step4Id = addProcessingStep(processingId, {
             type: "chart_generation",
-            title: "生成图表",
-            description: "正在创建图表并渲染...",
-            content: "正在创建图表并渲染...",
+            title: "Generate chart",
+            description: "Building and rendering the chart...",
+            content: "Building and rendering the chart...",
             status: "running",
             startTime: new Date(),
           });
@@ -185,7 +188,7 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
           stepId: chartStepId,
           updates: {
             status: "completed",
-            content: `${getChartTypeName(result.chartType)}生成完成`,
+            content: `${getChartTypeName(result.chartType)} created successfully`,
             endTime: new Date(),
             metadata: {
               chartType: result.chartType,
@@ -201,9 +204,9 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
         // 添加图片导出步骤
         const step5Id = addProcessingStep(processingId, {
           type: "optimization",
-          title: "导出图表图片",
-          description: "正在将图表转换为图片格式...",
-          content: "正在将图表转换为图片格式...",
+          title: "Export chart image",
+          description: "Converting the chart into an image format...",
+          content: "Converting the chart into an image format...",
           status: "running",
           startTime: new Date(),
         });
@@ -215,29 +218,29 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
             let imageUrl = "";
 
             // 使用主面板中的可见图表进行导出
-            console.log("📋 [导出] 开始导出图表图片");
+            console.log("📋 [Export] Start exporting chart image");
 
             // 直接查找图表容器元素（类似test-export的方式）
-            console.log("🔍 [导出] 查找图表容器...");
+            console.log("🔍 [Export] Searching for chart container...");
 
             // 等待更长时间确保图表渲染完成
             await new Promise(resolve => setTimeout(resolve, 2000));
 
             // 详细调试 - 打印所有可能的选择器结果
             console.log(
-              '📋 [调试] 所有 data-slot="chart" 元素:',
+              '📋 [Debug] All data-slot="chart" elements:',
               document.querySelectorAll('[data-slot="chart"]')
             );
             console.log(
-              "📋 [调试] 所有 .recharts-wrapper 元素:",
+              "📋 [Debug] All .recharts-wrapper elements:",
               document.querySelectorAll(".recharts-wrapper")
             );
             console.log(
-              "📋 [调试] 所有 .recharts-surface 元素:",
+              "📋 [Debug] All .recharts-surface elements:",
               document.querySelectorAll(".recharts-surface")
             );
             console.log(
-              "📋 [调试] 所有包含 aspect-video 的元素:",
+              "📋 [Debug] All elements containing aspect-video:",
               document.querySelectorAll('div[class*="aspect-video"]')
             );
 
@@ -246,12 +249,12 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
 
             // 尝试1：找到ChartContainer
             chartContainer = document.querySelector('[data-slot="chart"]') as HTMLElement;
-            console.log("🔍 [导出] 尝试1 - ChartContainer:", chartContainer);
+            console.log("🔍 [Export] Attempt 1 - ChartContainer:", chartContainer);
 
             if (!chartContainer) {
               // 尝试2：找到recharts容器
               chartContainer = document.querySelector(".recharts-wrapper") as HTMLElement;
-              console.log("🔍 [导出] 尝试2 - recharts-wrapper:", chartContainer);
+              console.log("🔍 [Export] Attempt 2 - recharts-wrapper:", chartContainer);
             }
 
             if (!chartContainer) {
@@ -259,18 +262,18 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
               const svg = document.querySelector(".recharts-surface");
               if (svg && svg.parentElement) {
                 chartContainer = svg.parentElement as HTMLElement;
-                console.log("🔍 [导出] 尝试3 - SVG父容器:", chartContainer);
+                console.log("🔍 [Export] Attempt 3 - SVG parent:", chartContainer);
               }
             }
 
             if (!chartContainer) {
               // 尝试4：找到包含图表的最外层容器
               chartContainer = document.querySelector('div[class*="aspect-video"]') as HTMLElement;
-              console.log("🔍 [导出] 尝试4 - aspect-video容器:", chartContainer);
+              console.log("🔍 [Export] Attempt 4 - aspect-video container:", chartContainer);
             }
 
             if (chartContainer) {
-              console.log("🔍 [导出] 找到图表容器:", chartContainer);
+              console.log("🔍 [Export] Found chart container:", chartContainer);
 
               // 直接使用html2canvas生成图片URL（不下载文件）
               const html2canvas = (await import("html2canvas-pro")).default;
@@ -285,13 +288,13 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
 
               imageUrl = canvas.toDataURL("image/png", 1.0);
               console.log(
-                "✅ [导出] 图片生成成功，大小:",
+                "✅ [Export] Image generated successfully. Size:",
                 Math.round(imageUrl.length / 1024),
                 "KB"
               );
             } else {
-              console.warn("⚠️ [导出] 未找到图表容器，使用降级方案");
-              throw new Error("未找到图表容器");
+              console.warn("⚠️ [Export] Chart container not found. Using fallback renderer.");
+              throw new Error("Chart container not found");
             }
 
             // 更新导出步骤为完成
@@ -299,7 +302,7 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
               stepId: step5Id,
               updates: {
                 status: "completed",
-                content: "图表图片导出完成",
+                content: "Chart image export complete",
                 endTime: new Date(),
               },
             });
@@ -325,7 +328,7 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
               data: result.data,
             });
           } catch (error) {
-            console.error("❌ [导出] 图片导出失败:", error);
+            console.error("❌ [Export] Chart image export failed:", error);
             // 处理导出错误 - 使用降级SVG图片
             const svgContent = `
               <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
@@ -345,7 +348,7 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
               stepId: step5Id,
               updates: {
                 status: "completed",
-                content: "图表图片导出完成（使用预览模式）",
+                content: "Chart image export complete (preview fallback)",
                 endTime: new Date(),
               },
             });
@@ -378,7 +381,7 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
           stepId: chartStepId,
           updates: {
             status: "error",
-            content: `图表生成失败: ${result.error?.message || "未知错误"}`,
+            content: `Chart generation failed: ${result.error?.message || "Unknown error"}`,
             endTime: new Date(),
           },
         });
@@ -389,7 +392,7 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
         stepId: chartStepId,
         updates: {
           status: "error",
-          content: "图表生成过程出错",
+          content: "An error occurred during chart generation",
           endTime: new Date(),
         },
       });
@@ -397,15 +400,15 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
     }
   };
 
-  // 获取图表类型中文名
+  // 获取图表类型标签
   const getChartTypeName = (chartType: ChartType): string => {
     const names: Record<ChartType, string> = {
-      bar: "柱状图",
-      line: "折线图",
-      pie: "饼图",
-      area: "面积图",
+      bar: "Bar chart",
+      line: "Line chart",
+      pie: "Pie chart",
+      area: "Area chart",
     };
-    return names[chartType] || "图表";
+    return names[chartType] || "Chart";
   };
 
   // 处理图片点击

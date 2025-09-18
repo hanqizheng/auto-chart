@@ -403,7 +403,7 @@ export function HorizontalDemoSection({
             <BeautifulPieChart
               data={data}
               config={config}
-              className="h-[220px] w-full"
+              className="h-[240px] w-full"
               showLegend={false}
             />
           </ChartThemeProvider>
@@ -418,29 +418,31 @@ export function HorizontalDemoSection({
   const renderDemoCard = useCallback(
     (demo: DemoItem, index: number, layout: "horizontal" | "stacked" = "horizontal") => {
       const widthClass =
-        layout === "horizontal" ? "w-[min(600px,90vw)] flex-none" : "w-full";
-      const heightClass = layout === "horizontal" ? "h-[32rem]" : "min-h-[28rem] h-full";
+        layout === "horizontal" ? "w-[min(620px,90vw)] flex-none" : "w-full";
+      const heightClass = layout === "horizontal" ? "min-h-[36rem]" : "min-h-[30rem]";
       const snapClass = layout === "horizontal" ? "snap-center" : "";
 
       return (
         <article
           key={demo.id}
-          className={`flex ${heightClass} ${widthClass} ${snapClass} rounded-3xl border border-border/40 bg-card/80 p-6 shadow-xl backdrop-blur transition-colors duration-200 hover:border-border hover:bg-card`}
+          className={`flex h-auto ${heightClass} ${widthClass} ${snapClass} overflow-visible rounded-3xl border border-border/40 bg-card/80 p-6 shadow-xl backdrop-blur transition-colors duration-200 hover:border-border hover:bg-card`}
         >
-          <div className="flex w-full flex-col">
+          <div className="flex w-full flex-1 flex-col gap-4">
             <div className="flex items-center justify-between text-xs font-mono uppercase tracking-[0.3em] text-primary/80">
               <span>{`[${String(index).padStart(2, "0")}]`}</span>
               <span>{demo.chartType.toUpperCase()}</span>
             </div>
 
-            <div className="mt-4 overflow-hidden rounded-2xl border border-border/40 bg-muted/30 p-4">
-              {getMockDataAndChart(demo.chartType)}
+            <div className="flex-1">
+              <div className="relative flex h-full min-h-[300px] flex-col items-center justify-start overflow-hidden rounded-2xl border border-border/40 bg-muted/30 p-4">
+                {getMockDataAndChart(demo.chartType)}
+              </div>
             </div>
 
-            <h3 className="mt-6 text-2xl font-semibold leading-tight">{demo.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{demo.description}</p>
+            <h3 className="text-2xl font-semibold leading-tight">{demo.title}</h3>
+            <p className="text-sm leading-relaxed text-muted-foreground">{demo.description}</p>
 
-            <div className="mt-4 space-y-2">
+            <div className="space-y-2">
               <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/80">
                 Best for
               </span>

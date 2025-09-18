@@ -12,7 +12,87 @@ import {
   AutoAnalysisResult,
   VisualMapping,
   AIChartError,
+  DataRow,
 } from "./types";
+
+const KEYWORD_MAP: Record<ChartType, string[]> = {
+  line: [
+    "line",
+    "line chart",
+    "line graph",
+    "trend",
+    "timeline",
+    "over time",
+    "growth",
+    "decline",
+    "走势",
+    "趋势",
+    "折线",
+    "变化",
+  ],
+  area: [
+    "area",
+    "area chart",
+    "stacked",
+    "cumulative",
+    "filled",
+    "coverage",
+    "累计",
+    "面积",
+    "堆叠",
+  ],
+  bar: [
+    "bar",
+    "column",
+    "compare",
+    "comparison",
+    "versus",
+    "ranking",
+    "top",
+    "bottom",
+    "对比",
+    "比较",
+    "柱状",
+    "条形",
+  ],
+  pie: [
+    "pie",
+    "donut",
+    "share",
+    "portion",
+    "ratio",
+    "percentage",
+    "percent",
+    "distribution",
+    "breakdown",
+    "composition",
+    "占比",
+    "比例",
+    "份额",
+    "饼图",
+  ],
+};
+
+const FALLBACK_CHART_LABEL: Record<ChartType, string> = {
+  bar: "Bar Chart",
+  line: "Line Chart",
+  pie: "Pie Chart",
+  area: "Area Chart",
+};
+
+interface HeuristicAnalysis {
+  bestType: ChartType | null;
+  bestScore: number;
+  secondScore: number;
+  scores: Record<ChartType, number>;
+  matchedKeywords: string[];
+  reasons: string[];
+}
+
+interface HeuristicRecommendation {
+  intent: ChartIntent | null;
+  analysis: HeuristicAnalysis;
+}
 
 /**
  * 意图分析器接口
@@ -48,14 +128,56 @@ export class IntentAnalyzer implements IIntentAnalyzer {
     console.log("🎯 [IntentAnalyzer] 开始AI意图分析...");
 
     try {
+      const heuristic = this.buildHeuristicRecommendation(prompt, dataStructure);
+
       // 使用AI分析
       const aiIntent = await this.aiAnalyzeIntent(prompt, dataStructure);
       if (aiIntent) {
         console.log("✅ [IntentAnalyzer] AI意图分析成功:", aiIntent.chartType);
+
+        const compatibility = this.validateDataCompatibility(aiIntent, dataStructure);
+        const fallbackIntent = heuristic.intent;
+        const fallbackCompatibility = fallbackIntent
+          ? this.validateDataCompatibility(fallbackIntent, dataStructure)
+          : null;
+
+        // 如果AI结果与数据不兼容，而回退方案可行，则优先回退
+        if (!compatibility.isCompatible && fallbackIntent && fallbackCompatibility?.isCompatible) {
+          console.warn(
+            "🧭 [IntentAnalyzer] AI意图与数据不兼容，使用回退策略:",
+            fallbackIntent.chartType
+          );
+          return fallbackIntent;
+        }
+
+        // 语义上有明显的图表类型偏好但AI结果不一致时执行回退
+        const hasStrongPreference =
+          fallbackIntent &&
+          fallbackIntent.chartType !== aiIntent.chartType &&
+          heuristic.analysis.matchedKeywords.length > 0 &&
+          heuristic.analysis.bestScore - heuristic.analysis.secondScore >= 1;
+
+        if (hasStrongPreference) {
+          console.warn("🧭 [IntentAnalyzer] 语义偏好与AI结果不一致，优先遵循用户关键词:", {
+            aiChartType: aiIntent.chartType,
+            preferredChartType: fallbackIntent.chartType,
+            matchedKeywords: heuristic.analysis.matchedKeywords,
+          });
+          return fallbackIntent;
+        }
+
         return aiIntent;
       }
 
-      // AI分析失败，直接报错
+      // AI意图分析失败时尝试回退逻辑
+      if (heuristic.intent) {
+        console.warn(
+          "🧭 [IntentAnalyzer] AI分析失败，使用本地回退策略:",
+          heuristic.intent.chartType
+        );
+        return heuristic.intent;
+      }
+
       throw new AIChartError(
         "intent_analysis",
         "SERVICE_UNAVAILABLE",
@@ -73,6 +195,15 @@ export class IntentAnalyzer implements IIntentAnalyzer {
 
       if (error instanceof AIChartError) {
         throw error; // 重新抛出AI错误
+      }
+
+      const heuristic = this.buildHeuristicRecommendation(prompt, dataStructure);
+      if (heuristic.intent) {
+        console.warn("🧭 [IntentAnalyzer] AI分析异常，已使用回退策略:", {
+          chartType: heuristic.intent.chartType,
+          reason: heuristic.intent.reasoning,
+        });
+        return heuristic.intent;
       }
 
       throw new AIChartError("intent_analysis", "UNKNOWN_ERROR", "意图分析过程发生未知错误", {
@@ -192,10 +323,10 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
     try {
       const token = getClientTurnstileToken();
 
-      const response = await fetch('/api/ai/analyze-intent', {
-        method: 'POST',
+      const response = await fetch("/api/ai/analyze-intent", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           prompt,
@@ -215,9 +346,11 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
       }
 
       return result.chartIntent;
-
     } catch (error) {
-      console.warn("⚠️ [AI Intent] AI意图分析失败:", error instanceof Error ? error.message : String(error));
+      console.warn(
+        "⚠️ [AI Intent] AI意图分析失败:",
+        error instanceof Error ? error.message : String(error)
+      );
       return null;
     }
   }
@@ -325,6 +458,370 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
     }
 
     return cleaned;
+  }
+
+  private generateFallbackIntent(prompt: string, data: UnifiedDataStructure): ChartIntent | null {
+    return this.buildHeuristicRecommendation(prompt, data).intent;
+  }
+
+  private buildHeuristicRecommendation(
+    prompt: string,
+    data: UnifiedDataStructure
+  ): HeuristicRecommendation {
+    const stats = data.metadata?.statistics ?? {
+      numericFields: [],
+      categoricalFields: [],
+      dateFields: [],
+      missingValues: 0,
+    };
+
+    const numericFields = stats.numericFields || [];
+    const categoricalFields = stats.categoricalFields || [];
+    const dateFields = stats.dateFields || [];
+
+    if (numericFields.length === 0) {
+      console.warn("🛟 [IntentAnalyzer] 回退策略失败：缺少数值字段");
+      return {
+        intent: null,
+        analysis: {
+          bestType: null,
+          bestScore: Number.NEGATIVE_INFINITY,
+          secondScore: Number.NEGATIVE_INFINITY,
+          scores: { line: 0, area: 0, bar: 0, pie: 0 },
+          matchedKeywords: [],
+          reasons: ["缺少数值字段，无法生成图表"],
+        },
+      };
+    }
+
+    const scores: Record<ChartType, number> = {
+      line: 0,
+      area: 0,
+      bar: 0,
+      pie: 0,
+    };
+
+    const reasons: string[] = [];
+    const matchedKeywords: string[] = [];
+    const normalizedPrompt = prompt.toLowerCase();
+
+    (Object.entries(KEYWORD_MAP) as [ChartType, string[]][]).forEach(([chartType, keywords]) => {
+      keywords.forEach(keyword => {
+        const normalizedKeyword = keyword.toLowerCase();
+        if (normalizedPrompt.includes(normalizedKeyword)) {
+          scores[chartType] += 2;
+          matchedKeywords.push(keyword);
+        }
+      });
+    });
+
+    if (matchedKeywords.length > 0) {
+      reasons.push(`Keyword hints: ${matchedKeywords.join(", ")}`);
+    }
+
+    if (dateFields.length > 0) {
+      scores.line += 1.5;
+      scores.area += 1.2;
+      reasons.push(`Detected time-related field ${dateFields[0]} which favors trend charts`);
+    }
+
+    if (categoricalFields.length > 0) {
+      scores.bar += 1.2;
+      reasons.push(`Categorical field ${categoricalFields[0]} suggests comparison visuals`);
+    }
+
+    if (numericFields.length > 1) {
+      scores.line += 0.8;
+      scores.area += 1.0;
+    }
+
+    const rowCount = data.data.length;
+    if (rowCount <= 8) {
+      scores.pie += 0.6;
+    }
+    if (rowCount > 15) {
+      scores.pie -= 1;
+      reasons.push(`Large category count (${rowCount}) reduces pie chart suitability`);
+    }
+
+    if (
+      normalizedPrompt.includes("percent") ||
+      normalizedPrompt.includes("percentage") ||
+      normalizedPrompt.includes("share") ||
+      normalizedPrompt.includes("ratio") ||
+      normalizedPrompt.includes("%") ||
+      prompt.includes("占比") ||
+      prompt.includes("比例") ||
+      prompt.includes("份额")
+    ) {
+      scores.pie += 2.5;
+      reasons.push("Prompt mentions proportion or percentage, increasing pie chart weight");
+    }
+
+    if (
+      normalizedPrompt.includes("compare") ||
+      normalizedPrompt.includes("comparison") ||
+      normalizedPrompt.includes("versus") ||
+      prompt.includes("对比") ||
+      prompt.includes("比较")
+    ) {
+      scores.bar += 2;
+      reasons.push("Comparison language detected, boosting bar chart score");
+    }
+
+    if (
+      normalizedPrompt.includes("trend") ||
+      normalizedPrompt.includes("over time") ||
+      normalizedPrompt.includes("growth") ||
+      normalizedPrompt.includes("decline") ||
+      prompt.includes("趋势") ||
+      prompt.includes("走势")
+    ) {
+      scores.line += 2;
+      scores.area += 1;
+      reasons.push("Trend language detected, boosting line/area scores");
+    }
+
+    if (
+      normalizedPrompt.includes("cumulative") ||
+      normalizedPrompt.includes("stacked") ||
+      normalizedPrompt.includes("area") ||
+      prompt.includes("累计") ||
+      prompt.includes("堆叠") ||
+      prompt.includes("面积")
+    ) {
+      scores.area += 2.2;
+      reasons.push("Stacked or cumulative language detected, boosting area chart score");
+    }
+
+    const sortedScoreEntries = (Object.entries(scores) as [ChartType, number][]).sort(
+      (a, b) => b[1] - a[1]
+    );
+
+    let [selectedType, maxScore] = sortedScoreEntries[0];
+    const secondScore = sortedScoreEntries[1]?.[1] ?? Number.NEGATIVE_INFINITY;
+
+    if (!selectedType || maxScore <= 0) {
+      if (dateFields.length > 0) {
+        selectedType = "line";
+      } else if (categoricalFields.length > 0) {
+        selectedType = "bar";
+      } else {
+        selectedType = "line";
+      }
+      maxScore = Math.max(maxScore, 0.5);
+      reasons.push("No strong hints found, falling back to data-driven inference");
+    }
+
+    if (selectedType === "pie") {
+      const uniqueCategoryCount = this.countUniqueCategories(data, categoricalFields[0]);
+      if (
+        categoricalFields.length === 0 ||
+        numericFields.length === 0 ||
+        uniqueCategoryCount > 12
+      ) {
+        selectedType =
+          categoricalFields.length > 0 ? "bar" : dateFields.length > 0 ? "line" : "bar";
+        reasons.push("Pie chart unsuitable for this data, switching to a more robust type");
+      }
+    }
+
+    const xAxis = this.pickFallbackXAxis(selectedType, data);
+    const yAxis = this.pickFallbackYAxis(selectedType, data, xAxis);
+
+    if (!xAxis || yAxis.length === 0) {
+      console.warn("🛟 [IntentAnalyzer] 回退策略未能生成有效的轴映射", { xAxis, yAxis });
+      return {
+        intent: null,
+        analysis: {
+          bestType: selectedType,
+          bestScore: maxScore,
+          secondScore,
+          scores,
+          matchedKeywords,
+          reasons,
+        },
+      };
+    }
+
+    const requiredFields = Array.from(new Set([xAxis, ...yAxis].filter(Boolean)));
+    const optionalFields = categoricalFields.filter(field => field !== xAxis);
+
+    const confidence = Math.max(0.5, Math.min(0.9, 0.55 + maxScore * 0.08));
+
+    const suggestions = this.buildFallbackSuggestions(selectedType, xAxis, yAxis, data);
+    reasons.push(`Selected ${selectedType} chart with confidence ${confidence.toFixed(2)}`);
+
+    const intent: ChartIntent = {
+      chartType: selectedType,
+      confidence,
+      reasoning: reasons.join("; "),
+      requiredFields,
+      optionalFields,
+      visualMapping: {
+        xAxis,
+        yAxis,
+        colorBy: selectedType === "pie" ? undefined : optionalFields[0],
+      },
+      suggestions,
+    };
+
+    return {
+      intent,
+      analysis: {
+        bestType: selectedType,
+        bestScore: maxScore,
+        secondScore,
+        scores,
+        matchedKeywords,
+        reasons,
+      },
+    };
+  }
+
+  private pickFallbackXAxis(chartType: ChartType, data: UnifiedDataStructure): string | null {
+    const stats = data.metadata.statistics;
+    const stringField = data.schema.fields.find(field => field.type === "string")?.name;
+    const dateField = data.schema.fields.find(field => field.type === "date")?.name;
+    const fallback = stringField || dateField || data.schema.fields[0]?.name || null;
+
+    if (chartType === "line" || chartType === "area") {
+      return stats.dateFields[0] || stats.categoricalFields[0] || dateField || fallback;
+    }
+
+    if (chartType === "pie") {
+      return stats.categoricalFields[0] || fallback;
+    }
+
+    return stats.categoricalFields[0] || stats.dateFields[0] || fallback;
+  }
+
+  private pickFallbackYAxis(
+    chartType: ChartType,
+    data: UnifiedDataStructure,
+    xAxis: string | null
+  ): string[] {
+    const numericFields = data.metadata.statistics.numericFields;
+    const available = numericFields.filter(field => field !== xAxis);
+
+    const selected = available.length > 0 ? available : numericFields;
+
+    if (selected.length === 0) {
+      const numericFallback = data.schema.fields.find(field => field.type === "number")?.name;
+      return numericFallback ? [numericFallback] : [];
+    }
+
+    if (chartType === "pie") {
+      return [selected[0]];
+    }
+
+    if (chartType === "bar") {
+      return selected.slice(0, 2);
+    }
+
+    return selected.slice(0, 3);
+  }
+
+  private buildFallbackSuggestions(
+    chartType: ChartType,
+    xAxis: string,
+    yAxis: string[],
+    data: UnifiedDataStructure
+  ): ChartIntent["suggestions"] {
+    const chartLabel = FALLBACK_CHART_LABEL[chartType];
+    const formattedMetricList = yAxis.join(", ");
+
+    const title = `${chartLabel} of ${this.toTitleCase(xAxis)}`;
+    const description = `${chartLabel} automatically generated from ${data.data.length} records highlighting ${formattedMetricList}`;
+    const insights = this.generateFallbackInsights(chartType, xAxis, yAxis, data);
+
+    return {
+      title,
+      description,
+      insights,
+    };
+  }
+
+  private generateFallbackInsights(
+    chartType: ChartType,
+    xAxis: string,
+    yAxis: string[],
+    data: UnifiedDataStructure
+  ): string[] {
+    const insights: string[] = [];
+    const primaryMetric = yAxis[0];
+
+    if (primaryMetric) {
+      const numericEntries = data.data
+        .map(row => {
+          const rawValue = row[primaryMetric];
+          const numericValue = typeof rawValue === "number" ? rawValue : Number(rawValue);
+          if (Number.isFinite(numericValue)) {
+            return { value: numericValue, row };
+          }
+          return null;
+        })
+        .filter((item): item is { value: number; row: DataRow } => item !== null);
+
+      if (numericEntries.length > 0) {
+        const maxEntry = numericEntries.reduce((best, current) =>
+          current.value > best.value ? current : best
+        );
+        const minEntry = numericEntries.reduce((best, current) =>
+          current.value < best.value ? current : best
+        );
+
+        insights.push(
+          `${this.formatMetric(primaryMetric)} peaks at ${this.extractRowLabel(maxEntry.row, xAxis)} with ${maxEntry.value}`
+        );
+
+        if (numericEntries.length > 1 && chartType !== "pie") {
+          insights.push(
+            `${this.formatMetric(primaryMetric)} is lowest at ${this.extractRowLabel(minEntry.row, xAxis)} with ${minEntry.value}`
+          );
+        }
+      }
+    }
+
+    if (insights.length === 0) {
+      insights.push("Data automatically analysed to highlight the main trend");
+    }
+
+    return insights.slice(0, 3);
+  }
+
+  private extractRowLabel(row: DataRow, field: string): string {
+    const raw = row[field];
+    if (raw instanceof Date) {
+      return raw.toISOString().split("T")[0];
+    }
+    if (typeof raw === "number") {
+      return String(raw);
+    }
+    return raw ? String(raw) : "N/A";
+  }
+
+  private formatMetric(metric: string): string {
+    return this.toTitleCase(metric.replace(/[_-]/g, " "));
+  }
+
+  private toTitleCase(value: string): string {
+    return value
+      .split(/\s+/)
+      .map(part => (part ? part[0].toUpperCase() + part.slice(1) : part))
+      .join(" ");
+  }
+
+  private countUniqueCategories(data: UnifiedDataStructure, field?: string): number {
+    if (!field) return data.data.length;
+    const unique = new Set<string>();
+    data.data.forEach(row => {
+      const value = row[field];
+      if (value !== undefined && value !== null) {
+        unique.add(String(value));
+      }
+    });
+    return unique.size || data.data.length;
   }
 }
 

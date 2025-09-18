@@ -16,7 +16,7 @@ import {
   Database,
   Palette,
   AlertCircle,
-  RotateCcw
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -49,14 +49,14 @@ export function ImageResultMessage({
 }: ImageResultMessageProps) {
   const { toast } = useToast();
   const { currentChart } = useChartExport();
-  
+
   // 简单的本地图片加载状态
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageLoadError, setImageLoadError] = useState(false);
 
   const { content, timestamp } = message;
   const { chartData, chartType, title, description, imageInfo, chartConfig, theme } = content;
-  
+
   // 优先使用当前图表的图片信息，如果没有则使用消息中的信息
   const currentImageInfo = currentChart?.imageInfo || imageInfo;
   const imageUrl = currentImageInfo.localBlobUrl;
@@ -68,7 +68,7 @@ export function ImageResultMessage({
     hasImageInfo: !!currentImageInfo,
     imageUrl: imageUrl?.substring(0, 50) + "...",
     imageLoaded,
-    imageLoadError
+    imageLoadError,
   });
 
   // 重置图片状态当URL变化时
@@ -89,7 +89,7 @@ export function ImageResultMessage({
     fileSize: currentImageInfo.size,
     ...currentImageInfo.metadata,
   };
-  
+
   const downloadUrl = currentImageInfo.localBlobUrl;
 
   const palettePreview = theme
@@ -114,8 +114,7 @@ export function ImageResultMessage({
 
         return configKeys.map((key, index) => ({
           label: String(chartConfig?.[key]?.label || key),
-          color:
-            theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
+          color: theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
         }));
       })()
     : [];
@@ -270,12 +269,12 @@ export function ImageResultMessage({
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           {/* 图片容器 */}
-          <div className="relative bg-muted/30">
+          <div className="bg-muted/30 relative">
             {shouldShowLoading && (
               <div className="bg-muted flex aspect-video items-center justify-center">
-                <div className="space-y-2 text-center">
+                <div className="flex items-center space-y-2 text-center">
                   <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
-                  <p className="text-muted-foreground text-sm">正在生成图片...</p>
+                  <p className="text-muted-foreground text-sm">Generating image...</p>
                 </div>
               </div>
             )}
@@ -285,11 +284,15 @@ export function ImageResultMessage({
                 <div className="space-y-2 text-center">
                   <BarChart3 className="text-muted-foreground mx-auto h-12 w-12" />
                   <p className="text-muted-foreground text-sm">图片加载失败</p>
-                  <Button variant="outline" size="sm" onClick={() => {
-                    setImageLoadError(false);
-                    setImageLoaded(false);
-                  }}>
-                    <RotateCcw className="h-4 w-4 mr-1" />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setImageLoadError(false);
+                      setImageLoaded(false);
+                    }}
+                  >
+                    <RotateCcw className="mr-1 h-4 w-4" />
                     重试
                   </Button>
                 </div>
@@ -308,16 +311,16 @@ export function ImageResultMessage({
                   onLoad={() => {
                     console.log("✅ [ImageResultMessage] 图片加载成功:", {
                       messageId: message.id,
-                      title
+                      title,
                     });
                     setImageLoaded(true);
                     setImageLoadError(false);
                   }}
-                  onError={(e) => {
+                  onError={e => {
                     console.error("❌ [ImageResultMessage] 图片加载失败:", {
                       messageId: message.id,
                       url: imageUrl?.substring(0, 50) + "...",
-                      error: e
+                      error: e,
                     });
                     setImageLoadError(true);
                     setImageLoaded(false);
@@ -413,13 +416,22 @@ export function ImageResultMessage({
                     </div>
                     <div className="flex flex-wrap items-center gap-2">
                       {palettePreview.map(swatch => (
-                        <ColorBadge key={swatch.label} label={swatch.label} color={swatch.color} subtle />
+                        <ColorBadge
+                          key={swatch.label}
+                          label={swatch.label}
+                          color={swatch.color}
+                          subtle
+                        />
                       ))}
                     </div>
                     {seriesPalette.length > 0 && (
                       <div className="flex flex-wrap items-center gap-2">
                         {seriesPalette.map(swatch => (
-                          <ColorBadge key={swatch.label} label={swatch.label} color={swatch.color} />
+                          <ColorBadge
+                            key={swatch.label}
+                            label={swatch.label}
+                            color={swatch.color}
+                          />
                         ))}
                       </div>
                     )}
@@ -498,7 +510,10 @@ function ColorBadge({ label, color, subtle }: ColorBadgeProps) {
       }`}
       title={`${label}: ${color}`}
     >
-      <span className="h-3 w-3 rounded-full border" style={{ backgroundColor: color, borderColor: color }} />
+      <span
+        className="h-3 w-3 rounded-full border"
+        style={{ backgroundColor: color, borderColor: color }}
+      />
       <span className="text-muted-foreground text-xs">{label}</span>
     </span>
   );
