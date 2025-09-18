@@ -84,18 +84,14 @@ export function BeautifulBarChart({ data, config, title, description, className 
   
   if (!validation.isValid) {
     return (
-      <Card className={className}>
-        <CardHeader>
-          <CardTitle className="text-red-600">数据格式错误</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-red-600 space-y-1">
-            {validation.errors.map((error, index) => (
-              <p key={index} className="text-sm">• {error}</p>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className={className}>
+        <h3 className="text-lg font-semibold mb-2 text-red-600">数据格式错误</h3>
+        <div className="text-red-600 space-y-1">
+          {validation.errors.map((error, index) => (
+            <p key={index} className="text-sm">• {error}</p>
+          ))}
+        </div>
+      </div>
     );
   }
 
@@ -114,17 +110,19 @@ export function BeautifulBarChart({ data, config, title, description, className 
   });
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>{title}</span>
-          <div className="text-muted-foreground text-sm font-normal">柱状图</div>
-        </CardTitle>
-        {description && <CardDescription>{description}</CardDescription>}
+    <div className={className}>
+      {(title || description) && (
+        <div className="mb-4">
+          {title && (
+            <h3 className="text-lg font-semibold mb-2">{title}</h3>
+          )}
+          {description && (
+            <p className="text-sm text-muted-foreground">{description}</p>
+          )}
+        </div>
+      )}
 
-      </CardHeader>
-
-      <CardContent>
+      <div className="py-4">
         <ChartContainer config={config}>
           <BarChart
             data={data}
@@ -141,9 +139,9 @@ export function BeautifulBarChart({ data, config, title, description, className 
               tickLine={false}
               axisLine={false}
               tick={{ fontSize: 12, fill: palette.neutralStrong }}
-              angle={-45}
-              textAnchor="end"
-              height={60}
+              angle={0}
+              textAnchor="middle"
+              height={40}
             />
             <YAxis
               tickLine={false}
@@ -173,10 +171,8 @@ export function BeautifulBarChart({ data, config, title, description, className 
             ))}
           </BarChart>
         </ChartContainer>
-
-
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

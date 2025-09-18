@@ -2,14 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import {
-  BarChart,
-  TrendingUp,
-  Sparkles,
-  FileSpreadsheet,
-  ChevronDown,
-  ArrowRight,
-} from "lucide-react";
+import { BarChart, TrendingUp, Sparkles, FileSpreadsheet, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewChatInput } from "@/components/chat/new-chat-input";
 import { FileAttachment, SerializableChatSession, AutoTriggerConfig } from "@/types";
@@ -22,14 +15,15 @@ import { fileToBase64 } from "@/lib/session-serializer";
 import { v4 as uuidv4 } from "uuid";
 import { DEMO_SESSION_LIST, getDemoSession } from "@/data/demo-sessions";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { HorizontalDemoSection } from "@/components/horizontal-demo-section";
+import { CustomizableChartSection } from "@/components/customizable-chart-section";
+import TextType from "@/components/ui/TextType";
 
 export default function HomePage() {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const section1Ref = useRef<HTMLDivElement>(null);
   const section2Ref = useRef<HTMLDivElement>(null);
-  const section3Ref = useRef<HTMLDivElement>(null);
-  const section4Ref = useRef<HTMLDivElement>(null);
 
   // 安全验证hook
   const { validateRequest } = useSecurityValidation();
@@ -276,6 +270,7 @@ export default function HomePage() {
       {/* 第一个 Section：输入框和标题 */}
       <section
         ref={section1Ref}
+        data-section="input"
         className="relative flex min-h-screen items-center justify-center px-6 py-16"
       >
         <div className="container mx-auto max-w-4xl">
@@ -296,11 +291,15 @@ export default function HomePage() {
 
               <div className="space-y-6">
                 <h1 className="text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-                  AI-Powered
-                  <br />
-                  <span className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-transparent">
-                    Chart Generator
-                  </span>
+                  <TextType
+                    text={["AI-Powered", "Chart Generator", "Data Visualization"]}
+                    typingSpeed={75}
+                    pauseDuration={1500}
+                    showCursor={true}
+                    cursorCharacter="|"
+                    as="span"
+                    className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-transparent"
+                  />
                 </h1>
 
                 <p className="text-muted-foreground mx-auto max-w-2xl text-lg leading-relaxed md:text-xl">
@@ -312,13 +311,6 @@ export default function HomePage() {
 
             {/* 输入框区域 */}
             <div className="mx-auto max-w-2xl">
-              <div className="mb-6">
-                <h3 className="mb-2 text-lg font-medium">Start creating your chart now</h3>
-                <p className="text-muted-foreground text-sm">
-                  Describe the chart type and data you want, or upload an Excel file
-                </p>
-              </div>
-
               <NewChatInput
                 onSendMessage={handleMessageSubmit}
                 placeholder="Example: Generate a bar chart depending on [data], or upload your data file..."
@@ -336,76 +328,21 @@ export default function HomePage() {
             className="text-muted-foreground hover:text-foreground flex flex-col items-center space-y-1"
             onClick={() => scrollToSection(section2Ref)}
           >
-            <span className="text-xs">View examples</span>
+            <div className="text-xs">View examples</div>
             <ChevronDown className="h-4 w-4" />
           </Button>
         </div>
       </section>
 
-      {/* 第二个 Section：Demo展示 */}
-      <section
-        ref={section2Ref}
-        className="bg-muted/20 relative flex min-h-screen items-center justify-center px-6 py-16"
-      >
-        <div className="container mx-auto max-w-6xl">
-          <div className="space-y-12 text-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold md:text-5xl">Feature Demo</h2>
-              <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-                Experience the powerful AI chart generation features, click the demo below to see
-                the results immediately
-              </p>
-            </div>
+      {/* 横向滚动 Demo 展示区域 */}
+      <HorizontalDemoSection
+        heading="Chart Types"
+        subheading="Explore different visualization types to bring your data to life"
+        demos={DEMO_SESSION_LIST}
+        onTryDemo={handleDemoClick}
+      />
 
-            {/* Demo展示卡片 */}
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {DEMO_SESSION_LIST.map(demo => (
-                <div
-                  key={demo.id}
-                  className="bg-card rounded-2xl border p-6 transition-shadow hover:shadow-lg"
-                >
-                  <div className="space-y-4">
-                    {/* Demo图标 */}
-                    <div className="bg-primary/10 mx-auto flex h-12 w-12 items-center justify-center rounded-full">
-                      {demo.chartType === "line" && <TrendingUp className="text-primary h-6 w-6" />}
-                      {demo.chartType === "pie" && <Sparkles className="text-primary h-6 w-6" />}
-                      {demo.chartType === "bar" && <BarChart className="text-primary h-6 w-6" />}
-                    </div>
-
-                    {/* Demo标题和描述 */}
-                    <div>
-                      <h3 className="mb-2 text-xl font-semibold">{demo.title}</h3>
-                      <p className="text-muted-foreground mb-4 text-sm">{demo.description}</p>
-                    </div>
-
-                    {/* Demo特性 */}
-                    <div className="mb-4 flex flex-wrap justify-center gap-2">
-                      {demo.features.map((feature, index) => (
-                        <span
-                          key={index}
-                          className="bg-muted text-muted-foreground rounded px-2 py-1 text-xs"
-                        >
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Demo按钮 */}
-                    <Button
-                      onClick={() => handleDemoClick(demo.id)}
-                      className="w-full"
-                      variant="outline"
-                    >
-                      Try Demo
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <CustomizableChartSection />
 
       {/* Footer */}
       <footer className="bg-muted/30 border-t py-12">

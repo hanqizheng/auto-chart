@@ -1,7 +1,7 @@
 import { ChartPalette, ChartTheme } from "@/types";
 
 const HEX_COLOR_REGEX = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i;
-export const DEFAULT_CHART_BASE_COLOR = "#3b82f6";
+export const DEFAULT_CHART_BASE_COLOR = "#22c55e";
 
 type RGB = { r: number; g: number; b: number };
 type HSL = { h: number; s: number; l: number };

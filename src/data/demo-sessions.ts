@@ -147,6 +147,76 @@ export const PRODUCT_SHARE_DEMO: SerializableChatSession = {
 };
 
 /**
+ * Performance analysis demo - triggers real AI process
+ */
+export const PERFORMANCE_ANALYSIS_DEMO: SerializableChatSession = {
+  id: "demo_performance_analysis_2024",
+  title: undefined, // Let the system generate automatically
+  version: "1.0",
+  source: "demo",
+  createdAt: new Date("2024-01-25T09:45:00.000Z"),
+  lastActivity: new Date("2024-01-25T09:45:00.000Z"),
+
+  messages: [
+    {
+      id: "demo_performance_user_msg",
+      type: MESSAGE_TYPES.USER,
+      content: {
+        text: "Create an area chart showing performance metrics over time",
+        subtype: USER_MESSAGE_SUBTYPES.MIXED,
+        attachments: [
+          {
+            id: "demo_performance_file",
+            name: "performance_data.csv",
+            type: "csv",
+            size: 1536,
+            uploadedAt: new Date("2024-01-25T09:45:00.000Z"),
+            storageType: "base64",
+            dataUrl:
+              "data:text/csv;base64," +
+              btoa(
+                unescape(
+                  encodeURIComponent(
+                    "month,performance,target\n2024-01,85,80\n2024-02,88,82\n2024-03,92,85\n2024-04,89,87\n2024-05,94,90\n2024-06,97,92"
+                  )
+                )
+              ),
+            metadata: {
+              rows: 7,
+              columns: 3,
+              encoding: "utf-8",
+            },
+          },
+        ],
+      },
+      timestamp: new Date("2024-01-25T09:45:00.000Z"),
+      status: MESSAGE_STATUS.SENT,
+    },
+  ],
+
+  // Configure auto-trigger to let demo follow real AI processing flow
+  _autoTrigger: {
+    enabled: true,
+    type: "ai_processing",
+    triggerMessage: "demo_performance_user_msg",
+    expectedFlow: [
+      "thinking",
+      "data_analysis",
+      "chart_type_detection",
+      "chart_generation",
+      "image_export",
+    ],
+  },
+
+  _storage: {
+    totalFiles: 1,
+    totalCharts: 0,
+    storageTypes: ["base64"],
+    indexeddbKeys: [],
+  },
+};
+
+/**
  * Regional revenue comparison demo - triggers real AI process
  */
 export const REGIONAL_REVENUE_DEMO: SerializableChatSession = {
@@ -223,6 +293,7 @@ export const DEMO_SESSIONS = {
   sales_analysis: SALES_ANALYSIS_DEMO,
   product_share: PRODUCT_SHARE_DEMO,
   regional_revenue: REGIONAL_REVENUE_DEMO,
+  performance_analysis: PERFORMANCE_ANALYSIS_DEMO,
 } as const;
 
 /**
@@ -236,7 +307,6 @@ export const DEMO_SESSION_LIST = [
     category: "Data Analysis",
     chartType: "line",
     features: ["File Upload", "Trend Analysis", "Comparison Display"],
-    estimatedTime: "30 seconds",
   },
   {
     id: "product_share",
@@ -245,7 +315,6 @@ export const DEMO_SESSION_LIST = [
     category: "Market Analysis",
     chartType: "pie",
     features: ["AI Generated Data", "Share Analysis", "Interactive Charts"],
-    estimatedTime: "15 seconds",
   },
   {
     id: "regional_revenue",
@@ -254,7 +323,14 @@ export const DEMO_SESSION_LIST = [
     category: "Regional Analysis",
     chartType: "bar",
     features: ["Multi-dimensional Comparison", "Data Insights", "Professional Charts"],
-    estimatedTime: "20 seconds",
+  },
+  {
+    id: "performance_analysis",
+    title: "Performance Trend Analysis",
+    description: "Visualize cumulative performance data over time",
+    category: "Performance Analysis",
+    chartType: "area",
+    features: ["Time Series", "Cumulative Display", "Trend Indicators"],
   },
 ] as const;
 

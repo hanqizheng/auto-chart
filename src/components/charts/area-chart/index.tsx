@@ -185,20 +185,16 @@ export function BeautifulAreaChart({
 
   if (!validation.isValid) {
     return (
-      <Card className={className}>
-        <CardHeader>
-          <CardTitle className="text-red-600">数据格式错误</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-1 text-red-600">
-            {validation.errors.map((error, index) => (
-              <p key={index} className="text-sm">
-                • {error}
-              </p>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className={className}>
+        <h3 className="text-lg font-semibold mb-2 text-red-600">数据格式错误</h3>
+        <div className="space-y-1 text-red-600">
+          {validation.errors.map((error, index) => (
+            <p key={index} className="text-sm">
+              • {error}
+            </p>
+          ))}
+        </div>
+      </div>
     );
   }
 
@@ -233,14 +229,19 @@ export function BeautifulAreaChart({
   );
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>{title}</span>
-        </CardTitle>
-      </CardHeader>
+    <div className={className}>
+      {(title || description) && (
+        <div className="mb-4">
+          {title && (
+            <h3 className="text-lg font-semibold mb-2">{title}</h3>
+          )}
+          {description && (
+            <p className="text-sm text-muted-foreground">{description}</p>
+          )}
+        </div>
+      )}
 
-      <CardContent>
+      <div className="py-4">
         <ChartContainer config={config}>
           <AreaChart
             data={enhancedData}
@@ -257,9 +258,9 @@ export function BeautifulAreaChart({
               tickLine={false}
               axisLine={false}
               tick={{ fontSize: 12, fill: palette.neutralStrong }}
-              angle={-45}
-              textAnchor="end"
-              height={60}
+              angle={0}
+              textAnchor="middle"
+              height={40}
             />
             <YAxis
               tickLine={false}
@@ -294,8 +295,8 @@ export function BeautifulAreaChart({
             ))}
           </AreaChart>
         </ChartContainer>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
