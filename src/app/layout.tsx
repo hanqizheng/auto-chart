@@ -5,6 +5,7 @@ import { getMessages } from "next-intl/server";
 import { Toaster } from "@/components/ui/toast";
 import { ChartExportProvider } from "@/contexts/chart-export-context";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
 
 import "./globals.css";
 
@@ -32,10 +33,15 @@ export default async function RootLayout({
 
   return (
     <html lang="zh">
-      <body className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
+      >
         <ThemeProvider defaultTheme="light">
           <ChartExportProvider>
-            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+            <NextIntlClientProvider messages={messages}>
+              {children}
+              <Analytics />
+            </NextIntlClientProvider>
           </ChartExportProvider>
           <Toaster />
         </ThemeProvider>
