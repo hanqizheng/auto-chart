@@ -30,10 +30,10 @@ const clamp = (value: number, min: number, max: number) => {
 };
 
 const SECTION_MIN_HEIGHT = 480;
-const ENTRY_DELAY_RATIO = 0.25;
-const EXIT_DELAY_RATIO = 0.35;
-const MIN_ENTRY_DELAY = 160;
-const MIN_EXIT_DELAY = 220;
+const ENTRY_DELAY_RATIO = 0.12;
+const EXIT_DELAY_RATIO = 0.18;
+const MIN_ENTRY_DELAY = 80;
+const MIN_EXIT_DELAY = 120;
 const MIN_TAIL_SPACING = 160;
 const MAX_TAIL_SPACING = 320;
 const ENTRY_ALIGNMENT_BUFFER = 64;
@@ -233,7 +233,7 @@ export function HorizontalDemoSection({
       const sectionStart = scrollTop + top;
       const startPin = sectionStart + Math.max(entrySpacer - pinnedTop, 0);
       const scrollEnd = startPin + scrollDistance;
-      const releasePoint = scrollEnd + exitSpacer;
+      const releasePoint = scrollEnd;
 
       scrollBoundsRef.current = {
         sectionTop: sectionStart,
@@ -494,7 +494,7 @@ export function HorizontalDemoSection({
     );
   }
 
-  const afterTop = layout.entrySpacer + layout.scrollDistance + layout.exitSpacer;
+  const afterTop = layout.entrySpacer + layout.scrollDistance;
   const pinnedStyle: CSSProperties =
     stage === "active"
       ? {
