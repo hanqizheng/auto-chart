@@ -48,7 +48,6 @@ export function ImageResultMessage({
   onConfigureChart,
 }: ImageResultMessageProps) {
   const { toast } = useToast();
-  const { currentChart } = useChartExport();
 
   // 简单的本地图片加载状态
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -57,15 +56,13 @@ export function ImageResultMessage({
   const { content, timestamp } = message;
   const { chartData, chartType, title, description, imageInfo, chartConfig, theme } = content;
 
-  // 优先使用当前图表的图片信息，如果没有则使用消息中的信息
-  const currentImageInfo = currentChart?.imageInfo || imageInfo;
-  const imageUrl = currentImageInfo.localBlobUrl;
+  // Use imageInfo directly from the message prop to ensure independence.
+  const imageUrl = imageInfo?.localBlobUrl;
 
   console.log("🖼️ [ImageResultMessage] 组件状态:", {
     messageId: message.id,
     title,
-    hasCurrentChart: !!currentChart,
-    hasImageInfo: !!currentImageInfo,
+    hasImageInfo: !!imageInfo,
     imageUrl: imageUrl?.substring(0, 50) + "...",
     imageLoaded,
     imageLoadError,
@@ -83,41 +80,14 @@ export function ImageResultMessage({
     title,
     chartType,
     dataPoints: chartData.length,
-    generatedAt: currentImageInfo.createdAt || timestamp,
-    width: currentImageInfo.dimensions.width,
-    height: currentImageInfo.dimensions.height,
-    fileSize: currentImageInfo.size,
-    ...currentImageInfo.metadata,
+    generatedAt: imageInfo.createdAt || timestamp,
+    width: imageInfo.dimensions.width,
+    height: imageInfo.dimensions.height,
+    fileSize: imageInfo.size,
+    ...imageInfo.metadata,
   };
 
-  const downloadUrl = currentImageInfo.localBlobUrl;
-
-  const palettePreview = theme
-    ? [
-        { label: "主色", color: theme.palette.primary },
-        { label: "强调", color: theme.palette.accent },
-        { label: "背景", color: theme.palette.background },
-      ]
-    : [];
-
-  const seriesPalette = theme
-    ? (() => {
-        const configKeys = chartConfig ? Object.keys(chartConfig) : [];
-
-        if (configKeys.length === 0 && chartType === "pie") {
-          return (chartData || []).map((item: any, index: number) => ({
-            label: item?.name ?? `类别${index + 1}`,
-            color:
-              theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
-          }));
-        }
-
-        return configKeys.map((key, index) => ({
-          label: String(chartConfig?.[key]?.label || key),
-          color: theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
-        }));
-      })()
-    : [];
+  const downloadUrl = imageInfo.localBlobUrl;
 
   const handleDownload = async () => {
     try {
@@ -380,63 +350,21 @@ export function ImageResultMessage({
                 <Separator />
                 <div className="grid grid-cols-2 gap-4 text-xs">
                   <div className="flex items-center space-x-2">
-                    <Database className="text-muted-foreground h-3 w-3" />
-                    <span className="text-muted-foreground">数据行数:</span>
-                    <span className="font-medium">{chartData?.length || 0}</span>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
                     <Palette className="text-muted-foreground h-3 w-3" />
-                    <span className="text-muted-foreground">图片尺寸:</span>
+                    <span className="text-muted-foreground">Dimensions:</span>
                     <span className="font-medium">
                       {metadata.width}×{metadata.height}
                     </span>
                   </div>
 
-                  <div className="flex items-center space-x-2">
-                    <Clock className="text-muted-foreground h-3 w-3" />
-                    <span className="text-muted-foreground">生成时间:</span>
-                    <span className="font-medium">
-                      {format(metadata.generatedAt, "HH:mm", { locale: zhCN })}
-                    </span>
-                  </div>
-
                   {metadata.fileSize && (
                     <div className="flex items-center space-x-2">
-                      <span className="text-muted-foreground">文件大小:</span>
+                      <Download className="text-muted-foreground h-3 w-3" />
+                      <span className="text-muted-foreground">File Size:</span>
                       <span className="font-medium">{formatFileSize(metadata.fileSize)}</span>
                     </div>
                   )}
                 </div>
-                {theme && (
-                  <div className="mt-3 space-y-2 text-xs">
-                    <div className="text-muted-foreground flex items-center gap-2">
-                      <Palette className="h-3 w-3" />
-                      <span>主题配色</span>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      {palettePreview.map(swatch => (
-                        <ColorBadge
-                          key={swatch.label}
-                          label={swatch.label}
-                          color={swatch.color}
-                          subtle
-                        />
-                      ))}
-                    </div>
-                    {seriesPalette.length > 0 && (
-                      <div className="flex flex-wrap items-center gap-2">
-                        {seriesPalette.map(swatch => (
-                          <ColorBadge
-                            key={swatch.label}
-                            label={swatch.label}
-                            color={swatch.color}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
               </>
             )}
 
@@ -451,7 +379,7 @@ export function ImageResultMessage({
                   className="flex items-center space-x-1"
                 >
                   <Download className="h-4 w-4" />
-                  <span>下载</span>
+                  <span>Download</span>
                 </Button>
 
                 <Button
@@ -462,7 +390,7 @@ export function ImageResultMessage({
                   className="flex items-center space-x-1"
                 >
                   <Copy className="h-4 w-4" />
-                  <span>复制</span>
+                  <span>Copy</span>
                 </Button>
 
                 <Button
@@ -473,7 +401,7 @@ export function ImageResultMessage({
                   className="flex items-center space-x-1"
                 >
                   <Share className="h-4 w-4" />
-                  <span>分享</span>
+                  <span>Share</span>
                 </Button>
               </div>
 
@@ -485,7 +413,7 @@ export function ImageResultMessage({
                   className="flex items-center space-x-1"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  <span>配置调整</span>
+                  <span>Configure</span>
                 </Button>
               )}
             </div>

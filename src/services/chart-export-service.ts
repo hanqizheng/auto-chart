@@ -213,13 +213,6 @@ class ChartExportService {
 
         // 查找SVG元素
         const svgElements = element.querySelectorAll("svg");
-        console.log(`🔍 [ChartExport] Checking SVG render state (${elapsedTime}ms)`, {
-          svgCount: svgElements.length,
-          containerSize: {
-            width: element.offsetWidth,
-            height: element.offsetHeight,
-          },
-        });
 
         if (svgElements.length === 0) {
           // 没有找到SVG，继续等待
@@ -234,11 +227,6 @@ class ChartExportService {
           const svgWidth = svgRect.width;
           const svgHeight = svgRect.height;
 
-          console.log(`📊 [ChartExport] SVG${index + 1} status:`, {
-            size: `${svgWidth}×${svgHeight}`,
-            hasValidSize: svgWidth > 0 && svgHeight > 0,
-          });
-
           // 检查SVG尺寸是否有效
           if (svgWidth <= 0 || svgHeight <= 0) {
             allSvgsReady = false;
@@ -247,10 +235,6 @@ class ChartExportService {
 
           // 检查SVG内部是否有图表元素
           const chartElements = svg.querySelectorAll("path, rect, circle, line, text");
-          console.log(`🎨 [ChartExport] SVG${index + 1} chart elements:`, {
-            elementCount: chartElements.length,
-            hasChartContent: chartElements.length > 0,
-          });
 
           if (chartElements.length === 0) {
             allSvgsReady = false;
@@ -262,11 +246,6 @@ class ChartExportService {
             ".recharts-wrapper, .recharts-surface, .recharts-pie, .recharts-bar, .recharts-line, .recharts-area"
           );
 
-          console.log(`📈 [ChartExport] SVG${index + 1} Recharts elements:`, {
-            rechartsCount: rechartsElements.length,
-            hasRechartsContent: rechartsElements.length > 0,
-          });
-
           if (rechartsElements.length === 0) {
             allSvgsReady = false;
             return;
@@ -275,10 +254,6 @@ class ChartExportService {
 
         // 检查容器是否被SVG撑开
         const containerHasValidSize = element.offsetWidth > 200 && element.offsetHeight > 150;
-        console.log(`📦 [ChartExport] Container size check:`, {
-          size: `${element.offsetWidth}×${element.offsetHeight}`,
-          isValid: containerHasValidSize,
-        });
 
         if (!containerHasValidSize) {
           allSvgsReady = false;
@@ -310,7 +285,7 @@ class ChartExportService {
 
     // 执行截图 - 针对Tailwind CSS + Shadcn/UI优化
     const canvas = await html2canvas(element, {
-      backgroundColor: "#ffffff",
+      backgroundColor: null,
       scale: 2,
       useCORS: true,
       allowTaint: true,
@@ -319,8 +294,17 @@ class ChartExportService {
       height: dimensions.height,
       // 基础修复：确保基本样式
       onclone: (clonedDoc: Document) => {
-        // 只添加基础样式，不进行复杂的样式修复
         this.addBasicStyles(clonedDoc);
+        // Aggressively force transparency over any theme styles
+        const styleEl = clonedDoc.createElement("style");
+        styleEl.textContent = `
+          /* Force all major elements in the capture to have a transparent background */
+          body, div, svg, .recharts-wrapper {
+            background-color: transparent !important;
+            background: transparent !important;
+          }
+        `;
+        clonedDoc.head.appendChild(styleEl);
       },
     });
 
@@ -389,7 +373,7 @@ class ChartExportService {
         font-size: 14px;
         line-height: 1.5;
         color: #333;
-        background: white;
+        background: transparent;
       }
       /* Ensure SVG renders correctly */
       svg {
