@@ -83,9 +83,10 @@ export function ChartThemeProvider({
     [chartType, chartData, chartConfig]
   );
 
-  const seriesCount = chartType === "pie" || chartType === "radial"
-    ? Math.max(chartData.length || derivedSeriesKeys.length, 1)
-    : Math.max(derivedSeriesKeys.length || 1, 1);
+  const seriesCount =
+    chartType === "pie" || chartType === "radial"
+      ? Math.max(chartData.length || derivedSeriesKeys.length, 1)
+      : Math.max(derivedSeriesKeys.length || 1, 1);
 
   const initialBaseColor = useMemo(() => {
     if (incomingTheme?.baseColor) {
@@ -124,43 +125,66 @@ export function ChartThemeProvider({
   const palette = theme.palette;
 
   const themedConfig = useMemo(() => {
-  if (chartType === "pie" || chartType === "radial") {
-    return chartConfig;
-  }
+    if (chartType === "pie" || chartType === "radial") {
+      return chartConfig;
+    }
 
     const keys = Object.keys(chartConfig).length > 0 ? Object.keys(chartConfig) : derivedSeriesKeys;
-    return applyPaletteToConfig(chartConfig || {}, palette, keys);
+
+    const paletteMap = mapSeriesKeysToColors(keys, palette);
+    const next = { ...(chartConfig || {}) } as Record<string, any>;
+    keys.forEach(key => {
+      const existing = next[key] || {};
+      // Preserve existing explicit color if present, otherwise fill from palette
+      next[key] = existing.color ? existing : { ...existing, color: paletteMap[key] };
+    });
+    return next;
   }, [chartType, chartConfig, derivedSeriesKeys, palette]);
 
   const pieSliceColors = useMemo(() => {
-  if (chartType !== "pie" && chartType !== "radial") {
-    return [];
-  }
+    if (chartType !== "pie" && chartType !== "radial") {
+      return [];
+    }
+
+    const explicitColors: string[] | undefined = Array.isArray((chartConfig as any)?.colors)
+      ? ((chartConfig as any).colors as string[])
+      : undefined;
+
+    const source = explicitColors && explicitColors.length > 0 ? explicitColors : palette.series;
 
     return Array.from({ length: chartData.length }).map((_, index) => {
-      return palette.series[index % palette.series.length] || palette.primary;
+      return source[index % source.length] || palette.primary;
     });
-  }, [chartType, chartData.length, palette.series, palette.primary]);
+  }, [chartType, chartData.length, chartConfig, palette.series, palette.primary]);
 
   const seriesColorMap = useMemo(() => {
-  if (chartType === "pie" || chartType === "radial") {
-    const labels = Array.isArray(chartData)
-      ? chartData.map((item: any, index: number) => String(item?.name ?? `slice-${index + 1}`))
-      : [];
+    if (chartType === "pie" || chartType === "radial") {
+      const labels = Array.isArray(chartData)
+        ? chartData.map((item: any, index: number) => String(item?.name ?? `slice-${index + 1}`))
+        : [];
+
+      const explicitColors: string[] | undefined = Array.isArray((chartConfig as any)?.colors)
+        ? ((chartConfig as any).colors as string[])
+        : undefined;
+
+      const source = explicitColors && explicitColors.length > 0 ? explicitColors : palette.series;
 
       return labels.reduce<Record<string, string>>((acc, label, index) => {
-        acc[label] = palette.series[index % palette.series.length] || palette.primary;
+        acc[label] = source[index % source.length] || palette.primary;
         return acc;
       }, {});
     }
 
     const keys = Object.keys(chartConfig).length > 0 ? Object.keys(chartConfig) : derivedSeriesKeys;
-    return mapSeriesKeysToColors(keys, palette);
-  }, [chartType, chartData, chartConfig, derivedSeriesKeys, palette]);
+    return mapSeriesKeysToColors(keys, theme.palette);
+  }, [chartType, chartData, chartConfig, derivedSeriesKeys, theme.palette]);
 
-  const handleSetBaseColor = useCallback((color: string) => {
-    setBaseColor(normalizeHexColor(color, palette.primary));
-  }, [palette.primary]);
+  const handleSetBaseColor = useCallback(
+    (color: string) => {
+      setBaseColor(normalizeHexColor(color, palette.primary));
+    },
+    [palette.primary]
+  );
 
   const getSeriesColor = useCallback(
     (key: string, fallbackIndex?: number) => {

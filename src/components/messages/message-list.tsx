@@ -55,7 +55,7 @@ export function MessageList({
   };
 
   const handleConfigureChart = (message: Extract<ChatMessage, { type: "chart_result" }>) => {
-    onConfigureChart?.(message);
+    onConfigureChart?.(message.content);
   };
 
   // 空状态

@@ -23,10 +23,12 @@ export async function POST(req: NextRequest) {
     const systemPrompt = `你是一个专业的数据可视化专家。根据用户需求和数据特征，推荐最合适的图表类型。
 
 支持的图表类型：
-- bar: 柱状图，用于比较不同类别的数值
-- line: 折线图，用于显示趋势和时间序列变化
-- pie: 饼图，用于显示部分与整体的比例关系
-- area: 面积图，用于显示累积数据和多系列对比
+- bar: 柱状图，用于比较不同类别的数值。
+- line: 折线图，用于显示趋势和时间序列变化。
+- pie: 饼图，用于显示部分与整体的比例关系。
+- area: 面积图，用于显示累积数据和多系列对比。
+- radial: 径向图/玉玦图，用于在圆形布局中比较类别数值，适合少量分类的排名或对比。
+- radar: 雷达图，用于比较多个定量变量在不同类别下的表现，适合多维数据对比。
 
 数据信息：
 - 字段：${dataStructure.schema.fields.map((f: any) => `${f.name}(${f.type})`).join(", ")}
@@ -36,7 +38,7 @@ export async function POST(req: NextRequest) {
 
 请分析用户需求并以JSON格式回复：
 {
-  "chartType": "bar|line|pie|area",
+  "chartType": "bar|line|pie|area|radial|radar",
   "confidence": 0.0-1.0,
   "reasoning": "选择理由",
   "visualMapping": {
@@ -99,7 +101,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 验证AI响应
-    if (!parsed.chartType || !["bar", "line", "pie", "area"].includes(parsed.chartType)) {
+    if (!parsed.chartType || !["bar", "line", "pie", "area", "radial", "radar"].includes(parsed.chartType)) {
       return NextResponse.json(
         {
           success: false,

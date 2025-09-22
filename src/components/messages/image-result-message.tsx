@@ -94,8 +94,8 @@ export function ImageResultMessage({
       const url = downloadUrl || imageUrl;
       if (!url) {
         toast({
-          title: "下载失败",
-          description: "图片还未生成完成",
+          title: "Download failed",
+          description: "Image not ready yet",
           variant: "destructive",
         });
         return;
@@ -113,14 +113,14 @@ export function ImageResultMessage({
       URL.revokeObjectURL(link.href);
 
       toast({
-        title: "下载成功",
-        description: "图表图片已保存到本地",
+        title: "Download successful",
+        description: "Chart image saved locally",
       });
     } catch (error) {
       console.error("Download failed:", error);
       toast({
-        title: "下载失败",
-        description: "无法下载图片，请稍后重试",
+        title: "Download failed",
+        description: "Unable to download image, please try again later",
         variant: "destructive",
       });
     }
@@ -130,8 +130,8 @@ export function ImageResultMessage({
     try {
       if (!imageUrl) {
         toast({
-          title: "复制失败",
-          description: "图片还未生成完成",
+          title: "Copy failed",
+          description: "Image not ready yet",
           variant: "destructive",
         });
         return;
@@ -143,14 +143,14 @@ export function ImageResultMessage({
       await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
 
       toast({
-        title: "复制成功",
-        description: "图片已复制到剪贴板",
+        title: "Copy successful",
+        description: "Image copied to clipboard",
       });
     } catch (error) {
       console.error("Copy failed:", error);
       toast({
-        title: "复制失败",
-        description: "无法复制图片，请尝试下载",
+        title: "Copy failed",
+        description: "Unable to copy image, please try downloading",
         variant: "destructive",
       });
     }
@@ -159,8 +159,8 @@ export function ImageResultMessage({
   const handleShare = async () => {
     if (!imageUrl) {
       toast({
-        title: "分享失败",
-        description: "图片还未生成完成",
+        title: "Share failed",
+        description: "Image not ready yet",
         variant: "destructive",
       });
       return;
@@ -173,15 +173,15 @@ export function ImageResultMessage({
         const file = new File([blob], `${metadata.title || "chart"}.png`, { type: "image/png" });
 
         await navigator.share({
-          title: metadata.title || "图表分享",
-          text: metadata.description || "查看这个图表",
+          title: metadata.title || "Chart Share",
+          text: metadata.description || "View this chart",
           files: [file],
         });
       } catch (error) {
         console.error("Share failed:", error);
         toast({
-          title: "分享失败",
-          description: "无法分享图片",
+          title: "Share failed",
+          description: "Unable to share image",
           variant: "destructive",
         });
       }
@@ -190,13 +190,13 @@ export function ImageResultMessage({
       try {
         await navigator.clipboard.writeText(imageUrl);
         toast({
-          title: "链接已复制",
-          description: "图片链接已复制到剪贴板",
+          title: "Link copied",
+          description: "Image link copied to clipboard",
         });
       } catch (error) {
         toast({
-          title: "分享失败",
-          description: "浏览器不支持分享功能",
+          title: "Share failed",
+          description: "Browser doesn't support sharing",
           variant: "destructive",
         });
       }
@@ -205,10 +205,10 @@ export function ImageResultMessage({
 
   const getChartTypeLabel = (type: string) => {
     const labels: Record<string, string> = {
-      bar: "柱状图",
-      line: "折线图",
-      pie: "饼图",
-      area: "面积图",
+      bar: "Bar Chart",
+      line: "Line Chart",
+      pie: "Pie Chart",
+      area: "Area Chart",
     };
     return labels[type] || type;
   };
@@ -253,7 +253,7 @@ export function ImageResultMessage({
               <div className="bg-muted flex aspect-video items-center justify-center">
                 <div className="space-y-2 text-center">
                   <BarChart3 className="text-muted-foreground mx-auto h-12 w-12" />
-                  <p className="text-muted-foreground text-sm">图片加载失败</p>
+                  <p className="text-muted-foreground text-sm">Image load failed</p>
                   <Button
                     variant="outline"
                     size="sm"
@@ -263,7 +263,7 @@ export function ImageResultMessage({
                     }}
                   >
                     <RotateCcw className="mr-1 h-4 w-4" />
-                    重试
+                    Retry
                   </Button>
                 </div>
               </div>
@@ -303,7 +303,7 @@ export function ImageResultMessage({
                   <div className="bg-muted/80 absolute inset-0 flex items-center justify-center backdrop-blur-sm">
                     <div className="space-y-2 text-center">
                       <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
-                      <p className="text-muted-foreground text-sm">图片加载中...</p>
+                      <p className="text-muted-foreground text-sm">Loading image...</p>
                     </div>
                   </div>
                 )}
@@ -404,18 +404,6 @@ export function ImageResultMessage({
                   <span>Share</span>
                 </Button>
               </div>
-
-              {onConfigureChart && (
-                <Button
-                  variant="default"
-                  size="sm"
-                  onClick={onConfigureChart}
-                  className="flex items-center space-x-1"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  <span>Configure</span>
-                </Button>
-              )}
             </div>
           </div>
         </CardContent>
