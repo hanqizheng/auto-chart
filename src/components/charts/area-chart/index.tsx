@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { Activity, BarChart2, TrendingUp } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, ReferenceLine, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -178,6 +179,8 @@ export function BeautifulAreaChart({
   showTotalLine = AREA_CHART_DEFAULTS.showTotalLine,
   showGrowthRate = AREA_CHART_DEFAULTS.showGrowthRate,
   fillOpacity = AREA_CHART_DEFAULTS.fillOpacity,
+  useGradient = AREA_CHART_DEFAULTS.useGradient,
+  showGrid = AREA_CHART_DEFAULTS.showGrid,
 }: AreaChartProps) {
   const { getSeriesColor, palette } = useChartTheme();
   // 数据验证
@@ -228,6 +231,8 @@ export function BeautifulAreaChart({
     current._growth > best._growth ? current : best
   );
 
+  const gradientBaseId = useId();
+
   return (
     <div className={className}>
       {(title || description) && (
@@ -252,7 +257,26 @@ export function BeautifulAreaChart({
               bottom: 40,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.35} />
+            {useGradient && (
+              <defs>
+                {valueKeys.map((key, index) => {
+                  const color = getSeriesColor(key, index);
+                  const gradientId = `${gradientBaseId}-${index}`;
+                  const startOpacity = Math.min(fillOpacity + 0.25, 0.95);
+                  const endOpacity = Math.max(fillOpacity - 0.35, 0.05);
+
+                  return (
+                    <linearGradient key={gradientId} id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={color} stopOpacity={startOpacity} />
+                      <stop offset="95%" stopColor={color} stopOpacity={endOpacity} />
+                    </linearGradient>
+                  );
+                })}
+              </defs>
+            )}
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.35} />
+            )}
             <XAxis
               dataKey={xAxisKey}
               tickLine={false}
@@ -287,8 +311,12 @@ export function BeautifulAreaChart({
                 dataKey={key}
                 stackId={stacked ? "1" : undefined}
                 stroke={getSeriesColor(key, index)}
-                fill={getSeriesColor(key, index)}
-                fillOpacity={fillOpacity}
+                fill={
+                  useGradient
+                    ? `url(#${gradientBaseId}-${index})`
+                    : getSeriesColor(key, index)
+                }
+                fillOpacity={useGradient ? 1 : fillOpacity}
                 strokeWidth={AREA_CHART_DEFAULTS.strokeWidth}
                 name={String(config[key]?.label || key)}
               />

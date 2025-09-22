@@ -33,6 +33,15 @@ export interface BarChartProps {
   
   /** 自定义样式类名 */
   className?: string;
+
+  /** 柱子圆角半径 */
+  barRadius?: number;
+
+  /** 是否显示数值标签 */
+  showValueLabels?: boolean;
+
+  /** 是否显示背景网格 */
+  showGrid?: boolean;
 }
 
 /**

@@ -77,7 +77,16 @@ export function validateBarChartData(data: BarChartData): BarChartValidationResu
  * 美化柱状图组件
  * 专为静态图像导出设计，显示完整的数据信息和统计分析
  */
-export function BeautifulBarChart({ data, config, title, description, className }: BarChartProps) {
+export function BeautifulBarChart({
+  data,
+  config,
+  title,
+  description,
+  className,
+  barRadius = 4,
+  showValueLabels = true,
+  showGrid = true,
+}: BarChartProps) {
   const { getSeriesColor, palette } = useChartTheme();
   // 数据验证
   const validation = validateBarChartData(data);
@@ -133,7 +142,9 @@ export function BeautifulBarChart({ data, config, title, description, className 
               bottom: 40,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.35} />
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.35} />
+            )}
             <XAxis
               dataKey={categoryKey}
               tickLine={false}
@@ -154,19 +165,21 @@ export function BeautifulBarChart({ data, config, title, description, className 
                 key={key}
                 dataKey={key}
                 fill={getSeriesColor(key)}
-                radius={[4, 4, 0, 0]}
+                radius={[barRadius, barRadius, 0, 0]}
                 name={String(config[key]?.label || key)}
               >
-                <LabelList
-                  dataKey={key}
-                  position="top"
-                  style={{
-                    fontSize: "11px",
-                    fill: palette.neutralStrong,
-                    fontWeight: "600",
-                  }}
-                  formatter={(value: number) => value.toLocaleString()}
-                />
+                {showValueLabels && (
+                  <LabelList
+                    dataKey={key}
+                    position="top"
+                    style={{
+                      fontSize: "11px",
+                      fill: palette.neutralStrong,
+                      fontWeight: "600",
+                    }}
+                    formatter={(value: number) => value.toLocaleString()}
+                  />
+                )}
               </Bar>
             ))}
           </BarChart>

@@ -2,6 +2,7 @@
 
 import { ChartResultContent, ProcessingFlow, ProcessingStep, ChartType, ChartTheme } from "@/types";
 import { PROCESSING_STEPS } from "@/constants/processing";
+import { CHART_TYPES, CHART_TYPE_LABELS } from "@/constants/chart";
 import { AutoExportService } from "./auto-export-service";
 import { LocalStorageService } from "./local-storage-service";
 import { createRoot } from "react-dom/client";
@@ -9,6 +10,8 @@ import { EnhancedChart } from "@/components/charts/enhanced-chart";
 import { aiDirector, ChartGenerationRequest } from "@/lib/ai-agents";
 import { ChartThemeProvider } from "@/contexts/chart-theme-context";
 import { createChartTheme, DEFAULT_CHART_BASE_COLOR, mapSeriesKeysToColors } from "@/lib/colors";
+
+const { BAR, LINE, PIE, AREA, RADAR, RADIAL } = CHART_TYPES;
 
 /**
  * 自动图表生成服务
@@ -510,22 +513,38 @@ export class AutoChartService {
 
     // 简单的关键词匹配来确定图表类型
     const lowerInput = input.toLowerCase();
-    let chartType: ChartType = "bar"; // 默认
+    let chartType: ChartType = BAR; // 默认
 
     if (
+      lowerInput.includes("雷达") ||
+      lowerInput.includes("radar") ||
+      lowerInput.includes("spider") ||
+      lowerInput.includes("polar")
+    ) {
+      chartType = RADAR;
+    } else if (
+      lowerInput.includes("径向") ||
+      lowerInput.includes("环形") ||
+      lowerInput.includes("gauge") ||
+      lowerInput.includes("radial") ||
+      lowerInput.includes("progress ring")
+    ) {
+      chartType = RADIAL;
+    } else if (
       lowerInput.includes("饼图") ||
       lowerInput.includes("饼状图") ||
-      lowerInput.includes("pie")
+      lowerInput.includes("pie") ||
+      lowerInput.includes("donut")
     ) {
-      chartType = "pie";
+      chartType = PIE;
     } else if (
       lowerInput.includes("折线图") ||
       lowerInput.includes("线图") ||
       lowerInput.includes("line")
     ) {
-      chartType = "line";
+      chartType = LINE;
     } else if (lowerInput.includes("面积图") || lowerInput.includes("area")) {
-      chartType = "area";
+      chartType = AREA;
     }
 
     const data = this.generateMockDataByType(chartType);
@@ -540,14 +559,21 @@ export class AutoChartService {
    */
   private generateMockDataByType(chartType: ChartType): any[] {
     switch (chartType) {
-      case "pie":
+      case PIE:
         return [
           { name: "Mobile", value: 45 },
           { name: "Desktop", value: 30 },
           { name: "Tablet", value: 15 },
           { name: "Other", value: 10 },
         ];
-      case "line":
+      case RADIAL:
+        return [
+          { name: "North", value: 68 },
+          { name: "South", value: 54 },
+          { name: "East", value: 72 },
+          { name: "West", value: 60 },
+        ];
+      case LINE:
         return [
           { name: "January", sales: 4000, profit: 2400 },
           { name: "February", sales: 3000, profit: 1398 },
@@ -556,14 +582,23 @@ export class AutoChartService {
           { name: "May", sales: 1890, profit: 4800 },
           { name: "June", sales: 2390, profit: 3800 },
         ];
-      case "area":
+      case AREA:
         return [
           { name: "Q1", marketing: 100, engineering: 150, operations: 80 },
           { name: "Q2", marketing: 120, engineering: 180, operations: 95 },
           { name: "Q3", marketing: 140, engineering: 200, operations: 110 },
           { name: "Q4", marketing: 160, engineering: 220, operations: 125 },
         ];
-      default: // bar
+      case RADAR:
+        return [
+          { dimension: "Quality", productA: 78, productB: 69, productC: 85 },
+          { dimension: "Speed", productA: 85, productB: 82, productC: 80 },
+          { dimension: "Reliability", productA: 92, productB: 76, productC: 88 },
+          { dimension: "Usability", productA: 74, productB: 90, productC: 79 },
+          { dimension: "Support", productA: 88, productB: 72, productC: 83 },
+        ];
+      case BAR:
+      default:
         return [
           { name: "Product A", revenue: 1200, target: 1000 },
           { name: "Product B", revenue: 800, target: 900 },
@@ -608,12 +643,7 @@ export class AutoChartService {
   }
 
   private getChartTypeLabel(chartType: string): string {
-    const labels: Record<string, string> = {
-      bar: "Bar chart",
-      line: "Line chart",
-      area: "Area chart",
-      pie: "Pie chart",
-    };
-    return labels[chartType] || chartType;
+    const normalizedType = chartType as ChartType;
+    return CHART_TYPE_LABELS[normalizedType]?.en ?? chartType;
   }
 }

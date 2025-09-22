@@ -1,6 +1,6 @@
 "use client";
 
-import { Minus, TrendingDown, TrendingUp } from "lucide-react";
+import { GitCommitVertical, Minus, TrendingDown, TrendingUp } from "lucide-react";
 import { CartesianGrid, LabelList, Line, LineChart, ReferenceLine, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
@@ -116,6 +116,11 @@ export function BeautifulLineChart({
   showReferenceLine = true,
   referenceValue,
   referenceLabel,
+  curveType = "monotone",
+  showDots = true,
+  dotSize = 6,
+  dotVariant = "default",
+  showGrid = true,
 }: LineChartProps) {
   const { getSeriesColor, palette } = useChartTheme();
   // 数据验证
@@ -136,6 +141,76 @@ export function BeautifulLineChart({
 
   const { stats } = validation;
   const { xAxisKey, valueKeys } = stats;
+
+  const createIconDot = (
+    color: string,
+    seriesKey: string,
+    sizeMultiplier = 1
+  ) =>
+    (props: any) => {
+      const { cx, cy, payload } = props;
+      if (typeof cx !== "number" || typeof cy !== "number") {
+        return null;
+      }
+      const baseSize = Math.max(dotSize * 2.2 * sizeMultiplier, 12);
+      const key = payload?.[xAxisKey] ?? `${seriesKey}-${cx}-${cy}`;
+      return (
+        <GitCommitVertical
+          key={`${seriesKey}-${key}-${sizeMultiplier}`}
+          x={cx - baseSize / 2}
+          y={cy - baseSize / 2}
+          width={baseSize}
+          height={baseSize}
+          strokeWidth={2}
+          stroke={color}
+          fill={palette.background}
+        />
+      );
+    };
+
+  const getDotConfiguration = (seriesKey: string, seriesIndex: number, color: string) => {
+    if (!showDots) {
+      return { dot: false, activeDot: undefined } as const;
+    }
+
+    switch (dotVariant) {
+      case "solid":
+        return {
+          dot: {
+            r: dotSize,
+            fill: color,
+            stroke: palette.background,
+            strokeWidth: 1.5,
+          },
+          activeDot: {
+            r: dotSize + 2,
+            fill: color,
+            stroke: palette.background,
+            strokeWidth: 2,
+          },
+        } as const;
+      case "icon":
+        return {
+          dot: createIconDot(color, seriesKey, 1),
+          activeDot: createIconDot(color, seriesKey, 1.2),
+        } as const;
+      default:
+        return {
+          dot: {
+            fill: palette.background,
+            strokeWidth: 2,
+            r: dotSize,
+            stroke: color,
+          },
+          activeDot: {
+            r: dotSize + 2,
+            stroke: color,
+            strokeWidth: 2,
+            fill: palette.background,
+          },
+        } as const;
+    }
+  };
 
   // 计算趋势分析
   const trendAnalysis = calculateTrendAnalysis(data, valueKeys);
@@ -174,7 +249,9 @@ export function BeautifulLineChart({
               bottom: 40,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.4} />
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.4} />
+            )}
             <XAxis
               dataKey={xAxisKey}
               tickLine={false}
@@ -202,32 +279,27 @@ export function BeautifulLineChart({
             )}
 
             {/* 折线渲染 */}
-            {valueKeys.map((key, index) => (
-              <Line
-                key={key}
-                type="monotone"
-                dataKey={key}
-                stroke={getSeriesColor(key, index)}
-                strokeWidth={3}
-                strokeOpacity={1}
-                dot={{
-                  fill: palette.background,
-                  strokeWidth: 2,
-                  r: 6,
-                  stroke: getSeriesColor(key, index),
-                }}
-                activeDot={{
-                  r: 8,
-                  stroke: getSeriesColor(key, index),
-                  strokeWidth: 2,
-                  fill: palette.background,
-                }}
-                name={String(config[key]?.label || key)}
-                animationBegin={index * 200}
-                animationDuration={1500}
-                connectNulls={false}
-              />
-            ))}
+            {valueKeys.map((key, index) => {
+              const color = getSeriesColor(key, index);
+              const { dot, activeDot } = getDotConfiguration(key, index, color);
+
+              return (
+                <Line
+                  key={key}
+                  type={curveType}
+                  dataKey={key}
+                  stroke={color}
+                  strokeWidth={3}
+                  strokeOpacity={1}
+                  dot={dot}
+                  activeDot={activeDot}
+                  name={String(config[key]?.label || key)}
+                  animationBegin={index * 200}
+                  animationDuration={1500}
+                  connectNulls={false}
+                />
+              );
+            })}
             
             {/* 数值标签 - 仅在系列较少时显示，避免重叠 */}
             {valueKeys.length <= 2 &&

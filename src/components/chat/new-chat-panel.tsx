@@ -9,6 +9,7 @@ import { NewChatInput } from "./new-chat-input";
 import { ChatArea } from "@/components/layout/chat-area";
 import { UploadedFile } from "@/types/chat";
 import { ChartType } from "@/types/chart";
+import { CHART_TYPE_LABELS } from "@/constants/chart";
 import { generateChart } from "@/lib/ai-chart-system";
 import { useSimpleExport } from "@/hooks/use-simple-export";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
@@ -400,15 +401,8 @@ export function NewChatPanel({ className, onChartGenerated, onImageGenerated }: 
   };
 
   // 获取图表类型标签
-  const getChartTypeName = (chartType: ChartType): string => {
-    const names: Record<ChartType, string> = {
-      bar: "Bar chart",
-      line: "Line chart",
-      pie: "Pie chart",
-      area: "Area chart",
-    };
-    return names[chartType] || "Chart";
-  };
+  const getChartTypeName = (chartType: ChartType): string =>
+    CHART_TYPE_LABELS[chartType]?.en || "Chart";
 
   // 处理图片点击
   const handleImageClick = useCallback((imageUrl: string, title?: string) => {

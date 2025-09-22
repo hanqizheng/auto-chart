@@ -4,6 +4,8 @@ import { BeautifulAreaChart } from "../area-chart";
 import { BeautifulBarChart } from "../bar-chart";
 import { BeautifulLineChart } from "../line-chart";
 import { BeautifulPieChart } from "../pie-chart";
+import { BeautifulRadarChart } from "../radar-chart";
+import { BeautifulRadialChart } from "../radial-chart";
 import {
   EnhancedChartProps,
   StandardChartData,
@@ -11,6 +13,7 @@ import {
   ENHANCED_CHART_DEFAULTS,
 } from "./types";
 import { PieChartData } from "../pie-chart/types";
+import { RadialChartData } from "../radial-chart/types";
 import { useChartTheme } from "@/contexts/chart-theme-context";
 
 /**
@@ -87,6 +90,17 @@ export function validateChartTypeCompatibility(
       }
       break;
 
+    case "radial":
+      if (!isPieFormat && !isStandardFormat) {
+        errors.push("径向图需要包含 name 和 value 字段，或标准的分类数据格式");
+        isValid = false;
+      }
+      if (pointCount < 2) {
+        errors.push("径向图建议至少包含2个数据点");
+        isValid = false;
+      }
+      break;
+
     case "bar":
     case "line":
     case "area":
@@ -100,6 +114,21 @@ export function validateChartTypeCompatibility(
       }
       if (seriesCount < 1) {
         errors.push(`${type}图至少需要1个数值系列`);
+        isValid = false;
+      }
+      break;
+
+    case "radar":
+      if (!isStandardFormat) {
+        errors.push("雷达图需要标准的分类数据格式");
+        isValid = false;
+      }
+      if (pointCount < 3) {
+        errors.push("雷达图至少需要3个数据点");
+        isValid = false;
+      }
+      if (seriesCount < 2) {
+        errors.push("雷达图至少需要2个数值系列用于比较");
         isValid = false;
       }
       break;
@@ -169,7 +198,32 @@ export function EnhancedChart({
   outerRadius = ENHANCED_CHART_DEFAULTS.outerRadius,
   showPercentage = ENHANCED_CHART_DEFAULTS.showPercentage,
   showLegend = ENHANCED_CHART_DEFAULTS.showLegend,
+  barRadius = ENHANCED_CHART_DEFAULTS.bar.radius,
+  barShowValues = ENHANCED_CHART_DEFAULTS.bar.showValues,
+  barShowGrid = ENHANCED_CHART_DEFAULTS.bar.showGrid,
+  lineCurveType = ENHANCED_CHART_DEFAULTS.line.curveType,
+  lineShowDots = ENHANCED_CHART_DEFAULTS.line.showDots,
+  lineDotSize = ENHANCED_CHART_DEFAULTS.line.dotSize,
+  lineDotVariant = ENHANCED_CHART_DEFAULTS.line.dotVariant,
+  lineShowGrid = ENHANCED_CHART_DEFAULTS.line.showGrid,
+  radarShowGrid = ENHANCED_CHART_DEFAULTS.radar.showGrid,
+  radarShowLegend = ENHANCED_CHART_DEFAULTS.radar.showLegend,
+  radarShowDots = ENHANCED_CHART_DEFAULTS.radar.showDots,
+  radarShowArea = ENHANCED_CHART_DEFAULTS.radar.showArea,
+  radarFillOpacity = ENHANCED_CHART_DEFAULTS.radar.fillOpacity,
+  radarStrokeWidth = ENHANCED_CHART_DEFAULTS.radar.strokeWidth,
+  radarMaxValue,
+  radialBarSize = ENHANCED_CHART_DEFAULTS.radial.barSize,
+  radialCornerRadius = ENHANCED_CHART_DEFAULTS.radial.cornerRadius,
+  radialStartAngle = ENHANCED_CHART_DEFAULTS.radial.startAngle,
+  radialEndAngle = ENHANCED_CHART_DEFAULTS.radial.endAngle,
+  radialShowBackground = ENHANCED_CHART_DEFAULTS.radial.showBackground,
+  radialShowLabels = ENHANCED_CHART_DEFAULTS.radial.showLabels,
+  radialInnerRadius = ENHANCED_CHART_DEFAULTS.radial.innerRadius,
+  radialOuterRadius = ENHANCED_CHART_DEFAULTS.radial.outerRadius,
   exportMode = false,
+  areaUseGradient = ENHANCED_CHART_DEFAULTS.area.useGradient,
+  areaShowGrid = ENHANCED_CHART_DEFAULTS.area.showGrid,
 }: EnhancedChartProps) {
   const { themedConfig } = useChartTheme();
   const activeConfig = Object.keys(themedConfig || {}).length ? themedConfig : config;
@@ -216,6 +270,9 @@ export function EnhancedChart({
           config={activeConfig}
           title={title}
           description={description}
+          barRadius={barRadius}
+          showValueLabels={barShowValues}
+          showGrid={barShowGrid}
         />
       );
 
@@ -227,6 +284,11 @@ export function EnhancedChart({
           config={activeConfig}
           title={title}
           description={description}
+          curveType={lineCurveType}
+          showDots={lineShowDots}
+          dotSize={lineDotSize}
+          dotVariant={lineDotVariant}
+          showGrid={lineShowGrid}
         />
       );
 
@@ -264,6 +326,38 @@ export function EnhancedChart({
         />
       );
 
+    case "radial":
+      console.log("⭕ [EnhancedChart] 渲染径向图，数据:", data);
+      let radialData: RadialChartData;
+      if (Array.isArray(data) && data.length > 0) {
+        const firstItem = data[0];
+        if ("name" in firstItem && "value" in firstItem) {
+          radialData = data as RadialChartData;
+        } else {
+          radialData = transformToPieData(data as StandardChartData) as RadialChartData;
+        }
+      } else {
+        radialData = [];
+      }
+
+      return (
+        <BeautifulRadialChart
+          data={radialData}
+          config={activeConfig}
+          title={title}
+          description={description}
+          innerRadius={radialInnerRadius ?? innerRadius}
+          outerRadius={radialOuterRadius ?? outerRadius}
+          barSize={radialBarSize}
+          cornerRadius={radialCornerRadius}
+          startAngle={radialStartAngle}
+          endAngle={radialEndAngle}
+          showLegend={showLegend}
+          showBackground={radialShowBackground}
+          showLabels={radialShowLabels}
+        />
+      );
+
     case "area":
       console.log("🌄 [EnhancedChart] 渲染面积图，数据:", data);
       return (
@@ -274,6 +368,26 @@ export function EnhancedChart({
           description={description}
           stacked={stacked}
           fillOpacity={fillOpacity}
+          useGradient={areaUseGradient}
+          showGrid={areaShowGrid}
+        />
+      );
+
+    case "radar":
+      console.log("🕸️ [EnhancedChart] 渲染雷达图，数据:", data);
+      return (
+        <BeautifulRadarChart
+          data={data as StandardChartData}
+          config={activeConfig}
+          title={title}
+          description={description}
+          showGrid={radarShowGrid}
+          showLegend={radarShowLegend}
+          showDots={radarShowDots}
+          showArea={radarShowArea}
+          fillOpacity={radarFillOpacity}
+          strokeWidth={radarStrokeWidth}
+          maxValue={radarMaxValue}
         />
       );
 

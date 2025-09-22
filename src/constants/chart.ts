@@ -6,6 +6,8 @@ export const CHART_TYPES = {
   LINE: "line",
   PIE: "pie",
   AREA: "area",
+  RADAR: "radar",
+  RADIAL: "radial",
 } as const;
 
 // 简单图表支持的类型
@@ -54,6 +56,15 @@ export const CHART_OPTIONS = {
     MEDIUM: 4,
     LARGE: 8,
   },
+} as const;
+
+export const CHART_TYPE_LABELS = {
+  [CHART_TYPES.BAR]: { en: "Bar chart", zh: "柱状图" },
+  [CHART_TYPES.LINE]: { en: "Line chart", zh: "折线图" },
+  [CHART_TYPES.PIE]: { en: "Pie chart", zh: "饼图" },
+  [CHART_TYPES.AREA]: { en: "Area chart", zh: "面积图" },
+  [CHART_TYPES.RADAR]: { en: "Radar chart", zh: "雷达图" },
+  [CHART_TYPES.RADIAL]: { en: "Radial chart", zh: "径向图" },
 } as const;
 
 // 颜色主题常量

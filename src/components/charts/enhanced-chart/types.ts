@@ -4,9 +4,11 @@ import { ChartType } from "@/types/chart";
 
 // 导入各图表组件的数据类型
 import { BarChartData } from "../bar-chart/types";
-import { LineChartData } from "../line-chart/types";
+import { LineChartData, LineDotVariant } from "../line-chart/types";
 import { PieChartData } from "../pie-chart/types";
 import { AreaChartData } from "../area-chart/types";
+import { RadarChartData, RADAR_CHART_DEFAULTS } from "../radar-chart/types";
+import { RadialChartData, RADIAL_CHART_DEFAULTS } from "../radial-chart/types";
 
 /**
  * 通用图表数据点接口
@@ -24,7 +26,7 @@ export type StandardChartData = StandardChartDataPoint[];
 /**
  * 增强图表组件支持的所有数据类型
  */
-export type EnhancedChartData = StandardChartData | PieChartData;
+export type EnhancedChartData = StandardChartData | PieChartData | RadialChartData;
 
 /**
  * 增强图表组件属性接口
@@ -54,6 +56,12 @@ export interface EnhancedChartProps {
   /** 面积图透明度（仅适用于面积图） */
   fillOpacity?: number;
 
+  /** 面积图是否使用渐变填充 */
+  areaUseGradient?: boolean;
+
+  /** 面积图是否显示背景网格 */
+  areaShowGrid?: boolean;
+
   /** 饼图内圆半径（仅适用于饼图） */
   innerRadius?: number;
 
@@ -63,8 +71,77 @@ export interface EnhancedChartProps {
   /** 是否显示百分比标签（仅适用于饼图） */
   showPercentage?: boolean;
 
-  /** 是否显示图例（仅适用于饼图） */
+  /** 是否显示图例（饼图/径向图） */
   showLegend?: boolean;
+
+  /** 柱状图圆角半径 */
+  barRadius?: number;
+
+  /** 柱状图是否显示数值标签 */
+  barShowValues?: boolean;
+
+  /** 柱状图是否显示背景网格 */
+  barShowGrid?: boolean;
+
+  /** 折线图曲线类型 */
+  lineCurveType?: "monotone" | "linear";
+
+  /** 折线图是否显示节点 */
+  lineShowDots?: boolean;
+
+  /** 折线图节点大小 */
+  lineDotSize?: number;
+
+  /** 折线图节点样式 */
+  lineDotVariant?: LineDotVariant;
+
+  /** 折线图是否显示背景网格 */
+  lineShowGrid?: boolean;
+
+  /** 雷达图是否显示网格 */
+  radarShowGrid?: boolean;
+
+  /** 雷达图是否显示图例 */
+  radarShowLegend?: boolean;
+
+  /** 雷达图是否显示数据点 */
+  radarShowDots?: boolean;
+
+  /** 雷达图是否填充区域 */
+  radarShowArea?: boolean;
+
+  /** 雷达图区域透明度 */
+  radarFillOpacity?: number;
+
+  /** 雷达图线条宽度 */
+  radarStrokeWidth?: number;
+
+  /** 雷达图最大刻度值 */
+  radarMaxValue?: number;
+
+  /** 径向图条形宽度 */
+  radialBarSize?: number;
+
+  /** 径向图条形圆角 */
+  radialCornerRadius?: number;
+
+  /** 径向图起始角度 */
+  radialStartAngle?: number;
+
+  /** 径向图结束角度 */
+  radialEndAngle?: number;
+
+  /** 径向图是否显示背景轨道 */
+  radialShowBackground?: boolean;
+
+  /** 径向图是否显示标签 */
+  radialShowLabels?: boolean;
+
+  /** 径向图内半径 */
+  radialInnerRadius?: number;
+
+  /** 径向图外半径 */
+  radialOuterRadius?: number;
 
   /** 导出模式 - 隐藏UI元素，仅显示图表 */
   exportMode?: boolean;
@@ -203,11 +280,39 @@ export const ENHANCED_CHART_DEFAULTS = {
   fillOpacity: 0.6,
   stacked: false,
 
+  // 柱状图默认值
+  bar: {
+    radius: 4,
+    showValues: true,
+    showGrid: true,
+  },
+
+  // 折线图默认值
+  line: {
+    curveType: "monotone" as const,
+    showDots: true,
+    dotSize: 6,
+    dotVariant: "default" as LineDotVariant,
+    showGrid: true,
+  },
+
   // 饼图默认值
   innerRadius: 0,
   outerRadius: 120,
   showPercentage: true,
   showLegend: true,
+
+  // 面积图选项默认值
+  area: {
+    showGrid: true,
+    useGradient: true,
+  },
+
+  // 雷达图默认值
+  radar: RADAR_CHART_DEFAULTS,
+
+  // 径向图默认值
+  radial: RADIAL_CHART_DEFAULTS,
 
   // 导出默认值
   export: {
@@ -232,6 +337,8 @@ export const CHART_TYPE_MAP = {
   line: "BeautifulLineChart",
   pie: "BeautifulPieChart",
   area: "BeautifulAreaChart",
+  radar: "BeautifulRadarChart",
+  radial: "BeautifulRadialChart",
 } as const;
 
 /**
@@ -247,4 +354,6 @@ export const CHART_DATA_COMPATIBILITY = {
   line: ["standard"],
   area: ["standard"],
   pie: ["pie", "standard"], // 饼图支持两种数据格式
+  radial: ["pie", "standard"],
+  radar: ["standard"],
 } as const;

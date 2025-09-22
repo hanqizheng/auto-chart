@@ -2,6 +2,7 @@
 // 重构现有的 AI agents 系统，使用新的 AI 服务层
 
 import { ChartType } from "@/types/chart";
+import { CHART_TYPE_LABELS } from "@/constants/chart";
 import { AIService } from "./ai/types";
 import { createServiceFromEnv } from "./ai/service-factory";
 
@@ -643,15 +644,8 @@ export class ChartIntentAgent implements AIAgent {
     chartType: ChartType,
     dataMapping: DataMappingResult
   ): MetadataResult {
-    const typeNames = {
-      bar: "柱状图",
-      line: "折线图",
-      pie: "饼图",
-      area: "面积图",
-    };
-
     return {
-      title: `${typeNames[chartType]}分析`,
+      title: `${CHART_TYPE_LABELS[chartType]?.zh ?? chartType}分析`,
       description: "基于数据自动生成的图表",
       config: this.generateChartConfig(dataMapping),
       labels: {

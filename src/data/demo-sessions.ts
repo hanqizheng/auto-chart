@@ -287,6 +287,144 @@ export const REGIONAL_REVENUE_DEMO: SerializableChatSession = {
 };
 
 /**
+ * Team skill radar chart demo
+ */
+export const TEAM_SKILL_RADAR_DEMO: SerializableChatSession = {
+  id: "demo_team_skill_radar_2024",
+  title: undefined,
+  version: "1.0",
+  source: "demo",
+  createdAt: new Date("2024-02-02T11:00:00.000Z"),
+  lastActivity: new Date("2024-02-02T11:00:00.000Z"),
+
+  messages: [
+    {
+      id: "demo_team_skill_msg",
+      type: MESSAGE_TYPES.USER,
+      content: {
+        text: "Generate a radar chart comparing the key capability scores of three product teams",
+        subtype: USER_MESSAGE_SUBTYPES.TEXT,
+        attachments: [
+          {
+            id: "demo_team_skill_file",
+            name: "team_capabilities.csv",
+            type: "csv",
+            size: 1024,
+            uploadedAt: new Date("2024-02-02T11:00:00.000Z"),
+            storageType: "base64",
+            dataUrl:
+              "data:text/csv;base64," +
+              btoa(
+                unescape(
+                  encodeURIComponent(
+                    "dimension,Team Alpha,Team Bravo,Team Charlie\nExecution,82,75,88\nInnovation,90,78,84\nQuality,88,83,91\nSpeed,76,89,80\nCollaboration,92,86,88"
+                  )
+                )
+              ),
+            metadata: {
+              rows: 6,
+              columns: 4,
+              encoding: "utf-8",
+            },
+          },
+        ],
+      },
+      timestamp: new Date("2024-02-02T11:00:00.000Z"),
+      status: MESSAGE_STATUS.SENT,
+    },
+  ],
+
+  _autoTrigger: {
+    enabled: true,
+    type: "ai_processing",
+    triggerMessage: "demo_team_skill_msg",
+    expectedFlow: [
+      "thinking",
+      "data_analysis",
+      "chart_type_detection",
+      "chart_generation",
+      "image_export",
+    ],
+  },
+
+  _storage: {
+    totalFiles: 1,
+    totalCharts: 0,
+    storageTypes: ["base64"],
+    indexeddbKeys: [],
+  },
+};
+
+/**
+ * Marketing channel radial chart demo
+ */
+export const CHANNEL_PERFORMANCE_RADIAL_DEMO: SerializableChatSession = {
+  id: "demo_channel_radial_2024",
+  title: undefined,
+  version: "1.0",
+  source: "demo",
+  createdAt: new Date("2024-02-05T14:20:00.000Z"),
+  lastActivity: new Date("2024-02-05T14:20:00.000Z"),
+
+  messages: [
+    {
+      id: "demo_channel_radial_msg",
+      type: MESSAGE_TYPES.USER,
+      content: {
+        text: "Show a radial bar chart of each marketing channel's contribution percentage",
+        subtype: USER_MESSAGE_SUBTYPES.TEXT,
+        attachments: [
+          {
+            id: "demo_channel_file",
+            name: "channel_contribution.csv",
+            type: "csv",
+            size: 768,
+            uploadedAt: new Date("2024-02-05T14:20:00.000Z"),
+            storageType: "base64",
+            dataUrl:
+              "data:text/csv;base64," +
+              btoa(
+                unescape(
+                  encodeURIComponent(
+                    "channel,contribution\nEmail,24\nPaid Ads,32\nOrganic Search,18\nEvents,14\nReferrals,12"
+                  )
+                )
+              ),
+            metadata: {
+              rows: 6,
+              columns: 2,
+              encoding: "utf-8",
+            },
+          },
+        ],
+      },
+      timestamp: new Date("2024-02-05T14:20:00.000Z"),
+      status: MESSAGE_STATUS.SENT,
+    },
+  ],
+
+  _autoTrigger: {
+    enabled: true,
+    type: "ai_processing",
+    triggerMessage: "demo_channel_radial_msg",
+    expectedFlow: [
+      "thinking",
+      "data_analysis",
+      "chart_type_detection",
+      "chart_generation",
+      "image_export",
+    ],
+  },
+
+  _storage: {
+    totalFiles: 1,
+    totalCharts: 0,
+    storageTypes: ["base64"],
+    indexeddbKeys: [],
+  },
+};
+
+/**
  * Demo session mapping table
  */
 export const DEMO_SESSIONS = {
@@ -294,6 +432,8 @@ export const DEMO_SESSIONS = {
   product_share: PRODUCT_SHARE_DEMO,
   regional_revenue: REGIONAL_REVENUE_DEMO,
   performance_analysis: PERFORMANCE_ANALYSIS_DEMO,
+  team_skill_radar: TEAM_SKILL_RADAR_DEMO,
+  channel_radial_breakdown: CHANNEL_PERFORMANCE_RADIAL_DEMO,
 } as const;
 
 /**
@@ -331,6 +471,22 @@ export const DEMO_SESSION_LIST = [
     category: "Performance Analysis",
     chartType: "area",
     features: ["Time Series", "Cumulative Display", "Trend Indicators"],
+  },
+  {
+    id: "team_skill_radar",
+    title: "Team Capability Radar",
+    description: "Compare multidimensional team capability scores",
+    category: "Team Insights",
+    chartType: "radar",
+    features: ["Multi-series Comparison", "Capability Radar", "Quick Insights"],
+  },
+  {
+    id: "channel_radial_breakdown",
+    title: "Marketing Channel Contribution",
+    description: "Radial bar view of channel performance share",
+    category: "Marketing",
+    chartType: "radial",
+    features: ["Contribution Analysis", "Compact View", "Category Breakdown"],
   },
 ] as const;
 

@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { X, AlertCircle, RotateCcw, RefreshCcw, Palette as PaletteIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { ChartResultContent } from "@/types";
+import { ChartResultContent, ChartType } from "@/types";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
 import { useChartExport, useChartExportStatus } from "@/contexts/chart-export-context";
 import { ChartThemeProvider } from "@/contexts/chart-theme-context";
@@ -15,6 +15,12 @@ import { chartExportService } from "@/services/chart-export-service";
 import { normalizeHexColor } from "@/lib/colors";
 import { useChartTheme } from "@/contexts/chart-theme-context";
 import { globalChartManager } from "@/lib/global-chart-manager";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { ENHANCED_CHART_DEFAULTS } from "@/components/charts/enhanced-chart/types";
+import { CHART_TYPE_LABELS } from "@/constants/chart";
+import type { LineDotVariant } from "@/components/charts/line-chart/types";
 
 interface ChartDisplayAreaProps {
   chart: ChartResultContent | null;
@@ -23,6 +29,99 @@ interface ChartDisplayAreaProps {
 }
 
 const HEX_INPUT_PATTERN = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i;
+
+const BAR_RADIUS_MAX = 24;
+
+const LINE_DOT_VARIANTS: Array<{ value: LineDotVariant; label: string }> = [
+  { value: "default", label: "Default" },
+  { value: "solid", label: "Solid" },
+  { value: "icon", label: "Icon" },
+];
+
+type ChartOptionState = {
+  barRadius?: number;
+  barShowValues?: boolean;
+  barShowGrid?: boolean;
+  lineCurveType?: "monotone" | "linear";
+  lineShowDots?: boolean;
+  lineDotSize?: number;
+  lineDotVariant?: LineDotVariant;
+  lineShowGrid?: boolean;
+  areaFillOpacity?: number;
+  areaStacked?: boolean;
+  areaUseGradient?: boolean;
+  areaShowGrid?: boolean;
+  innerRadius?: number;
+  outerRadius?: number;
+  showPercentage?: boolean;
+  showLegend?: boolean;
+  radialInnerRadius?: number;
+  radialOuterRadius?: number;
+  radialBarSize?: number;
+  radialCornerRadius?: number;
+  radialShowBackground?: boolean;
+  radialShowLabels?: boolean;
+  radarShowArea?: boolean;
+  radarShowDots?: boolean;
+  radarShowGrid?: boolean;
+  radarShowLegend?: boolean;
+  radarFillOpacity?: number;
+  radarStrokeWidth?: number;
+};
+
+function getDefaultOptions(chartType: ChartType): ChartOptionState {
+  switch (chartType) {
+    case "bar":
+      return {
+        barRadius: ENHANCED_CHART_DEFAULTS.bar.radius,
+        barShowValues: ENHANCED_CHART_DEFAULTS.bar.showValues,
+        barShowGrid: ENHANCED_CHART_DEFAULTS.bar.showGrid,
+      };
+    case "line":
+      return {
+        lineCurveType: ENHANCED_CHART_DEFAULTS.line.curveType,
+        lineShowDots: ENHANCED_CHART_DEFAULTS.line.showDots,
+        lineDotSize: ENHANCED_CHART_DEFAULTS.line.dotSize,
+        lineDotVariant: ENHANCED_CHART_DEFAULTS.line.dotVariant,
+        lineShowGrid: ENHANCED_CHART_DEFAULTS.line.showGrid,
+      };
+    case "area":
+      return {
+        areaFillOpacity: ENHANCED_CHART_DEFAULTS.fillOpacity,
+        areaStacked: ENHANCED_CHART_DEFAULTS.stacked,
+        areaUseGradient: ENHANCED_CHART_DEFAULTS.area.useGradient,
+        areaShowGrid: ENHANCED_CHART_DEFAULTS.area.showGrid,
+      };
+    case "pie":
+      return {
+        innerRadius: ENHANCED_CHART_DEFAULTS.innerRadius,
+        outerRadius: ENHANCED_CHART_DEFAULTS.outerRadius,
+        showPercentage: ENHANCED_CHART_DEFAULTS.showPercentage,
+        showLegend: ENHANCED_CHART_DEFAULTS.showLegend,
+      };
+    case "radial":
+      return {
+        radialInnerRadius: ENHANCED_CHART_DEFAULTS.radial.innerRadius,
+        radialOuterRadius: ENHANCED_CHART_DEFAULTS.radial.outerRadius,
+        radialBarSize: ENHANCED_CHART_DEFAULTS.radial.barSize,
+        radialCornerRadius: ENHANCED_CHART_DEFAULTS.radial.cornerRadius,
+        radialShowBackground: ENHANCED_CHART_DEFAULTS.radial.showBackground,
+        radialShowLabels: ENHANCED_CHART_DEFAULTS.radial.showLabels,
+        showLegend: ENHANCED_CHART_DEFAULTS.showLegend,
+      };
+    case "radar":
+      return {
+        radarShowArea: ENHANCED_CHART_DEFAULTS.radar.showArea,
+        radarShowDots: ENHANCED_CHART_DEFAULTS.radar.showDots,
+        radarShowGrid: ENHANCED_CHART_DEFAULTS.radar.showGrid,
+        radarShowLegend: ENHANCED_CHART_DEFAULTS.radar.showLegend,
+        radarFillOpacity: ENHANCED_CHART_DEFAULTS.radar.fillOpacity,
+        radarStrokeWidth: ENHANCED_CHART_DEFAULTS.radar.strokeWidth,
+      };
+    default:
+      return {};
+  }
+}
 
 /**
  * 重构的图表展示区域组件
@@ -121,17 +220,8 @@ export function ChartDisplayArea({ chart, onClose, onUpdateChart }: ChartDisplay
 /**
  * 获取图表类型的标签
  */
-function getChartTypeLabel(chartType: string): string {
-  const labels: Record<string, string> = {
-    bar: "Bar chart",
-    line: "Line chart",
-    area: "Area chart",
-    pie: "Pie chart",
-    scatter: "Scatter chart",
-    radar: "Radar chart",
-  };
-
-  return labels[chartType] || chartType;
+function getChartTypeLabel(chartType: ChartType): string {
+  return CHART_TYPE_LABELS[chartType]?.en || chartType;
 }
 
 interface ThemedChartContentProps {
@@ -178,6 +268,408 @@ function ThemedChartContent({
   const [hexInput, setHexInput] = useState(baseColor);
   const [hexError, setHexError] = useState<string | null>(null);
   const [pendingColor, setPendingColor] = useState(baseColor);
+  const defaultOptions = useMemo(() => getDefaultOptions(chart.chartType), [chart.chartType]);
+  const [chartOptions, setChartOptions] = useState<ChartOptionState>(defaultOptions);
+
+  useEffect(() => {
+    setChartOptions(defaultOptions);
+  }, [defaultOptions]);
+
+  const updateOptions = useCallback((partial: Partial<ChartOptionState>) => {
+    setChartOptions(prev => ({ ...prev, ...partial }));
+  }, []);
+
+  const getOption = useCallback(
+    <K extends keyof ChartOptionState>(key: K, fallback?: ChartOptionState[K]) =>
+      (chartOptions[key] ?? defaultOptions[key] ?? fallback) as ChartOptionState[K],
+    [chartOptions, defaultOptions]
+  );
+
+  const resolvedOptions = useMemo(
+    () => ({
+      barRadius: getOption("barRadius", ENHANCED_CHART_DEFAULTS.bar.radius),
+      barShowValues: getOption("barShowValues", ENHANCED_CHART_DEFAULTS.bar.showValues),
+      barShowGrid: getOption("barShowGrid", ENHANCED_CHART_DEFAULTS.bar.showGrid),
+      lineCurveType: getOption("lineCurveType", ENHANCED_CHART_DEFAULTS.line.curveType),
+      lineShowDots: getOption("lineShowDots", ENHANCED_CHART_DEFAULTS.line.showDots),
+      lineDotSize: getOption("lineDotSize", ENHANCED_CHART_DEFAULTS.line.dotSize),
+      lineDotVariant: getOption("lineDotVariant", ENHANCED_CHART_DEFAULTS.line.dotVariant),
+      lineShowGrid: getOption("lineShowGrid", ENHANCED_CHART_DEFAULTS.line.showGrid),
+      areaFillOpacity: getOption("areaFillOpacity", ENHANCED_CHART_DEFAULTS.fillOpacity),
+      areaStacked: getOption("areaStacked", ENHANCED_CHART_DEFAULTS.stacked),
+      areaUseGradient: getOption("areaUseGradient", ENHANCED_CHART_DEFAULTS.area.useGradient),
+      areaShowGrid: getOption("areaShowGrid", ENHANCED_CHART_DEFAULTS.area.showGrid),
+      innerRadius: getOption("innerRadius", ENHANCED_CHART_DEFAULTS.innerRadius),
+      outerRadius: getOption("outerRadius", ENHANCED_CHART_DEFAULTS.outerRadius),
+      showPercentage: getOption("showPercentage", ENHANCED_CHART_DEFAULTS.showPercentage),
+      showLegend: getOption("showLegend", ENHANCED_CHART_DEFAULTS.showLegend),
+      radialInnerRadius: getOption("radialInnerRadius", ENHANCED_CHART_DEFAULTS.radial.innerRadius),
+      radialOuterRadius: getOption("radialOuterRadius", ENHANCED_CHART_DEFAULTS.radial.outerRadius),
+      radialBarSize: getOption("radialBarSize", ENHANCED_CHART_DEFAULTS.radial.barSize),
+      radialCornerRadius: getOption("radialCornerRadius", ENHANCED_CHART_DEFAULTS.radial.cornerRadius),
+      radialShowBackground: getOption("radialShowBackground", ENHANCED_CHART_DEFAULTS.radial.showBackground),
+      radialShowLabels: getOption("radialShowLabels", ENHANCED_CHART_DEFAULTS.radial.showLabels),
+      radarShowArea: getOption("radarShowArea", ENHANCED_CHART_DEFAULTS.radar.showArea),
+      radarShowDots: getOption("radarShowDots", ENHANCED_CHART_DEFAULTS.radar.showDots),
+      radarShowGrid: getOption("radarShowGrid", ENHANCED_CHART_DEFAULTS.radar.showGrid),
+      radarShowLegend: getOption("radarShowLegend", ENHANCED_CHART_DEFAULTS.radar.showLegend),
+      radarFillOpacity: getOption("radarFillOpacity", ENHANCED_CHART_DEFAULTS.radar.fillOpacity),
+      radarStrokeWidth: getOption("radarStrokeWidth", ENHANCED_CHART_DEFAULTS.radar.strokeWidth),
+    }),
+    [getOption]
+  );
+
+  const renderChartControls = () => {
+    const sectionClass = "flex flex-wrap items-center gap-4 border-t border-dashed border-border/50 pt-3";
+    switch (chart.chartType) {
+      case "bar":
+        return (
+          <div className={sectionClass}>
+            <div className="flex items-center gap-3">
+              <Label className="text-sm font-medium text-muted-foreground">Bar radius</Label>
+              <Slider
+                value={[getOption("barRadius", ENHANCED_CHART_DEFAULTS.bar.radius) ?? 0]}
+                min={0}
+                max={BAR_RADIUS_MAX}
+                step={1}
+                className="w-32"
+                onValueChange={value => updateOptions({ barRadius: value[0] })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {(getOption("barRadius", ENHANCED_CHART_DEFAULTS.bar.radius) ?? 0).toFixed(0)}px
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="bar-show-values"
+                checked={getOption("barShowValues", ENHANCED_CHART_DEFAULTS.bar.showValues) ?? true}
+                onCheckedChange={value => updateOptions({ barShowValues: value })}
+              />
+              <Label htmlFor="bar-show-values" className="text-sm text-muted-foreground">
+                Show value labels
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="bar-grid"
+                checked={getOption("barShowGrid", ENHANCED_CHART_DEFAULTS.bar.showGrid) ?? true}
+                onCheckedChange={value => updateOptions({ barShowGrid: value })}
+              />
+              <Label htmlFor="bar-grid" className="text-sm text-muted-foreground">
+                Show background grid
+              </Label>
+            </div>
+          </div>
+        );
+
+      case "line": {
+        const dotsEnabled = getOption("lineShowDots", ENHANCED_CHART_DEFAULTS.line.showDots) ?? true;
+        const currentVariant = getOption(
+          "lineDotVariant",
+          ENHANCED_CHART_DEFAULTS.line.dotVariant
+        ) as LineDotVariant;
+
+        return (
+          <div className={sectionClass}>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="line-smooth"
+                checked={getOption("lineCurveType", ENHANCED_CHART_DEFAULTS.line.curveType) !== "linear"}
+                onCheckedChange={value => updateOptions({ lineCurveType: value ? "monotone" : "linear" })}
+              />
+              <Label htmlFor="line-smooth" className="text-sm text-muted-foreground">
+                Smooth curves
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="line-grid"
+                checked={getOption("lineShowGrid", ENHANCED_CHART_DEFAULTS.line.showGrid) ?? true}
+                onCheckedChange={value => updateOptions({ lineShowGrid: value })}
+              />
+              <Label htmlFor="line-grid" className="text-sm text-muted-foreground">
+                Show background grid
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="line-dots"
+                checked={dotsEnabled}
+                onCheckedChange={value => updateOptions({ lineShowDots: value })}
+              />
+              <Label htmlFor="line-dots" className="text-sm text-muted-foreground">
+                Show points
+              </Label>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Label className="text-sm font-medium text-muted-foreground">Point style</Label>
+              <div className="flex flex-wrap items-center gap-2">
+                {LINE_DOT_VARIANTS.map(option => (
+                  <Button
+                    key={option.value}
+                    type="button"
+                    size="sm"
+                    variant={currentVariant === option.value ? "default" : "outline"}
+                    disabled={!dotsEnabled}
+                    onClick={() => updateOptions({ lineDotVariant: option.value })}
+                  >
+                    {option.label}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      case "area":
+        return (
+          <div className={sectionClass}>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="area-stacked"
+                checked={getOption("areaStacked", ENHANCED_CHART_DEFAULTS.stacked) ?? false}
+                onCheckedChange={value => updateOptions({ areaStacked: value })}
+              />
+              <Label htmlFor="area-stacked" className="text-sm text-muted-foreground">
+                Stacked series
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="area-gradient"
+                checked={getOption("areaUseGradient", ENHANCED_CHART_DEFAULTS.area.useGradient) ?? true}
+                onCheckedChange={value => updateOptions({ areaUseGradient: value })}
+              />
+              <Label htmlFor="area-gradient" className="text-sm text-muted-foreground">
+                Gradient fill
+              </Label>
+            </div>
+            <div className="flex items-center gap-3">
+              <Label className="text-sm font-medium text-muted-foreground">Fill opacity</Label>
+              <Slider
+                value={[getOption("areaFillOpacity", ENHANCED_CHART_DEFAULTS.fillOpacity) ?? 0.6]}
+                min={0.1}
+                max={1}
+                step={0.05}
+                className="w-36"
+                onValueChange={value => updateOptions({ areaFillOpacity: Number(value[0].toFixed(2)) })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {Math.round((getOption("areaFillOpacity", ENHANCED_CHART_DEFAULTS.fillOpacity) ?? 0.6) * 100)}%
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="area-grid"
+                checked={getOption("areaShowGrid", ENHANCED_CHART_DEFAULTS.area.showGrid) ?? true}
+                onCheckedChange={value => updateOptions({ areaShowGrid: value })}
+              />
+              <Label htmlFor="area-grid" className="text-sm text-muted-foreground">
+                Show background grid
+              </Label>
+            </div>
+          </div>
+        );
+
+      case "pie":
+        return (
+          <div className={sectionClass}>
+            <div className="flex items-center gap-3">
+              <Label className="text-sm font-medium text-muted-foreground">Inner radius</Label>
+              <Slider
+                value={[getOption("innerRadius", ENHANCED_CHART_DEFAULTS.innerRadius) ?? 0]}
+                min={0}
+                max={90}
+                step={5}
+                className="w-36"
+                onValueChange={value => updateOptions({ innerRadius: value[0] })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {getOption("innerRadius", ENHANCED_CHART_DEFAULTS.innerRadius) ?? 0}px
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="pie-percentage"
+                checked={getOption("showPercentage", ENHANCED_CHART_DEFAULTS.showPercentage) ?? true}
+                onCheckedChange={value => updateOptions({ showPercentage: value })}
+              />
+              <Label htmlFor="pie-percentage" className="text-sm text-muted-foreground">
+                Show percentage labels
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="pie-legend"
+                checked={getOption("showLegend", ENHANCED_CHART_DEFAULTS.showLegend) ?? true}
+                onCheckedChange={value => updateOptions({ showLegend: value })}
+              />
+              <Label htmlFor="pie-legend" className="text-sm text-muted-foreground">
+                Show legend
+              </Label>
+            </div>
+          </div>
+        );
+
+      case "radial":
+        return (
+          <div className="flex flex-col gap-3 border-t border-dashed border-border/50 pt-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <Label className="text-sm font-medium text-muted-foreground">Inner radius</Label>
+              <Slider
+                value={[getOption("radialInnerRadius", ENHANCED_CHART_DEFAULTS.radial.innerRadius) ?? 40]}
+                min={10}
+                max={100}
+                step={5}
+                className="w-32"
+                onValueChange={value => updateOptions({ radialInnerRadius: value[0] })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {getOption("radialInnerRadius", ENHANCED_CHART_DEFAULTS.radial.innerRadius) ?? 40}px
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <Label className="text-sm font-medium text-muted-foreground">Bar thickness</Label>
+              <Slider
+                value={[getOption("radialBarSize", ENHANCED_CHART_DEFAULTS.radial.barSize) ?? 14]}
+                min={6}
+                max={30}
+                step={1}
+                className="w-32"
+                onValueChange={value => updateOptions({ radialBarSize: value[0] })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {getOption("radialBarSize", ENHANCED_CHART_DEFAULTS.radial.barSize) ?? 14}px
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <Label className="text-sm font-medium text-muted-foreground">Corner radius</Label>
+              <Slider
+                value={[getOption("radialCornerRadius", ENHANCED_CHART_DEFAULTS.radial.cornerRadius) ?? 6]}
+                min={0}
+                max={16}
+                step={1}
+                className="w-32"
+                onValueChange={value => updateOptions({ radialCornerRadius: value[0] })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {getOption("radialCornerRadius", ENHANCED_CHART_DEFAULTS.radial.cornerRadius) ?? 6}px
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="radial-labels"
+                  checked={getOption("radialShowLabels", ENHANCED_CHART_DEFAULTS.radial.showLabels) ?? true}
+                  onCheckedChange={value => updateOptions({ radialShowLabels: value })}
+                />
+                <Label htmlFor="radial-labels" className="text-sm text-muted-foreground">
+                  Show value labels
+                </Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="radial-background"
+                  checked={getOption("radialShowBackground", ENHANCED_CHART_DEFAULTS.radial.showBackground) ?? true}
+                  onCheckedChange={value => updateOptions({ radialShowBackground: value })}
+                />
+                <Label htmlFor="radial-background" className="text-sm text-muted-foreground">
+                  Show background track
+                </Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="radial-legend"
+                  checked={getOption("showLegend", ENHANCED_CHART_DEFAULTS.showLegend) ?? true}
+                  onCheckedChange={value => updateOptions({ showLegend: value })}
+                />
+                <Label htmlFor="radial-legend" className="text-sm text-muted-foreground">
+                  Show legend
+                </Label>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "radar":
+        return (
+          <div className="flex flex-col gap-3 border-t border-dashed border-border/50 pt-3">
+            <div className="flex items-center gap-2">
+              <Switch
+                id="radar-area"
+                checked={getOption("radarShowArea", ENHANCED_CHART_DEFAULTS.radar.showArea) ?? true}
+                onCheckedChange={value => updateOptions({ radarShowArea: value })}
+              />
+              <Label htmlFor="radar-area" className="text-sm text-muted-foreground">
+                Fill polygon area
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="radar-dots"
+                checked={getOption("radarShowDots", ENHANCED_CHART_DEFAULTS.radar.showDots) ?? true}
+                onCheckedChange={value => updateOptions({ radarShowDots: value })}
+              />
+              <Label htmlFor="radar-dots" className="text-sm text-muted-foreground">
+                Show points
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="radar-grid"
+                checked={getOption("radarShowGrid", ENHANCED_CHART_DEFAULTS.radar.showGrid) ?? true}
+                onCheckedChange={value => updateOptions({ radarShowGrid: value })}
+              />
+              <Label htmlFor="radar-grid" className="text-sm text-muted-foreground">
+                Show polar grid
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch
+                id="radar-legend"
+                checked={getOption("radarShowLegend", ENHANCED_CHART_DEFAULTS.radar.showLegend) ?? true}
+                onCheckedChange={value => updateOptions({ radarShowLegend: value })}
+              />
+              <Label htmlFor="radar-legend" className="text-sm text-muted-foreground">
+                Show legend
+              </Label>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <Label className="text-sm font-medium text-muted-foreground">Fill opacity</Label>
+              <Slider
+                value={[getOption("radarFillOpacity", ENHANCED_CHART_DEFAULTS.radar.fillOpacity) ?? 0.25]}
+                min={0.1}
+                max={0.8}
+                step={0.05}
+                className="w-32"
+                onValueChange={value => updateOptions({ radarFillOpacity: Number(value[0].toFixed(2)) })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {Math.round((getOption("radarFillOpacity", ENHANCED_CHART_DEFAULTS.radar.fillOpacity) ?? 0.25) * 100)}%
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <Label className="text-sm font-medium text-muted-foreground">Outline width</Label>
+              <Slider
+                value={[getOption("radarStrokeWidth", ENHANCED_CHART_DEFAULTS.radar.strokeWidth) ?? 2]}
+                min={1}
+                max={5}
+                step={0.5}
+                className="w-32"
+                onValueChange={value => updateOptions({ radarStrokeWidth: Number(value[0]) })}
+              />
+              <span className="text-xs text-muted-foreground">
+                {(getOption("radarStrokeWidth", ENHANCED_CHART_DEFAULTS.radar.strokeWidth) ?? 2).toFixed(1)}px
+              </span>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
     setHexInput(baseColor);
@@ -443,15 +935,17 @@ function ThemedChartContent({
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            {(pieEntries.length ? pieEntries : seriesEntries).map(entry => (
-              <ColorChip key={entry.key} label={entry.label} color={entry.color} subdued />
-            ))}
-          </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {(pieEntries.length ? pieEntries : seriesEntries).map(entry => (
+            <ColorChip key={entry.key} label={entry.label} color={entry.color} subdued />
+          ))}
         </div>
       </div>
 
-      {/* 图表展示区域 */}
+      {renderChartControls()}
+    </div>
+
+    {/* 图表展示区域 */}
       <div className="flex-1 overflow-auto">
         <div className="p-6">
           <div
@@ -464,6 +958,40 @@ function ThemedChartContent({
               config={chart.chartConfig}
               title={chart.title}
               description={chart.description}
+              barRadius={chart.chartType === "bar" ? resolvedOptions.barRadius : undefined}
+              barShowValues={chart.chartType === "bar" ? resolvedOptions.barShowValues : undefined}
+              barShowGrid={chart.chartType === "bar" ? resolvedOptions.barShowGrid : undefined}
+              lineCurveType={chart.chartType === "line" ? resolvedOptions.lineCurveType : undefined}
+              lineShowDots={chart.chartType === "line" ? resolvedOptions.lineShowDots : undefined}
+              lineDotSize={chart.chartType === "line" ? resolvedOptions.lineDotSize : undefined}
+              lineDotVariant={chart.chartType === "line" ? resolvedOptions.lineDotVariant : undefined}
+              lineShowGrid={chart.chartType === "line" ? resolvedOptions.lineShowGrid : undefined}
+              stacked={chart.chartType === "area" ? resolvedOptions.areaStacked : undefined}
+              fillOpacity={chart.chartType === "area" ? resolvedOptions.areaFillOpacity : undefined}
+              areaUseGradient={chart.chartType === "area" ? resolvedOptions.areaUseGradient : undefined}
+              areaShowGrid={chart.chartType === "area" ? resolvedOptions.areaShowGrid : undefined}
+              innerRadius={chart.chartType === "pie" ? resolvedOptions.innerRadius : undefined}
+              outerRadius={chart.chartType === "pie" ? resolvedOptions.outerRadius : undefined}
+              showPercentage={chart.chartType === "pie" ? resolvedOptions.showPercentage : undefined}
+              showLegend={
+                chart.chartType === "pie" || chart.chartType === "radial"
+                  ? resolvedOptions.showLegend
+                  : chart.chartType === "radar"
+                    ? resolvedOptions.radarShowLegend
+                    : undefined
+              }
+              radialInnerRadius={chart.chartType === "radial" ? resolvedOptions.radialInnerRadius : undefined}
+              radialOuterRadius={chart.chartType === "radial" ? resolvedOptions.radialOuterRadius : undefined}
+              radialBarSize={chart.chartType === "radial" ? resolvedOptions.radialBarSize : undefined}
+              radialCornerRadius={chart.chartType === "radial" ? resolvedOptions.radialCornerRadius : undefined}
+              radialShowBackground={chart.chartType === "radial" ? resolvedOptions.radialShowBackground : undefined}
+              radialShowLabels={chart.chartType === "radial" ? resolvedOptions.radialShowLabels : undefined}
+              radarShowArea={chart.chartType === "radar" ? resolvedOptions.radarShowArea : undefined}
+              radarShowDots={chart.chartType === "radar" ? resolvedOptions.radarShowDots : undefined}
+              radarShowGrid={chart.chartType === "radar" ? resolvedOptions.radarShowGrid : undefined}
+              radarShowLegend={chart.chartType === "radar" ? resolvedOptions.radarShowLegend : undefined}
+              radarFillOpacity={chart.chartType === "radar" ? resolvedOptions.radarFillOpacity : undefined}
+              radarStrokeWidth={chart.chartType === "radar" ? resolvedOptions.radarStrokeWidth : undefined}
             />
           </div>
         </div>

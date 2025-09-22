@@ -56,7 +56,7 @@ const collectSeriesKeys = (
     return [];
   }
 
-  if (chartType === "pie") {
+  if (chartType === "pie" || chartType === "radial") {
     return data.map((item: any, index: number) => String(item?.name ?? `slice-${index + 1}`));
   }
 
@@ -83,7 +83,7 @@ export function ChartThemeProvider({
     [chartType, chartData, chartConfig]
   );
 
-  const seriesCount = chartType === "pie"
+  const seriesCount = chartType === "pie" || chartType === "radial"
     ? Math.max(chartData.length || derivedSeriesKeys.length, 1)
     : Math.max(derivedSeriesKeys.length || 1, 1);
 
@@ -124,18 +124,18 @@ export function ChartThemeProvider({
   const palette = theme.palette;
 
   const themedConfig = useMemo(() => {
-    if (chartType === "pie") {
-      return chartConfig;
-    }
+  if (chartType === "pie" || chartType === "radial") {
+    return chartConfig;
+  }
 
     const keys = Object.keys(chartConfig).length > 0 ? Object.keys(chartConfig) : derivedSeriesKeys;
     return applyPaletteToConfig(chartConfig || {}, palette, keys);
   }, [chartType, chartConfig, derivedSeriesKeys, palette]);
 
   const pieSliceColors = useMemo(() => {
-    if (chartType !== "pie") {
-      return [];
-    }
+  if (chartType !== "pie" && chartType !== "radial") {
+    return [];
+  }
 
     return Array.from({ length: chartData.length }).map((_, index) => {
       return palette.series[index % palette.series.length] || palette.primary;
@@ -143,10 +143,10 @@ export function ChartThemeProvider({
   }, [chartType, chartData.length, palette.series, palette.primary]);
 
   const seriesColorMap = useMemo(() => {
-    if (chartType === "pie") {
-      const labels = Array.isArray(chartData)
-        ? chartData.map((item: any, index: number) => String(item?.name ?? `slice-${index + 1}`))
-        : [];
+  if (chartType === "pie" || chartType === "radial") {
+    const labels = Array.isArray(chartData)
+      ? chartData.map((item: any, index: number) => String(item?.name ?? `slice-${index + 1}`))
+      : [];
 
       return labels.reduce<Record<string, string>>((acc, label, index) => {
         acc[label] = palette.series[index % palette.series.length] || palette.primary;

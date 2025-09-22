@@ -1,6 +1,7 @@
 "use client";
 
 import { PieChart } from "lucide-react";
+import { CHART_TYPE_LABELS } from "@/constants/chart";
 import { ProcessingStep, ChartGenerationData } from "@/types";
 import { BaseStepComponent } from "./base-step-component";
 
@@ -87,16 +88,7 @@ export function ChartGenerationStepComponent(props: ChartGenerationStepProps) {
 }
 
 function getChartTypeLabel(chartType: string): string {
-  const labels: Record<string, string> = {
-    bar: "柱状图",
-    line: "折线图",
-    area: "面积图",
-    pie: "饼图",
-    scatter: "散点图",
-    radar: "雷达图",
-  };
-
-  return labels[chartType] || chartType;
+  return CHART_TYPE_LABELS[chartType as keyof typeof CHART_TYPE_LABELS]?.zh || chartType;
 }
 
 function formatDuration(ms: number): string {

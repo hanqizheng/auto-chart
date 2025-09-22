@@ -7,6 +7,8 @@ import { BeautifulLineChart } from "@/components/charts/line-chart";
 import { BeautifulBarChart } from "@/components/charts/bar-chart";
 import { BeautifulAreaChart } from "@/components/charts/area-chart";
 import { BeautifulPieChart } from "@/components/charts/pie-chart";
+import { BeautifulRadarChart } from "@/components/charts/radar-chart";
+import { BeautifulRadialChart } from "@/components/charts/radial-chart";
 import { ChartThemeProvider } from "@/contexts/chart-theme-context";
 import { createChartTheme } from "@/lib/colors";
 
@@ -405,6 +407,71 @@ export function HorizontalDemoSection({
               config={config}
               className="h-[240px] w-full"
               showLegend={false}
+            />
+          </ChartThemeProvider>
+        );
+      }
+
+      case "radar": {
+        const data = [
+          { dimension: "Execution", alpha: 82, bravo: 75, charlie: 88 },
+          { dimension: "Innovation", alpha: 90, bravo: 78, charlie: 84 },
+          { dimension: "Quality", alpha: 88, bravo: 83, charlie: 91 },
+          { dimension: "Speed", alpha: 76, bravo: 89, charlie: 80 },
+          { dimension: "Collaboration", alpha: 92, bravo: 86, charlie: 88 },
+        ];
+        const config = {
+          alpha: { label: "Team Alpha", color: "#22c55e" },
+          bravo: { label: "Team Bravo", color: "#16a34a" },
+          charlie: { label: "Team Charlie", color: "#4ade80" },
+        };
+
+        return (
+          <ChartThemeProvider
+            chartType="radar"
+            chartData={data}
+            chartConfig={config}
+            theme={createChartTheme("#22c55e", 3, "demo-radar")}
+          >
+            <BeautifulRadarChart
+              data={data}
+              config={config}
+              className="h-[280px] w-full"
+              showLegend
+              showDots
+              showArea
+            />
+          </ChartThemeProvider>
+        );
+      }
+
+      case "radial": {
+        const data = [
+          { name: "Email", value: 68 },
+          { name: "Paid Ads", value: 92 },
+          { name: "Organic", value: 56 },
+          { name: "Events", value: 44 },
+          { name: "Referral", value: 52 },
+        ];
+        const config = { value: { label: "Contribution" } };
+
+        return (
+          <ChartThemeProvider
+            chartType="radial"
+            chartData={data}
+            chartConfig={config}
+            theme={createChartTheme("#22c55e", data.length, "demo-radial")}
+          >
+            <BeautifulRadialChart
+              data={data}
+              config={config}
+              className="h-[260px] w-full"
+              showLegend
+              showLabels
+              innerRadius={45}
+              outerRadius={140}
+              barSize={20}
+              cornerRadius={10}
             />
           </ChartThemeProvider>
         );

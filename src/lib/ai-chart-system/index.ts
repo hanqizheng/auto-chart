@@ -1,6 +1,8 @@
 // AI Chart System - 统一导出
 // Professional AI-driven chart generation system
 
+import { CHART_TYPES } from "@/constants/chart";
+
 // 核心系统
 export { AIChartDirector, aiChartDirector, generateChart, getSystemStatus } from './ai-chart-director';
 
@@ -50,7 +52,7 @@ export { AIChartError } from './types';
 // 系统常量
 export const AI_CHART_SYSTEM_VERSION = '1.0.0';
 export const SUPPORTED_FILE_FORMATS = ['.xlsx', '.xls', '.csv'];
-export const SUPPORTED_CHART_TYPES = ['bar', 'line', 'pie', 'area'] as const;
+export const SUPPORTED_CHART_TYPES = Object.values(CHART_TYPES);
 
 /**
  * 快速开始指南:

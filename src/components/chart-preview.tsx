@@ -10,6 +10,8 @@ import {
   Download,
   RotateCcw,
   Share,
+  Radar,
+  Gauge,
 } from "lucide-react";
 import { useSimpleExport } from "@/hooks/use-simple-export";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,7 +20,7 @@ import { EnhancedChart } from "@/components/charts/enhanced-chart";
 import { ChartThemeProvider } from "@/contexts/chart-theme-context";
 import { ChartType } from "@/types/chart";
 import { ExportFormat } from "@/types/common";
-import { CHART_TYPES } from "@/constants/chart";
+import { CHART_TYPES, CHART_TYPE_LABELS } from "@/constants/chart";
 
 interface ChartData {
   type: ChartType;
@@ -84,10 +86,12 @@ export function ChartPreview({ chartData, onExport, onRefresh }: ChartPreviewPro
   }
 
   const chartTypeButtons = [
-    { type: "bar" as ChartType, icon: BarChart3, label: t("chart.chartTypes.bar") },
-    { type: "line" as ChartType, icon: LineChart, label: t("chart.chartTypes.line") },
-    { type: "pie" as ChartType, icon: PieChart, label: t("chart.chartTypes.pie") },
-    { type: "area" as ChartType, icon: TrendingUp, label: t("chart.chartTypes.area") },
+    { type: CHART_TYPES.BAR as ChartType, icon: BarChart3, label: CHART_TYPE_LABELS.bar.en },
+    { type: CHART_TYPES.LINE as ChartType, icon: LineChart, label: CHART_TYPE_LABELS.line.en },
+    { type: CHART_TYPES.PIE as ChartType, icon: PieChart, label: CHART_TYPE_LABELS.pie.en },
+    { type: CHART_TYPES.AREA as ChartType, icon: TrendingUp, label: CHART_TYPE_LABELS.area.en },
+    { type: CHART_TYPES.RADAR as ChartType, icon: Radar, label: CHART_TYPE_LABELS.radar.en },
+    { type: CHART_TYPES.RADIAL as ChartType, icon: Gauge, label: CHART_TYPE_LABELS.radial.en },
   ];
 
   const currentChartType = selectedType || chartData.type;

@@ -44,6 +44,8 @@ export interface TrendAnalysis {
 /**
  * 折线图组件属性接口
  */
+export type LineDotVariant = "default" | "solid" | "icon";
+
 export interface LineChartProps {
   /** 图表数据 - 必须包含至少两个数据点 */
   data: LineChartData;
@@ -68,6 +70,21 @@ export interface LineChartProps {
   
   /** 参考线标签 */
   referenceLabel?: string;
+
+  /** 曲线类型 */
+  curveType?: "monotone" | "linear";
+
+  /** 是否显示拐点 */
+  showDots?: boolean;
+
+  /** 拐点大小 */
+  dotSize?: number;
+
+  /** 拐点样式 */
+  dotVariant?: LineDotVariant;
+
+  /** 是否显示背景网格 */
+  showGrid?: boolean;
 }
 
 /**

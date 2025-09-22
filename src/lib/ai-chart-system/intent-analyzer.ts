@@ -2,6 +2,7 @@
 // 负责AI驱动的用户意图分析和图表类型推荐
 
 import { ChartType } from "@/types/chart";
+import { CHART_TYPES, CHART_TYPE_LABELS } from "@/constants/chart";
 import { AIService } from "@/lib/ai/types";
 import { createServiceFromEnv } from "@/lib/ai/service-factory";
 import {
@@ -14,8 +15,11 @@ import {
   DataRow,
 } from "./types";
 
+const SUPPORTED_CHART_TYPES = Object.values(CHART_TYPES) as ChartType[];
+const { BAR, LINE, PIE, AREA, RADAR, RADIAL } = CHART_TYPES;
+
 const KEYWORD_MAP: Record<ChartType, string[]> = {
-  line: [
+  [LINE]: [
     "line",
     "line chart",
     "line graph",
@@ -29,7 +33,7 @@ const KEYWORD_MAP: Record<ChartType, string[]> = {
     "折线",
     "变化",
   ],
-  area: [
+  [AREA]: [
     "area",
     "area chart",
     "stacked",
@@ -40,7 +44,7 @@ const KEYWORD_MAP: Record<ChartType, string[]> = {
     "面积",
     "堆叠",
   ],
-  bar: [
+  [BAR]: [
     "bar",
     "column",
     "compare",
@@ -54,7 +58,7 @@ const KEYWORD_MAP: Record<ChartType, string[]> = {
     "柱状",
     "条形",
   ],
-  pie: [
+  [PIE]: [
     "pie",
     "donut",
     "share",
@@ -70,14 +74,41 @@ const KEYWORD_MAP: Record<ChartType, string[]> = {
     "份额",
     "饼图",
   ],
+  [RADAR]: [
+    "radar",
+    "spider",
+    "star",
+    "polar",
+    "net",
+    "雷达",
+    "蛛网",
+    "极坐标",
+  ],
+  [RADIAL]: [
+    "radial",
+    "radial bar",
+    "gauge",
+    "circular",
+    "环形",
+    "径向",
+    "仪表",
+    "进度环",
+  ],
 };
 
-const FALLBACK_CHART_LABEL: Record<ChartType, string> = {
-  bar: "Bar Chart",
-  line: "Line Chart",
-  pie: "Pie Chart",
-  area: "Area Chart",
-};
+const FALLBACK_CHART_LABEL: Record<ChartType, string> = SUPPORTED_CHART_TYPES.reduce(
+  (acc, chartType) => {
+    acc[chartType] = CHART_TYPE_LABELS[chartType]?.en ?? chartType;
+    return acc;
+  },
+  {} as Record<ChartType, string>
+);
+
+const createScoreMap = (): Record<ChartType, number> =>
+  SUPPORTED_CHART_TYPES.reduce((acc, chartType) => {
+    acc[chartType] = 0;
+    return acc;
+  }, {} as Record<ChartType, number>);
 
 interface HeuristicAnalysis {
   bestType: ChartType | null;
@@ -356,14 +387,18 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
    */
   private getMinimumDataRequirement(chartType: ChartType): { min: number; reason: string } {
     switch (chartType) {
-      case "pie":
+      case PIE:
         return { min: 1, reason: "可以显示单个数据点的占比" };
-      case "bar":
+      case RADIAL:
+        return { min: 1, reason: "单指标分布即可展示环形占比" };
+      case BAR:
         return { min: 1, reason: "可以显示单个类别的数值" };
-      case "line":
+      case LINE:
         return { min: 2, reason: "需要至少两个数据点来显示趋势" };
-      case "area":
+      case AREA:
         return { min: 2, reason: "需要至少两个数据点来显示面积变化" };
+      case RADAR:
+        return { min: 3, reason: "雷达图至少需要三个维度来形成图形" };
       default:
         return { min: 1, reason: "基础数据要求" };
     }
@@ -385,7 +420,7 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
     const stats = data.metadata.statistics;
 
     switch (chartType) {
-      case "pie":
+      case PIE:
         if (stats.numericFields.length === 0) {
           issues.push("饼图需要至少一个数值字段");
         }
@@ -394,7 +429,19 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
         }
         break;
 
-      case "line":
+      case RADIAL:
+        if (stats.numericFields.length === 0) {
+          issues.push("径向图需要至少一个数值字段");
+        }
+        if (stats.categoricalFields.length === 0) {
+          issues.push("径向图需要分类字段作为角度坐标");
+        }
+        if (data.data.length > 12) {
+          suggestions.push("径向图类别较多时观感可能拥挤，建议改用柱状图");
+        }
+        break;
+
+      case LINE:
         if (stats.numericFields.length === 0) {
           issues.push("折线图需要至少一个数值字段");
         }
@@ -403,13 +450,22 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
         }
         break;
 
-      case "bar":
-      case "area":
+      case BAR:
+      case AREA:
         if (stats.numericFields.length === 0) {
           issues.push(`${chartType}图需要至少一个数值字段`);
         }
         if (stats.categoricalFields.length === 0 && stats.dateFields.length === 0) {
           issues.push(`${chartType}图需要分类或时间字段作为X轴`);
+        }
+        break;
+
+      case RADAR:
+        if (stats.numericFields.length < 2) {
+          issues.push("雷达图建议提供至少两个数值字段用于比较");
+        }
+        if (stats.categoricalFields.length === 0) {
+          issues.push("雷达图需要分类字段来描绘轴标签");
         }
         break;
     }
@@ -483,19 +539,14 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
           bestType: null,
           bestScore: Number.NEGATIVE_INFINITY,
           secondScore: Number.NEGATIVE_INFINITY,
-          scores: { line: 0, area: 0, bar: 0, pie: 0 },
+          scores: createScoreMap(),
           matchedKeywords: [],
           reasons: ["缺少数值字段，无法生成图表"],
         },
       };
     }
 
-    const scores: Record<ChartType, number> = {
-      line: 0,
-      area: 0,
-      bar: 0,
-      pie: 0,
-    };
+    const scores = createScoreMap();
 
     const reasons: string[] = [];
     const matchedKeywords: string[] = [];
@@ -516,27 +567,43 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
     }
 
     if (dateFields.length > 0) {
-      scores.line += 1.5;
-      scores.area += 1.2;
+      scores[LINE] += 1.5;
+      scores[AREA] += 1.2;
       reasons.push(`Detected time-related field ${dateFields[0]} which favors trend charts`);
     }
 
     if (categoricalFields.length > 0) {
-      scores.bar += 1.2;
+      scores[BAR] += 1.2;
       reasons.push(`Categorical field ${categoricalFields[0]} suggests comparison visuals`);
     }
 
     if (numericFields.length > 1) {
-      scores.line += 0.8;
-      scores.area += 1.0;
+      scores[LINE] += 0.8;
+      scores[AREA] += 1.0;
+    }
+
+    if (numericFields.length >= 3 && categoricalFields.length === 1) {
+      scores[RADAR] += 1.6;
+      reasons.push(
+        `Multiple metrics (${numericFields.length}) with a single category axis favor radar charts`
+      );
+    }
+
+    if (numericFields.length === 1 && categoricalFields.length >= 1) {
+      scores[RADIAL] += 1.3;
+      reasons.push(
+        `Single metric across categories (${categoricalFields.length}) fits radial bar comparisons`
+      );
     }
 
     const rowCount = data.data.length;
     if (rowCount <= 8) {
-      scores.pie += 0.6;
+      scores[PIE] += 0.6;
+      scores[RADIAL] += 0.6;
     }
     if (rowCount > 15) {
-      scores.pie -= 1;
+      scores[PIE] -= 1;
+      scores[RADIAL] -= 0.5;
       reasons.push(`Large category count (${rowCount}) reduces pie chart suitability`);
     }
 
@@ -550,7 +617,8 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
       prompt.includes("比例") ||
       prompt.includes("份额")
     ) {
-      scores.pie += 2.5;
+      scores[PIE] += 2.5;
+      scores[RADIAL] += 2.0;
       reasons.push("Prompt mentions proportion or percentage, increasing pie chart weight");
     }
 
@@ -561,7 +629,8 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
       prompt.includes("对比") ||
       prompt.includes("比较")
     ) {
-      scores.bar += 2;
+      scores[BAR] += 2;
+      scores[RADAR] += 1.0;
       reasons.push("Comparison language detected, boosting bar chart score");
     }
 
@@ -573,8 +642,8 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
       prompt.includes("趋势") ||
       prompt.includes("走势")
     ) {
-      scores.line += 2;
-      scores.area += 1;
+      scores[LINE] += 2;
+      scores[AREA] += 1;
       reasons.push("Trend language detected, boosting line/area scores");
     }
 
@@ -586,7 +655,7 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
       prompt.includes("堆叠") ||
       prompt.includes("面积")
     ) {
-      scores.area += 2.2;
+      scores[AREA] += 2.2;
       reasons.push("Stacked or cumulative language detected, boosting area chart score");
     }
 
@@ -599,17 +668,17 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
 
     if (!selectedType || maxScore <= 0) {
       if (dateFields.length > 0) {
-        selectedType = "line";
+        selectedType = LINE;
       } else if (categoricalFields.length > 0) {
-        selectedType = "bar";
+        selectedType = BAR;
       } else {
-        selectedType = "line";
+        selectedType = LINE;
       }
       maxScore = Math.max(maxScore, 0.5);
       reasons.push("No strong hints found, falling back to data-driven inference");
     }
 
-    if (selectedType === "pie") {
+    if (selectedType === PIE || selectedType === RADIAL) {
       const uniqueCategoryCount = this.countUniqueCategories(data, categoricalFields[0]);
       if (
         categoricalFields.length === 0 ||
@@ -617,8 +686,8 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
         uniqueCategoryCount > 12
       ) {
         selectedType =
-          categoricalFields.length > 0 ? "bar" : dateFields.length > 0 ? "line" : "bar";
-        reasons.push("Pie chart unsuitable for this data, switching to a more robust type");
+          categoricalFields.length > 0 ? BAR : dateFields.length > 0 ? LINE : BAR;
+        reasons.push("Radial/pie chart unsuitable for this data, switching to a more robust type");
       }
     }
 
@@ -657,7 +726,7 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
       visualMapping: {
         xAxis,
         yAxis,
-        colorBy: selectedType === "pie" ? undefined : optionalFields[0],
+        colorBy: selectedType === PIE || selectedType === RADIAL ? undefined : optionalFields[0],
       },
       suggestions,
     };
@@ -681,11 +750,11 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
     const dateField = data.schema.fields.find(field => field.type === "date")?.name;
     const fallback = stringField || dateField || data.schema.fields[0]?.name || null;
 
-    if (chartType === "line" || chartType === "area") {
+    if (chartType === LINE || chartType === AREA) {
       return stats.dateFields[0] || stats.categoricalFields[0] || dateField || fallback;
     }
 
-    if (chartType === "pie") {
+    if (chartType === PIE || chartType === RADIAL) {
       return stats.categoricalFields[0] || fallback;
     }
 
@@ -707,12 +776,17 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
       return numericFallback ? [numericFallback] : [];
     }
 
-    if (chartType === "pie") {
+    if (chartType === PIE || chartType === RADIAL) {
       return [selected[0]];
     }
 
-    if (chartType === "bar") {
+    if (chartType === BAR) {
       return selected.slice(0, 2);
+    }
+
+    if (chartType === RADAR) {
+      const count = Math.min(5, Math.max(3, selected.length));
+      return selected.slice(0, count);
     }
 
     return selected.slice(0, 3);
@@ -771,7 +845,7 @@ ${JSON.stringify(data.data.slice(0, 3), null, 2)}
           `${this.formatMetric(primaryMetric)} peaks at ${this.extractRowLabel(maxEntry.row, xAxis)} with ${maxEntry.value}`
         );
 
-        if (numericEntries.length > 1 && chartType !== "pie") {
+        if (numericEntries.length > 1 && chartType !== PIE && chartType !== RADIAL) {
           insights.push(
             `${this.formatMetric(primaryMetric)} is lowest at ${this.extractRowLabel(minEntry.row, xAxis)} with ${minEntry.value}`
           );

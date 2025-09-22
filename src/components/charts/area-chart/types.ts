@@ -88,6 +88,12 @@ export interface AreaChartProps {
   
   /** 面积透明度 */
   fillOpacity?: number;
+
+  /** 是否使用渐变填充 */
+  useGradient?: boolean;
+
+  /** 是否显示背景网格 */
+  showGrid?: boolean;
 }
 
 /**
@@ -184,6 +190,7 @@ export const AREA_CHART_DEFAULTS = {
   showDots: false,
   dotSize: 4,
   useGradient: true,
+  showGrid: true,
   curveType: 'monotone' as const,
   stacked: false,
   showTotalLine: true,
