@@ -96,9 +96,12 @@ export class ChartIntentAgent implements AIAgent {
   }
 
   async execute(request: ChartGenerationRequest): Promise<ChartGenerationResult> {
-    console.log("🔍 [AI-Agents] 开始处理请求:", {
-      prompt: request.prompt,
+    console.log("🐛🔍 [AI-Agents] 主流程：开始处理请求:", {
+      prompt: request.prompt?.substring(0, 100),
       hasFile: !!request.uploadedFile,
+      fileName: request.uploadedFile?.name,
+      fileType: request.uploadedFile?.type,
+      fileSize: request.uploadedFile?.size,
       contextLength: request.context?.length || 0,
     });
 
@@ -335,25 +338,55 @@ export class ChartIntentAgent implements AIAgent {
     request: ChartGenerationRequest,
     chartType: ChartType
   ): Promise<DataMappingResult> {
-    console.log("🔧 [DataMapping] 开始数据映射, chartType:", chartType);
+    console.log("🐛🔧 [DataMapping] 主流程：开始数据映射, chartType:", chartType);
 
     // 尝试从用户提示中提取数据
+    console.log("🐛🔧 [DataMapping] 主流程：尝试从prompt提取数据...");
     const extractedData = await this.extractDataFromPrompt(request.prompt, chartType);
     if (extractedData) {
-      console.log("🔧 [DataMapping] 从prompt提取到数据:", extractedData);
+      console.log("✅🐛🔧 [DataMapping] 主流程：从prompt提取到数据:", {
+        dataType: extractedData.dataType,
+        rowCount: extractedData.mappedData.length,
+        sampleData: extractedData.mappedData.slice(0, 2),
+      });
       return extractedData;
+    } else {
+      console.log("❌🐛🔧 [DataMapping] 主流程：prompt中未发现结构化数据");
     }
 
     // 如果有上传的文件，处理文件数据
     if (request.uploadedFile) {
-      console.log("🔧 [DataMapping] 处理上传文件:", request.uploadedFile.name);
+      console.log("🐛🔧 [DataMapping] 主流程：检测到上传文件，文件信息:", {
+        name: request.uploadedFile.name,
+        type: request.uploadedFile.type,
+        size: request.uploadedFile.size,
+      });
+
+      console.log("⚠️🚨🐛🔧 [DataMapping] 主流程：【关键问题】文件处理尚未实现！");
+      console.log(
+        "⚠️🚨🐛🔧 [DataMapping] 主流程：直接返回Mock数据，这就是看到'北京、上海、深圳'的原因！"
+      );
+      console.log("⚠️🚨🐛🔧 [DataMapping] 主流程：需要实现真正的Excel/CSV文件解析！");
+
       // TODO: 实现文件数据解析
-      return this.generateMockData(chartType);
+      const mockResult = this.generateMockData(chartType);
+      console.log("🐛🔧 [DataMapping] 主流程：返回Mock数据详情:", {
+        dataType: mockResult.dataType,
+        rowCount: mockResult.mappedData.length,
+        sampleData: mockResult.mappedData.slice(0, 2),
+      });
+      return mockResult;
     }
 
     // 最后降级使用模拟数据
-    console.log("🔧 [DataMapping] 使用模拟数据");
-    return this.generateMockData(chartType);
+    console.log("🐛🔧 [DataMapping] 主流程：无上传文件，使用模拟数据");
+    const fallbackResult = this.generateMockData(chartType);
+    console.log("🐛🔧 [DataMapping] 主流程：返回后备Mock数据:", {
+      dataType: fallbackResult.dataType,
+      rowCount: fallbackResult.mappedData.length,
+      sampleData: fallbackResult.mappedData.slice(0, 2),
+    });
+    return fallbackResult;
   }
 
   /**

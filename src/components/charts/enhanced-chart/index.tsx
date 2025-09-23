@@ -227,12 +227,13 @@ export function EnhancedChart({
 }: EnhancedChartProps) {
   const { themedConfig } = useChartTheme();
   const activeConfig = Object.keys(themedConfig || {}).length ? themedConfig : config;
-  console.log("📊 [EnhancedChart] 组件渲染开始:", {
+  console.log("🐛📊 [EnhancedChart] 接收到的Props:", {
     type,
     title,
     description,
     dataLength: data?.length || 0,
     dataFirstItem: data?.[0] || null,
+    dataSecondItem: data?.[1] || null,
     configKeys: config ? Object.keys(config) : [],
     className,
     stacked,

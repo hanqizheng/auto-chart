@@ -35,7 +35,7 @@ export function calculateTrendAnalysis(data: LineChartData, valueKeys: string[])
  */
 export function validateLineChartData(data: LineChartData): LineChartValidationResult {
   const errors: string[] = [];
-  
+
   // 检查数据是否存在且非空
   if (!data || !Array.isArray(data) || data.length === 0) {
     errors.push("数据不能为空");
@@ -59,33 +59,33 @@ export function validateLineChartData(data: LineChartData): LineChartValidationR
   // 检查数据点结构一致性
   const firstItem = data[0];
   const keys = Object.keys(firstItem);
-  
+
   if (keys.length < 2) {
     errors.push("每个数据点至少需要包含 2 个字段（1个X轴字段 + 至少1个Y轴数值字段）");
   }
 
   const xAxisKey = keys[0];
   const valueKeys = keys.slice(1);
-  
+
   // 验证数据类型一致性
   data.forEach((item, index) => {
     const itemKeys = Object.keys(item);
-    
+
     // 检查字段数量一致性
     if (itemKeys.length !== keys.length) {
       errors.push(`数据点 ${index} 的字段数量与第一个数据点不一致`);
     }
-    
+
     // 检查X轴字段（可以是字符串或数字）
     const xValue = item[xAxisKey];
-    if (typeof xValue !== 'string' && typeof xValue !== 'number') {
+    if (typeof xValue !== "string" && typeof xValue !== "number") {
       errors.push(`数据点 ${index} 的X轴字段 "${xAxisKey}" 必须为字符串或数字类型`);
     }
-    
+
     // 检查Y轴数值字段类型
     valueKeys.forEach(key => {
       const value = item[key];
-      if (typeof value !== 'number' || isNaN(value)) {
+      if (typeof value !== "number" || isNaN(value)) {
         errors.push(`数据点 ${index} 的数值字段 "${key}" 必须为有效数字`);
       }
     });
@@ -122,17 +122,20 @@ export function BeautifulLineChart({
   dotVariant = "default",
   showGrid = true,
 }: LineChartProps) {
-  const { getSeriesColor, palette } = useChartTheme();
+  const { getSeriesColor, getCommonColors, palette } = useChartTheme();
+  const commonColors = getCommonColors();
   // 数据验证
   const validation = validateLineChartData(data);
-  
+
   if (!validation.isValid) {
     return (
       <div className={className}>
-        <h3 className="text-lg font-semibold mb-2 text-red-600">数据格式错误</h3>
-        <div className="text-red-600 space-y-1">
+        <h3 className="mb-2 text-lg font-semibold text-red-600">数据格式错误</h3>
+        <div className="space-y-1 text-red-600">
           {validation.errors.map((error, index) => (
-            <p key={index} className="text-sm">• {error}</p>
+            <p key={index} className="text-sm">
+              • {error}
+            </p>
           ))}
         </div>
       </div>
@@ -142,11 +145,8 @@ export function BeautifulLineChart({
   const { stats } = validation;
   const { xAxisKey, valueKeys } = stats;
 
-  const createIconDot = (
-    color: string,
-    seriesKey: string,
-    sizeMultiplier = 1
-  ) =>
+  const createIconDot =
+    (color: string, seriesKey: string, sizeMultiplier = 1) =>
     (props: any) => {
       const { cx, cy, payload } = props;
       if (typeof cx !== "number" || typeof cy !== "number") {
@@ -191,8 +191,8 @@ export function BeautifulLineChart({
         } as const;
       case "icon":
         return {
-          dot: createIconDot(color, seriesKey, 1),
-          activeDot: createIconDot(color, seriesKey, 1.2),
+          dot: createIconDot(color, seriesKey, 1) as any, // 类型断言以解决类型冲突
+          activeDot: createIconDot(color, seriesKey, 1.2) as any,
         } as const;
       default:
         return {
@@ -216,25 +216,21 @@ export function BeautifulLineChart({
   const trendAnalysis = calculateTrendAnalysis(data, valueKeys);
 
   // 计算整体平均值作为参考线
-  const overallAverage = referenceValue ?? (
-    valueKeys.length > 0
+  const overallAverage =
+    referenceValue ??
+    (valueKeys.length > 0
       ? data.reduce((sum, item) => {
           const total = valueKeys.reduce((keySum, key) => keySum + (Number(item[key]) || 0), 0);
           return sum + total / valueKeys.length;
         }, 0) / data.length
-      : 0
-  );
+      : 0);
 
   return (
     <div className={className}>
       {(title || description) && (
         <div className="mb-4">
-          {title && (
-            <h3 className="text-lg font-semibold mb-2">{title}</h3>
-          )}
-          {description && (
-            <p className="text-sm text-muted-foreground">{description}</p>
-          )}
+          {title && <h3 className="mb-2 text-lg font-semibold">{title}</h3>}
+          {description && <p className="text-muted-foreground text-sm">{description}</p>}
         </div>
       )}
 
@@ -250,13 +246,13 @@ export function BeautifulLineChart({
             }}
           >
             {showGrid && (
-              <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.4} />
+              <CartesianGrid strokeDasharray="3 3" stroke={commonColors.grid} opacity={0.4} />
             )}
             <XAxis
               dataKey={xAxisKey}
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: palette.neutralStrong }}
+              tick={{ fontSize: 12, fill: commonColors.label }}
               angle={0}
               textAnchor="middle"
               height={40}
@@ -264,7 +260,7 @@ export function BeautifulLineChart({
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: palette.neutralStrong }}
+              tick={{ fontSize: 12, fill: commonColors.label }}
               tickFormatter={value => value.toLocaleString()}
             />
 
@@ -300,7 +296,7 @@ export function BeautifulLineChart({
                 />
               );
             })}
-            
+
             {/* 数值标签 - 仅在系列较少时显示，避免重叠 */}
             {valueKeys.length <= 2 &&
               valueKeys.map((key, index) => (

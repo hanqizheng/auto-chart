@@ -425,46 +425,88 @@ export class DataExtractor implements IDataExtractor {
    * Excel文件数据提取
    */
   private async extractFromExcel(file: File): Promise<ExtractedData> {
+    console.log("🐛📊 [Excel Parser] 开始解析Excel文件:", file.name);
+
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
       reader.onload = e => {
         try {
+          console.log("🐛📊 [Excel Parser] 文件读取完成，开始解析...");
+
           const data = new Uint8Array(e.target?.result as ArrayBuffer);
+          console.log("🐛📊 [Excel Parser] ArrayBuffer大小:", data.length);
+
           const workbook = XLSX.read(data, { type: "array" });
+          console.log(
+            "🐛📊 [Excel Parser] Workbook解析完成，工作表数量:",
+            workbook.SheetNames.length
+          );
+          console.log("🐛📊 [Excel Parser] 工作表名称:", workbook.SheetNames);
+
           const sheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[sheetName];
+          console.log("🐛📊 [Excel Parser] 选择工作表:", sheetName);
+
           const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          console.log("🐛📊 [Excel Parser] JSON转换完成，原始数据行数:", jsonData.length);
+          console.log("🐛📊 [Excel Parser] 前3行原始数据:", jsonData.slice(0, 3));
 
           if (jsonData.length === 0) {
+            console.error("🐛📊 [Excel Parser] 文件内容为空");
             reject(new AIChartError("data_extraction", "INSUFFICIENT_DATA", "文件内容为空"));
             return;
           }
 
           const headers = jsonData[0] as string[];
+          console.log("🐛📊 [Excel Parser] 解析到的表头:", headers);
+
           const rows = jsonData
             .slice(1)
             .filter(
               (row: any) => Array.isArray(row) && row.some(cell => cell !== null && cell !== "")
             ) as any[][];
 
-          const structuredData = rows.map((row: unknown[]) => {
+          console.log("🐛📊 [Excel Parser] 过滤后的数据行数:", rows.length);
+          console.log("🐛📊 [Excel Parser] 前2行过滤后数据:", rows.slice(0, 2));
+
+          const structuredData = rows.map((row: unknown[], rowIndex: number) => {
             const obj: DataRow = {};
             headers.forEach((header, index) => {
               const fieldName = header || `Column_${index + 1}`;
               const value = row[index];
               obj[fieldName] = value === undefined || value === null ? "" : (value as DataValue);
             });
+
+            if (rowIndex < 2) {
+              console.log(`🐛📊 [Excel Parser] 结构化数据行 ${rowIndex}:`, obj);
+            }
+
             return obj;
           });
 
-          resolve({
+          console.log("🐛📊 [Excel Parser] 最终结构化数据行数:", structuredData.length);
+          console.log("🐛📊 [Excel Parser] 数据字段:", Object.keys(structuredData[0] || {}));
+
+          const result = {
             data: structuredData,
             confidence: 0.9,
-            extractionMethod: "file_parsing",
+            extractionMethod: "file_parsing" as const,
             warnings: structuredData.length === 0 ? ["文件中没有有效数据行"] : [],
+          };
+
+          console.log("✅🐛📊 [Excel Parser] Excel解析成功:", {
+            rowCount: result.data.length,
+            confidence: result.confidence,
+            hasWarnings: result.warnings.length > 0,
           });
+
+          resolve(result);
         } catch (error) {
+          console.error("❌🐛📊 [Excel Parser] Excel解析失败:", {
+            error: error instanceof Error ? error.message : error,
+            stack: error instanceof Error ? error.stack : undefined,
+          });
           reject(
             new AIChartError(
               "data_extraction",
@@ -475,9 +517,12 @@ export class DataExtractor implements IDataExtractor {
         }
       };
 
-      reader.onerror = () =>
+      reader.onerror = error => {
+        console.error("❌🐛📊 [Excel Parser] 文件读取失败:", error);
         reject(new AIChartError("data_extraction", "UNKNOWN_ERROR", "文件读取失败"));
+      };
 
+      console.log("🐛📊 [Excel Parser] 开始读取文件为ArrayBuffer...");
       reader.readAsArrayBuffer(file);
     });
   }

@@ -1,3 +1,41 @@
+// ===== 新增：结构化颜色配置类型 =====
+
+/**
+ * 通用颜色配置 - 所有图表共用的颜色
+ */
+export interface ChartCommonColors {
+  /** 背景色 */
+  background: string;
+  /** 网格线颜色 */
+  grid: string;
+  /** 文字/坐标轴标签颜色 */
+  label: string;
+  /** tooltip 背景色 */
+  tooltip: string;
+}
+
+/**
+ * 系列颜色配置 - 支持边框和填充颜色分离
+ */
+export interface SeriesColorConfig {
+  /** 主颜色（边框/线条颜色） */
+  stroke: string;
+  /** 填充颜色（可选，用于区域图、雷达图等） */
+  fill?: string;
+}
+
+/**
+ * 结构化图表颜色配置
+ */
+export interface StructuredChartColors {
+  /** 通用颜色 */
+  common: ChartCommonColors;
+  /** 系列颜色配置列表 */
+  seriesConfigs: SeriesColorConfig[];
+}
+
+// ===== 保持向后兼容的原有类型定义 =====
+
 export interface ChartPalette {
   /** 主色，用于主要图元 */
   primary: string;
@@ -19,6 +57,10 @@ export interface ChartPalette {
   grid: string;
   /** 系列颜色列表，按顺序匹配数据字段 */
   series: string[];
+
+  // ===== 新增：结构化颜色配置 =====
+  /** 结构化颜色配置（新增） */
+  structured: StructuredChartColors;
 }
 
 export interface ChartTheme {

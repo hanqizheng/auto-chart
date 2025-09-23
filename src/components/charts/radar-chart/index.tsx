@@ -106,7 +106,8 @@ export function BeautifulRadarChart({
   strokeWidth = RADAR_CHART_DEFAULTS.strokeWidth,
   maxValue,
 }: RadarChartProps) {
-  const { getSeriesColor, palette } = useChartTheme();
+  const { getSeriesColor, getSeriesConfig, getCommonColors, palette } = useChartTheme();
+  const commonColors = getCommonColors();
   const validation = validateRadarChartData(data);
   const containerClass = cn("flex h-full w-full flex-col", className);
 
@@ -130,22 +131,21 @@ export function BeautifulRadarChart({
   const computedMax =
     typeof maxValue === "number"
       ? maxValue
-      : Math.max(
-          ...valueKeys.map(key => Math.max(...data.map(item => Number(item[key]) || 0))),
-          0
-        );
+      : Math.max(...valueKeys.map(key => Math.max(...data.map(item => Number(item[key]) || 0))), 0);
 
   const summaries = valueKeys.map(key => {
     const seriesValues = data.map(item => Number(item[key]) || 0);
     const max = Math.max(...seriesValues);
     const min = Math.min(...seriesValues);
-    const avg =
-      seriesValues.reduce((acc, value) => acc + value, 0) / (seriesValues.length || 1);
+    const avg = seriesValues.reduce((acc, value) => acc + value, 0) / (seriesValues.length || 1);
+
+    // 使用新的结构化颜色配置
+    const colorConfig = getSeriesConfig(key);
 
     return {
       key,
       label: String(config[key]?.label || key),
-      color: getSeriesColor(key),
+      color: colorConfig.stroke, // 使用边框色作为指示器颜色
       max,
       min,
       avg,
@@ -157,32 +157,33 @@ export function BeautifulRadarChart({
       {(title || description) && (
         <div className="mb-4 space-y-1">
           {title && <h3 className="text-lg font-semibold">{title}</h3>}
-          {description && <p className="text-sm text-muted-foreground">{description}</p>}
+          {description && <p className="text-muted-foreground text-sm">{description}</p>}
         </div>
       )}
 
       <ChartContainer config={config} className="flex-1">
         <RechartsRadarChart data={data} outerRadius="80%">
-          {showGrid && <PolarGrid stroke={palette.grid} />}
+          {showGrid && <PolarGrid stroke={commonColors.grid} />}
           <PolarAngleAxis
             dataKey={dimensionKey}
-            tick={{ fill: palette.neutralStrong, fontSize: 12 }}
+            tick={{ fill: commonColors.label, fontSize: 12 }}
           />
           <PolarRadiusAxis
-            tick={{ fill: palette.neutral, fontSize: 11 }}
+            tick={{ fill: commonColors.label, fontSize: 11 }}
             angle={30}
             domain={[0, computedMax || "auto"]}
           />
           {valueKeys.map((key, index) => {
-            const color = getSeriesColor(key, index);
+            // 使用新的结构化颜色配置
+            const colorConfig = getSeriesConfig(key, index);
             return (
               <Radar
                 key={key}
                 name={String(config[key]?.label || key)}
                 dataKey={key}
-                stroke={color}
-                fill={showArea ? color : undefined}
-                fillOpacity={showArea ? fillOpacity : 0}
+                stroke={colorConfig.stroke} // 边框色
+                fill={showArea ? colorConfig.fill : undefined} // 填充色（支持透明度）
+                fillOpacity={showArea ? 1 : 0} // 透明度由fill中的rgba控制
                 strokeWidth={strokeWidth}
                 dot={showDots}
                 activeDot={showDots ? { r: 4 } : undefined}
@@ -200,14 +201,14 @@ export function BeautifulRadarChart({
         </RechartsRadarChart>
       </ChartContainer>
 
-      <div className="mt-4 grid gap-2 text-xs text-muted-foreground">
+      <div className="text-muted-foreground mt-4 grid gap-2 text-xs">
         {summaries.map(item => (
           <div key={item.key} className="flex items-center gap-3">
             <span
               className="inline-flex h-2 w-6 rounded-full"
               style={{ backgroundColor: item.color }}
             />
-            <span className="font-medium text-foreground">{item.label}</span>
+            <span className="text-foreground font-medium">{item.label}</span>
             <span>max {item.max.toFixed(0)}</span>
             <span>min {item.min.toFixed(0)}</span>
             <span>avg {item.avg.toFixed(1)}</span>

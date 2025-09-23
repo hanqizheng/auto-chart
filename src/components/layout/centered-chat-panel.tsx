@@ -59,16 +59,19 @@ export function CenteredChatPanel({
   const loadSessionRef = useRef(loadSessionFromData);
   loadSessionRef.current = loadSessionFromData;
 
-  // 设置全局图表更新处理器
+  // 🎯 设置图表管理器的处理器
   useEffect(() => {
-    globalChartManager.setUpdateHandler(updateChartResultMessage);
+    // 设置图表追加处理器
     globalChartManager.setAppendHandler(addChartResultMessage);
 
+    // 🔧 恢复图表更新处理器 - 用于更新消息列表中的图片URL
+    globalChartManager.setUpdateHandler(updateChartResultMessage);
+
     return () => {
-      globalChartManager.removeUpdateHandler(updateChartResultMessage);
       globalChartManager.setAppendHandler(null);
+      globalChartManager.setUpdateHandler(null);
     };
-  }, [updateChartResultMessage, addChartResultMessage]);
+  }, [addChartResultMessage, updateChartResultMessage]);
 
   // 检查并处理自动触发的会话（首页跳转、Demo等）
   useEffect(() => {

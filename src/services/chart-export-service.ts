@@ -109,7 +109,20 @@ class ChartExportService {
 
       return result;
     } catch (error) {
-      console.error("❌ [ChartExport] Export failed:", { chartId, error });
+      // 🚨 Enhanced error logging for debugging
+      console.error("❌ [ChartExport] Export failed:", {
+        chartId,
+        filename: exportFilename,
+        errorType: typeof error,
+        errorConstructor: error?.constructor?.name,
+        errorMessage: error instanceof Error ? error.message : String(error),
+        errorStack: error instanceof Error ? error.stack?.substring(0, 500) : undefined,
+        elementDimensions: element ? {
+          width: element.offsetWidth,
+          height: element.offsetHeight,
+          hasStyle: !!element.style,
+        } : null,
+      });
 
       this.setExportState(chartId, {
         isExporting: false,
@@ -196,23 +209,29 @@ class ChartExportService {
    * 检测Recharts SVG是否真正渲染完成，而不是简单等待固定时间
    */
   private async waitForSVGRendering(element: HTMLElement): Promise<void> {
-    const maxWaitTime = 10000; // 最大等待10秒
-    const checkInterval = 200; // 每200ms检查一次
+    const maxWaitTime = 5000; // 🔧 减少最大等待时间到5秒
+    const checkInterval = 100; // 🔧 增加检查频率到每100ms
     const startTime = Date.now();
 
     return new Promise(resolve => {
       const checkRendering = () => {
         const elapsedTime = Date.now() - startTime;
 
-        // 超时保护
+        // 查找SVG元素
+        const svgElements = element.querySelectorAll("svg");
+
+        // 🔧 超时保护 - 即使检查失败也继续导出
         if (elapsedTime >= maxWaitTime) {
-          console.warn("⚠️ [ChartExport] SVG rendering check timed out; proceeding with export");
+          console.warn("⚠️ [ChartExport] SVG rendering check timed out; proceeding with export anyway", {
+            svgCount: svgElements.length,
+            containerSize: {
+              width: element.offsetWidth,
+              height: element.offsetHeight,
+            },
+          });
           resolve();
           return;
         }
-
-        // 查找SVG元素
-        const svgElements = element.querySelectorAll("svg");
 
         if (svgElements.length === 0) {
           // 没有找到SVG，继续等待
@@ -241,21 +260,31 @@ class ChartExportService {
             return;
           }
 
-          // 特别检查Recharts的关键元素
+          // 🔧 更宽松的Recharts检查：如果有基本图表元素就认为OK
+          // 不再强制要求特定的Recharts CSS类，因为这些类可能不总是存在
           const rechartsElements = svg.querySelectorAll(
             ".recharts-wrapper, .recharts-surface, .recharts-pie, .recharts-bar, .recharts-line, .recharts-area"
           );
 
-          if (rechartsElements.length === 0) {
+          // 如果没有Recharts特定元素，但有基本图表元素，也认为是OK的
+          if (rechartsElements.length === 0 && chartElements.length < 3) {
+            console.log(`⚠️ [ChartExport] SVG ${index} has no Recharts elements and few chart elements:`, {
+              rechartsElements: rechartsElements.length,
+              chartElements: chartElements.length,
+            });
             allSvgsReady = false;
             return;
           }
         });
 
-        // 检查容器是否被SVG撑开
-        const containerHasValidSize = element.offsetWidth > 200 && element.offsetHeight > 150;
+        // 🔧 更宽松的容器尺寸检查
+        const containerHasValidSize = element.offsetWidth > 100 && element.offsetHeight > 100;
 
         if (!containerHasValidSize) {
+          console.log(`⚠️ [ChartExport] Container size too small:`, {
+            width: element.offsetWidth,
+            height: element.offsetHeight,
+          });
           allSvgsReady = false;
         }
 

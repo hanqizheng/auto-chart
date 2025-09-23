@@ -10,7 +10,7 @@ Auto Chart is an AI-powered Next.js application that generates beautiful, inform
 
 ### Core Development
 
-- `pnpm run dev` - Start development server with Turbopack (http://localhost:3000)
+- `pnpm run dev` - Start development server with Turbopack (http://localhost:3456)
 - `pnpm run build` - Build production bundle with Turbopack
 - `pnpm start` - Start production server
 - `pnpm run type-check` - Run TypeScript type checking without emitting files
@@ -34,7 +34,7 @@ Auto Chart is an AI-powered Next.js application that generates beautiful, inform
 - **Framework**: Next.js 15.5.0 (App Router)
 - **UI**: React 19, Tailwind CSS 4, Shadcn/UI components
 - **Charts**: Recharts + Shadcn/Charts for advanced chart rendering
-- **AI System**: Custom AI agent architecture for chart generation
+- **AI System**: Multi-provider AI service architecture with factory pattern and custom chart generation agents
 - **Excel Processing**: XLSX library for parsing Excel files
 - **Export**: Enhanced screenshot system with html2canvas and native browser APIs
 - **Styling**: Tailwind CSS with Shadcn/UI design system
@@ -146,7 +146,22 @@ The project uses a centralized constants and types system to ensure consistency 
 - **Breakpoint Detection**: Automatic switching based on screen size
 - **Touch-Friendly**: Optimized interactions for mobile devices
 
-#### AI Agent System (`src/lib/ai-agents.ts`)
+#### AI Service Architecture (`src/lib/ai/`)
+
+- **Service Factory Pattern**: `DefaultAIServiceFactory` manages AI service instances with caching
+- **Provider Abstraction**: `AIService` interface supports multiple AI providers (DeepseekAI, future providers)
+- **Configuration Management**: Centralized model configuration with provider-specific defaults
+- **Error Handling**: Structured error types for different AI service failure modes
+
+#### AI Chart System (`src/lib/ai-chart-system/`)
+
+- **AIChartDirector**: Main orchestrator for the chart generation pipeline
+- **InputRouter**: Routes different input types (prompts, files) to appropriate processors
+- **DataExtractor**: Extracts and normalizes data from various sources
+- **IntentAnalyzer**: Analyzes user intent to determine optimal chart types
+- **ChartGenerator**: Generates chart configurations based on data and intent
+
+#### Legacy AI Agent System (`src/lib/ai-agents.ts`)
 
 - **AIDirector**: Orchestrates multiple specialized agents for chart generation
 - **DataAnalysisAgent**: Processes prompts and determines appropriate chart types and mock data
@@ -172,10 +187,23 @@ Charts are designed for static image export with rich information display:
 - **Visual Hierarchy**: Clear typography and spacing for easy comprehension
 - **Professional Appearance**: Consistent styling suitable for presentations and reports
 
-### AI Agent Architecture
+### AI Architecture
 
-The AI system uses a multi-agent approach for sophisticated chart generation:
+The system features a modern multi-provider AI architecture with sophisticated chart generation:
 
+#### Modern AI Service Layer
+- **Multi-Provider Support**: Abstracted AI service layer supporting multiple providers (DeepseekAI, future OpenAI/Anthropic)
+- **Factory Pattern**: Centralized service creation with caching and configuration management
+- **Provider Agnostic**: Easy to switch between AI providers without changing business logic
+- **Error Resilience**: Structured error handling with provider-specific error types
+
+#### Chart Generation Pipeline
+- **Input Routing**: Smart routing of different input types (natural language, files) to appropriate processors
+- **Intent Analysis**: Advanced prompt analysis to determine optimal chart types and data requirements
+- **Data Processing**: Unified data extraction and normalization from various sources
+- **Chart Generation**: Intelligent chart configuration generation based on data characteristics and user intent
+
+#### Legacy Multi-Agent System
 - **Modular Design**: Each agent specializes in specific aspects (analysis, styling, insights)
 - **Extensible Framework**: Easy to add new agents for additional capabilities
 - **Context Awareness**: Agents consider conversation history and user preferences
@@ -267,12 +295,12 @@ import { ChartType } from "@/types/chart";
 3. Update AI agent keyword detection in `ai-agents.ts`
 4. Add mock data generator for the new chart type
 
-### Integrating Real AI Services
+### Adding New AI Service Providers
 
-1. Replace mock AI processing in `ai-agents.ts`
-2. Add API configuration in `constants/index.ts`
-3. Implement error handling for external service failures
-4. Add rate limiting and cost management
+1. Implement the `AIService` interface in `src/lib/ai/`
+2. Add provider configuration to `PROVIDER_DEFAULTS` in types
+3. Update `DefaultAIServiceFactory` to handle the new provider
+4. Add provider-specific error handling and configuration
 
 ### Advanced Export Features
 

@@ -15,7 +15,14 @@ export type {
 } from "./chart";
 
 // 图表主题相关类型
-export type { ChartTheme, ChartPalette } from "./chart-theme";
+export type {
+  ChartTheme,
+  ChartPalette,
+  // 新增的结构化颜色配置类型
+  SeriesColorConfig,
+  ChartCommonColors,
+  StructuredChartColors,
+} from "./chart-theme";
 
 // 数据处理相关类型
 export type {

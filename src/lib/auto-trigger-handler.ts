@@ -623,6 +623,13 @@ class AutoTriggerHandler {
         return 1;
       })();
 
+      console.log("📊 [AutoTrigger] 构造图表结果:", {
+        chartType: result.chartType,
+        dataLength: result.data?.length,
+        title: result.title,
+        seriesCount,
+      });
+
       const chartResult: ChartResultContent = {
         chartData: result.data,
         chartConfig: result.config,

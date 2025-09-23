@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { ChartPalette, ChartTheme, ChartType } from "@/types";
+import { ChartPalette, ChartTheme, ChartType, SeriesColorConfig } from "@/types";
 import {
   applyPaletteToConfig,
   createChartTheme,
@@ -37,6 +37,12 @@ interface ChartThemeContextValue {
   themedConfig: Record<string, any>;
   setBaseColor: (color: string) => void;
   getSeriesColor: (key: string, fallbackIndex?: number) => string;
+
+  // ===== 新增：结构化颜色配置获取方法 =====
+  /** 获取结构化的系列颜色配置（包含边框色和填充色） */
+  getSeriesConfig: (key: string, fallbackIndex?: number) => SeriesColorConfig;
+  /** 获取通用颜色配置 */
+  getCommonColors: () => import("@/types").ChartCommonColors;
 }
 
 const ChartThemeContext = createContext<ChartThemeContextValue | null>(null);
@@ -203,6 +209,57 @@ export function ChartThemeProvider({
     [seriesColorMap, palette]
   );
 
+  // ===== 新增：结构化颜色配置获取方法 =====
+
+  const getSeriesConfig = useCallback(
+    (key: string, fallbackIndex?: number): SeriesColorConfig => {
+      // 优先使用结构化配置
+      if (palette.structured?.seriesConfigs) {
+        const keyIndex = derivedSeriesKeys.indexOf(key);
+        const targetIndex = keyIndex >= 0 ? keyIndex : (fallbackIndex ?? 0);
+        const config =
+          palette.structured.seriesConfigs[targetIndex % palette.structured.seriesConfigs.length];
+
+        if (config) {
+          return config;
+        }
+      }
+
+      // 回退到传统逻辑 - 基于现有颜色生成结构化配置
+      const color = getSeriesColor(key, fallbackIndex);
+      const { r, g, b } = (() => {
+        const hex = color.replace("#", "");
+        const num = parseInt(hex, 16);
+        return {
+          r: (num >> 16) & 255,
+          g: (num >> 8) & 255,
+          b: num & 255,
+        };
+      })();
+
+      return {
+        stroke: color,
+        fill: `rgba(${r}, ${g}, ${b}, 0.2)`, // 默认20%透明度
+      };
+    },
+    [palette.structured, derivedSeriesKeys, getSeriesColor]
+  );
+
+  const getCommonColors = useCallback(() => {
+    // 优先使用结构化配置
+    if (palette.structured?.common) {
+      return palette.structured.common;
+    }
+
+    // 回退到传统字段映射
+    return {
+      background: palette.background,
+      grid: palette.grid,
+      label: palette.neutralStrong,
+      tooltip: palette.background,
+    };
+  }, [palette]);
+
   const value: ChartThemeContextValue = {
     chartType,
     theme,
@@ -214,6 +271,10 @@ export function ChartThemeProvider({
     themedConfig,
     setBaseColor: handleSetBaseColor,
     getSeriesColor,
+
+    // 新增的结构化颜色配置方法
+    getSeriesConfig,
+    getCommonColors,
   };
 
   return <ChartThemeContext.Provider value={value}>{children}</ChartThemeContext.Provider>;

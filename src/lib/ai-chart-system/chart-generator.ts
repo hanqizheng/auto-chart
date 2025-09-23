@@ -73,9 +73,27 @@ export class ChartGenerator implements IChartGenerator {
       const insights = await this.generateInsights(processedData, intent);
 
       const needsCircularTransform = intent.chartType === PIE || intent.chartType === RADIAL;
+
+      console.log("🐛🎨 [ChartGenerator] 数据转换判断:", {
+        chartType: intent.chartType,
+        PIE_constant: PIE,
+        RADIAL_constant: RADIAL,
+        isPie: intent.chartType === PIE,
+        isRadial: intent.chartType === RADIAL,
+        needsCircularTransform,
+      });
+
       const resultData = needsCircularTransform
         ? this.normalizePieResult(processedData, intent)
         : processedData;
+
+      console.log("🐛🎨 [ChartGenerator] 数据转换结果:", {
+        originalDataLength: processedData.length,
+        originalDataSample: processedData.slice(0, 1),
+        transformedDataLength: resultData.length,
+        transformedDataSample: resultData.slice(0, 1),
+        wasTransformed: needsCircularTransform,
+      });
 
       const processingTime = Date.now() - startTime;
 
@@ -94,6 +112,13 @@ export class ChartGenerator implements IChartGenerator {
           confidence: intent.confidence,
         },
       };
+
+      console.log("✅ [ChartGenerator] 图表生成成功:", {
+        chartType: result.chartType,
+        dataLength: result.data.length,
+        title: result.title,
+        processingTime: result.metadata.processingTime,
+      });
 
       return result;
     } catch (error) {
@@ -318,7 +343,7 @@ export class ChartGenerator implements IChartGenerator {
   private preprocessData(data: UnifiedDataStructure, intent: ChartIntent): DataRow[] {
     const mapping = intent.visualMapping;
 
-    const processedData = data.data.map(row => {
+    const processedData = data.data.map((row, index) => {
       const processed: DataRow = {};
 
       // 复制X轴字段
@@ -343,7 +368,7 @@ export class ChartGenerator implements IChartGenerator {
     });
 
     // 数据清理：移除无效记录
-    const cleanedData = processedData.filter(row => {
+    const cleanedData = processedData.filter((row, index) => {
       // 至少要有X轴值
       const hasXValue =
         mapping.xAxis && row[mapping.xAxis] !== null && row[mapping.xAxis] !== undefined;
@@ -354,6 +379,12 @@ export class ChartGenerator implements IChartGenerator {
       );
 
       return hasXValue && hasYValue;
+    });
+
+    console.log("✅ [ChartGenerator] 数据预处理完成:", {
+      原始数据: data.data.length,
+      清理后数据: cleanedData.length,
+      丢弃行数: processedData.length - cleanedData.length,
     });
 
     return cleanedData;

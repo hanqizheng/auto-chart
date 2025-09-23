@@ -24,7 +24,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
-import { useChartExport } from "@/contexts/chart-export-context";
 
 interface ImageResultMessageProps {
   message: ImageResultMessageType;
