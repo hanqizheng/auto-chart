@@ -289,21 +289,17 @@ class GlobalChartManager {
     const chartCreateTime = updatedChart.imageInfo?.createdAt || new Date(0);
     const timeDiffMinutes = (now.getTime() - chartCreateTime.getTime()) / (1000 * 60);
 
-    console.log("🔄🐛 [GlobalChartManager] 更新图表:", {
+    console.log("🔄 [GlobalChartManager] 更新图表:", {
       title: updatedChart.title,
       handlersCount: this.updateHandlers.size,
       hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl,
-      chartCreateTime: chartCreateTime.toISOString(),
-      timeDiffMinutes: Math.round(timeDiffMinutes * 100) / 100,
-      isRecentChart: timeDiffMinutes < 5, // 5分钟内的图表认为是新图表
     });
 
     // 防止过时的图表导出更新影响到用户当前操作
     if (timeDiffMinutes > 10) {
-      console.warn("⚠️🐛 [GlobalChartManager] 跳过过时图表更新:", {
+      console.warn("⚠️ [GlobalChartManager] 跳过过时图表更新:", {
         title: updatedChart.title,
         timeDiffMinutes,
-        reason: "图表创建时间超过10分钟，可能是过期的导出任务",
       });
       return;
     }

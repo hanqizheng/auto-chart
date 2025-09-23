@@ -300,11 +300,9 @@ const ChartRenderer: FC<{
   config: any;
   options: UnifiedOptionConfig;
 }> = memo(({ chart, chartRef, config, options }) => {
-  console.log("🐛📊 [ChartRenderer] 传递给EnhancedChart的props:", {
+  console.log("📊 [ChartRenderer] 传递给EnhancedChart的props:", {
     type: chart.chartType,
     dataLength: chart.chartData?.length,
-    dataSample: chart.chartData?.slice?.(0, 2),
-    dataFirstItem: chart.chartData?.[0],
     title: chart.title,
   });
 
@@ -618,17 +616,6 @@ function ThemedChartContent({
           chartConfig={finalConfig}
           theme={finalThemeForExport}
         >
-          {(() => {
-            console.log("🐛📊 [ChartDisplayArea] 准备渲染图表，数据检查:", {
-              chartType: chart.chartType,
-              chartDataLength: chart.chartData?.length,
-              chartDataSample: chart.chartData?.slice?.(0, 2),
-              chartDataFirstItem: chart.chartData?.[0],
-              chartTitle: chart.title,
-              configKeys: finalConfig ? Object.keys(finalConfig) : [],
-            });
-            return null;
-          })()}
           <ChartRenderer
             chart={chart}
             chartRef={chartRef}

@@ -227,7 +227,7 @@ export function EnhancedChart({
 }: EnhancedChartProps) {
   const { themedConfig } = useChartTheme();
   const activeConfig = Object.keys(themedConfig || {}).length ? themedConfig : config;
-  console.log("🐛📊 [EnhancedChart] 接收到的Props:", {
+  console.log("📊 [EnhancedChart] 接收到的Props:", {
     type,
     title,
     description,

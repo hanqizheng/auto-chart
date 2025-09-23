@@ -152,46 +152,21 @@ export function useChatSession() {
    * 更新图表结果消息
    */
   const updateChartResultMessage = useCallback((updatedChart: ChartResultContent) => {
-    console.log("📝🐛 [ChatSession] 收到图表消息更新请求:", {
+    console.log("📝 [ChatSession] 收到图表消息更新请求:", {
       title: updatedChart.title,
-      chartType: updatedChart.chartType,
       hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl,
-      imageUrl: updatedChart.imageInfo?.localBlobUrl?.substring(0, 50) + "...",
     });
 
     setSession(prev => {
-      console.log(
-        "🔍🐛 [ChatSession] 当前所有消息:",
-        prev.messages.map(msg => ({
-          id: msg.id,
-          type: msg.type,
-          title: msg.type === MESSAGE_TYPES.CHART_RESULT ? msg.content.title : "非图表消息",
-          chartType: msg.type === MESSAGE_TYPES.CHART_RESULT ? msg.content.chartType : "非图表消息",
-        }))
-      );
 
       // 🚨 修复：只更新最新的图表消息，而不是基于title+chartType匹配
       // 这样可以避免旧图表数据覆盖新图表数据的问题
       const chartMessages = prev.messages.filter(msg => msg.type === MESSAGE_TYPES.CHART_RESULT);
       const latestChartMessage = chartMessages[chartMessages.length - 1]; // 获取最新的图表消息
 
-      console.log("🔍🐛 [ChatSession] 图表消息分析:", {
-        总图表消息数: chartMessages.length,
-        最新图表消息Title: latestChartMessage?.content?.title,
-        最新图表消息ChartType: latestChartMessage?.content?.chartType,
-        更新请求Title: updatedChart.title,
-        更新请求ChartType: updatedChart.chartType,
-        策略: "只更新最新图表消息，避免旧数据覆盖",
-      });
 
       const updatedMessages = prev.messages.map(msg => {
         if (msg.type === MESSAGE_TYPES.CHART_RESULT && msg.id === latestChartMessage?.id) {
-          console.log("✅🐛 [ChatSession] 更新最新图表消息:", {
-            原标题: msg.content.title,
-            新标题: updatedChart.title,
-            原数据样本: msg.content.chartData?.slice?.(0, 1),
-            新数据样本: updatedChart.chartData?.slice?.(0, 1),
-          });
 
           return {
             ...msg,
