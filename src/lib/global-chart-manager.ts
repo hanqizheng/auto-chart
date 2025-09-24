@@ -26,15 +26,23 @@ class GlobalChartManager {
   private appendHandler: ChartAppendHandler | null = null;
   private renderingCharts = new Map<string, ChartRenderInfo>();
   private pendingExports = new Set<string>();
+  // 🎯 单一当前图表的图片更新回调 - 用于自动导出完成后更新DashboardLayout的图片URL
+  private currentChartImageUpdateHandler: ((imageUrl: string) => void) | null = null;
 
   /**
    * Set chart update handler
    */
-  setUpdateHandler(handler: ChartUpdateHandler) {
-    this.updateHandlers.add(handler);
-    console.log("🌐 [GlobalChartManager] Registered update handler:", {
-      handlersCount: this.updateHandlers.size,
-    });
+  setUpdateHandler(handler: ChartUpdateHandler | null) {
+    if (handler) {
+      this.updateHandlers.add(handler);
+      console.log("🌐 [GlobalChartManager] Registered update handler:", {
+        handlersCount: this.updateHandlers.size,
+      });
+    } else {
+      // Clear all handlers when null is passed
+      this.updateHandlers.clear();
+      console.log("🧹 [GlobalChartManager] Cleared all update handlers");
+    }
   }
 
   /**
@@ -69,14 +77,31 @@ class GlobalChartManager {
   }
 
   /**
+   * 🎯 设置当前图表的图片更新回调
+   * 用于自动导出完成后更新DashboardLayout中的图片URL
+   */
+  setCurrentChartImageUpdateHandler(handler: ((imageUrl: string) => void) | null) {
+    this.currentChartImageUpdateHandler = handler;
+    console.log("🎯 [GlobalChartManager] 设置当前图表图片更新回调:", {
+      hasHandler: !!handler,
+    });
+  }
+
+  /**
    * Register chart rendering
    * Called when chart component rendering is completed
    */
-  registerChartRender(chartId: string, element: HTMLElement, chartData: ChartResultContent) {
+  registerChartRender(
+    chartId: string,
+    element: HTMLElement,
+    chartData: ChartResultContent,
+    autoExport: boolean = true
+  ) {
     console.log("📊 [GlobalChartManager] 注册图表渲染:", {
       chartId,
       title: chartData.title,
       hasElement: !!element,
+      autoExport,
     });
 
     const renderInfo: ChartRenderInfo = {
@@ -90,8 +115,12 @@ class GlobalChartManager {
 
     this.renderingCharts.set(chartId, renderInfo);
 
-    // Auto-trigger export
-    this.scheduleExport(chartId);
+    // 🎯 只有非Demo图表才自动导出
+    if (autoExport && !chartId.startsWith("demo-")) {
+      this.scheduleExport(chartId);
+    } else if (chartId.startsWith("demo-")) {
+      console.log("🎨 [GlobalChartManager] Demo图表不自动导出:", { chartId });
+    }
   }
 
   /**
@@ -178,8 +207,17 @@ class GlobalChartManager {
           stage: "completed",
         });
 
-        // 更新图表
+        // 🔧 调用updateChart来更新消息列表中的图表数据
         this.updateChart(updatedChart);
+
+        // 🎯 分离式更新：同时更新当前活跃图表的图片URL（用于DashboardLayout）
+        if (this.currentChartImageUpdateHandler && updatedChart.imageInfo?.localBlobUrl) {
+          console.log("🎯 [GlobalChartManager] 通知当前图表图片更新:", {
+            chartId,
+            imageUrl: updatedChart.imageInfo.localBlobUrl.substring(0, 50) + "...",
+          });
+          this.currentChartImageUpdateHandler(updatedChart.imageInfo.localBlobUrl);
+        }
       } else {
         // 导出失败
         console.error("❌ [GlobalChartManager] 导出失败:", {
@@ -247,14 +285,43 @@ class GlobalChartManager {
    * 更新图表
    */
   updateChart(updatedChart: ChartResultContent) {
+    const now = new Date();
+    const chartCreateTime = updatedChart.imageInfo?.createdAt || new Date(0);
+    const timeDiffMinutes = (now.getTime() - chartCreateTime.getTime()) / (1000 * 60);
+
     console.log("🔄 [GlobalChartManager] 更新图表:", {
       title: updatedChart.title,
       handlersCount: this.updateHandlers.size,
       hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl,
     });
 
+    // 防止过时的图表导出更新影响到用户当前操作
+    if (timeDiffMinutes > 10) {
+      console.warn("⚠️ [GlobalChartManager] 跳过过时图表更新:", {
+        title: updatedChart.title,
+        timeDiffMinutes,
+      });
+      return;
+    }
+
     if (this.updateHandlers.size > 0) {
-      this.updateHandlers.forEach(handler => handler(updatedChart));
+      this.updateHandlers.forEach(handler => {
+        try {
+          if (typeof handler === 'function') {
+            handler(updatedChart);
+          } else {
+            console.error("❌ [GlobalChartManager] Invalid handler type:", {
+              handlerType: typeof handler,
+              handler: handler,
+            });
+          }
+        } catch (error) {
+          console.error("❌ [GlobalChartManager] Handler execution failed:", {
+            error: error instanceof Error ? error.message : error,
+            handlerName: handler.name || 'anonymous',
+          });
+        }
+      });
     } else {
       console.warn("⚠️ [GlobalChartManager] 没有设置更新处理器");
     }

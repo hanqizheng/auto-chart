@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ChartResultContent } from "@/types";
 import { CenteredChatPanel } from "./centered-chat-panel";
 import { ChartDisplayArea } from "./chart-display-area";
 import { Button } from "@/components/ui/button";
-import { Settings, X } from "lucide-react";
-import { useChartExport } from "@/contexts/chart-export-context";
+import { Settings } from "lucide-react";
+import { globalChartManager } from "@/lib/global-chart-manager";
 
 /**
  * 主仪表板布局组件
@@ -14,45 +14,91 @@ import { useChartExport } from "@/contexts/chart-export-context";
  */
 export function DashboardLayout() {
   const [isChartVisible, setIsChartVisible] = useState(false);
-  const [localChart, setLocalChart] = useState<ChartResultContent | null>(null);
-  const { currentChart } = useChartExport();
 
-  // 优先使用 ChartExportContext 中的图表，如果没有则使用本地图表
-  const displayChart = currentChart || localChart;
+  // 🎯 单一数据源：只维护一个图表状态
+  const [currentChart, setCurrentChart] = useState<ChartResultContent | null>(null);
+
+  console.log("✅ [DashboardLayout] 简化数据流 - 单一图表状态:", {
+    hasChart: !!currentChart,
+    chartTitle: currentChart?.title,
+    chartType: currentChart?.chartType,
+    dataSample: currentChart?.chartData?.slice?.(0, 1),
+  });
+
+  // ✅ 图片生成完成回调：只更新图片URL，核心数据不变
+  const handleImageGenerated = useCallback((imageUrl: string) => {
+    console.log("✅ [DashboardLayout] 图片生成完成 - 更新图片URL:", {
+      imageUrl: imageUrl.substring(0, 50) + "...",
+    });
+
+    setCurrentChart(prev => {
+      if (!prev) return null;
+
+      // 检查是否真的需要更新，避免不必要的重新渲染
+      if (prev.imageInfo?.localBlobUrl === imageUrl) {
+        return prev; // 返回原对象，避免重新创建
+      }
+
+      return {
+        ...prev,
+        imageInfo: {
+          ...prev.imageInfo,
+          localBlobUrl: imageUrl,
+          createdAt: new Date(),
+        },
+      };
+    });
+  }, []);
+
+  // 🎯 注册自动导出完成后的图片更新回调
+  useEffect(() => {
+    const imageUpdateHandler = (imageUrl: string) => {
+      console.log("🎯 [DashboardLayout] 收到自动导出的图片更新:", {
+        imageUrl: imageUrl.substring(0, 50) + "...",
+      });
+
+      // 使用现有的handleImageGenerated逻辑
+      handleImageGenerated(imageUrl);
+    };
+
+    globalChartManager.setCurrentChartImageUpdateHandler(imageUpdateHandler);
+
+    return () => {
+      globalChartManager.setCurrentChartImageUpdateHandler(null);
+    };
+  }, []); // 🎯 不需要依赖handleImageGenerated，因为它内部只使用setState
 
   /**
    * 处理图表生成完成事件
    */
-  const handleChartGenerated = (chart: ChartResultContent) => {
-    console.log("📊 [DashboardLayout] 图表生成完成:", {
+  const handleChartGenerated = useCallback((chart: ChartResultContent) => {
+    console.log("✅ [DashboardLayout] 图表生成完成 - 设置为当前图表:", {
       title: chart.title,
-      chartType: chart.chartType
+      chartType: chart.chartType,
+      dataSample: chart.chartData?.slice?.(0, 1),
     });
-    
-    setLocalChart(chart);
-    setIsChartVisible(true);
-  };
 
-  const handleChartUpdated = (chart: ChartResultContent) => {
-    setLocalChart(chart);
-  };
+    // 🎯 直接设置为当前图表，数据流简单清晰
+    setCurrentChart(chart);
+    setIsChartVisible(true);
+  }, []);
 
   /**
    * 处理关闭图表显示
    */
-  const handleCloseChart = () => {
+  const handleCloseChart = useCallback(() => {
     setIsChartVisible(false);
     // 不清空数据，保持图表数据以便重新打开
-  };
+  }, []);
 
   /**
    * 处理打开图表显示
    */
-  const handleOpenChart = () => {
-    if (displayChart) {
+  const handleOpenChart = useCallback(() => {
+    if (currentChart) {
       setIsChartVisible(true);
     }
-  };
+  }, [currentChart]);
 
   return (
     <div className="bg-background h-screen overflow-hidden">
@@ -70,19 +116,19 @@ export function DashboardLayout() {
         </div>
 
         {/* 图表展示区域 - 滑出动画 */}
-        {isChartVisible && displayChart && (
+        {isChartVisible && currentChart && (
           <div className="bg-muted/10 border-border/50 animate-slide-in w-1/2 border-l">
             <ChartDisplayArea
-              chart={displayChart}
+              chart={currentChart}
               onClose={handleCloseChart}
-              onUpdateChart={handleChartUpdated}
+              onImageGenerated={handleImageGenerated}
             />
           </div>
         )}
       </div>
 
       {/* 配置面板开关按钮 */}
-      {!isChartVisible && displayChart && (
+      {!isChartVisible && currentChart && (
         <div className="animate-fade-in fixed top-1/2 right-0 z-50 -translate-y-1/2">
           <Button
             onClick={handleOpenChart}

@@ -16,7 +16,7 @@ import {
   Database,
   Palette,
   AlertCircle,
-  RotateCcw
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -24,7 +24,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
-import { useChartExport } from "@/contexts/chart-export-context";
 
 interface ImageResultMessageProps {
   message: ImageResultMessageType;
@@ -48,27 +47,24 @@ export function ImageResultMessage({
   onConfigureChart,
 }: ImageResultMessageProps) {
   const { toast } = useToast();
-  const { currentChart } = useChartExport();
-  
+
   // 简单的本地图片加载状态
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageLoadError, setImageLoadError] = useState(false);
 
   const { content, timestamp } = message;
   const { chartData, chartType, title, description, imageInfo, chartConfig, theme } = content;
-  
-  // 优先使用当前图表的图片信息，如果没有则使用消息中的信息
-  const currentImageInfo = currentChart?.imageInfo || imageInfo;
-  const imageUrl = currentImageInfo.localBlobUrl;
+
+  // Use imageInfo directly from the message prop to ensure independence.
+  const imageUrl = imageInfo?.localBlobUrl;
 
   console.log("🖼️ [ImageResultMessage] 组件状态:", {
     messageId: message.id,
     title,
-    hasCurrentChart: !!currentChart,
-    hasImageInfo: !!currentImageInfo,
+    hasImageInfo: !!imageInfo,
     imageUrl: imageUrl?.substring(0, 50) + "...",
     imageLoaded,
-    imageLoadError
+    imageLoadError,
   });
 
   // 重置图片状态当URL变化时
@@ -83,50 +79,22 @@ export function ImageResultMessage({
     title,
     chartType,
     dataPoints: chartData.length,
-    generatedAt: currentImageInfo.createdAt || timestamp,
-    width: currentImageInfo.dimensions.width,
-    height: currentImageInfo.dimensions.height,
-    fileSize: currentImageInfo.size,
-    ...currentImageInfo.metadata,
+    generatedAt: imageInfo.createdAt || timestamp,
+    width: imageInfo.dimensions.width,
+    height: imageInfo.dimensions.height,
+    fileSize: imageInfo.size,
+    ...imageInfo.metadata,
   };
-  
-  const downloadUrl = currentImageInfo.localBlobUrl;
 
-  const palettePreview = theme
-    ? [
-        { label: "主色", color: theme.palette.primary },
-        { label: "强调", color: theme.palette.accent },
-        { label: "背景", color: theme.palette.background },
-      ]
-    : [];
-
-  const seriesPalette = theme
-    ? (() => {
-        const configKeys = chartConfig ? Object.keys(chartConfig) : [];
-
-        if (configKeys.length === 0 && chartType === "pie") {
-          return (chartData || []).map((item: any, index: number) => ({
-            label: item?.name ?? `类别${index + 1}`,
-            color:
-              theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
-          }));
-        }
-
-        return configKeys.map((key, index) => ({
-          label: String(chartConfig?.[key]?.label || key),
-          color:
-            theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
-        }));
-      })()
-    : [];
+  const downloadUrl = imageInfo.localBlobUrl;
 
   const handleDownload = async () => {
     try {
       const url = downloadUrl || imageUrl;
       if (!url) {
         toast({
-          title: "下载失败",
-          description: "图片还未生成完成",
+          title: "Download failed",
+          description: "Image not ready yet",
           variant: "destructive",
         });
         return;
@@ -144,14 +112,14 @@ export function ImageResultMessage({
       URL.revokeObjectURL(link.href);
 
       toast({
-        title: "下载成功",
-        description: "图表图片已保存到本地",
+        title: "Download successful",
+        description: "Chart image saved locally",
       });
     } catch (error) {
       console.error("Download failed:", error);
       toast({
-        title: "下载失败",
-        description: "无法下载图片，请稍后重试",
+        title: "Download failed",
+        description: "Unable to download image, please try again later",
         variant: "destructive",
       });
     }
@@ -161,8 +129,8 @@ export function ImageResultMessage({
     try {
       if (!imageUrl) {
         toast({
-          title: "复制失败",
-          description: "图片还未生成完成",
+          title: "Copy failed",
+          description: "Image not ready yet",
           variant: "destructive",
         });
         return;
@@ -174,14 +142,14 @@ export function ImageResultMessage({
       await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
 
       toast({
-        title: "复制成功",
-        description: "图片已复制到剪贴板",
+        title: "Copy successful",
+        description: "Image copied to clipboard",
       });
     } catch (error) {
       console.error("Copy failed:", error);
       toast({
-        title: "复制失败",
-        description: "无法复制图片，请尝试下载",
+        title: "Copy failed",
+        description: "Unable to copy image, please try downloading",
         variant: "destructive",
       });
     }
@@ -190,8 +158,8 @@ export function ImageResultMessage({
   const handleShare = async () => {
     if (!imageUrl) {
       toast({
-        title: "分享失败",
-        description: "图片还未生成完成",
+        title: "Share failed",
+        description: "Image not ready yet",
         variant: "destructive",
       });
       return;
@@ -204,15 +172,15 @@ export function ImageResultMessage({
         const file = new File([blob], `${metadata.title || "chart"}.png`, { type: "image/png" });
 
         await navigator.share({
-          title: metadata.title || "图表分享",
-          text: metadata.description || "查看这个图表",
+          title: metadata.title || "Chart Share",
+          text: metadata.description || "View this chart",
           files: [file],
         });
       } catch (error) {
         console.error("Share failed:", error);
         toast({
-          title: "分享失败",
-          description: "无法分享图片",
+          title: "Share failed",
+          description: "Unable to share image",
           variant: "destructive",
         });
       }
@@ -221,13 +189,13 @@ export function ImageResultMessage({
       try {
         await navigator.clipboard.writeText(imageUrl);
         toast({
-          title: "链接已复制",
-          description: "图片链接已复制到剪贴板",
+          title: "Link copied",
+          description: "Image link copied to clipboard",
         });
       } catch (error) {
         toast({
-          title: "分享失败",
-          description: "浏览器不支持分享功能",
+          title: "Share failed",
+          description: "Browser doesn't support sharing",
           variant: "destructive",
         });
       }
@@ -236,10 +204,10 @@ export function ImageResultMessage({
 
   const getChartTypeLabel = (type: string) => {
     const labels: Record<string, string> = {
-      bar: "柱状图",
-      line: "折线图",
-      pie: "饼图",
-      area: "面积图",
+      bar: "Bar Chart",
+      line: "Line Chart",
+      pie: "Pie Chart",
+      area: "Area Chart",
     };
     return labels[type] || type;
   };
@@ -270,12 +238,12 @@ export function ImageResultMessage({
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           {/* 图片容器 */}
-          <div className="relative bg-muted/30">
+          <div className="bg-muted/30 relative">
             {shouldShowLoading && (
               <div className="bg-muted flex aspect-video items-center justify-center">
-                <div className="space-y-2 text-center">
+                <div className="flex items-center space-y-2 text-center">
                   <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
-                  <p className="text-muted-foreground text-sm">正在生成图片...</p>
+                  <p className="text-muted-foreground text-sm">Generating image...</p>
                 </div>
               </div>
             )}
@@ -284,13 +252,17 @@ export function ImageResultMessage({
               <div className="bg-muted flex aspect-video items-center justify-center">
                 <div className="space-y-2 text-center">
                   <BarChart3 className="text-muted-foreground mx-auto h-12 w-12" />
-                  <p className="text-muted-foreground text-sm">图片加载失败</p>
-                  <Button variant="outline" size="sm" onClick={() => {
-                    setImageLoadError(false);
-                    setImageLoaded(false);
-                  }}>
-                    <RotateCcw className="h-4 w-4 mr-1" />
-                    重试
+                  <p className="text-muted-foreground text-sm">Image load failed</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setImageLoadError(false);
+                      setImageLoaded(false);
+                    }}
+                  >
+                    <RotateCcw className="mr-1 h-4 w-4" />
+                    Retry
                   </Button>
                 </div>
               </div>
@@ -308,16 +280,16 @@ export function ImageResultMessage({
                   onLoad={() => {
                     console.log("✅ [ImageResultMessage] 图片加载成功:", {
                       messageId: message.id,
-                      title
+                      title,
                     });
                     setImageLoaded(true);
                     setImageLoadError(false);
                   }}
-                  onError={(e) => {
+                  onError={e => {
                     console.error("❌ [ImageResultMessage] 图片加载失败:", {
                       messageId: message.id,
                       url: imageUrl?.substring(0, 50) + "...",
-                      error: e
+                      error: e,
                     });
                     setImageLoadError(true);
                     setImageLoaded(false);
@@ -330,7 +302,7 @@ export function ImageResultMessage({
                   <div className="bg-muted/80 absolute inset-0 flex items-center justify-center backdrop-blur-sm">
                     <div className="space-y-2 text-center">
                       <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
-                      <p className="text-muted-foreground text-sm">图片加载中...</p>
+                      <p className="text-muted-foreground text-sm">Loading image...</p>
                     </div>
                   </div>
                 )}
@@ -377,54 +349,21 @@ export function ImageResultMessage({
                 <Separator />
                 <div className="grid grid-cols-2 gap-4 text-xs">
                   <div className="flex items-center space-x-2">
-                    <Database className="text-muted-foreground h-3 w-3" />
-                    <span className="text-muted-foreground">数据行数:</span>
-                    <span className="font-medium">{chartData?.length || 0}</span>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
                     <Palette className="text-muted-foreground h-3 w-3" />
-                    <span className="text-muted-foreground">图片尺寸:</span>
+                    <span className="text-muted-foreground">Dimensions:</span>
                     <span className="font-medium">
                       {metadata.width}×{metadata.height}
                     </span>
                   </div>
 
-                  <div className="flex items-center space-x-2">
-                    <Clock className="text-muted-foreground h-3 w-3" />
-                    <span className="text-muted-foreground">生成时间:</span>
-                    <span className="font-medium">
-                      {format(metadata.generatedAt, "HH:mm", { locale: zhCN })}
-                    </span>
-                  </div>
-
                   {metadata.fileSize && (
                     <div className="flex items-center space-x-2">
-                      <span className="text-muted-foreground">文件大小:</span>
+                      <Download className="text-muted-foreground h-3 w-3" />
+                      <span className="text-muted-foreground">File Size:</span>
                       <span className="font-medium">{formatFileSize(metadata.fileSize)}</span>
                     </div>
                   )}
                 </div>
-                {theme && (
-                  <div className="mt-3 space-y-2 text-xs">
-                    <div className="text-muted-foreground flex items-center gap-2">
-                      <Palette className="h-3 w-3" />
-                      <span>主题配色</span>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      {palettePreview.map(swatch => (
-                        <ColorBadge key={swatch.label} label={swatch.label} color={swatch.color} subtle />
-                      ))}
-                    </div>
-                    {seriesPalette.length > 0 && (
-                      <div className="flex flex-wrap items-center gap-2">
-                        {seriesPalette.map(swatch => (
-                          <ColorBadge key={swatch.label} label={swatch.label} color={swatch.color} />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
               </>
             )}
 
@@ -439,7 +378,7 @@ export function ImageResultMessage({
                   className="flex items-center space-x-1"
                 >
                   <Download className="h-4 w-4" />
-                  <span>下载</span>
+                  <span>Download</span>
                 </Button>
 
                 <Button
@@ -450,7 +389,7 @@ export function ImageResultMessage({
                   className="flex items-center space-x-1"
                 >
                   <Copy className="h-4 w-4" />
-                  <span>复制</span>
+                  <span>Copy</span>
                 </Button>
 
                 <Button
@@ -461,21 +400,9 @@ export function ImageResultMessage({
                   className="flex items-center space-x-1"
                 >
                   <Share className="h-4 w-4" />
-                  <span>分享</span>
+                  <span>Share</span>
                 </Button>
               </div>
-
-              {onConfigureChart && (
-                <Button
-                  variant="default"
-                  size="sm"
-                  onClick={onConfigureChart}
-                  className="flex items-center space-x-1"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  <span>配置调整</span>
-                </Button>
-              )}
             </div>
           </div>
         </CardContent>
@@ -498,7 +425,10 @@ function ColorBadge({ label, color, subtle }: ColorBadgeProps) {
       }`}
       title={`${label}: ${color}`}
     >
-      <span className="h-3 w-3 rounded-full border" style={{ backgroundColor: color, borderColor: color }} />
+      <span
+        className="h-3 w-3 rounded-full border"
+        style={{ backgroundColor: color, borderColor: color }}
+      />
       <span className="text-muted-foreground text-xs">{label}</span>
     </span>
   );

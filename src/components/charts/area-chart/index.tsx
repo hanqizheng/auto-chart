@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { Activity, BarChart2, TrendingUp } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, ReferenceLine, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,7 +13,6 @@ import {
   AreaSeriesAnalysis,
   AREA_CHART_DEFAULTS,
 } from "./types";
-import { useChartTheme } from "@/contexts/chart-theme-context";
 
 /**
  * 计算面积图系列分析
@@ -178,15 +178,20 @@ export function BeautifulAreaChart({
   showTotalLine = AREA_CHART_DEFAULTS.showTotalLine,
   showGrowthRate = AREA_CHART_DEFAULTS.showGrowthRate,
   fillOpacity = AREA_CHART_DEFAULTS.fillOpacity,
+  useGradient = AREA_CHART_DEFAULTS.useGradient,
+  showGrid = AREA_CHART_DEFAULTS.showGrid,
+  colors: providedColors,
+  primaryColor = "#22c55e",
 }: AreaChartProps) {
-  const { getSeriesColor, palette } = useChartTheme();
+  // 直接使用传入的颜色配置
+  const finalColors = providedColors;
   // 数据验证
   const validation = validateAreaChartData(data);
 
   if (!validation.isValid) {
     return (
       <div className={className}>
-        <h3 className="text-lg font-semibold mb-2 text-red-600">数据格式错误</h3>
+        <h3 className="mb-2 text-lg font-semibold text-red-600">数据格式错误</h3>
         <div className="space-y-1 text-red-600">
           {validation.errors.map((error, index) => (
             <p key={index} className="text-sm">
@@ -228,16 +233,14 @@ export function BeautifulAreaChart({
     current._growth > best._growth ? current : best
   );
 
+  const gradientBaseId = useId();
+
   return (
     <div className={className}>
       {(title || description) && (
         <div className="mb-4">
-          {title && (
-            <h3 className="text-lg font-semibold mb-2">{title}</h3>
-          )}
-          {description && (
-            <p className="text-sm text-muted-foreground">{description}</p>
-          )}
+          {title && <h3 className="mb-2 text-lg font-semibold">{title}</h3>}
+          {description && <p className="text-muted-foreground text-sm">{description}</p>}
         </div>
       )}
 
@@ -252,12 +255,32 @@ export function BeautifulAreaChart({
               bottom: 40,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.35} />
+            {useGradient && (
+              <defs>
+                {valueKeys.map((key, index) => {
+                  const color =
+                    finalColors.series[index % finalColors.series.length] || finalColors.primary;
+                  const gradientId = `${gradientBaseId}-${index}`;
+                  const startOpacity = Math.min(fillOpacity + 0.25, 0.95);
+                  const endOpacity = Math.max(fillOpacity - 0.35, 0.05);
+
+                  return (
+                    <linearGradient key={gradientId} id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={color} stopOpacity={startOpacity} />
+                      <stop offset="95%" stopColor={color} stopOpacity={endOpacity} />
+                    </linearGradient>
+                  );
+                })}
+              </defs>
+            )}
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" stroke={finalColors.grid} opacity={0.35} />
+            )}
             <XAxis
               dataKey={xAxisKey}
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: palette.neutralStrong }}
+              tick={{ fontSize: 12, fill: finalColors.text }}
               angle={0}
               textAnchor="middle"
               height={40}
@@ -265,7 +288,7 @@ export function BeautifulAreaChart({
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: palette.neutralStrong }}
+              tick={{ fontSize: 12, fill: finalColors.text }}
               tickFormatter={value => value.toLocaleString()}
             />
 
@@ -273,7 +296,7 @@ export function BeautifulAreaChart({
             {showTotalLine && (
               <ReferenceLine
                 y={totalAverage}
-                stroke={palette.neutral}
+                stroke={finalColors.grid}
                 strokeDasharray="5 5"
                 opacity={0.5}
               />
@@ -286,8 +309,16 @@ export function BeautifulAreaChart({
                 type="monotone"
                 dataKey={key}
                 stackId={stacked ? "1" : undefined}
-                stroke={getSeriesColor(key, index)}
-                fill={getSeriesColor(key, index)}
+                stroke={
+                  finalColors.seriesStroke?.[index] ||
+                  finalColors.series[index % finalColors.series.length] ||
+                  finalColors.primary
+                }
+                fill={
+                  useGradient
+                    ? `url(#${gradientBaseId}-${index})`
+                    : finalColors.series[index % finalColors.series.length] || finalColors.primary
+                }
                 fillOpacity={fillOpacity}
                 strokeWidth={AREA_CHART_DEFAULTS.strokeWidth}
                 name={String(config[key]?.label || key)}

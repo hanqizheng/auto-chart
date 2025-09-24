@@ -2,6 +2,7 @@
 // 负责基于真实数据生成图表配置，无Mock逻辑
 
 import { ChartType } from "@/types/chart";
+import { CHART_TYPES } from "@/constants/chart";
 import {
   ChartIntent,
   UnifiedDataStructure,
@@ -11,6 +12,8 @@ import {
   DataValue,
   AIChartError,
 } from "./types";
+
+const { PIE, BAR, LINE, AREA, RADAR, RADIAL } = CHART_TYPES;
 
 /**
  * 图表生成器接口
@@ -69,12 +72,35 @@ export class ChartGenerator implements IChartGenerator {
       // 生成洞察
       const insights = await this.generateInsights(processedData, intent);
 
+      const needsCircularTransform = intent.chartType === PIE || intent.chartType === RADIAL;
+
+      console.log("🐛🎨 [ChartGenerator] 数据转换判断:", {
+        chartType: intent.chartType,
+        PIE_constant: PIE,
+        RADIAL_constant: RADIAL,
+        isPie: intent.chartType === PIE,
+        isRadial: intent.chartType === RADIAL,
+        needsCircularTransform,
+      });
+
+      const resultData = needsCircularTransform
+        ? this.normalizePieResult(processedData, intent)
+        : processedData;
+
+      console.log("🐛🎨 [ChartGenerator] 数据转换结果:", {
+        originalDataLength: processedData.length,
+        originalDataSample: processedData.slice(0, 1),
+        transformedDataLength: resultData.length,
+        transformedDataSample: resultData.slice(0, 1),
+        wasTransformed: needsCircularTransform,
+      });
+
       const processingTime = Date.now() - startTime;
 
       const result: ChartGenerationResult = {
         success: true,
         chartType: intent.chartType,
-        data: processedData,
+        data: resultData,
         config,
         title: intent.suggestions.title,
         description: intent.suggestions.description,
@@ -86,6 +112,13 @@ export class ChartGenerator implements IChartGenerator {
           confidence: intent.confidence,
         },
       };
+
+      console.log("✅ [ChartGenerator] 图表生成成功:", {
+        chartType: result.chartType,
+        dataLength: result.data.length,
+        title: result.title,
+        processingTime: result.metadata.processingTime,
+      });
 
       return result;
     } catch (error) {
@@ -121,7 +154,11 @@ export class ChartGenerator implements IChartGenerator {
         },
       },
       legend: {
-        show: mapping.yAxis.length > 1 || chartType === "pie",
+        show:
+          mapping.yAxis.length > 1 ||
+          chartType === PIE ||
+          chartType === RADIAL ||
+          chartType === RADAR,
         position: this.determineLegendPosition(chartType, data.data.length),
       },
       responsive: true,
@@ -129,20 +166,49 @@ export class ChartGenerator implements IChartGenerator {
 
     // 图表特定配置
     switch (chartType) {
-      case "pie":
+      case PIE:
         config.legend.position = "right";
         break;
 
-      case "line":
+      case RADIAL:
+        config.legend.position = "right";
+        config.axes = {
+          xAxis: {
+            label: this.formatAxisLabel(mapping.xAxis || "Category"),
+            type: "category",
+          },
+          yAxis: {
+            label: this.formatAxisLabel(mapping.yAxis[0] || "Value"),
+            type: "value",
+            min: 0,
+          },
+        };
+        break;
+
+      case LINE:
         // 折线图可能需要时间轴特殊处理
         if (stats.dateFields.includes(mapping.xAxis)) {
           config.axes.xAxis.type = "time";
         }
         break;
 
-      case "area":
+      case AREA:
         // 面积图通常使用堆叠模式
         config.axes.yAxis.min = 0;
+        break;
+
+      case RADAR:
+        config.axes = {
+          xAxis: {
+            label: this.formatAxisLabel(mapping.xAxis || "Category"),
+            type: "category",
+          },
+          yAxis: {
+            label: this.formatAxisLabel(mapping.yAxis[0] || "Value"),
+            type: "value",
+            min: 0,
+          },
+        };
         break;
     }
 
@@ -198,7 +264,7 @@ export class ChartGenerator implements IChartGenerator {
     const stats = data.metadata.statistics;
 
     switch (chartType) {
-      case "pie":
+      case PIE:
         if (stats.numericFields.length === 0) {
           throw new AIChartError("chart_generation", "INVALID_REQUEST", "饼图需要至少一个数值字段");
         }
@@ -211,7 +277,20 @@ export class ChartGenerator implements IChartGenerator {
         }
         break;
 
-      case "line":
+      case RADIAL:
+        if (stats.numericFields.length === 0) {
+          throw new AIChartError("chart_generation", "INVALID_REQUEST", "径向图需要一个数值字段");
+        }
+        if (stats.categoricalFields.length === 0) {
+          throw new AIChartError(
+            "chart_generation",
+            "INVALID_REQUEST",
+            "径向图需要分类字段作为角度坐标"
+          );
+        }
+        break;
+
+      case LINE:
         if (stats.numericFields.length === 0) {
           throw new AIChartError(
             "chart_generation",
@@ -228,13 +307,30 @@ export class ChartGenerator implements IChartGenerator {
         }
         break;
 
-      case "bar":
-      case "area":
+      case BAR:
+      case AREA:
         if (stats.numericFields.length === 0) {
           throw new AIChartError(
             "chart_generation",
             "INVALID_REQUEST",
             `${chartType}图需要至少一个数值字段`
+          );
+        }
+        break;
+
+      case RADAR:
+        if (stats.numericFields.length < 2) {
+          throw new AIChartError(
+            "chart_generation",
+            "INVALID_REQUEST",
+            "雷达图需要至少两个数值字段用于比较"
+          );
+        }
+        if (stats.categoricalFields.length === 0) {
+          throw new AIChartError(
+            "chart_generation",
+            "INVALID_REQUEST",
+            "雷达图需要分类字段作为轴标签"
           );
         }
         break;
@@ -247,7 +343,7 @@ export class ChartGenerator implements IChartGenerator {
   private preprocessData(data: UnifiedDataStructure, intent: ChartIntent): DataRow[] {
     const mapping = intent.visualMapping;
 
-    const processedData = data.data.map(row => {
+    const processedData = data.data.map((row, index) => {
       const processed: DataRow = {};
 
       // 复制X轴字段
@@ -272,7 +368,7 @@ export class ChartGenerator implements IChartGenerator {
     });
 
     // 数据清理：移除无效记录
-    const cleanedData = processedData.filter(row => {
+    const cleanedData = processedData.filter((row, index) => {
       // 至少要有X轴值
       const hasXValue =
         mapping.xAxis && row[mapping.xAxis] !== null && row[mapping.xAxis] !== undefined;
@@ -285,7 +381,44 @@ export class ChartGenerator implements IChartGenerator {
       return hasXValue && hasYValue;
     });
 
+    console.log("✅ [ChartGenerator] 数据预处理完成:", {
+      原始数据: data.data.length,
+      清理后数据: cleanedData.length,
+      丢弃行数: processedData.length - cleanedData.length,
+    });
+
     return cleanedData;
+  }
+
+  private normalizePieResult(data: DataRow[], intent: ChartIntent): DataRow[] {
+    const xField = intent.visualMapping.xAxis;
+    const yField = intent.visualMapping.yAxis[0];
+
+    if (!xField || !yField) {
+      return data;
+    }
+
+    return data
+      .map(row => {
+        const name = row[xField];
+        const rawValue = row[yField];
+        const value =
+          typeof rawValue === "number"
+            ? rawValue
+            : typeof rawValue === "string"
+              ? this.parseNumericValue(rawValue)
+              : null;
+
+        if (name == null || value == null || isNaN(value)) {
+          return null;
+        }
+
+        return {
+          name: String(name),
+          value,
+        } as DataRow;
+      })
+      .filter((row): row is DataRow => row !== null);
   }
 
   /**
@@ -303,7 +436,7 @@ export class ChartGenerator implements IChartGenerator {
         insights.push(`数据范围：${stats.min.toLocaleString()} - ${stats.max.toLocaleString()}`);
         insights.push(`平均值：${stats.average.toLocaleString()}`);
 
-        if (intent.chartType === "line" && data.length > 1) {
+        if (intent.chartType === LINE && data.length > 1) {
           const trend = this.calculateTrend(data, mapping.yAxis[0]);
           insights.push(`总体趋势：${trend > 0 ? "上升" : trend < 0 ? "下降" : "平稳"}`);
         }
@@ -311,7 +444,8 @@ export class ChartGenerator implements IChartGenerator {
 
       // 图表特定洞察
       switch (intent.chartType) {
-        case "pie":
+        case PIE:
+        case RADIAL:
           const total = data.reduce((sum, item) => {
             const value = this.parseNumericValue(item[mapping.yAxis[0]]);
             return sum + (value || 0);
@@ -329,7 +463,7 @@ export class ChartGenerator implements IChartGenerator {
           }
           break;
 
-        case "bar":
+        case BAR:
           const sortedData = [...data].sort((a, b) => {
             const aValue = this.parseNumericValue(a[mapping.yAxis[0]]) || 0;
             const bValue = this.parseNumericValue(b[mapping.yAxis[0]]) || 0;
@@ -340,6 +474,11 @@ export class ChartGenerator implements IChartGenerator {
               `排名前二：${sortedData[0][mapping.xAxis]}、${sortedData[1][mapping.xAxis]}`
             );
           }
+          break;
+
+        case RADAR:
+          const metricCount = mapping.yAxis.length;
+          insights.push(`雷达图展示 ${metricCount} 个指标的全景对比`);
           break;
       }
 
@@ -379,12 +518,12 @@ export class ChartGenerator implements IChartGenerator {
     let { width, height } = this.DEFAULT_DIMENSIONS;
 
     // 根据数据量和图表类型调整尺寸
-    if (chartType === "bar" && dataCount > 10) {
+    if (chartType === BAR && dataCount > 10) {
       width = Math.min(1200, 600 + dataCount * 30);
     }
 
-    if (chartType === "pie") {
-      width = Math.min(width, height + 200); // 饼图通常不需要很宽
+    if (chartType === PIE || chartType === RADIAL) {
+      width = Math.min(width, height + 200); // 饼/径向图通常不需要很宽
     }
 
     return { width, height };
@@ -417,7 +556,8 @@ export class ChartGenerator implements IChartGenerator {
     chartType: ChartType,
     dataCount: number
   ): "top" | "bottom" | "left" | "right" {
-    if (chartType === "pie") return "right";
+    if (chartType === PIE || chartType === RADIAL) return "right";
+    if (chartType === RADAR) return "top";
     if (dataCount > 8) return "top";
     return "bottom";
   }

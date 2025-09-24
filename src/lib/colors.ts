@@ -1,4 +1,10 @@
-import { ChartPalette, ChartTheme } from "@/types";
+import {
+  ChartPalette,
+  ChartTheme,
+  SeriesColorConfig,
+  ChartCommonColors,
+  StructuredChartColors,
+} from "@/types";
 
 const HEX_COLOR_REGEX = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i;
 export const DEFAULT_CHART_BASE_COLOR = "#22c55e";
@@ -20,7 +26,10 @@ const expandToSixDigitHex = (hex: string): string => {
   return hex;
 };
 
-export const normalizeHexColor = (input: string | undefined | null, fallback = DEFAULT_CHART_BASE_COLOR): string => {
+export const normalizeHexColor = (
+  input: string | undefined | null,
+  fallback = DEFAULT_CHART_BASE_COLOR
+): string => {
   if (!input) {
     return fallback;
   }
@@ -115,7 +124,7 @@ const hslToRgb = ({ h, s, l }: HSL): RGB => {
 const hslToHex = (hsl: HSL): string => rgbToHex(hslToRgb(hsl));
 
 const applyAdjustment = (hsl: HSL, adjustment: ColorAdjustment): HSL => ({
-  h: ((hsl.h + (adjustment.hue || 0)) % 360 + 360) % 360,
+  h: (((hsl.h + (adjustment.hue || 0)) % 360) + 360) % 360,
   s: clamp(hsl.s + (adjustment.saturation || 0)),
   l: clamp(hsl.l + (adjustment.lightness || 0)),
 });
@@ -138,6 +147,63 @@ const generateSeriesColors = (baseColor: string, count: number): string[] => {
   });
 };
 
+/**
+ * 生成结构化颜色配置 - 新增功能
+ * @param baseColor 基础颜色
+ * @param count 需要生成的系列数量
+ * @param fillOpacity 填充色透明度 (0-1)
+ * @returns 结构化的系列颜色配置
+ */
+export const generateSeriesConfigs = (
+  baseColor: string,
+  count: number,
+  fillOpacity: number = 0.2
+): SeriesColorConfig[] => {
+  const mainColors = generateSeriesColors(baseColor, count);
+
+  return mainColors.map(color => {
+    const { r, g, b } = hexToRgb(color);
+    return {
+      stroke: color,
+      fill: `rgba(${r}, ${g}, ${b}, ${fillOpacity})`,
+    };
+  });
+};
+
+/**
+ * 生成通用颜色配置 - 新增功能
+ * @param baseColor 基础颜色
+ * @returns 通用颜色配置
+ */
+export const generateCommonColors = (baseColor: string): ChartCommonColors => {
+  const baseHsl = rgbToHsl(hexToRgb(baseColor));
+
+  return {
+    background: "transparent", // 保持透明，让容器控制背景
+    grid: hslToHex(applyAdjustment(baseHsl, { saturation: -0.35, lightness: 0.15 })),
+    label: hslToHex(applyAdjustment(baseHsl, { saturation: -0.4, lightness: -0.25 })),
+    tooltip: hslToHex(applyAdjustment(baseHsl, { saturation: -0.5, lightness: 0.42 })),
+  };
+};
+
+/**
+ * 生成完整的结构化颜色配置 - 新增功能
+ * @param baseColor 基础颜色
+ * @param seriesCount 系列数量
+ * @param fillOpacity 填充色透明度
+ * @returns 完整的结构化颜色配置
+ */
+export const generateStructuredColors = (
+  baseColor: string,
+  seriesCount: number,
+  fillOpacity: number = 0.2
+): StructuredChartColors => {
+  return {
+    common: generateCommonColors(baseColor),
+    seriesConfigs: generateSeriesConfigs(baseColor, seriesCount, fillOpacity),
+  };
+};
+
 export const createChartPalette = (baseColor: string, seriesCount = 4): ChartPalette => {
   const normalizedBase = normalizeHexColor(baseColor);
   const baseHsl = rgbToHsl(hexToRgb(normalizedBase));
@@ -155,7 +221,11 @@ export const createChartPalette = (baseColor: string, seriesCount = 4): ChartPal
 
   const series = generateSeriesColors(normalizedBase, seriesCount);
 
+  // 生成结构化颜色配置
+  const structured = generateStructuredColors(normalizedBase, seriesCount);
+
   return {
+    // 保持向后兼容的原有字段
     primary: normalizedBase,
     primarySoft,
     primaryStrong,
@@ -166,6 +236,9 @@ export const createChartPalette = (baseColor: string, seriesCount = 4): ChartPal
     background,
     grid,
     series,
+
+    // 新增的结构化配置
+    structured,
   };
 };
 

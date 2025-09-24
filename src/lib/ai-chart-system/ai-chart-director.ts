@@ -1,6 +1,7 @@
 // AI Chart Director - 系统总协调器
 // 整合所有组件，实现三种场景的统一处理
 
+import { ChartType } from "@/types/chart";
 import { AIService } from "@/lib/ai/types";
 import { createServiceFromEnv } from "@/lib/ai/service-factory";
 import {
@@ -89,12 +90,17 @@ export class AIChartDirector implements IAIChartDirector {
       console.log("✅ [AIChartDirector] 场景识别:", scenario);
 
       // 步骤2: 根据场景处理数据
+      console.log("🐛🎯 [AIChartDirector] 开始数据提取和统一化...");
       const unifiedData = await this.extractAndUnifyData(scenario, input);
-      console.log("✅ [AIChartDirector] 数据提取完成:", {
+      console.log("✅🐛🎯 [AIChartDirector] 数据提取完成:", {
         rows: unifiedData.data.length,
         fields: unifiedData.schema.fields.length,
         sampleData: unifiedData.data.slice(0, 3), // 显示前3行数据样本
         dataSchema: unifiedData.schema,
+        source: unifiedData.metadata.source,
+        qualityScore: unifiedData.schema.qualityScore,
+        isValid: unifiedData.isValid,
+        validationErrors: unifiedData.validationErrors,
       });
 
       // 步骤3: 分析用户意图
@@ -276,29 +282,298 @@ export class AIChartDirector implements IAIChartDirector {
   }
 
   /**
-   * 处理仅Prompt场景
+   * 处理仅Prompt场景 - 优化后的流程
    */
   private async handlePromptOnlyData(prompt: string) {
     console.log("📝 [PromptOnly] 处理仅Prompt场景...");
 
-    // 从prompt提取数据
+    // 步骤1: 尝试从prompt提取结构化数据
     const extractedData = await this.dataExtractor.extractFromPrompt(prompt);
 
-    if (!extractedData || extractedData.data.length === 0) {
+    if (extractedData && extractedData.data.length > 0) {
+      // 如果找到结构化数据，直接使用
+      console.log("✅ [PromptOnly] 从prompt中提取到结构化数据");
+      return this.dataExtractor.normalizeData(extractedData.data, "prompt", {
+        fileInfo: undefined,
+      });
+    }
+
+    // 步骤2: 未找到结构化数据，进行图表意图分析并生成模拟数据
+    console.log("🎯 [PromptOnly] 未找到结构化数据，开始图表意图分析...");
+
+    try {
+      // 分析图表意图（不依赖数据结构）
+      const chartIntent = await this.analyzeIntentFromPromptOnly(prompt);
+      console.log("✅ [PromptOnly] 图表意图分析完成:", {
+        chartType: chartIntent.chartType,
+        reasoning: chartIntent.reasoning,
+      });
+
+      // 基于意图生成合适的模拟数据
+      const mockData = await this.generateMockDataForIntent(chartIntent, prompt);
+      console.log("✅ [PromptOnly] 模拟数据生成完成:", {
+        rows: mockData.length,
+        sampleData: mockData.slice(0, 2),
+      });
+
+      // 标准化数据
+      return this.dataExtractor.normalizeData(mockData, "prompt", {
+        fileInfo: undefined,
+      });
+    } catch (error) {
+      console.error("❌ [PromptOnly] 意图分析或数据生成失败:", error);
+
+      // 最后的降级策略：抛出友好的错误信息
       throw new AIChartError(
         "data_extraction",
         "INSUFFICIENT_DATA",
-        "未在描述中发现可用的数据。请提供具体的数值、表格或数据列表，或上传数据文件。",
+        "未在描述中发现可用的数据，且无法从描述中推断图表需求。请提供具体的数值、表格或数据列表，或上传数据文件。",
         {
-          suggestions: ["提供具体的数字数据", "使用表格格式描述", "上传Excel或CSV文件"],
+          suggestions: [
+            "提供具体的数字数据",
+            "使用表格格式描述",
+            "上传Excel或CSV文件",
+            "明确说明想要展示的图表类型",
+          ],
+          originalError: error instanceof Error ? error.message : String(error),
         }
       );
     }
+  }
 
-    // 标准化数据
-    return this.dataExtractor.normalizeData(extractedData.data, "prompt", {
-      fileInfo: undefined,
-    });
+  /**
+   * 从prompt分析图表意图（不依赖数据结构）
+   */
+  private async analyzeIntentFromPromptOnly(prompt: string) {
+    console.log("🎯 [PromptOnlyIntent] 开始纯文本意图分析...");
+
+    try {
+      // 使用AI分析用户意图
+      const systemPrompt = `你是一个专业的数据可视化专家。从用户的描述中分析他们的图表需求。
+
+任务要求：
+1. 识别用户想要的图表类型
+2. 分析数据的大致结构和特征
+3. 提供图表标题和描述建议
+4. 如果无法确定图表类型，选择最通用的类型
+
+支持的图表类型：
+- bar: 柱状图，适合比较分类数据
+- line: 折线图，适合显示趋势变化
+- pie: 饼图，适合显示比例关系
+- area: 面积图，适合显示累计数据
+- radar: 雷达图，适合多维度对比
+- radial: 径向图，适合层次结构
+
+响应格式（严格JSON）：
+{
+  "chartType": "图表类型",
+  "confidence": 0.0-1.0,
+  "reasoning": "选择理由",
+  "suggestions": {
+    "title": "建议的图表标题",
+    "description": "图表描述",
+    "dataStructure": "数据结构特征描述"
+  }
+}`;
+
+      const response = await this.aiService.chat({
+        messages: [{ role: "user", content: prompt }],
+        systemPrompt,
+        params: {
+          temperature: 0.2, // 较低温度确保一致性
+          maxTokens: 500,
+        },
+      });
+
+      let content = this.cleanJsonResponse(response.content);
+      const parsed = JSON.parse(content);
+
+      return {
+        chartType: parsed.chartType as ChartType,
+        confidence: parsed.confidence || 0.7,
+        reasoning: parsed.reasoning || "基于提示词分析",
+        suggestions: {
+          title: parsed.suggestions?.title || "数据图表",
+          description: parsed.suggestions?.description || "",
+        },
+      };
+    } catch (error) {
+      console.warn("🎯 [PromptOnlyIntent] AI分析失败，使用关键词回退:", error);
+
+      // 回退到关键词分析
+      return this.fallbackKeywordAnalysis(prompt);
+    }
+  }
+
+  /**
+   * 关键词回退分析
+   */
+  private fallbackKeywordAnalysis(prompt: string) {
+    const lowerPrompt = prompt.toLowerCase();
+
+    // 简化的关键词匹配
+    const chartTypeKeywords = {
+      line: [
+        "line",
+        "trend",
+        "timeline",
+        "over time",
+        "growth",
+        "decline",
+        "走势",
+        "趋势",
+        "折线",
+        "变化",
+      ],
+      bar: ["bar", "column", "compare", "comparison", "vs", "对比", "柱状", "比较"],
+      pie: ["pie", "share", "percentage", "proportion", "distribution", "饼图", "占比", "比例"],
+      area: ["area", "stacked", "cumulative", "filled", "coverage", "累计", "面积", "堆叠"],
+      radar: ["radar", "spider", "multi", "dimension", "雷达", "多维", "综合"],
+      radial: ["radial", "circular", "hierarchy", "tree", "径向", "圆形", "层次"],
+    };
+
+    let bestMatch = { type: "bar", score: 0 }; // 默认柱状图
+
+    for (const [chartType, keywords] of Object.entries(chartTypeKeywords)) {
+      const matches = keywords.filter(keyword => lowerPrompt.includes(keyword)).length;
+      if (matches > bestMatch.score) {
+        bestMatch = { type: chartType, score: matches };
+      }
+    }
+
+    return {
+      chartType: bestMatch.type as ChartType,
+      confidence: bestMatch.score > 0 ? 0.6 : 0.4,
+      reasoning:
+        bestMatch.score > 0
+          ? `基于关键词匹配: ${bestMatch.score}个相关词汇`
+          : "未找到明确关键词，使用默认类型",
+      suggestions: {
+        title: "数据图表",
+        description: "基于您的描述生成的图表",
+      },
+    };
+  }
+
+  /**
+   * 基于图表意图生成模拟数据
+   */
+  private async generateMockDataForIntent(chartIntent: any, prompt: string) {
+    console.log("🎲 [MockDataGen] 生成模拟数据，图表类型:", chartIntent.chartType);
+
+    try {
+      // 使用AI生成合适的模拟数据
+      const systemPrompt = `你是一个数据生成专家。根据用户的描述和图表类型，生成合适的模拟数据。
+
+图表类型：${chartIntent.chartType}
+用户描述：${prompt}
+
+要求：
+1. 生成5-8行现实的数据
+2. 数据应该符合图表类型的要求
+3. 使用中文字段名和数据值
+4. 数据应该有意义且相关
+
+响应格式（严格JSON数组）：
+[
+  {"字段1": "值", "字段2": 数值, ...},
+  {"字段1": "值", "字段2": 数值, ...}
+]`;
+
+      const response = await this.aiService.chat({
+        messages: [
+          { role: "user", content: `图表类型: ${chartIntent.chartType}\n描述: ${prompt}` },
+        ],
+        systemPrompt,
+        params: {
+          temperature: 0.4,
+          maxTokens: 800,
+        },
+      });
+
+      let content = this.cleanJsonResponse(response.content);
+      const mockData = JSON.parse(content);
+
+      if (Array.isArray(mockData) && mockData.length > 0) {
+        console.log("✅ [MockDataGen] AI生成模拟数据成功");
+        return mockData;
+      }
+
+      throw new Error("AI生成的数据格式不正确");
+    } catch (error) {
+      console.warn("🎲 [MockDataGen] AI生成失败，使用预设模板:", error);
+
+      // 回退到预设模板
+      return this.generateTemplateData(chartIntent.chartType);
+    }
+  }
+
+  /**
+   * 生成预设模板数据
+   */
+  private generateTemplateData(chartType: ChartType) {
+    const templates: Record<ChartType, any[]> = {
+      bar: [
+        { category: "产品A", value: 320 },
+        { category: "产品B", value: 240 },
+        { category: "产品C", value: 180 },
+        { category: "产品D", value: 290 },
+        { category: "产品E", value: 160 },
+      ],
+      line: [
+        { time: "1月", value: 150 },
+        { time: "2月", value: 180 },
+        { time: "3月", value: 160 },
+        { time: "4月", value: 220 },
+        { time: "5月", value: 200 },
+        { time: "6月", value: 250 },
+      ],
+      pie: [
+        { category: "类别A", value: 35 },
+        { category: "类别B", value: 25 },
+        { category: "类别C", value: 20 },
+        { category: "类别D", value: 20 },
+      ],
+      area: [
+        { time: "Q1", series1: 100, series2: 80 },
+        { time: "Q2", series1: 120, series2: 95 },
+        { time: "Q3", series1: 140, series2: 110 },
+        { time: "Q4", series1: 160, series2: 125 },
+      ],
+      radar: [
+        { dimension: "技能A", score: 85 },
+        { dimension: "技能B", score: 72 },
+        { dimension: "技能C", score: 68 },
+        { dimension: "技能D", score: 79 },
+        { dimension: "技能E", score: 91 },
+      ],
+      radial: [
+        { category: "一级", level: 1, value: 100 },
+        { category: "二级A", level: 2, value: 60 },
+        { category: "二级B", level: 2, value: 40 },
+        { category: "三级A", level: 3, value: 35 },
+        { category: "三级B", level: 3, value: 25 },
+      ],
+    };
+
+    return templates[chartType] || templates.bar;
+  }
+
+  /**
+   * 清理AI响应中的JSON内容
+   */
+  private cleanJsonResponse(content: string): string {
+    let cleaned = content.trim();
+
+    // 移除markdown代码块
+    if (cleaned.startsWith("```json")) {
+      cleaned = cleaned.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+    } else if (cleaned.startsWith("```")) {
+      cleaned = cleaned.replace(/^```\s*/, "").replace(/\s*```$/, "");
+    }
+
+    return cleaned;
   }
 
   /**

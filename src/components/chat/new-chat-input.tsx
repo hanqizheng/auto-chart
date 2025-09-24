@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { FileAttachment } from "@/types";
 import { Send, Paperclip, X, FileSpreadsheet, Loader2 } from "lucide-react";
@@ -9,16 +9,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
-import { Turnstile } from "@marsidev/react-turnstile";
-import { SecurityVerificationPayload } from "@/types/security";
-import { setClientTurnstileToken } from "@/lib/security-context";
 
 interface NewChatInputProps {
-  onSendMessage: (
-    message: string,
-    files: FileAttachment[],
-    security?: SecurityVerificationPayload
-  ) => void;
+  onSendMessage: (message: string, files: FileAttachment[]) => void;
   onCancel?: () => void;
   isLoading?: boolean;
   isCancelling?: boolean;
@@ -44,40 +37,17 @@ export function NewChatInput({
   const [files, setFiles] = useState<FileAttachment[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isComposing, setIsComposing] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [turnstileKey, setTurnstileKey] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const turnstileEnabled = useMemo(() => process.env.NEXT_PUBLIC_ENABLE_TURNSTILE === "true", []);
-  const hasTurnstile = useMemo(
-    () => turnstileEnabled && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
-    [turnstileEnabled]
-  );
   const { toast } = useToast();
 
   const handleSend = useCallback(() => {
     if (!message.trim() && files.length === 0) return;
 
-    if (hasTurnstile && !turnstileToken) {
-      toast({
-        title: "Please complete human verification first",
-        description: "Click the verification below before sending the message",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    onSendMessage(message.trim(), files, {
-      turnstileToken: turnstileToken || undefined,
-    });
+    onSendMessage(message.trim(), files);
     setMessage("");
     setFiles([]);
-    if (hasTurnstile) {
-      setTurnstileToken(null);
-      setClientTurnstileToken(null);
-      setTurnstileKey(prev => prev + 1);
-    }
-  }, [message, files, onSendMessage, hasTurnstile, turnstileToken, toast]);
+  }, [message, files, onSendMessage]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (isComposing || e.nativeEvent.isComposing) {
@@ -253,34 +223,6 @@ export function NewChatInput({
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            {hasTurnstile && (
-              <div className="min-w-[150px]">
-                <Turnstile
-                  key={turnstileKey}
-                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-                  onSuccess={token => {
-                    setTurnstileToken(token);
-                    setClientTurnstileToken(token);
-                  }}
-                  onExpire={() => {
-                    setTurnstileToken(null);
-                    setClientTurnstileToken(null);
-                  }}
-                  onError={() => {
-                    setTurnstileToken(null);
-                    setClientTurnstileToken(null);
-                    toast({
-                      title: "Human verification failed",
-                      description: "Please refresh the verification component and try again",
-                      variant: "destructive",
-                    });
-                  }}
-                  options={{
-                    appearance: "interaction-only",
-                  }}
-                />
-              </div>
-            )}
             {/* 取消按钮 */}
             {isLoading && onCancel && (
               <Button
@@ -297,12 +239,7 @@ export function NewChatInput({
             {/* 发送按钮 */}
             <Button
               onClick={handleSend}
-              disabled={
-                disabled ||
-                isLoading ||
-                (!message.trim() && files.length === 0) ||
-                (hasTurnstile && !turnstileToken)
-              }
+              disabled={disabled || isLoading || (!message.trim() && files.length === 0)}
               size="sm"
               className="h-8"
             >

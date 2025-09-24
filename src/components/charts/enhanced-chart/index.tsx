@@ -4,6 +4,8 @@ import { BeautifulAreaChart } from "../area-chart";
 import { BeautifulBarChart } from "../bar-chart";
 import { BeautifulLineChart } from "../line-chart";
 import { BeautifulPieChart } from "../pie-chart";
+import { BeautifulRadarChart } from "../radar-chart";
+import { BeautifulRadialChart } from "../radial-chart";
 import {
   EnhancedChartProps,
   StandardChartData,
@@ -11,7 +13,8 @@ import {
   ENHANCED_CHART_DEFAULTS,
 } from "./types";
 import { PieChartData } from "../pie-chart/types";
-import { useChartTheme } from "@/contexts/chart-theme-context";
+import { RadialChartData } from "../radial-chart/types";
+import { useChartConfig } from "@/components/charts/simple-chart-wrapper";
 
 /**
  * 验证数据与图表类型的兼容性
@@ -87,6 +90,17 @@ export function validateChartTypeCompatibility(
       }
       break;
 
+    case "radial":
+      if (!isPieFormat && !isStandardFormat) {
+        errors.push("径向图需要包含 name 和 value 字段，或标准的分类数据格式");
+        isValid = false;
+      }
+      if (pointCount < 2) {
+        errors.push("径向图建议至少包含2个数据点");
+        isValid = false;
+      }
+      break;
+
     case "bar":
     case "line":
     case "area":
@@ -100,6 +114,21 @@ export function validateChartTypeCompatibility(
       }
       if (seriesCount < 1) {
         errors.push(`${type}图至少需要1个数值系列`);
+        isValid = false;
+      }
+      break;
+
+    case "radar":
+      if (!isStandardFormat) {
+        errors.push("雷达图需要标准的分类数据格式");
+        isValid = false;
+      }
+      if (pointCount < 3) {
+        errors.push("雷达图至少需要3个数据点");
+        isValid = false;
+      }
+      if (seriesCount < 2) {
+        errors.push("雷达图至少需要2个数值系列用于比较");
         isValid = false;
       }
       break;
@@ -169,28 +198,109 @@ export function EnhancedChart({
   outerRadius = ENHANCED_CHART_DEFAULTS.outerRadius,
   showPercentage = ENHANCED_CHART_DEFAULTS.showPercentage,
   showLegend = ENHANCED_CHART_DEFAULTS.showLegend,
+  barRadius = ENHANCED_CHART_DEFAULTS.bar.radius,
+  barShowValues = ENHANCED_CHART_DEFAULTS.bar.showValues,
+  barShowGrid = ENHANCED_CHART_DEFAULTS.bar.showGrid,
+  lineCurveType = ENHANCED_CHART_DEFAULTS.line.curveType,
+  lineShowDots = ENHANCED_CHART_DEFAULTS.line.showDots,
+  lineDotSize = ENHANCED_CHART_DEFAULTS.line.dotSize,
+  lineDotVariant = ENHANCED_CHART_DEFAULTS.line.dotVariant,
+  lineShowGrid = ENHANCED_CHART_DEFAULTS.line.showGrid,
+  radarShowGrid = ENHANCED_CHART_DEFAULTS.radar.showGrid,
+  radarShowLegend = ENHANCED_CHART_DEFAULTS.radar.showLegend,
+  radarShowDots = ENHANCED_CHART_DEFAULTS.radar.showDots,
+  radarShowArea = ENHANCED_CHART_DEFAULTS.radar.showArea,
+  radarFillOpacity = ENHANCED_CHART_DEFAULTS.radar.fillOpacity,
+  radarStrokeWidth = ENHANCED_CHART_DEFAULTS.radar.strokeWidth,
+  radarMaxValue,
+  radialBarSize = ENHANCED_CHART_DEFAULTS.radial.barSize,
+  radialCornerRadius = ENHANCED_CHART_DEFAULTS.radial.cornerRadius,
+  radialStartAngle = ENHANCED_CHART_DEFAULTS.radial.startAngle,
+  radialEndAngle = ENHANCED_CHART_DEFAULTS.radial.endAngle,
+  radialShowBackground = ENHANCED_CHART_DEFAULTS.radial.showBackground,
+  radialShowLabels = ENHANCED_CHART_DEFAULTS.radial.showLabels,
+  radialInnerRadius = ENHANCED_CHART_DEFAULTS.radial.innerRadius,
+  radialOuterRadius = ENHANCED_CHART_DEFAULTS.radial.outerRadius,
   exportMode = false,
-}: EnhancedChartProps) {
-  const { themedConfig } = useChartTheme();
-  const activeConfig = Object.keys(themedConfig || {}).length ? themedConfig : config;
-  console.log("📊 [EnhancedChart] 组件渲染开始:", {
-    type,
-    title,
-    description,
-    dataLength: data?.length || 0,
-    dataFirstItem: data?.[0] || null,
-    configKeys: config ? Object.keys(config) : [],
-    className,
-    stacked,
-    fillOpacity,
-  });
+  areaUseGradient = ENHANCED_CHART_DEFAULTS.area.useGradient,
+  areaShowGrid = ENHANCED_CHART_DEFAULTS.area.showGrid,
+  unifiedConfig,
+  primaryColor = "#22c55e",
+  ...props
+}: EnhancedChartProps & { unifiedConfig?: any; primaryColor?: string }) {
+  // 使用新的图表配置hook生成配置（作为fallback）
+  // 转换ChartConfig为简化的config格式
+  const simplifiedConfig: Record<string, { label?: string; color?: string; show?: boolean }> = {};
+  if (config) {
+    Object.entries(config).forEach(([key, value]) => {
+      simplifiedConfig[key] = {
+        label: typeof value.label === "string" ? value.label : undefined,
+        color: value.color,
+        show: true,
+      };
+    });
+  }
+  const { colors: generatedColors } = useChartConfig(type, data, simplifiedConfig, primaryColor);
+
+  // 🎯 优先使用统一配置，其次使用生成的配置，最后使用传入的config
+  let activeConfig = config;
+  let activeOptions: Record<string, any> = { ...props };
+  let activeColors = generatedColors;
+
+  if (unifiedConfig) {
+    // 使用统一配置的颜色
+    activeColors = unifiedConfig.colors;
+
+    // 生成带颜色的配置
+    activeConfig = { ...config };
+
+    // 为系列添加颜色配置
+    if (unifiedConfig.seriesKeys && unifiedConfig.colors.series) {
+      unifiedConfig.seriesKeys.forEach((entry: any, index: number) => {
+        const key = entry.key || entry;
+        const existingConfig = activeConfig[key] || {};
+        // Only set color if theme is not already defined (ChartConfig type constraint)
+        activeConfig[key] = existingConfig.theme
+          ? existingConfig
+          : {
+              ...existingConfig,
+              color: unifiedConfig.colors.series[index % unifiedConfig.colors.series.length],
+            };
+      });
+    }
+
+    // 注意：饼图和径向图的颜色数组通过activeColors.series直接传递给组件
+    // 不需要添加到activeConfig中，因为ChartConfig结构不支持这些属性
+
+    // 使用统一配置的选项
+    activeOptions = { ...props, ...unifiedConfig.options };
+  } else {
+    // 使用生成的颜色配置更新activeConfig
+    const dataKeys =
+      Array.isArray(data) && data.length > 0
+        ? Object.keys(data[0]).filter(key => key !== "name")
+        : [];
+
+    dataKeys.forEach((key, index) => {
+      const existingConfig = activeConfig[key] || {};
+      // Only set color if theme is not already defined (ChartConfig type constraint)
+      activeConfig[key] = existingConfig.theme
+        ? existingConfig
+        : {
+            ...existingConfig,
+            color: activeColors.series[index % activeColors.series.length],
+          };
+    });
+
+    // 注意：饼图和径向图的颜色数组通过activeColors.series直接传递给组件
+    // 不需要添加到activeConfig中，因为ChartConfig结构不支持这些属性
+  }
+
 
   // 验证数据兼容性
   const validation = validateChartTypeCompatibility(data, type);
-  console.log("🔍 [EnhancedChart] 数据验证结果:", validation);
 
   if (!validation.isValid) {
-    console.error("❌ [EnhancedChart] 数据验证失败，显示错误信息:", validation.errors);
     return (
       <div className={className}>
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/20">
@@ -206,48 +316,52 @@ export function EnhancedChart({
   }
 
   // 渲染对应的图表组件
-  console.log("🎨 [EnhancedChart] 开始渲染图表类型:", type);
   switch (type) {
     case "bar":
-      console.log("📊 [EnhancedChart] 渲染柱状图，数据:", data);
       return (
         <BeautifulBarChart
           data={data as StandardChartData}
           config={activeConfig}
           title={title}
           description={description}
+          barRadius={activeOptions.barRadius ?? barRadius}
+          showValueLabels={activeOptions.barShowValues ?? barShowValues}
+          showGrid={activeOptions.barShowGrid ?? barShowGrid}
+          colors={activeColors}
+          primaryColor={primaryColor}
         />
       );
 
     case "line":
-      console.log("📈 [EnhancedChart] 渲染折线图，数据:", data);
       return (
         <BeautifulLineChart
           data={data as StandardChartData}
           config={activeConfig}
           title={title}
           description={description}
+          curveType={activeOptions.lineCurveType ?? lineCurveType}
+          showDots={activeOptions.lineShowDots ?? lineShowDots}
+          dotSize={activeOptions.lineDotSize ?? lineDotSize}
+          dotVariant={activeOptions.lineDotVariant ?? lineDotVariant}
+          showGrid={activeOptions.lineShowGrid ?? lineShowGrid}
+          colors={activeColors}
+          primaryColor={primaryColor}
         />
       );
 
     case "pie":
-      console.log("🥧 [EnhancedChart] 处理饼图数据转换...");
       // 数据格式转换处理
       let pieData: PieChartData;
       if (Array.isArray(data) && data.length > 0) {
         const firstItem = data[0];
         if ("name" in firstItem && "value" in firstItem) {
           // 已经是饼图格式
-          console.log("✅ [EnhancedChart] 数据已是饼图格式:", data);
           pieData = data as PieChartData;
         } else {
           // 转换标准数据为饼图格式
-          console.log("🔄 [EnhancedChart] 转换标准数据为饼图格式，原始数据:", data);
           pieData = transformToPieData(data as StandardChartData);
-          console.log("✅ [EnhancedChart] 转换完成，饼图数据:", pieData);
         }
       } else {
-        console.warn("⚠️ [EnhancedChart] 饼图数据为空或无效:", data);
         pieData = [];
       }
 
@@ -257,28 +371,84 @@ export function EnhancedChart({
           config={activeConfig}
           title={title}
           description={description}
-          showPercentage={showPercentage}
-          showLegend={showLegend}
-          innerRadius={innerRadius}
-          outerRadius={outerRadius}
+          showPercentage={activeOptions.showPercentage ?? showPercentage}
+          showLegend={activeOptions.showLegend ?? showLegend}
+          innerRadius={activeOptions.innerRadius ?? innerRadius}
+          outerRadius={activeOptions.outerRadius ?? outerRadius}
+          colors={activeColors}
+          primaryColor={primaryColor}
+        />
+      );
+
+    case "radial":
+      let radialData: RadialChartData;
+      if (Array.isArray(data) && data.length > 0) {
+        const firstItem = data[0];
+        if ("name" in firstItem && "value" in firstItem) {
+          radialData = data as RadialChartData;
+        } else {
+          radialData = transformToPieData(data as StandardChartData) as RadialChartData;
+        }
+      } else {
+        radialData = [];
+      }
+
+      return (
+        <BeautifulRadialChart
+          data={radialData}
+          config={activeConfig}
+          title={title}
+          description={description}
+          innerRadius={activeOptions.radialInnerRadius ?? radialInnerRadius ?? innerRadius}
+          outerRadius={activeOptions.radialOuterRadius ?? radialOuterRadius ?? outerRadius}
+          barSize={activeOptions.radialBarSize ?? radialBarSize}
+          cornerRadius={activeOptions.radialCornerRadius ?? radialCornerRadius}
+          startAngle={activeOptions.radialStartAngle ?? radialStartAngle}
+          endAngle={activeOptions.radialEndAngle ?? radialEndAngle}
+          showLegend={activeOptions.showLegend ?? showLegend}
+          showBackground={activeOptions.radialShowBackground ?? radialShowBackground}
+          showLabels={activeOptions.radialShowLabels ?? radialShowLabels}
+          colors={activeColors}
+          primaryColor={primaryColor}
         />
       );
 
     case "area":
-      console.log("🌄 [EnhancedChart] 渲染面积图，数据:", data);
       return (
         <BeautifulAreaChart
           data={data as StandardChartData}
           config={activeConfig}
           title={title}
           description={description}
-          stacked={stacked}
-          fillOpacity={fillOpacity}
+          stacked={activeOptions.stacked ?? stacked}
+          fillOpacity={activeOptions.areaFillOpacity ?? activeOptions.fillOpacity ?? fillOpacity}
+          useGradient={activeOptions.areaUseGradient ?? areaUseGradient}
+          showGrid={activeOptions.areaShowGrid ?? areaShowGrid}
+          colors={activeColors}
+          primaryColor={primaryColor}
+        />
+      );
+
+    case "radar":
+      return (
+        <BeautifulRadarChart
+          data={data as StandardChartData}
+          config={activeConfig}
+          title={title}
+          description={description}
+          showGrid={activeOptions.radarShowGrid ?? radarShowGrid}
+          showLegend={activeOptions.radarShowLegend ?? radarShowLegend}
+          showDots={activeOptions.radarShowDots ?? radarShowDots}
+          showArea={activeOptions.radarShowArea ?? radarShowArea}
+          fillOpacity={activeOptions.radarFillOpacity ?? radarFillOpacity}
+          strokeWidth={activeOptions.radarStrokeWidth ?? radarStrokeWidth}
+          maxValue={activeOptions.radarMaxValue ?? radarMaxValue}
+          colors={activeColors}
+          primaryColor={primaryColor}
         />
       );
 
     default:
-      console.error("❌ [EnhancedChart] 不支持的图表类型:", type);
       return (
         <div className="bg-muted rounded-lg border p-4">
           <p className="text-muted-foreground text-sm">不支持的图表类型: {type}</p>

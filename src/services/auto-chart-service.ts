@@ -2,19 +2,15 @@
 
 import { ChartResultContent, ProcessingFlow, ProcessingStep, ChartType, ChartTheme } from "@/types";
 import { PROCESSING_STEPS } from "@/constants/processing";
+import { CHART_TYPES, CHART_TYPE_LABELS } from "@/constants/chart";
 import { AutoExportService } from "./auto-export-service";
 import { LocalStorageService } from "./local-storage-service";
 import { createRoot } from "react-dom/client";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
 import { aiDirector, ChartGenerationRequest } from "@/lib/ai-agents";
-import { ChartThemeProvider } from "@/contexts/chart-theme-context";
-import {
-  createChartTheme,
-  DEFAULT_CHART_BASE_COLOR,
-  mapSeriesKeysToColors,
-} from "@/lib/colors";
-import { SecurityVerificationPayload } from "@/types/security";
-import { getClientTurnstileToken } from "@/lib/security-context";
+import { createChartTheme, DEFAULT_CHART_BASE_COLOR, mapSeriesKeysToColors } from "@/lib/colors";
+
+const { BAR, LINE, PIE, AREA, RADAR, RADIAL } = CHART_TYPES;
 
 /**
  * 自动图表生成服务
@@ -35,13 +31,12 @@ export class AutoChartService {
   async processUserInput(
     input: string,
     files?: File[],
-    onStepUpdate?: (flow: ProcessingFlow) => void,
-    security?: SecurityVerificationPayload
+    onStepUpdate?: (flow: ProcessingFlow) => void
   ): Promise<{
     processingFlow: ProcessingFlow;
     chartResult: ChartResultContent;
   }> {
-    console.log("🚀 [AutoChart] 开始处理用户输入:", { input, fileCount: files?.length || 0 });
+    console.log("🚀 [AutoChart] Processing user input:", { input, fileCount: files?.length || 0 });
 
     // 1. 创建处理流程
     const processingFlow = this.createProcessingFlow();
@@ -52,8 +47,7 @@ export class AutoChartService {
         input,
         files,
         processingFlow,
-        onStepUpdate,
-        security
+        onStepUpdate
       );
 
       // 3. 生成图表并导出
@@ -68,11 +62,14 @@ export class AutoChartService {
       // 最后一次更新
       onStepUpdate?.(processingFlow);
 
-      console.log("✅ [AutoChart] 处理完成");
+      console.log("✅ [AutoChart] Processing finished");
       return { processingFlow, chartResult };
     } catch (error) {
-      console.error("❌ [AutoChart] 处理失败:", error);
-      this.failProcessingFlow(processingFlow, error instanceof Error ? error.message : "未知错误");
+      console.error("❌ [AutoChart] Processing failed:", error);
+      this.failProcessingFlow(
+        processingFlow,
+        error instanceof Error ? error.message : "Unknown error"
+      );
       throw error;
     }
   }
@@ -101,14 +98,13 @@ export class AutoChartService {
     input: string,
     files: File[] | undefined,
     flow: ProcessingFlow,
-    onStepUpdate?: (flow: ProcessingFlow) => void,
-    security?: SecurityVerificationPayload
+    onStepUpdate?: (flow: ProcessingFlow) => void
   ): Promise<any> {
     // 步骤1: AI思考分析
     const thinkingStep = this.addProcessingStep(flow, {
       type: PROCESSING_STEPS.THINKING,
-      title: "分析用户需求",
-      description: "正在理解您的数据和图表需求...",
+      title: "Analyze user needs",
+      description: "Reviewing your data and chart requirements...",
       status: "running",
       startTime: new Date(),
       progress: 0,
@@ -117,10 +113,14 @@ export class AutoChartService {
     await this.simulateStepProgress(thinkingStep, 1000);
     this.completeStep(thinkingStep, {
       reasoning: files?.length
-        ? "用户上传了数据文件，需要解析文件内容并根据数据特征选择合适的图表类型"
-        : "用户提供了文本描述，需要根据描述生成模拟数据并创建相应的图表",
-      considerations: ["分析数据结构和类型", "确定最适合的可视化方式", "考虑用户的具体需求"],
-      conclusion: "开始调用AI系统进行智能分析",
+        ? "Uploaded files detected; parsing contents and matching data patterns to chart types"
+        : "Received a text prompt; preparing synthetic data and selecting a matching chart",
+      considerations: [
+        "Inspect data structure and value types",
+        "Match the best visualization technique",
+        "Align with the stated business question",
+      ],
+      conclusion: "Triggering AI agents for deeper analysis",
     });
     // 实时更新UI
     onStepUpdate?.(flow);
@@ -130,8 +130,8 @@ export class AutoChartService {
     if (files && files.length > 0) {
       const parsingStep = this.addProcessingStep(flow, {
         type: PROCESSING_STEPS.FILE_PARSING,
-        title: "解析数据文件",
-        description: `正在解析 ${files[0].name}...`,
+        title: "Parse uploaded file",
+        description: `Parsing ${files[0].name}...`,
         status: "running",
         startTime: new Date(),
         progress: 0,
@@ -153,15 +153,15 @@ export class AutoChartService {
     // 步骤3: AI图表生成（整合了数据分析、图表类型检测、图表生成）
     const generationStep = this.addProcessingStep(flow, {
       type: PROCESSING_STEPS.CHART_GENERATION,
-      title: "AI 智能生成图表",
-      description: "正在使用人工智能分析数据并生成图表...",
+      title: "AI chart generation",
+      description: "Using AI to analyze data and build the chart...",
       status: "running",
       startTime: new Date(),
       progress: 0,
     });
 
     // 调用服务端API进行AI处理
-    console.log("🤖 [AutoChartService] 调用服务端API进行AI处理");
+    console.log("🤖 [AutoChartService] Calling server API for AI processing");
 
     try {
       // 准备请求数据
@@ -176,10 +176,6 @@ export class AutoChartService {
       };
 
       // 调用服务端API
-      const latestToken = getClientTurnstileToken();
-      const resolvedSecurity =
-        security ?? (latestToken ? { turnstileToken: latestToken } : undefined);
-
       const response = await fetch("/api/chart/generate", {
         method: "POST",
         headers: {
@@ -187,7 +183,6 @@ export class AutoChartService {
         },
         body: JSON.stringify({
           ...requestData,
-          security: resolvedSecurity,
         }),
       });
 
@@ -199,12 +194,12 @@ export class AutoChartService {
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || "AI图表生成失败");
+        throw new Error(result.error || "AI chart generation failed");
       }
 
       const aiResult = result.chartResult;
 
-      console.log("✅ [AutoChartService] AI 图表生成成功:", {
+      console.log("✅ [AutoChartService] AI chart generation succeeded:", {
         chartType: aiResult.chartType,
         dataCount: aiResult.chartData?.length || 0,
         title: aiResult.title,
@@ -214,7 +209,7 @@ export class AutoChartService {
         chartType: aiResult.chartType,
         dataCount: aiResult.chartData?.length || 0,
         title: aiResult.title,
-        reasoning: "通过服务端AI处理",
+        reasoning: "Generated via server-side AI processing",
         aiProcessingTime: 2000,
       });
       // 实时更新UI
@@ -231,11 +226,11 @@ export class AutoChartService {
         description: aiResult.description,
       };
     } catch (error) {
-      console.error("❌ [AutoChartService] AI 图表生成失败:", error);
+      console.error("❌ [AutoChartService] AI chart generation failed:", error);
 
       // AI 失败时的降级方案
       generationStep.status = "error";
-      generationStep.error = error instanceof Error ? error.message : "AI处理失败";
+      generationStep.error = error instanceof Error ? error.message : "AI processing failed";
 
       // 使用模拟数据作为降级
       const fallbackData = this.generateFallbackChart(input);
@@ -248,7 +243,7 @@ export class AutoChartService {
         chartConfig: fallbackData.config,
         theme: fallbackData.theme,
         title: fallbackData.title,
-        description: "AI处理失败，使用模拟数据生成图表",
+        description: "AI processing failed; generated chart with sample data",
         isFallback: true,
       };
     }
@@ -265,8 +260,8 @@ export class AutoChartService {
     // 步骤5: 图表生成
     const generationStep = this.addProcessingStep(flow, {
       type: PROCESSING_STEPS.CHART_GENERATION,
-      title: "生成图表",
-      description: "正在创建图表组件...",
+      title: "Render chart",
+      description: "Assembling the chart component...",
       status: "running",
       startTime: new Date(),
       progress: 0,
@@ -296,8 +291,8 @@ export class AutoChartService {
     // 步骤6: 图片导出
     const exportStep = this.addProcessingStep(flow, {
       type: PROCESSING_STEPS.IMAGE_EXPORT,
-      title: "导出图片",
-      description: "正在生成高清图片...",
+      title: "Export image",
+      description: "Rendering a high-resolution image...",
       status: "running",
       startTime: new Date(),
       progress: 0,
@@ -330,7 +325,7 @@ export class AutoChartService {
       chartConfig,
       chartType: processedData.chartType,
       title: processedData.title,
-      description: `基于${processedData.files?.length ? "上传数据" : "用户需求"}生成的${this.getChartTypeLabel(processedData.chartType)}`,
+      description: `Generated from ${processedData.files?.length ? "uploaded data" : "user requirements"} as a ${this.getChartTypeLabel(processedData.chartType)}`,
       imageInfo,
       theme,
     };
@@ -410,12 +405,14 @@ export class AutoChartService {
         import("react").then(React => {
           const root = createRoot(chartDiv);
           const { theme, ...restProps } = chartProps;
-          const element = React.createElement(ChartThemeProvider, {
-            chartType: restProps.type,
-            chartData: restProps.data,
-            chartConfig: restProps.config,
-            theme,
-            children: React.createElement(EnhancedChart, restProps),
+
+          // 从theme中提取primaryColor用于新架构
+          const primaryColor = theme?.baseColor || DEFAULT_CHART_BASE_COLOR;
+
+          // 直接创建EnhancedChart，传递primaryColor
+          const element = React.createElement(EnhancedChart, {
+            ...restProps,
+            primaryColor,
           });
 
           root.render(element);
@@ -513,31 +510,47 @@ export class AutoChartService {
     title: string;
     theme: ChartTheme;
   } {
-    console.log("🔄 [AutoChartService] 使用降级方案生成图表");
+    console.log("🔄 [AutoChartService] Generating chart with fallback data");
 
     // 简单的关键词匹配来确定图表类型
     const lowerInput = input.toLowerCase();
-    let chartType: ChartType = "bar"; // 默认
+    let chartType: ChartType = BAR; // 默认
 
     if (
+      lowerInput.includes("雷达") ||
+      lowerInput.includes("radar") ||
+      lowerInput.includes("spider") ||
+      lowerInput.includes("polar")
+    ) {
+      chartType = RADAR;
+    } else if (
+      lowerInput.includes("径向") ||
+      lowerInput.includes("环形") ||
+      lowerInput.includes("gauge") ||
+      lowerInput.includes("radial") ||
+      lowerInput.includes("progress ring")
+    ) {
+      chartType = RADIAL;
+    } else if (
       lowerInput.includes("饼图") ||
       lowerInput.includes("饼状图") ||
-      lowerInput.includes("pie")
+      lowerInput.includes("pie") ||
+      lowerInput.includes("donut")
     ) {
-      chartType = "pie";
+      chartType = PIE;
     } else if (
       lowerInput.includes("折线图") ||
       lowerInput.includes("线图") ||
       lowerInput.includes("line")
     ) {
-      chartType = "line";
+      chartType = LINE;
     } else if (lowerInput.includes("面积图") || lowerInput.includes("area")) {
-      chartType = "area";
+      chartType = AREA;
     }
 
     const data = this.generateMockDataByType(chartType);
     const { config, theme } = this.generateChartConfig(data);
-    const title = `${this.getChartTypeLabel(chartType)} - ${lowerInput.includes("excel") || lowerInput.includes("数据") ? "数据分析" : "示例图表"}`;
+    const title = `${this.getChartTypeLabel(chartType)} - ${lowerInput.includes("excel") || lowerInput.includes("数据") ? "Data analysis" : "Sample chart"}`;
 
     return { data, chartType, config, title, theme };
   }
@@ -547,35 +560,51 @@ export class AutoChartService {
    */
   private generateMockDataByType(chartType: ChartType): any[] {
     switch (chartType) {
-      case "pie":
+      case PIE:
         return [
-          { name: "移动端", value: 45 },
-          { name: "PC端", value: 30 },
-          { name: "平板", value: 15 },
-          { name: "其他", value: 10 },
+          { name: "Mobile", value: 45 },
+          { name: "Desktop", value: 30 },
+          { name: "Tablet", value: 15 },
+          { name: "Other", value: 10 },
         ];
-      case "line":
+      case RADIAL:
         return [
-          { name: "一月", 销售额: 4000, 利润: 2400 },
-          { name: "二月", 销售额: 3000, 利润: 1398 },
-          { name: "三月", 销售额: 2000, 利润: 9800 },
-          { name: "四月", 销售额: 2780, 利润: 3908 },
-          { name: "五月", 销售额: 1890, 利润: 4800 },
-          { name: "六月", 销售额: 2390, 利润: 3800 },
+          { name: "North", value: 68 },
+          { name: "South", value: 54 },
+          { name: "East", value: 72 },
+          { name: "West", value: 60 },
         ];
-      case "area":
+      case LINE:
         return [
-          { name: "Q1", 市场部: 100, 开发部: 150, 运营部: 80 },
-          { name: "Q2", 市场部: 120, 开发部: 180, 运营部: 95 },
-          { name: "Q3", 市场部: 140, 开发部: 200, 运营部: 110 },
-          { name: "Q4", 市场部: 160, 开发部: 220, 运营部: 125 },
+          { name: "January", sales: 4000, profit: 2400 },
+          { name: "February", sales: 3000, profit: 1398 },
+          { name: "March", sales: 2000, profit: 9800 },
+          { name: "April", sales: 2780, profit: 3908 },
+          { name: "May", sales: 1890, profit: 4800 },
+          { name: "June", sales: 2390, profit: 3800 },
         ];
-      default: // bar
+      case AREA:
         return [
-          { name: "产品A", 销售额: 1200, 目标: 1000 },
-          { name: "产品B", 销售额: 800, 目标: 900 },
-          { name: "产品C", 销售额: 1500, 目标: 1200 },
-          { name: "产品D", 销售额: 600, 目标: 700 },
+          { name: "Q1", marketing: 100, engineering: 150, operations: 80 },
+          { name: "Q2", marketing: 120, engineering: 180, operations: 95 },
+          { name: "Q3", marketing: 140, engineering: 200, operations: 110 },
+          { name: "Q4", marketing: 160, engineering: 220, operations: 125 },
+        ];
+      case RADAR:
+        return [
+          { dimension: "Quality", productA: 78, productB: 69, productC: 85 },
+          { dimension: "Speed", productA: 85, productB: 82, productC: 80 },
+          { dimension: "Reliability", productA: 92, productB: 76, productC: 88 },
+          { dimension: "Usability", productA: 74, productB: 90, productC: 79 },
+          { dimension: "Support", productA: 88, productB: 72, productC: 83 },
+        ];
+      case BAR:
+      default:
+        return [
+          { name: "Product A", revenue: 1200, target: 1000 },
+          { name: "Product B", revenue: 800, target: 900 },
+          { name: "Product C", revenue: 1500, target: 1200 },
+          { name: "Product D", revenue: 600, target: 700 },
         ];
     }
   }
@@ -594,14 +623,19 @@ export class AutoChartService {
 
     const seriesKeys = numericKeys.length > 0 ? numericKeys : candidateKeys;
     const effectiveKeys = seriesKeys.length > 0 ? seriesKeys : ["value"];
-    const theme = createChartTheme(baseColor || DEFAULT_CHART_BASE_COLOR, Math.max(effectiveKeys.length, 1));
+    const theme = createChartTheme(
+      baseColor || DEFAULT_CHART_BASE_COLOR,
+      Math.max(effectiveKeys.length, 1)
+    );
     const colorMap = mapSeriesKeysToColors(effectiveKeys, theme.palette);
 
     const config = effectiveKeys.reduce<Record<string, any>>((acc, key, index) => {
       acc[key] = {
         label: key,
         color:
-          colorMap[key] || theme.palette.series[index % theme.palette.series.length] || theme.palette.primary,
+          colorMap[key] ||
+          theme.palette.series[index % theme.palette.series.length] ||
+          theme.palette.primary,
       };
       return acc;
     }, {});
@@ -610,12 +644,7 @@ export class AutoChartService {
   }
 
   private getChartTypeLabel(chartType: string): string {
-    const labels: Record<string, string> = {
-      bar: "柱状图",
-      line: "折线图",
-      area: "面积图",
-      pie: "饼图",
-    };
-    return labels[chartType] || chartType;
+    const normalizedType = chartType as ChartType;
+    return CHART_TYPE_LABELS[normalizedType]?.en ?? chartType;
   }
 }

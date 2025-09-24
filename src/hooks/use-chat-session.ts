@@ -154,49 +154,37 @@ export function useChatSession() {
   const updateChartResultMessage = useCallback((updatedChart: ChartResultContent) => {
     console.log("📝 [ChatSession] 收到图表消息更新请求:", {
       title: updatedChart.title,
-      chartType: updatedChart.chartType,
       hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl,
-      imageUrl: updatedChart.imageInfo?.localBlobUrl?.substring(0, 50) + "..."
     });
 
     setSession(prev => {
-      console.log("🔍 [ChatSession] 当前所有消息:", prev.messages.map(msg => ({
-        id: msg.id,
-        type: msg.type,
-        title: msg.type === MESSAGE_TYPES.CHART_RESULT ? msg.content.title : '非图表消息',
-        chartType: msg.type === MESSAGE_TYPES.CHART_RESULT ? msg.content.chartType : '非图表消息'
-      })));
-      
+
+      // 🚨 修复：只更新最新的图表消息，而不是基于title+chartType匹配
+      // 这样可以避免旧图表数据覆盖新图表数据的问题
+      const chartMessages = prev.messages.filter(msg => msg.type === MESSAGE_TYPES.CHART_RESULT);
+      const latestChartMessage = chartMessages[chartMessages.length - 1]; // 获取最新的图表消息
+
+
       const updatedMessages = prev.messages.map(msg => {
-        if (msg.type === MESSAGE_TYPES.CHART_RESULT) {
-          console.log("🔍 [ChatSession] 检查图表消息匹配:", {
-            messageTitle: msg.content.title,
-            updateTitle: updatedChart.title,
-            messageChartType: msg.content.chartType,
-            updateChartType: updatedChart.chartType,
-            titleMatch: msg.content.title === updatedChart.title,
-            chartTypeMatch: msg.content.chartType === updatedChart.chartType
-          });
-          
-          if (msg.content.title === updatedChart.title &&
-              msg.content.chartType === updatedChart.chartType) {
-            console.log("✅ [ChatSession] 找到匹配的图表消息，正在更新");
-            return {
-              ...msg,
-              content: updatedChart,
-              timestamp: new Date(),
-            };
-          }
+        if (msg.type === MESSAGE_TYPES.CHART_RESULT && msg.id === latestChartMessage?.id) {
+
+          return {
+            ...msg,
+            content: updatedChart,
+            timestamp: new Date(),
+          };
         }
         return msg;
       });
-      
-      const hasUpdated = updatedMessages.some((msg, index) => 
-        msg !== prev.messages[index] && msg.type === MESSAGE_TYPES.CHART_RESULT
-      );
-      
+
+      const hasUpdated =
+        latestChartMessage &&
+        updatedMessages.some(
+          (msg, index) => msg !== prev.messages[index] && msg.type === MESSAGE_TYPES.CHART_RESULT
+        );
+
       if (!hasUpdated) {
-        console.warn("⚠️ [ChatSession] 没有找到匹配的图表消息进行更新");
+        console.warn("⚠️🐛 [ChatSession] 没有找到最新图表消息进行更新，或没有图表消息");
       }
 
       return {
@@ -288,16 +276,16 @@ export function useChatSession() {
    */
   const generateAndUpdateTitle = useCallback(async () => {
     console.log("🏷️ [ChatSession] 生成会话标题");
-    
+
     try {
       const newTitle = await generateSessionTitle(session);
-      
+
       setSession(prev => ({
         ...prev,
         title: newTitle,
         lastActivity: new Date(),
       }));
-      
+
       console.log(`✅ [ChatSession] 标题生成成功: "${newTitle}"`);
       return newTitle;
     } catch (error) {
@@ -309,42 +297,45 @@ export function useChatSession() {
   /**
    * 导出会话数据
    */
-  const exportSession = useCallback(async (options?: {
-    includeFiles?: boolean;
-    includeCharts?: boolean;
-    format?: 'json' | 'compressed';
-  }) => {
-    console.log("📤 [ChatSession] 导出会话数据:", session.id);
-    
-    try {
-      const exportResult = await exportSessionData(session, options);
-      return {
-        success: true,
-        data: exportResult.sessionData,
-        size: exportResult.exportSize,
-      };
-    } catch (error) {
-      console.error("❌ [ChatSession] 会话导出失败:", error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : "未知错误",
-      };
-    }
-  }, [session]);
+  const exportSession = useCallback(
+    async (options?: {
+      includeFiles?: boolean;
+      includeCharts?: boolean;
+      format?: "json" | "compressed";
+    }) => {
+      console.log("📤 [ChatSession] 导出会话数据:", session.id);
+
+      try {
+        const exportResult = await exportSessionData(session, options);
+        return {
+          success: true,
+          data: exportResult.sessionData,
+          size: exportResult.exportSize,
+        };
+      } catch (error) {
+        console.error("❌ [ChatSession] 会话导出失败:", error);
+        return {
+          success: false,
+          error: error instanceof Error ? error.message : "Unknown error",
+        };
+      }
+    },
+    [session]
+  );
 
   /**
    * 从导出数据恢复会话
    */
   const loadFromExportData = useCallback(async (exportData: SerializableChatSession) => {
     console.log("📥 [ChatSession] 从导出数据恢复会话:", exportData.id);
-    
+
     try {
       const restoredSession = await deserializeSession(exportData);
       setSession({
         ...restoredSession,
         lastActivity: new Date(),
       });
-      
+
       console.log("✅ [ChatSession] 会话恢复成功");
       return true;
     } catch (error) {
@@ -358,9 +349,9 @@ export function useChatSession() {
    */
   const saveSessionToStorage = useCallback(async () => {
     if (!autoSaveEnabled) return;
-    
+
     console.log("💾 [ChatSession] 保存会话到存储:", session.id);
-    
+
     try {
       const storageService = getSessionStorageService();
       if (storageService) {
@@ -379,7 +370,7 @@ export function useChatSession() {
    */
   const loadSessionFromStorage = useCallback(async (sessionId: string) => {
     console.log("📖 [ChatSession] 从存储加载会话:", sessionId);
-    
+
     try {
       const storageService = getSessionStorageService();
       if (!storageService) {
@@ -409,40 +400,40 @@ export function useChatSession() {
    */
   const handleAutoTrigger = useCallback(async () => {
     console.log("⚡ [ChatSession] 检查自动触发");
-    
+
     try {
       const result = await autoTriggerHandler.checkPendingSessions();
-      
+
       if (result.sessionRestored && result.restoredSession) {
         // 恢复会话
         setSession({
           ...result.restoredSession,
           lastActivity: new Date(),
         });
-        
+
         if (result.triggerExecuted && result.restoredSession._autoTrigger?.enabled) {
           // 执行自动AI处理
-          const processingId = addProcessingMessage("正在处理您的请求...");
-          
+          const processingId = addProcessingMessage("Processing your request...");
+
           // 用于捕获图表结果的变量
           let generatedChartResult: ChartResultContent | null = null;
-          
+
           const success = await autoTriggerHandler.executeAutoProcessing(
             result.restoredSession,
             processingId,
             (messageId, updates) => updateProcessingMessage(messageId, updates),
-            (chartResult) => {
+            chartResult => {
               addChartResultMessage(chartResult);
               generatedChartResult = chartResult; // 捕获图表结果
               console.log("📊 [ChatSession] 自动触发生成图表:", chartResult.title);
             }
           );
-          
+
           if (success) {
             console.log("✅ [ChatSession] 自动触发执行成功");
             // 生成会话标题
             await generateAndUpdateTitle();
-            
+
             // 返回包含图表结果的结果
             return {
               ...result,
@@ -453,7 +444,7 @@ export function useChatSession() {
           }
         }
       }
-      
+
       return result;
     } catch (error) {
       console.error("❌ [ChatSession] 自动触发处理失败:", error);
@@ -461,10 +452,15 @@ export function useChatSession() {
         success: false,
         sessionRestored: false,
         triggerExecuted: false,
-        error: error instanceof Error ? error.message : "未知错误",
+        error: error instanceof Error ? error.message : "Unknown error",
       };
     }
-  }, [addProcessingMessage, updateProcessingMessage, addChartResultMessage, generateAndUpdateTitle]);
+  }, [
+    addProcessingMessage,
+    updateProcessingMessage,
+    addChartResultMessage,
+    generateAndUpdateTitle,
+  ]);
 
   /**
    * 开始Demo重放
@@ -474,35 +470,31 @@ export function useChatSession() {
       console.warn("⚠️ [ChatSession] 当前会话未配置Demo重放");
       return false;
     }
-    
+
     console.log("🎬 [ChatSession] 开始Demo重放");
-    
+
     try {
-      await autoTriggerHandler.startDemoReplay(
-        session.id,
-        session._demoReplay,
-        {
-          onStepUpdate: (step, stepIndex) => {
-            console.log(`🎬 [ChatSession] Demo步骤 ${stepIndex + 1}: ${step.type}`);
-            
-            // 根据步骤类型执行相应操作
-            switch (step.type) {
-              case 'add_processing_message':
-                addProcessingMessage(step.data.title);
-                break;
-              case 'add_chart_result':
-                addChartResultMessage(step.data);
-                break;
-              default:
-                console.log(`🎬 [ChatSession] Demo步骤数据:`, step.data);
-            }
-          },
-          onComplete: () => {
-            console.log("🎉 [ChatSession] Demo重放完成");
-          },
-        }
-      );
-      
+      await autoTriggerHandler.startDemoReplay(session.id, session._demoReplay, {
+        onStepUpdate: (step, stepIndex) => {
+          console.log(`🎬 [ChatSession] Demo步骤 ${stepIndex + 1}: ${step.type}`);
+
+          // 根据步骤类型执行相应操作
+          switch (step.type) {
+            case "add_processing_message":
+              addProcessingMessage(step.data.title);
+              break;
+            case "add_chart_result":
+              addChartResultMessage(step.data);
+              break;
+            default:
+              console.log(`🎬 [ChatSession] Demo步骤数据:`, step.data);
+          }
+        },
+        onComplete: () => {
+          console.log("🎉 [ChatSession] Demo重放完成");
+        },
+      });
+
       return true;
     } catch (error) {
       console.error("❌ [ChatSession] Demo重放失败:", error);
@@ -513,28 +505,31 @@ export function useChatSession() {
   /**
    * 创建新会话
    */
-  const createNewSession = useCallback((options?: {
-    source?: SingleChatSession['source'];
-    autoTrigger?: AutoTriggerConfig;
-    demoReplay?: DemoReplayConfig;
-  }) => {
-    const newSession: SingleChatSession = {
-      id: uuidv4(),
-      title: undefined,
-      messages: [],
-      createdAt: new Date(),
-      lastActivity: new Date(),
-      version: "1.0",
-      source: options?.source || "dashboard",
-      _autoTrigger: options?.autoTrigger,
-      _demoReplay: options?.demoReplay,
-    };
-    
-    setSession(newSession);
-    console.log("✨ [ChatSession] 创建新会话:", newSession.id);
-    
-    return newSession.id;
-  }, []);
+  const createNewSession = useCallback(
+    (options?: {
+      source?: SingleChatSession["source"];
+      autoTrigger?: AutoTriggerConfig;
+      demoReplay?: DemoReplayConfig;
+    }) => {
+      const newSession: SingleChatSession = {
+        id: uuidv4(),
+        title: undefined,
+        messages: [],
+        createdAt: new Date(),
+        lastActivity: new Date(),
+        version: "1.0",
+        source: options?.source || "dashboard",
+        _autoTrigger: options?.autoTrigger,
+        _demoReplay: options?.demoReplay,
+      };
+
+      setSession(newSession);
+      console.log("✨ [ChatSession] 创建新会话:", newSession.id);
+
+      return newSession.id;
+    },
+    []
+  );
 
   /**
    * 更新会话配置
@@ -553,7 +548,7 @@ export function useChatSession() {
       const timeoutId = setTimeout(() => {
         saveSessionToStorage();
       }, 1000); // 1秒延迟保存，避免频繁保存
-      
+
       return () => clearTimeout(timeoutId);
     }
   }, [session.messages, saveSessionToStorage, autoSaveEnabled]);
@@ -578,7 +573,7 @@ export function useChatSession() {
     clearMessages,
     setLoadingState,
     loadSessionFromData,
-    
+
     // 扩展功能
     generateAndUpdateTitle,
     exportSession,
@@ -589,7 +584,7 @@ export function useChatSession() {
     startDemoReplay,
     createNewSession,
     updateSessionConfig,
-    
+
     // 配置
     autoSaveEnabled,
     setAutoSaveEnabled,

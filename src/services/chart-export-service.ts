@@ -32,7 +32,7 @@ export type ExportResponse = ExportResult | ExportError;
 export interface ExportState {
   isExporting: boolean;
   progress: number; // 0-100
-  stage: 'idle' | 'preparing' | 'capturing' | 'processing' | 'completed' | 'error';
+  stage: "idle" | "preparing" | "capturing" | "processing" | "completed" | "error";
   error?: string;
 }
 
@@ -46,7 +46,7 @@ class ChartExportService {
    * @param filename 导出文件名
    */
   async exportChart(
-    element: HTMLElement, 
+    element: HTMLElement,
     chartId: string,
     filename?: string
   ): Promise<ExportResponse> {
@@ -54,42 +54,43 @@ class ChartExportService {
     if (this.isExporting(chartId)) {
       return {
         success: false,
-        error: "图表正在导出中",
-        details: "请等待当前导出完成",
-        retry: false
+        error: "Chart export is already in progress",
+        details: "Please wait for the current export to finish",
+        retry: false,
       };
     }
 
     // 生成文件名
-    const exportFilename = filename || this.generateFilename(chartId);
-    
+    const rawFilename = filename || this.generateFilename(chartId);
+    const exportFilename = this.withAutoChartBranding(rawFilename);
+
     try {
       // 初始化导出状态
       this.setExportState(chartId, {
         isExporting: true,
         progress: 0,
-        stage: 'preparing'
+        stage: "preparing",
       });
 
-      console.log("🎯 [ChartExport] 开始导出图表:", { chartId, filename: exportFilename });
+      console.log("🎯 [ChartExport] Begin exporting chart:", { chartId, filename: exportFilename });
 
       // 阶段1: 准备导出环境
       await this.prepareForExport(element);
-      this.updateProgress(chartId, 20, 'preparing');
+      this.updateProgress(chartId, 20, "preparing");
 
       // 阶段2: 执行截图
       const canvas = await this.captureElement(element);
-      this.updateProgress(chartId, 60, 'capturing');
+      this.updateProgress(chartId, 60, "capturing");
 
       // 阶段3: 处理图片
       const blob = await this.processCanvas(canvas);
-      this.updateProgress(chartId, 90, 'processing');
+      this.updateProgress(chartId, 90, "processing");
 
       // 阶段4: 生成结果
       const blobUrl = URL.createObjectURL(blob);
       const dimensions = this.getElementDimensions(element);
-      
-      this.updateProgress(chartId, 100, 'completed');
+
+      this.updateProgress(chartId, 100, "completed");
 
       const result: ExportResult = {
         success: true,
@@ -97,33 +98,47 @@ class ChartExportService {
         blob,
         filename: exportFilename,
         size: blob.size,
-        dimensions
+        dimensions,
       };
 
-      console.log("✅ [ChartExport] 导出完成:", {
+      console.log("✅ [ChartExport] Export completed:", {
         chartId,
         filename: exportFilename,
         size: blob.size,
-        url: blobUrl.substring(0, 50) + "..."
+        url: blobUrl.substring(0, 50) + "...",
       });
-      
-      return result;
 
+      return result;
     } catch (error) {
-      console.error("❌ [ChartExport] 导出失败:", { chartId, error });
-      
+      // 🚨 Enhanced error logging for debugging
+      console.error("❌ [ChartExport] Export failed:", {
+        chartId,
+        filename: exportFilename,
+        errorType: typeof error,
+        errorConstructor: error?.constructor?.name,
+        errorMessage: error instanceof Error ? error.message : String(error),
+        errorStack: error instanceof Error ? error.stack?.substring(0, 500) : undefined,
+        elementDimensions: element
+          ? {
+              width: element.offsetWidth,
+              height: element.offsetHeight,
+              hasStyle: !!element.style,
+            }
+          : null,
+      });
+
       this.setExportState(chartId, {
         isExporting: false,
         progress: 0,
-        stage: 'error',
-        error: error instanceof Error ? error.message : '未知错误'
+        stage: "error",
+        error: error instanceof Error ? error.message : "Unknown error",
       });
 
       return {
         success: false,
-        error: error instanceof Error ? error.message : '导出失败',
+        error: error instanceof Error ? error.message : "Export failed",
         details: error instanceof Error ? error.stack : undefined,
-        retry: true
+        retry: true,
       };
     } finally {
       // 清除导出状态
@@ -151,7 +166,7 @@ class ChartExportService {
    */
   cancelExport(chartId: string): void {
     this.clearExportState(chartId);
-    console.log("🚫 [ChartExport] 取消导出:", { chartId });
+    console.log("🚫 [ChartExport] Cancel export:", { chartId });
   }
 
   // ========== 私有方法 ==========
@@ -160,13 +175,13 @@ class ChartExportService {
     this.exportingCharts.set(chartId, state);
   }
 
-  private updateProgress(chartId: string, progress: number, stage: ExportState['stage']): void {
+  private updateProgress(chartId: string, progress: number, stage: ExportState["stage"]): void {
     const currentState = this.exportingCharts.get(chartId);
     if (currentState) {
       this.setExportState(chartId, {
         ...currentState,
         progress,
-        stage
+        stage,
       });
     }
   }
@@ -176,20 +191,36 @@ class ChartExportService {
   }
 
   private generateFilename(chartId: string): string {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    return `chart_${chartId}_${timestamp}.png`;
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+    return `chart_${chartId}_${timestamp}`;
+  }
+
+  private withAutoChartBranding(filename: string): string {
+    const baseName = (filename || "chart").toString().trim();
+    const sanitizedBase = baseName
+      .replace(/\.[^/.]+$/g, "")
+      .replace(/[^a-zA-Z0-9-_]+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+    const normalized = sanitizedBase.length > 0 ? sanitizedBase : "chart";
+    const prefixed = /^autochart[-_]?/i.test(normalized)
+      ? normalized.replace(/^autochart[-_]?/i, "AutoChart-")
+      : `AutoChart-${normalized}`;
+
+    return `${prefixed}.png`;
   }
 
   private async prepareForExport(element: HTMLElement): Promise<void> {
-    console.log("⏳ [ChartExport] 开始等待图表完全渲染...");
-    
+    console.log("⏳ [ChartExport] Waiting for chart to fully render...");
+
     // 智能等待SVG图表渲染完成
     await this.waitForSVGRendering(element);
-    
+
     // 确保所有字体和样式都已加载
     await document.fonts.ready;
-    
-    console.log("✅ [ChartExport] 图表渲染准备完成");
+
+    console.log("✅ [ChartExport] Chart render ready");
   }
 
   /**
@@ -197,30 +228,32 @@ class ChartExportService {
    * 检测Recharts SVG是否真正渲染完成，而不是简单等待固定时间
    */
   private async waitForSVGRendering(element: HTMLElement): Promise<void> {
-    const maxWaitTime = 10000; // 最大等待10秒
-    const checkInterval = 200; // 每200ms检查一次
+    const maxWaitTime = 5000; // 🔧 减少最大等待时间到5秒
+    const checkInterval = 100; // 🔧 增加检查频率到每100ms
     const startTime = Date.now();
-    
-    return new Promise((resolve) => {
+
+    return new Promise(resolve => {
       const checkRendering = () => {
         const elapsedTime = Date.now() - startTime;
-        
-        // 超时保护
+
+        // 查找SVG元素
+        const svgElements = element.querySelectorAll("svg");
+
+        // 🔧 超时保护 - 即使检查失败也继续导出
         if (elapsedTime >= maxWaitTime) {
-          console.warn("⚠️ [ChartExport] SVG渲染检测超时，继续执行导出");
+          console.warn(
+            "⚠️ [ChartExport] SVG rendering check timed out; proceeding with export anyway",
+            {
+              svgCount: svgElements.length,
+              containerSize: {
+                width: element.offsetWidth,
+                height: element.offsetHeight,
+              },
+            }
+          );
           resolve();
           return;
         }
-
-        // 查找SVG元素
-        const svgElements = element.querySelectorAll('svg');
-        console.log(`🔍 [ChartExport] 检查SVG渲染状态 (${elapsedTime}ms)`, {
-          svgCount: svgElements.length,
-          containerSize: {
-            width: element.offsetWidth,
-            height: element.offsetHeight
-          }
-        });
 
         if (svgElements.length === 0) {
           // 没有找到SVG，继续等待
@@ -235,11 +268,6 @@ class ChartExportService {
           const svgWidth = svgRect.width;
           const svgHeight = svgRect.height;
 
-          console.log(`📊 [ChartExport] SVG${index + 1} 状态:`, {
-            size: `${svgWidth}×${svgHeight}`,
-            hasValidSize: svgWidth > 0 && svgHeight > 0,
-          });
-
           // 检查SVG尺寸是否有效
           if (svgWidth <= 0 || svgHeight <= 0) {
             allSvgsReady = false;
@@ -247,46 +275,46 @@ class ChartExportService {
           }
 
           // 检查SVG内部是否有图表元素
-          const chartElements = svg.querySelectorAll('path, rect, circle, line, text');
-          console.log(`🎨 [ChartExport] SVG${index + 1} 图表元素:`, {
-            elementCount: chartElements.length,
-            hasChartContent: chartElements.length > 0
-          });
+          const chartElements = svg.querySelectorAll("path, rect, circle, line, text");
 
           if (chartElements.length === 0) {
             allSvgsReady = false;
             return;
           }
 
-          // 特别检查Recharts的关键元素
+          // 🔧 更宽松的Recharts检查：如果有基本图表元素就认为OK
+          // 不再强制要求特定的Recharts CSS类，因为这些类可能不总是存在
           const rechartsElements = svg.querySelectorAll(
-            '.recharts-wrapper, .recharts-surface, .recharts-pie, .recharts-bar, .recharts-line, .recharts-area'
+            ".recharts-wrapper, .recharts-surface, .recharts-pie, .recharts-bar, .recharts-line, .recharts-area"
           );
-          
-          console.log(`📈 [ChartExport] SVG${index + 1} Recharts元素:`, {
-            rechartsCount: rechartsElements.length,
-            hasRechartsContent: rechartsElements.length > 0
-          });
 
-          if (rechartsElements.length === 0) {
+          // 如果没有Recharts特定元素，但有基本图表元素，也认为是OK的
+          if (rechartsElements.length === 0 && chartElements.length < 3) {
+            console.log(
+              `⚠️ [ChartExport] SVG ${index} has no Recharts elements and few chart elements:`,
+              {
+                rechartsElements: rechartsElements.length,
+                chartElements: chartElements.length,
+              }
+            );
             allSvgsReady = false;
             return;
           }
         });
 
-        // 检查容器是否被SVG撑开
-        const containerHasValidSize = element.offsetWidth > 200 && element.offsetHeight > 150;
-        console.log(`📦 [ChartExport] 容器尺寸检查:`, {
-          size: `${element.offsetWidth}×${element.offsetHeight}`,
-          isValid: containerHasValidSize
-        });
+        // 🔧 更宽松的容器尺寸检查
+        const containerHasValidSize = element.offsetWidth > 100 && element.offsetHeight > 100;
 
         if (!containerHasValidSize) {
+          console.log(`⚠️ [ChartExport] Container size too small:`, {
+            width: element.offsetWidth,
+            height: element.offsetHeight,
+          });
           allSvgsReady = false;
         }
 
         if (allSvgsReady) {
-          console.log(`✅ [ChartExport] SVG渲染完成，总耗时: ${elapsedTime}ms`);
+          console.log(`✅ [ChartExport] SVG rendering finished after ${elapsedTime}ms`);
           // 额外等待一点时间确保样式完全应用
           setTimeout(() => resolve(), 300);
         } else {
@@ -303,15 +331,15 @@ class ChartExportService {
   private async captureElement(element: HTMLElement): Promise<HTMLCanvasElement> {
     // 动态导入 html2canvas-pro
     const html2canvas = await this.loadHtml2Canvas();
-    
+
     // 获取元素尺寸
     const dimensions = this.getElementDimensions(element);
-    
-    console.log("📐 [ChartExport] 截图尺寸:", dimensions);
-    
+
+    console.log("📐 [ChartExport] Capture dimensions:", dimensions);
+
     // 执行截图 - 针对Tailwind CSS + Shadcn/UI优化
     const canvas = await html2canvas(element, {
-      backgroundColor: "#ffffff",
+      backgroundColor: null,
       scale: 2,
       useCORS: true,
       allowTaint: true,
@@ -320,8 +348,17 @@ class ChartExportService {
       height: dimensions.height,
       // 基础修复：确保基本样式
       onclone: (clonedDoc: Document) => {
-        // 只添加基础样式，不进行复杂的样式修复
         this.addBasicStyles(clonedDoc);
+        // Aggressively force transparency over any theme styles
+        const styleEl = clonedDoc.createElement("style");
+        styleEl.textContent = `
+          /* Force all major elements in the capture to have a transparent background */
+          body, div, svg, .recharts-wrapper {
+            background-color: transparent !important;
+            background: transparent !important;
+          }
+        `;
+        clonedDoc.head.appendChild(styleEl);
       },
     });
 
@@ -335,7 +372,7 @@ class ChartExportService {
           if (blob) {
             resolve(blob);
           } else {
-            reject(new Error("Canvas 转换为 Blob 失败"));
+            reject(new Error("Failed to convert canvas to Blob"));
           }
         },
         "image/png",
@@ -347,7 +384,7 @@ class ChartExportService {
   private getElementDimensions(element: HTMLElement): { width: number; height: number } {
     const rect = element.getBoundingClientRect();
     const computedStyle = window.getComputedStyle(element);
-    
+
     const width = Math.max(
       rect.width,
       element.offsetWidth,
@@ -355,7 +392,7 @@ class ChartExportService {
       parseFloat(computedStyle.width) || 0,
       400 // 最小宽度
     );
-    
+
     const height = Math.max(
       rect.height,
       element.offsetHeight,
@@ -366,20 +403,19 @@ class ChartExportService {
 
     return {
       width: Math.ceil(width),
-      height: Math.ceil(height)
+      height: Math.ceil(height),
     };
   }
-
 
   /**
    * 添加基础样式到克隆文档
    * 简化的样式处理，专注于时序解决方案
    */
   private addBasicStyles(clonedDoc: Document): void {
-    console.log("🎨 [ChartExport] 添加基础样式");
+    console.log("🎨 [ChartExport] Injecting basic styles");
 
     // 添加基础样式重置
-    const styleEl = clonedDoc.createElement('style');
+    const styleEl = clonedDoc.createElement("style");
     styleEl.textContent = `
       * {
         box-sizing: border-box;
@@ -391,9 +427,9 @@ class ChartExportService {
         font-size: 14px;
         line-height: 1.5;
         color: #333;
-        background: white;
+        background: transparent;
       }
-      /* 确保SVG正确显示 */
+      /* Ensure SVG renders correctly */
       svg {
         display: block;
         max-width: 100%;
@@ -402,7 +438,7 @@ class ChartExportService {
     `;
     clonedDoc.head.appendChild(styleEl);
 
-    console.log("✅ [ChartExport] 基础样式添加完成");
+    console.log("✅ [ChartExport] Base styles applied");
   }
 
   private async loadHtml2Canvas(): Promise<any> {
@@ -410,7 +446,7 @@ class ChartExportService {
       const module = await import("html2canvas-pro");
       return module.default;
     } catch (error) {
-      throw new Error("图表导出库加载失败");
+      throw new Error("Failed to load chart export library");
     }
   }
 }

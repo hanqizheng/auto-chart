@@ -9,14 +9,38 @@ import {
   PieChartAnalysis,
   PIE_CHART_DEFAULTS,
 } from "./types";
-import { useChartTheme } from "@/contexts/chart-theme-context";
 import { cn } from "@/lib/utils";
 
 /**
  * 分析饼图数据分布
  */
 export function analyzePieChartData(data: PieChartData): PieChartAnalysis {
+  if (!Array.isArray(data) || data.length === 0) {
+    return {
+      total: 0,
+      largest: { name: "", value: 0, percentage: 0 },
+      smallest: { name: "", value: 0, percentage: 0 },
+      categoryCount: 0,
+      concentration: 0,
+      isHighlyConcentrated: false,
+    };
+  }
+
   const total = data.reduce((sum, item) => sum + item.value, 0);
+  if (total <= 0) {
+    return {
+      total: 0,
+      largest: { name: data[0].name, value: data[0].value, percentage: 0 },
+      smallest: {
+        name: data[data.length - 1].name,
+        value: data[data.length - 1].value,
+        percentage: 0,
+      },
+      categoryCount: data.length,
+      concentration: 0,
+      isHighlyConcentrated: false,
+    };
+  }
 
   // 按数值排序
   const sortedData = [...data].sort((a, b) => b.value - a.value);
@@ -129,6 +153,9 @@ export function validatePieChartData(data: PieChartData): PieChartValidationResu
  * 格式化百分比标签
  */
 const formatPercentageLabel = (entry: any, total: number): string => {
+  if (!total || total <= 0) {
+    return "0%";
+  }
   const percentage = ((entry.value / total) * 100).toFixed(1);
   return `${percentage}%`;
 };
@@ -147,8 +174,12 @@ export function BeautifulPieChart({
   showLegend = PIE_CHART_DEFAULTS.showLegend,
   innerRadius = PIE_CHART_DEFAULTS.innerRadius,
   outerRadius = PIE_CHART_DEFAULTS.outerRadius,
+  colors: providedColors,
+  primaryColor = "#22c55e",
 }: PieChartProps) {
-  const { pieSliceColors, palette } = useChartTheme();
+  // 直接使用传入的颜色配置
+  const finalColors = providedColors;
+
   const outerClasses = cn("flex h-full w-full flex-col", className);
 
   // 数据验证
@@ -157,7 +188,7 @@ export function BeautifulPieChart({
   if (!validation.isValid) {
     return (
       <div className={outerClasses}>
-        <h3 className="text-lg font-semibold mb-2 text-red-600">数据格式错误</h3>
+        <h3 className="mb-2 text-lg font-semibold text-red-600">数据格式错误</h3>
         <div className="space-y-1 text-red-600">
           {validation.errors.map((error, index) => (
             <p key={index} className="text-sm">
@@ -174,32 +205,63 @@ export function BeautifulPieChart({
     item => item && typeof item.value === "number" && !isNaN(item.value) && item.value > 0
   );
 
+  if (validData.length < 2) {
+    return (
+      <div className={outerClasses}>
+        {title && <h3 className="mb-2 text-lg font-semibold">{title}</h3>}
+        <div className="text-muted-foreground rounded-lg border border-dashed p-6 text-center text-sm">
+          Not enough non-zero categories to render a pie chart.
+        </div>
+      </div>
+    );
+  }
+
   // 分析数据
   const analysis = analyzePieChartData(validData);
+  const total =
+    analysis.total > 0 ? analysis.total : validData.reduce((sum, item) => sum + item.value, 0);
+
+  // 选择颜色调色板，优先使用config中的颜色配置
+  const colorPalette = (() => {
+    // 优先使用config中的colors数组（来自统一配置）
+    if (
+      (config as any)?.colors &&
+      Array.isArray((config as any).colors) &&
+      (config as any).colors.length > 0
+    ) {
+      return (config as any).colors;
+    }
+    // 其次使用finalColors.series
+    if (finalColors.series.length > 0) {
+      return finalColors.series;
+    }
+    // 最后使用primary颜色
+    return [finalColors.primary];
+  })();
 
   // 准备图表数据并分配颜色
   const chartData = validData.map((item, index) => ({
     ...item,
-    color: pieSliceColors[index % pieSliceColors.length] || palette.series[index % palette.series.length] || palette.primary,
+    color: colorPalette[index % colorPalette.length],
   }));
 
-  const effectiveOuterRadius = typeof outerRadius === "number" ? Math.min(outerRadius, 96) : outerRadius;
+  const effectiveOuterRadius =
+    typeof outerRadius === "number" ? Math.min(outerRadius, 96) : outerRadius;
 
   return (
     <div className={outerClasses}>
       {(title || description) && (
         <div className="mb-4">
-          {title && (
-            <h3 className="text-lg font-semibold mb-2">{title}</h3>
-          )}
-          {description && (
-            <p className="text-sm text-muted-foreground">{description}</p>
-          )}
+          {title && <h3 className="mb-2 text-lg font-semibold">{title}</h3>}
+          {description && <p className="text-muted-foreground text-sm">{description}</p>}
         </div>
       )}
 
       <div className="flex-1 py-2">
-        <ChartContainer config={config} className="!aspect-auto h-full w-full">
+        <ChartContainer
+          config={config}
+          className="mx-auto aspect-square min-h-[260px] w-full max-w-[360px]"
+        >
           <PieChart>
             <Pie
               data={chartData}
@@ -211,9 +273,7 @@ export function BeautifulPieChart({
               dataKey="value"
               startAngle={PIE_CHART_DEFAULTS.startAngle}
               endAngle={PIE_CHART_DEFAULTS.endAngle}
-              label={
-                showPercentage ? entry => formatPercentageLabel(entry, analysis.total) : undefined
-              }
+              label={showPercentage ? entry => formatPercentageLabel(entry, total) : undefined}
               labelLine={PIE_CHART_DEFAULTS.showConnectorLine}
             >
               {chartData.map((entry, index) => (
@@ -225,10 +285,10 @@ export function BeautifulPieChart({
                 verticalAlign="bottom"
                 height={36}
                 formatter={(value, entry) => (
-                  <span className="text-sm" style={{ color: palette.neutralStrong }}>
+                  <span className="text-sm" style={{ color: finalColors.text || "#666" }}>
                     {value} (
-                    {entry?.payload
-                      ? ((entry.payload.value / analysis.total) * 100).toFixed(1)
+                    {entry?.payload && total > 0
+                      ? ((entry.payload.value / total) * 100).toFixed(1)
                       : "0"}
                     %)
                   </span>

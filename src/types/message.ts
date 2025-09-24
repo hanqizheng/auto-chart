@@ -193,12 +193,6 @@ export interface SingleChatSession {
   
   // 标记是否正在等待处理（首页跳转时）
   _pendingProcessing?: boolean;
-
-  // 安全验证信息（用于自动触发时复用验证码）
-  _security?: {
-    turnstileToken?: string | null;
-    issuedAt?: string;
-  };
 }
 
 /**

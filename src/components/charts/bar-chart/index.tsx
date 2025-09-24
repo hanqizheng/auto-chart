@@ -3,7 +3,6 @@
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
-import { useChartTheme } from "@/contexts/chart-theme-context";
 import { BarChartProps, BarChartValidationResult, BarChartData } from "./types";
 
 /**
@@ -11,7 +10,7 @@ import { BarChartProps, BarChartValidationResult, BarChartData } from "./types";
  */
 export function validateBarChartData(data: BarChartData): BarChartValidationResult {
   const errors: string[] = [];
-  
+
   // 检查数据是否存在且非空
   if (!data || !Array.isArray(data) || data.length === 0) {
     errors.push("数据不能为空");
@@ -30,32 +29,32 @@ export function validateBarChartData(data: BarChartData): BarChartValidationResu
   // 检查数据点结构一致性
   const firstItem = data[0];
   const keys = Object.keys(firstItem);
-  
+
   if (keys.length < 2) {
     errors.push("每个数据点至少需要包含 2 个字段（1个分类字段 + 至少1个数值字段）");
   }
 
   const categoryKey = keys[0];
   const valueKeys = keys.slice(1);
-  
+
   // 验证数据类型一致性
   data.forEach((item, index) => {
     const itemKeys = Object.keys(item);
-    
+
     // 检查字段数量一致性
     if (itemKeys.length !== keys.length) {
       errors.push(`数据点 ${index} 的字段数量与第一个数据点不一致`);
     }
-    
+
     // 检查分类字段类型
-    if (typeof item[categoryKey] !== 'string') {
+    if (typeof item[categoryKey] !== "string") {
       errors.push(`数据点 ${index} 的分类字段 "${categoryKey}" 必须为字符串类型`);
     }
-    
+
     // 检查数值字段类型
     valueKeys.forEach(key => {
       const value = item[key];
-      if (typeof value !== 'number' || isNaN(value)) {
+      if (typeof value !== "number" || isNaN(value)) {
         errors.push(`数据点 ${index} 的数值字段 "${key}" 必须为有效数字`);
       }
     });
@@ -77,18 +76,32 @@ export function validateBarChartData(data: BarChartData): BarChartValidationResu
  * 美化柱状图组件
  * 专为静态图像导出设计，显示完整的数据信息和统计分析
  */
-export function BeautifulBarChart({ data, config, title, description, className }: BarChartProps) {
-  const { getSeriesColor, palette } = useChartTheme();
+export function BeautifulBarChart({
+  data,
+  config,
+  title,
+  description,
+  className,
+  barRadius = 4,
+  showValueLabels = true,
+  showGrid = true,
+  colors: providedColors,
+  primaryColor = "#22c55e",
+}: BarChartProps) {
+  // 直接使用传入的颜色配置
+  const finalColors = providedColors;
   // 数据验证
   const validation = validateBarChartData(data);
-  
+
   if (!validation.isValid) {
     return (
       <div className={className}>
-        <h3 className="text-lg font-semibold mb-2 text-red-600">数据格式错误</h3>
-        <div className="text-red-600 space-y-1">
+        <h3 className="mb-2 text-lg font-semibold text-red-600">数据格式错误</h3>
+        <div className="space-y-1 text-red-600">
           {validation.errors.map((error, index) => (
-            <p key={index} className="text-sm">• {error}</p>
+            <p key={index} className="text-sm">
+              • {error}
+            </p>
           ))}
         </div>
       </div>
@@ -99,9 +112,8 @@ export function BeautifulBarChart({ data, config, title, description, className 
   const { categoryKey, valueKeys } = stats;
 
   // 计算统计数据
-  const dataRange = data.length > 0 
-    ? `${data[0][categoryKey]} - ${data[data.length - 1][categoryKey]}` 
-    : "";
+  const dataRange =
+    data.length > 0 ? `${data[0][categoryKey]} - ${data[data.length - 1][categoryKey]}` : "";
 
   // 计算每个系列的最大值
   const maxValues = valueKeys.map(key => {
@@ -113,12 +125,8 @@ export function BeautifulBarChart({ data, config, title, description, className 
     <div className={className}>
       {(title || description) && (
         <div className="mb-4">
-          {title && (
-            <h3 className="text-lg font-semibold mb-2">{title}</h3>
-          )}
-          {description && (
-            <p className="text-sm text-muted-foreground">{description}</p>
-          )}
+          {title && <h3 className="mb-2 text-lg font-semibold">{title}</h3>}
+          {description && <p className="text-muted-foreground text-sm">{description}</p>}
         </div>
       )}
 
@@ -133,12 +141,14 @@ export function BeautifulBarChart({ data, config, title, description, className 
               bottom: 40,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke={palette.grid} opacity={0.35} />
+            {showGrid && (
+              <CartesianGrid strokeDasharray="3 3" stroke={finalColors.grid} opacity={0.35} />
+            )}
             <XAxis
               dataKey={categoryKey}
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: palette.neutralStrong }}
+              tick={{ fontSize: 12, fill: finalColors.text }}
               angle={0}
               textAnchor="middle"
               height={40}
@@ -146,27 +156,29 @@ export function BeautifulBarChart({ data, config, title, description, className 
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: palette.neutralStrong }}
+              tick={{ fontSize: 12, fill: finalColors.text }}
               tickFormatter={value => value.toLocaleString()}
             />
-            {valueKeys.map(key => (
+            {valueKeys.map((key, index) => (
               <Bar
                 key={key}
                 dataKey={key}
-                fill={getSeriesColor(key)}
-                radius={[4, 4, 0, 0]}
+                fill={finalColors.series[index % finalColors.series.length] || finalColors.primary}
+                radius={[barRadius, barRadius, 0, 0]}
                 name={String(config[key]?.label || key)}
               >
-                <LabelList
-                  dataKey={key}
-                  position="top"
-                  style={{
-                    fontSize: "11px",
-                    fill: palette.neutralStrong,
-                    fontWeight: "600",
-                  }}
-                  formatter={(value: number) => value.toLocaleString()}
-                />
+                {showValueLabels && (
+                  <LabelList
+                    dataKey={key}
+                    position="top"
+                    style={{
+                      fontSize: "11px",
+                      fill: finalColors.text,
+                      fontWeight: "600",
+                    }}
+                    formatter={(value: number) => value.toLocaleString()}
+                  />
+                )}
               </Bar>
             ))}
           </BarChart>

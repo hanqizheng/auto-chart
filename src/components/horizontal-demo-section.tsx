@@ -7,8 +7,173 @@ import { BeautifulLineChart } from "@/components/charts/line-chart";
 import { BeautifulBarChart } from "@/components/charts/bar-chart";
 import { BeautifulAreaChart } from "@/components/charts/area-chart";
 import { BeautifulPieChart } from "@/components/charts/pie-chart";
-import { ChartThemeProvider } from "@/contexts/chart-theme-context";
-import { createChartTheme } from "@/lib/colors";
+import { BeautifulRadarChart } from "@/components/charts/radar-chart";
+import { BeautifulRadialChart } from "@/components/charts/radial-chart";
+import { generateChartConfig } from "@/lib/data-standardization";
+import { generateChartColors } from "@/lib/simplified-color-config";
+
+// 完全重构的演示组件 - 使用新的简化配置系统
+const LineChartDemo = () => {
+  const rawData = [
+    { date: "2024-01", sales: 125000, target: 120000 },
+    { date: "2024-02", sales: 138000, target: 130000 },
+    { date: "2024-03", sales: 142000, target: 135000 },
+    { date: "2024-04", sales: 156000, target: 140000 },
+    { date: "2024-05", sales: 168000, target: 145000 },
+    { date: "2024-06", sales: 175000, target: 150000 },
+  ];
+  const userConfig = {
+    sales: { label: "Sales" },
+    target: { label: "Target" },
+  };
+
+  // 使用新的配置生成流程
+  const chartConfig = generateChartConfig("line", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("line", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulLineChart
+      data={chartConfig.data}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[280px] w-full"
+    />
+  );
+};
+
+const BarChartDemo = () => {
+  const rawData = [
+    { city: "Beijing", average_income: 25000, median_income: 20000 },
+    { city: "Shanghai", average_income: 23000, median_income: 19000 },
+    { city: "Shenzhen", average_income: 22000, median_income: 18500 },
+  ];
+  const userConfig = {
+    average_income: { label: "Average Income" },
+    median_income: { label: "Median Income" },
+  };
+
+  const chartConfig = generateChartConfig("bar", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("bar", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulBarChart
+      data={chartConfig.data}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[280px] w-full"
+    />
+  );
+};
+
+const AreaChartDemo = () => {
+  const rawData = [
+    { month: "2024-01", performance: 85, target: 80 },
+    { month: "2024-02", performance: 88, target: 82 },
+    { month: "2024-03", performance: 92, target: 85 },
+    { month: "2024-04", performance: 89, target: 87 },
+    { month: "2024-05", performance: 94, target: 90 },
+    { month: "2024-06", performance: 97, target: 92 },
+  ];
+  const userConfig = {
+    performance: { label: "Performance" },
+    target: { label: "Target" },
+  };
+
+  const chartConfig = generateChartConfig("area", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("area", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulAreaChart
+      data={chartConfig.data}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[280px] w-full"
+    />
+  );
+};
+
+const PieChartDemo = () => {
+  const rawData = [
+    { name: "Product A", value: 350000 },
+    { name: "Product B", value: 250000 },
+    { name: "Product C", value: 200000 },
+    { name: "Product D", value: 120000 },
+    { name: "Others", value: 80000 },
+  ];
+  const userConfig = { value: { label: "Sales" } };
+
+  const chartConfig = generateChartConfig("pie", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("pie", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulPieChart
+      data={chartConfig.data as any}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[240px] w-full"
+      showLegend={false}
+    />
+  );
+};
+
+const RadarChartDemo = () => {
+  const rawData = [
+    { dimension: "Execution", "Team Alpha": 82, "Team Bravo": 75, "Team Charlie": 88 },
+    { dimension: "Innovation", "Team Alpha": 90, "Team Bravo": 78, "Team Charlie": 84 },
+    { dimension: "Quality", "Team Alpha": 88, "Team Bravo": 83, "Team Charlie": 91 },
+    { dimension: "Speed", "Team Alpha": 76, "Team Bravo": 89, "Team Charlie": 80 },
+    { dimension: "Collaboration", "Team Alpha": 92, "Team Bravo": 86, "Team Charlie": 88 },
+  ];
+  const userConfig = {
+    "Team Alpha": { label: "Team Alpha" },
+    "Team Bravo": { label: "Team Bravo" },
+    "Team Charlie": { label: "Team Charlie" },
+  };
+
+  const chartConfig = generateChartConfig("radar", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("radar", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulRadarChart
+      data={chartConfig.data}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[280px] w-full"
+      showLegend
+      showDots
+      showArea
+    />
+  );
+};
+
+const RadialChartDemo = () => {
+  const rawData = [
+    { name: "Email", value: 24 },
+    { name: "Paid Ads", value: 32 },
+    { name: "Organic Search", value: 18 },
+    { name: "Events", value: 14 },
+    { name: "Referrals", value: 12 },
+  ];
+  const userConfig = { value: { label: "Contribution" } };
+
+  const chartConfig = generateChartConfig("radial", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("radial", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulRadialChart
+      data={chartConfig.data as any}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[260px] w-full"
+      showLegend
+      showLabels
+      innerRadius={45}
+      outerRadius={140}
+      barSize={20}
+      cornerRadius={10}
+    />
+  );
+};
 
 interface DemoItem {
   id: string;
@@ -81,14 +246,11 @@ export function HorizontalDemoSection({
     }
   }, []);
 
-  const updateStage = useCallback(
-    (next: ScrollStage) => {
-      if (stageRef.current === next) return;
-      stageRef.current = next;
-      setStage(next);
-    },
-    []
-  );
+  const updateStage = useCallback((next: ScrollStage) => {
+    if (stageRef.current === next) return;
+    stageRef.current = next;
+    setStage(next);
+  }, []);
 
   const applyOffset = useCallback((nextOffset: number) => {
     const maxTranslate = maxTranslateRef.current;
@@ -203,11 +365,7 @@ export function HorizontalDemoSection({
 
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-      const tailSpacing = clamp(
-        viewportWidth * 0.18,
-        MIN_TAIL_SPACING,
-        MAX_TAIL_SPACING
-      );
+      const tailSpacing = clamp(viewportWidth * 0.18, MIN_TAIL_SPACING, MAX_TAIL_SPACING);
 
       if (tailSpacerRef.current) {
         tailSpacerRef.current.style.width = `${tailSpacing}px`;
@@ -306,108 +464,27 @@ export function HorizontalDemoSection({
   const getMockDataAndChart = useCallback((chartType: string) => {
     switch (chartType) {
       case "line": {
-        const data = [
-          { month: "Jan", revenue: 125000, profit: 35000, expenses: 90000 },
-          { month: "Feb", revenue: 158000, profit: 52000, expenses: 106000 },
-          { month: "Mar", revenue: 142000, profit: 28000, expenses: 114000 },
-          { month: "Apr", revenue: 196000, profit: 78000, expenses: 118000 },
-          { month: "May", revenue: 188000, profit: 82000, expenses: 106000 },
-          { month: "Jun", revenue: 215000, profit: 95000, expenses: 120000 },
-        ];
-        const config = {
-          revenue: { label: "Revenue", color: "#22c55e" },
-          profit: { label: "Profit", color: "#16a34a" },
-          expenses: { label: "Expenses", color: "#4ade80" },
-        };
-
-        return (
-          <ChartThemeProvider
-            chartType="line"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", 3, "demo-line")}
-          >
-            <BeautifulLineChart data={data} config={config} className="h-[280px] w-full" />
-          </ChartThemeProvider>
-        );
+        return <LineChartDemo />;
       }
 
       case "bar": {
-        const data = [
-          { city: "Beijing", income: 25000 },
-          { city: "Shanghai", income: 23000 },
-          { city: "Shenzhen", income: 22000 },
-          { city: "Guangzhou", income: 21000 },
-          { city: "Chongqing", income: 20000 },
-        ];
-        const config = {
-          income: { label: "Income", color: "#22c55e" },
-        };
-
-        return (
-          <ChartThemeProvider
-            chartType="bar"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", 1, "demo-bar")}
-          >
-            <BeautifulBarChart data={data} config={config} className="h-[280px] w-full" />
-          </ChartThemeProvider>
-        );
+        return <BarChartDemo />;
       }
 
       case "area": {
-        const data = [
-          { month: "Jan", users: 12500, sessions: 35000, pageviews: 125000 },
-          { month: "Feb", users: 18300, sessions: 48000, pageviews: 156000 },
-          { month: "Mar", users: 22100, sessions: 52000, pageviews: 175000 },
-          { month: "Apr", users: 27800, sessions: 68000, pageviews: 202000 },
-          { month: "May", users: 31200, sessions: 74000, pageviews: 235000 },
-          { month: "Jun", users: 35600, sessions: 82000, pageviews: 268000 },
-        ];
-        const config = {
-          users: { label: "Users", color: "#16a34a" },
-          sessions: { label: "Sessions", color: "#22c55e" },
-          pageviews: { label: "Page Views", color: "#42d392" },
-        };
-
-        return (
-          <ChartThemeProvider
-            chartType="area"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", 3, "demo-area")}
-          >
-            <BeautifulAreaChart data={data} config={config} className="h-[280px] w-full" />
-          </ChartThemeProvider>
-        );
+        return <AreaChartDemo />;
       }
 
       case "pie": {
-        const data = [
-          { name: "Product A", value: 350000 },
-          { name: "Product B", value: 250000 },
-          { name: "Product C", value: 200000 },
-          { name: "Product D", value: 120000 },
-          { name: "Others", value: 80000 },
-        ];
-        const config = { value: { label: "Sales" } };
+        return <PieChartDemo />;
+      }
 
-        return (
-          <ChartThemeProvider
-            chartType="pie"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", data.length, "demo-pie")}
-          >
-            <BeautifulPieChart
-              data={data}
-              config={config}
-              className="h-[220px] w-full"
-              showLegend={false}
-            />
-          </ChartThemeProvider>
-        );
+      case "radar": {
+        return <RadarChartDemo />;
+      }
+
+      case "radial": {
+        return <RadialChartDemo />;
       }
 
       default:
@@ -417,38 +494,39 @@ export function HorizontalDemoSection({
 
   const renderDemoCard = useCallback(
     (demo: DemoItem, index: number, layout: "horizontal" | "stacked" = "horizontal") => {
-      const widthClass =
-        layout === "horizontal" ? "w-[min(600px,90vw)] flex-none" : "w-full";
-      const heightClass = layout === "horizontal" ? "h-[32rem]" : "min-h-[28rem] h-full";
+      const widthClass = layout === "horizontal" ? "w-[min(620px,90vw)] flex-none" : "w-full";
+      const heightClass = layout === "horizontal" ? "min-h-[36rem]" : "min-h-[30rem]";
       const snapClass = layout === "horizontal" ? "snap-center" : "";
 
       return (
         <article
           key={demo.id}
-          className={`flex ${heightClass} ${widthClass} ${snapClass} rounded-3xl border border-border/40 bg-card/80 p-6 shadow-xl backdrop-blur transition-colors duration-200 hover:border-border hover:bg-card`}
+          className={`flex h-auto ${heightClass} ${widthClass} ${snapClass} border-border/40 bg-card/80 hover:border-border hover:bg-card overflow-visible rounded-3xl border p-6 shadow-xl backdrop-blur transition-colors duration-200`}
         >
-          <div className="flex w-full flex-col">
-            <div className="flex items-center justify-between text-xs font-mono uppercase tracking-[0.3em] text-primary/80">
+          <div className="flex w-full flex-1 flex-col gap-4">
+            <div className="text-primary/80 flex items-center justify-between font-mono text-xs tracking-[0.3em] uppercase">
               <span>{`[${String(index).padStart(2, "0")}]`}</span>
               <span>{demo.chartType.toUpperCase()}</span>
             </div>
 
-            <div className="mt-4 overflow-hidden rounded-2xl border border-border/40 bg-muted/30 p-4">
-              {getMockDataAndChart(demo.chartType)}
+            <div className="flex-1">
+              <div className="border-border/40 bg-muted/30 relative flex h-full min-h-[300px] flex-col items-center justify-start overflow-hidden rounded-2xl border p-4">
+                {getMockDataAndChart(demo.chartType)}
+              </div>
             </div>
 
-            <h3 className="mt-6 text-2xl font-semibold leading-tight">{demo.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{demo.description}</p>
+            <h3 className="text-2xl leading-tight font-semibold">{demo.title}</h3>
+            <p className="text-muted-foreground text-sm leading-relaxed">{demo.description}</p>
 
-            <div className="mt-4 space-y-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/80">
+            <div className="space-y-2">
+              <span className="text-muted-foreground/80 text-xs font-semibold tracking-wide uppercase">
                 Best for
               </span>
-              <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+              <div className="text-muted-foreground flex flex-wrap gap-2 text-xs">
                 {demo.features.map((feature, featureIndex) => (
                   <span
                     key={`${demo.id}-feature-${featureIndex}`}
-                    className="rounded-full bg-muted/70 px-3 py-1"
+                    className="bg-muted/70 rounded-full px-3 py-1"
                   >
                     {feature}
                   </span>
@@ -474,15 +552,15 @@ export function HorizontalDemoSection({
 
   if (disableHorizontal) {
     return (
-      <section className="bg-gradient-to-b from-background to-muted/20 py-20">
-        <div className="container mx-auto px-6 space-y-12">
+      <section className="from-background to-muted/20 bg-gradient-to-b py-20">
+        <div className="container mx-auto space-y-12 px-6">
           <div className="max-w-2xl space-y-6">
-            <span className="text-sm font-semibold uppercase tracking-[0.4em] text-primary/80">
+            <span className="text-primary/80 text-sm font-semibold tracking-[0.4em] uppercase">
               Demo Library
             </span>
-            <h2 className="text-4xl font-bold leading-tight md:text-5xl">{heading}</h2>
+            <h2 className="text-4xl leading-tight font-bold md:text-5xl">{heading}</h2>
             {subheading && (
-              <p className="text-lg leading-relaxed text-muted-foreground">{subheading}</p>
+              <p className="text-muted-foreground text-lg leading-relaxed">{subheading}</p>
             )}
           </div>
 
@@ -515,7 +593,7 @@ export function HorizontalDemoSection({
   return (
     <section
       ref={containerRef}
-      className="relative bg-gradient-to-b from-background via-background to-muted/20"
+      className="from-background via-background to-muted/20 relative bg-gradient-to-b"
       style={{
         height: `${Math.max(layout.totalHeight, SECTION_MIN_HEIGHT * 2)}px`,
       }}
@@ -525,8 +603,8 @@ export function HorizontalDemoSection({
         className="z-10 flex w-full items-center justify-start overflow-visible"
         style={pinnedStyle}
       >
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background via-background/60 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background via-background/60 to-transparent" />
+        <div className="from-background via-background/60 pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r to-transparent" />
+        <div className="from-background via-background/60 pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l to-transparent" />
 
         <div
           ref={trackRef}
@@ -535,23 +613,28 @@ export function HorizontalDemoSection({
         >
           <div className="flex h-[32rem] w-[min(600px,90vw)] flex-none items-center">
             <div className="space-y-6">
-              <span className="text-sm font-semibold uppercase tracking-[0.4em] text-primary/80">
+              <span className="text-primary/80 text-sm font-semibold tracking-[0.4em] uppercase">
                 Demo Library
               </span>
-              <h2 className="text-4xl font-bold leading-tight md:text-6xl">{heading}</h2>
+              <h2 className="text-4xl leading-tight font-bold md:text-6xl">{heading}</h2>
               {subheading && (
-                <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
+                <p className="text-muted-foreground max-w-xl text-lg leading-relaxed">
                   {subheading}
                 </p>
               )}
-              <p className="text-sm uppercase tracking-wide text-muted-foreground">
+              <p className="text-muted-foreground text-sm tracking-wide uppercase">
                 Scroll ↓ to explore all chart types
               </p>
             </div>
           </div>
 
           {demos.map((demo, index) => renderDemoCard(demo, index, "horizontal"))}
-          <div ref={tailSpacerRef} className="flex-none" aria-hidden style={{ width: `${layout.tailSpacing}px` }} />
+          <div
+            ref={tailSpacerRef}
+            className="flex-none"
+            aria-hidden
+            style={{ width: `${layout.tailSpacing}px` }}
+          />
         </div>
       </div>
     </section>

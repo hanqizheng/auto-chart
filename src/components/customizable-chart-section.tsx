@@ -10,7 +10,7 @@ import {
   Bar,
   LabelList,
 } from "recharts";
-import { ChartThemeProvider, useChartTheme } from "@/contexts/chart-theme-context";
+import { useChartConfig } from "@/components/charts/simple-chart-wrapper";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,34 +48,34 @@ interface AnimatedBarChartProps {
 }
 
 function AnimatedBarChart({ baseColor, barRadius }: AnimatedBarChartProps) {
-  const { palette, getSeriesColor, setBaseColor } = useChartTheme();
-
-  useEffect(() => {
-    setBaseColor(baseColor);
-  }, [baseColor, setBaseColor]);
+  // 使用新的图表配置hook获取颜色
+  const { colors } = useChartConfig("bar", baseData, baseConfig, baseColor);
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-background p-6 shadow-lg">
+    <div className="border-border/60 bg-background relative overflow-hidden rounded-3xl border p-6 shadow-lg">
       <ResponsiveContainer width="100%" height={320}>
         <RechartsBarChart data={baseData} barGap={8}>
-          <CartesianGrid stroke={palette.grid} opacity={0.18} />
+          <CartesianGrid stroke={colors.grid} opacity={0.18} />
           <XAxis
             dataKey="month"
             tickLine={false}
             axisLine={false}
-            tick={{ fontSize: 12, fill: palette.neutralStrong }}
+            tick={{ fontSize: 12, fill: colors.text }}
             padding={{ left: 6, right: 6 }}
           />
           <YAxis
             tickLine={false}
             axisLine={false}
-            tick={{ fontSize: 12, fill: palette.neutralStrong }}
+            tick={{ fontSize: 12, fill: colors.text }}
             tickFormatter={value => `${Math.round(Number(value) / 1000)}k`}
             width={44}
           />
-          <Bar dataKey="revenue" fill={getSeriesColor("revenue")}
+          <Bar
+            dataKey="revenue"
+            fill={colors.series[0] || colors.primary}
             radius={[barRadius, barRadius, Math.max(barRadius - 6, 2), Math.max(barRadius - 6, 2)]}
-            maxBarSize={56}>
+            maxBarSize={56}
+          >
             <LabelList
               dataKey="revenue"
               position="top"
@@ -83,18 +83,18 @@ function AnimatedBarChart({ baseColor, barRadius }: AnimatedBarChartProps) {
               style={{
                 fontSize: 12,
                 fontWeight: 600,
-                fill: palette.neutralStrong,
+                fill: colors.text,
               }}
             />
           </Bar>
         </RechartsBarChart>
       </ResponsiveContainer>
 
-      <div className="mt-6 rounded-2xl border border-border/60 bg-background/80 p-4">
-        <div className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/70">
+      <div className="border-border/60 bg-background/80 mt-6 rounded-2xl border p-4">
+        <div className="text-primary/70 text-xs font-semibold tracking-[0.3em] uppercase">
           Auto Styling Script
         </div>
-        <pre className="mt-2 whitespace-pre-wrap text-sm font-mono text-muted-foreground">
+        <pre className="text-muted-foreground mt-2 font-mono text-sm whitespace-pre-wrap">
           {`chart.setStyle({ baseColor: "${baseColor}", barRadius: ${barRadius} });`}
         </pre>
       </div>
@@ -132,9 +132,7 @@ export function CustomizableChartSection() {
 
       const randomColor = swatchColors[Math.floor(Math.random() * swatchColors.length)];
       const [minRadius, maxRadius] = AUTO_RADIUS_RANGE;
-      const randomRadius = Math.round(
-        Math.random() * (maxRadius - minRadius) + minRadius
-      );
+      const randomRadius = Math.round(Math.random() * (maxRadius - minRadius) + minRadius);
 
       isManualRef.current = false;
       setBaseColor(randomColor);
@@ -153,14 +151,14 @@ export function CustomizableChartSection() {
   const radiusDisplay = useMemo(() => `${radius}px`, [radius]);
 
   return (
-    <section className="bg-gradient-to-b from-muted/40 via-background to-background py-24">
+    <section className="from-muted/40 via-background to-background bg-gradient-to-b py-24">
       <div className="container mx-auto grid gap-12 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:items-center">
         <div className="space-y-8">
           <div className="space-y-4">
-            <span className="text-sm font-semibold uppercase tracking-[0.4em] text-primary/80">
+            <span className="text-primary/80 text-sm font-semibold tracking-[0.4em] uppercase">
               Live Styling
             </span>
-            <h2 className="text-4xl font-bold leading-tight md:text-5xl">
+            <h2 className="text-4xl leading-tight font-bold md:text-5xl">
               Design-ready charts, tailored instantly
             </h2>
             <p className="text-muted-foreground text-base leading-relaxed md:text-lg">
@@ -170,10 +168,13 @@ export function CustomizableChartSection() {
             </p>
           </div>
 
-          <div className="grid gap-8 rounded-3xl border border-border/60 bg-muted/10 p-6">
+          <div className="border-border/60 bg-muted/10 grid gap-8 rounded-3xl border p-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label htmlFor="chart-color" className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
+                <Label
+                  htmlFor="chart-color"
+                  className="text-muted-foreground/80 text-xs font-semibold tracking-[0.3em] uppercase"
+                >
                   Chart Color
                 </Label>
                 <Input
@@ -181,7 +182,7 @@ export function CustomizableChartSection() {
                   type="color"
                   value={baseColor}
                   onChange={event => handleColorChange(event.target.value)}
-                  className="h-10 w-16 cursor-pointer border-border/60 bg-transparent p-1"
+                  className="border-border/60 h-10 w-16 cursor-pointer bg-transparent p-1"
                 />
               </div>
 
@@ -206,10 +207,10 @@ export function CustomizableChartSection() {
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground/80">
+                <Label className="text-muted-foreground/80 text-xs font-semibold tracking-[0.3em] uppercase">
                   Bar radius
                 </Label>
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                <span className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
                   {radiusDisplay}
                 </span>
               </div>
@@ -222,16 +223,14 @@ export function CustomizableChartSection() {
               />
             </div>
 
-            <p className="text-xs text-muted-foreground/80">
+            <p className="text-muted-foreground/80 text-xs">
               Pause for a second to let Auto Chart continue experimenting with colors and corner
               radii automatically—perfect for generating multiple design options programmatically.
             </p>
           </div>
         </div>
 
-        <ChartThemeProvider chartType="bar" chartData={baseData} chartConfig={baseConfig}>
-          <AnimatedBarChart baseColor={baseColor} barRadius={radius} />
-        </ChartThemeProvider>
+        <AnimatedBarChart baseColor={baseColor} barRadius={radius} />
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState, useCallback } from "react";
 import { ChartResultContent } from "@/types";
 import { globalChartManager } from "@/lib/global-chart-manager";
 import { ExportState } from "@/services/chart-export-service";
@@ -16,22 +16,23 @@ export interface ChartExportStatus {
 
 /**
  * 图表导出上下文接口
+ * 🎯 精简版：只管理导出状态，不管理图表数据
  */
 export interface ChartExportContextType {
   // 状态
   exportStatuses: Map<string, ChartExportStatus>;
-  currentChart: ChartResultContent | null;
-  
+  // 🚫 移除currentChart - 现在由DashboardLayout统一管理
+
   // 操作
   registerChart: (chartId: string, element: HTMLElement, chartData: ChartResultContent) => void;
   retryExport: (chartId: string) => void;
   cancelExport: (chartId: string) => void;
   clearChart: (chartId: string) => void;
-  
+
   // 查询
   getExportStatus: (chartId: string) => ChartExportStatus | null;
   isExporting: (chartId: string) => boolean;
-  
+
   // 统计
   getStats: () => {
     totalCharts: number;
@@ -48,7 +49,7 @@ const ChartExportContext = createContext<ChartExportContextType | undefined>(und
  */
 export function ChartExportProvider({ children }: { children: React.ReactNode }) {
   const [exportStatuses, setExportStatuses] = useState<Map<string, ChartExportStatus>>(new Map());
-  const [currentChart, setCurrentChart] = useState<ChartResultContent | null>(null);
+  // 🚫 移除currentChart状态 - 由DashboardLayout统一管理单一数据源
   const initRef = useRef(false);
 
   // 初始化全局管理器
@@ -56,24 +57,16 @@ export function ChartExportProvider({ children }: { children: React.ReactNode })
     if (initRef.current) return;
     initRef.current = true;
 
-    console.log("🔧 [ChartExportContext] 初始化");
+    console.log("🔧 [ChartExportContext] 初始化 - 精简版（只管理导出状态）");
 
-    const updateHandler = (updatedChart: ChartResultContent) => {
-      console.log("📊 [ChartExportContext] 收到图表更新:", {
-        title: updatedChart.title,
-        hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl
-      });
-      
-      setCurrentChart(updatedChart);
-    };
-    globalChartManager.setUpdateHandler(updateHandler);
+    // 🚫 图表更新处理器现在在CenteredChatPanel中设置，这里不再需要
 
     const exportStatusHandler = (chartId: string, status: ExportState) => {
       console.log("📈 [ChartExportContext] 导出状态变化:", {
         chartId,
         stage: status.stage,
         progress: status.progress,
-        isExporting: status.isExporting
+        isExporting: status.isExporting,
       });
 
       setExportStatuses(prev => {
@@ -81,7 +74,7 @@ export function ChartExportProvider({ children }: { children: React.ReactNode })
         newMap.set(chartId, {
           chartId,
           status,
-          lastUpdated: new Date()
+          lastUpdated: new Date(),
         });
         return newMap;
       });
@@ -90,60 +83,61 @@ export function ChartExportProvider({ children }: { children: React.ReactNode })
 
     // 清理函数
     return () => {
-      console.log("🧹 [ChartExportContext] 清理");
-      globalChartManager.removeUpdateHandler(updateHandler);
+      console.log("🧹 [ChartExportContext] 清理 - 精简版");
       globalChartManager.setExportStatusHandler(null);
     };
   }, []);
 
   // 注册图表
-  const registerChart = (chartId: string, element: HTMLElement, chartData: ChartResultContent) => {
+  const registerChart = useCallback((chartId: string, element: HTMLElement, chartData: ChartResultContent) => {
     console.log("📝 [ChartExportContext] 注册图表:", {
       chartId,
-      title: chartData.title
+      title: chartData.title,
     });
 
-    globalChartManager.registerChartRender(chartId, element, chartData);
-  };
+    // 🎯 Demo图表不自动导出
+    const autoExport = !chartId.startsWith("demo-");
+    globalChartManager.registerChartRender(chartId, element, chartData, autoExport);
+  }, []);
 
   // 重试导出
-  const retryExport = (chartId: string) => {
+  const retryExport = useCallback((chartId: string) => {
     console.log("🔄 [ChartExportContext] 重试导出:", { chartId });
     globalChartManager.retryExport(chartId);
-  };
+  }, []);
 
   // 取消导出
-  const cancelExport = (chartId: string) => {
+  const cancelExport = useCallback((chartId: string) => {
     console.log("🚫 [ChartExportContext] 取消导出:", { chartId });
     globalChartManager.cancelExport(chartId);
-  };
+  }, []);
 
   // 清除图表
-  const clearChart = (chartId: string) => {
+  const clearChart = useCallback((chartId: string) => {
     console.log("🧹 [ChartExportContext] 清除图表:", { chartId });
-    
+
     globalChartManager.clearChart(chartId);
-    
+
     setExportStatuses(prev => {
       const newMap = new Map(prev);
       newMap.delete(chartId);
       return newMap;
     });
-  };
+  }, []);
 
   // 获取导出状态
-  const getExportStatus = (chartId: string): ChartExportStatus | null => {
+  const getExportStatus = useCallback((chartId: string): ChartExportStatus | null => {
     return exportStatuses.get(chartId) || null;
-  };
+  }, [exportStatuses]);
 
   // 检查是否正在导出
-  const isExporting = (chartId: string): boolean => {
+  const isExporting = useCallback((chartId: string): boolean => {
     const status = exportStatuses.get(chartId);
     return status?.status.isExporting || false;
-  };
+  }, [exportStatuses]);
 
   // 获取统计信息
-  const getStats = () => {
+  const getStats = useCallback(() => {
     let exportingCharts = 0;
     let completedCharts = 0;
     let failedCharts = 0;
@@ -151,9 +145,9 @@ export function ChartExportProvider({ children }: { children: React.ReactNode })
     exportStatuses.forEach(({ status }) => {
       if (status.isExporting) {
         exportingCharts++;
-      } else if (status.stage === 'completed') {
+      } else if (status.stage === "completed") {
         completedCharts++;
-      } else if (status.stage === 'error') {
+      } else if (status.stage === "error") {
         failedCharts++;
       }
     });
@@ -162,34 +156,30 @@ export function ChartExportProvider({ children }: { children: React.ReactNode })
       totalCharts: exportStatuses.size,
       exportingCharts,
       completedCharts,
-      failedCharts
+      failedCharts,
     };
-  };
+  }, [exportStatuses]);
 
   const contextValue: ChartExportContextType = {
     // 状态
     exportStatuses,
-    currentChart,
-    
+    // 🚫 移除currentChart引用 - 由DashboardLayout统一管理
+
     // 操作
     registerChart,
     retryExport,
     cancelExport,
     clearChart,
-    
+
     // 查询
     getExportStatus,
     isExporting,
-    
+
     // 统计
-    getStats
+    getStats,
   };
 
-  return (
-    <ChartExportContext.Provider value={contextValue}>
-      {children}
-    </ChartExportContext.Provider>
-  );
+  return <ChartExportContext.Provider value={contextValue}>{children}</ChartExportContext.Provider>;
 }
 
 /**
@@ -198,7 +188,7 @@ export function ChartExportProvider({ children }: { children: React.ReactNode })
 export function useChartExport(): ChartExportContextType {
   const context = useContext(ChartExportContext);
   if (context === undefined) {
-    throw new Error('useChartExport must be used within a ChartExportProvider');
+    throw new Error("useChartExport must be used within a ChartExportProvider");
   }
   return context;
 }
@@ -208,17 +198,17 @@ export function useChartExport(): ChartExportContextType {
  */
 export function useChartExportStatus(chartId: string) {
   const { getExportStatus, isExporting, retryExport, cancelExport } = useChartExport();
-  
+
   const status = getExportStatus(chartId);
-  
+
   return {
     status,
     isExporting: isExporting(chartId),
-    stage: status?.status.stage || 'idle',
+    stage: status?.status.stage || "idle",
     progress: status?.status.progress || 0,
     error: status?.status.error,
     lastUpdated: status?.lastUpdated,
-    
+
     // 操作
     retry: () => retryExport(chartId),
     cancel: () => cancelExport(chartId),
