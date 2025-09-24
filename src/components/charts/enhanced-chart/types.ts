@@ -145,6 +145,9 @@ export interface EnhancedChartProps {
 
   /** 导出模式 - 隐藏UI元素，仅显示图表 */
   exportMode?: boolean;
+
+  /** 主色调（用于颜色生成） */
+  primaryColor?: string;
 }
 
 /**

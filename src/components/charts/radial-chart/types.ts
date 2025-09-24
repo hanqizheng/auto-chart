@@ -1,5 +1,6 @@
 // Radial Chart 专用类型定义
 import { ChartConfig } from "@/components/ui/chart";
+import { UnifiedColorConfig } from "@/types/chart-config";
 
 /**
  * 径向图数据点
@@ -60,6 +61,12 @@ export interface RadialChartProps {
 
   /** 是否显示标签 */
   showLabels?: boolean;
+
+  /** 颜色配置（新架构） - 必需 */
+  colors: UnifiedColorConfig;
+
+  /** 主色调（可选，用于生成颜色配置） */
+  primaryColor?: string;
 }
 
 /**

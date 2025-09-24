@@ -9,8 +9,171 @@ import { BeautifulAreaChart } from "@/components/charts/area-chart";
 import { BeautifulPieChart } from "@/components/charts/pie-chart";
 import { BeautifulRadarChart } from "@/components/charts/radar-chart";
 import { BeautifulRadialChart } from "@/components/charts/radial-chart";
-import { ChartThemeProvider } from "@/contexts/chart-theme-context";
-import { createChartTheme } from "@/lib/colors";
+import { generateChartConfig } from "@/lib/data-standardization";
+import { generateChartColors } from "@/lib/simplified-color-config";
+
+// 完全重构的演示组件 - 使用新的简化配置系统
+const LineChartDemo = () => {
+  const rawData = [
+    { date: "2024-01", sales: 125000, target: 120000 },
+    { date: "2024-02", sales: 138000, target: 130000 },
+    { date: "2024-03", sales: 142000, target: 135000 },
+    { date: "2024-04", sales: 156000, target: 140000 },
+    { date: "2024-05", sales: 168000, target: 145000 },
+    { date: "2024-06", sales: 175000, target: 150000 },
+  ];
+  const userConfig = {
+    sales: { label: "Sales" },
+    target: { label: "Target" },
+  };
+
+  // 使用新的配置生成流程
+  const chartConfig = generateChartConfig("line", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("line", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulLineChart
+      data={chartConfig.data}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[280px] w-full"
+    />
+  );
+};
+
+const BarChartDemo = () => {
+  const rawData = [
+    { city: "Beijing", average_income: 25000, median_income: 20000 },
+    { city: "Shanghai", average_income: 23000, median_income: 19000 },
+    { city: "Shenzhen", average_income: 22000, median_income: 18500 },
+  ];
+  const userConfig = {
+    average_income: { label: "Average Income" },
+    median_income: { label: "Median Income" },
+  };
+
+  const chartConfig = generateChartConfig("bar", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("bar", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulBarChart
+      data={chartConfig.data}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[280px] w-full"
+    />
+  );
+};
+
+const AreaChartDemo = () => {
+  const rawData = [
+    { month: "2024-01", performance: 85, target: 80 },
+    { month: "2024-02", performance: 88, target: 82 },
+    { month: "2024-03", performance: 92, target: 85 },
+    { month: "2024-04", performance: 89, target: 87 },
+    { month: "2024-05", performance: 94, target: 90 },
+    { month: "2024-06", performance: 97, target: 92 },
+  ];
+  const userConfig = {
+    performance: { label: "Performance" },
+    target: { label: "Target" },
+  };
+
+  const chartConfig = generateChartConfig("area", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("area", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulAreaChart
+      data={chartConfig.data}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[280px] w-full"
+    />
+  );
+};
+
+const PieChartDemo = () => {
+  const rawData = [
+    { name: "Product A", value: 350000 },
+    { name: "Product B", value: 250000 },
+    { name: "Product C", value: 200000 },
+    { name: "Product D", value: 120000 },
+    { name: "Others", value: 80000 },
+  ];
+  const userConfig = { value: { label: "Sales" } };
+
+  const chartConfig = generateChartConfig("pie", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("pie", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulPieChart
+      data={chartConfig.data as any}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[240px] w-full"
+      showLegend={false}
+    />
+  );
+};
+
+const RadarChartDemo = () => {
+  const rawData = [
+    { dimension: "Execution", "Team Alpha": 82, "Team Bravo": 75, "Team Charlie": 88 },
+    { dimension: "Innovation", "Team Alpha": 90, "Team Bravo": 78, "Team Charlie": 84 },
+    { dimension: "Quality", "Team Alpha": 88, "Team Bravo": 83, "Team Charlie": 91 },
+    { dimension: "Speed", "Team Alpha": 76, "Team Bravo": 89, "Team Charlie": 80 },
+    { dimension: "Collaboration", "Team Alpha": 92, "Team Bravo": 86, "Team Charlie": 88 },
+  ];
+  const userConfig = {
+    "Team Alpha": { label: "Team Alpha" },
+    "Team Bravo": { label: "Team Bravo" },
+    "Team Charlie": { label: "Team Charlie" },
+  };
+
+  const chartConfig = generateChartConfig("radar", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("radar", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulRadarChart
+      data={chartConfig.data}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[280px] w-full"
+      showLegend
+      showDots
+      showArea
+    />
+  );
+};
+
+const RadialChartDemo = () => {
+  const rawData = [
+    { name: "Email", value: 24 },
+    { name: "Paid Ads", value: 32 },
+    { name: "Organic Search", value: 18 },
+    { name: "Events", value: 14 },
+    { name: "Referrals", value: 12 },
+  ];
+  const userConfig = { value: { label: "Contribution" } };
+
+  const chartConfig = generateChartConfig("radial", rawData, userConfig, "#22c55e");
+  const colors = generateChartColors("radial", chartConfig.seriesCount, "#22c55e");
+
+  return (
+    <BeautifulRadialChart
+      data={chartConfig.data as any}
+      config={chartConfig.config}
+      colors={colors}
+      className="h-[260px] w-full"
+      showLegend
+      showLabels
+      innerRadius={45}
+      outerRadius={140}
+      barSize={20}
+      cornerRadius={10}
+    />
+  );
+};
 
 interface DemoItem {
   id: string;
@@ -301,176 +464,27 @@ export function HorizontalDemoSection({
   const getMockDataAndChart = useCallback((chartType: string) => {
     switch (chartType) {
       case "line": {
-        // 使用与SALES_ANALYSIS_DEMO相同的数据结构
-        const data = [
-          { date: "2024-01", sales: 125000, target: 120000 },
-          { date: "2024-02", sales: 138000, target: 130000 },
-          { date: "2024-03", sales: 142000, target: 135000 },
-          { date: "2024-04", sales: 156000, target: 140000 },
-          { date: "2024-05", sales: 168000, target: 145000 },
-          { date: "2024-06", sales: 175000, target: 150000 },
-        ];
-        const config = {
-          sales: { label: "Sales", color: "#22c55e" },
-          target: { label: "Target", color: "#16a34a" },
-        };
-
-        return (
-          <ChartThemeProvider
-            chartType="line"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", 2, "demo-line")}
-          >
-            <BeautifulLineChart data={data} config={config} className="h-[280px] w-full" />
-          </ChartThemeProvider>
-        );
+        return <LineChartDemo />;
       }
 
       case "bar": {
-        // 使用与REGIONAL_REVENUE_DEMO相同的数据结构
-        const data = [
-          { city: "Beijing", average_income: 25000, median_income: 20000 },
-          { city: "Shanghai", average_income: 23000, median_income: 19000 },
-          { city: "Shenzhen", average_income: 22000, median_income: 18500 },
-        ];
-        const config = {
-          average_income: { label: "Average Income", color: "#22c55e" },
-          median_income: { label: "Median Income", color: "#16a34a" },
-        };
-
-        return (
-          <ChartThemeProvider
-            chartType="bar"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", 2, "demo-bar")}
-          >
-            <BeautifulBarChart data={data} config={config} className="h-[280px] w-full" />
-          </ChartThemeProvider>
-        );
+        return <BarChartDemo />;
       }
 
       case "area": {
-        // 使用与PERFORMANCE_ANALYSIS_DEMO相同的数据结构
-        const data = [
-          { month: "2024-01", performance: 85, target: 80 },
-          { month: "2024-02", performance: 88, target: 82 },
-          { month: "2024-03", performance: 92, target: 85 },
-          { month: "2024-04", performance: 89, target: 87 },
-          { month: "2024-05", performance: 94, target: 90 },
-          { month: "2024-06", performance: 97, target: 92 },
-        ];
-        const config = {
-          performance: { label: "Performance", color: "#22c55e" },
-          target: { label: "Target", color: "#16a34a" },
-        };
-
-        return (
-          <ChartThemeProvider
-            chartType="area"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", 2, "demo-area")}
-          >
-            <BeautifulAreaChart data={data} config={config} className="h-[280px] w-full" />
-          </ChartThemeProvider>
-        );
+        return <AreaChartDemo />;
       }
 
       case "pie": {
-        // 使用与PRODUCT_SHARE_DEMO相同的数据结构，但适配图表组件接口
-        const data = [
-          { name: "Product A", value: 350000 },
-          { name: "Product B", value: 250000 },
-          { name: "Product C", value: 200000 },
-          { name: "Product D", value: 120000 },
-          { name: "Others", value: 80000 },
-        ];
-        const config = { value: { label: "Sales" } };
-
-        return (
-          <ChartThemeProvider
-            chartType="pie"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", data.length, "demo-pie")}
-          >
-            <BeautifulPieChart
-              data={data}
-              config={config}
-              className="h-[240px] w-full"
-              showLegend={false}
-            />
-          </ChartThemeProvider>
-        );
+        return <PieChartDemo />;
       }
 
       case "radar": {
-        // 使用与TEAM_SKILL_RADAR_DEMO相同的数据结构
-        const data = [
-          { dimension: "Execution", "Team Alpha": 82, "Team Bravo": 75, "Team Charlie": 88 },
-          { dimension: "Innovation", "Team Alpha": 90, "Team Bravo": 78, "Team Charlie": 84 },
-          { dimension: "Quality", "Team Alpha": 88, "Team Bravo": 83, "Team Charlie": 91 },
-          { dimension: "Speed", "Team Alpha": 76, "Team Bravo": 89, "Team Charlie": 80 },
-          { dimension: "Collaboration", "Team Alpha": 92, "Team Bravo": 86, "Team Charlie": 88 },
-        ];
-        const config = {
-          "Team Alpha": { label: "Team Alpha", color: "#22c55e" },
-          "Team Bravo": { label: "Team Bravo", color: "#16a34a" },
-          "Team Charlie": { label: "Team Charlie", color: "#4ade80" },
-        };
-
-        return (
-          <ChartThemeProvider
-            chartType="radar"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", 3, "demo-radar")}
-          >
-            <BeautifulRadarChart
-              data={data}
-              config={config}
-              className="h-[280px] w-full"
-              showLegend
-              showDots
-              showArea
-            />
-          </ChartThemeProvider>
-        );
+        return <RadarChartDemo />;
       }
 
       case "radial": {
-        // 使用与CHANNEL_PERFORMANCE_RADIAL_DEMO相同的数据结构，但适配图表组件接口
-        const data = [
-          { name: "Email", value: 24 },
-          { name: "Paid Ads", value: 32 },
-          { name: "Organic Search", value: 18 },
-          { name: "Events", value: 14 },
-          { name: "Referrals", value: 12 },
-        ];
-        const config = { value: { label: "Contribution" } };
-
-        return (
-          <ChartThemeProvider
-            chartType="radial"
-            chartData={data}
-            chartConfig={config}
-            theme={createChartTheme("#22c55e", data.length, "demo-radial")}
-          >
-            <BeautifulRadialChart
-              data={data}
-              config={config}
-              className="h-[260px] w-full"
-              showLegend
-              showLabels
-              innerRadius={45}
-              outerRadius={140}
-              barSize={20}
-              cornerRadius={10}
-            />
-          </ChartThemeProvider>
-        );
+        return <RadialChartDemo />;
       }
 
       default:

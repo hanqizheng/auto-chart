@@ -61,7 +61,8 @@ class ChartExportService {
     }
 
     // 生成文件名
-    const exportFilename = filename || this.generateFilename(chartId);
+    const rawFilename = filename || this.generateFilename(chartId);
+    const exportFilename = this.withAutoChartBranding(rawFilename);
 
     try {
       // 初始化导出状态
@@ -117,11 +118,13 @@ class ChartExportService {
         errorConstructor: error?.constructor?.name,
         errorMessage: error instanceof Error ? error.message : String(error),
         errorStack: error instanceof Error ? error.stack?.substring(0, 500) : undefined,
-        elementDimensions: element ? {
-          width: element.offsetWidth,
-          height: element.offsetHeight,
-          hasStyle: !!element.style,
-        } : null,
+        elementDimensions: element
+          ? {
+              width: element.offsetWidth,
+              height: element.offsetHeight,
+              hasStyle: !!element.style,
+            }
+          : null,
       });
 
       this.setExportState(chartId, {
@@ -189,7 +192,23 @@ class ChartExportService {
 
   private generateFilename(chartId: string): string {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    return `chart_${chartId}_${timestamp}.png`;
+    return `chart_${chartId}_${timestamp}`;
+  }
+
+  private withAutoChartBranding(filename: string): string {
+    const baseName = (filename || "chart").toString().trim();
+    const sanitizedBase = baseName
+      .replace(/\.[^/.]+$/g, "")
+      .replace(/[^a-zA-Z0-9-_]+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+    const normalized = sanitizedBase.length > 0 ? sanitizedBase : "chart";
+    const prefixed = /^autochart[-_]?/i.test(normalized)
+      ? normalized.replace(/^autochart[-_]?/i, "AutoChart-")
+      : `AutoChart-${normalized}`;
+
+    return `${prefixed}.png`;
   }
 
   private async prepareForExport(element: HTMLElement): Promise<void> {
@@ -222,13 +241,16 @@ class ChartExportService {
 
         // 🔧 超时保护 - 即使检查失败也继续导出
         if (elapsedTime >= maxWaitTime) {
-          console.warn("⚠️ [ChartExport] SVG rendering check timed out; proceeding with export anyway", {
-            svgCount: svgElements.length,
-            containerSize: {
-              width: element.offsetWidth,
-              height: element.offsetHeight,
-            },
-          });
+          console.warn(
+            "⚠️ [ChartExport] SVG rendering check timed out; proceeding with export anyway",
+            {
+              svgCount: svgElements.length,
+              containerSize: {
+                width: element.offsetWidth,
+                height: element.offsetHeight,
+              },
+            }
+          );
           resolve();
           return;
         }
@@ -268,10 +290,13 @@ class ChartExportService {
 
           // 如果没有Recharts特定元素，但有基本图表元素，也认为是OK的
           if (rechartsElements.length === 0 && chartElements.length < 3) {
-            console.log(`⚠️ [ChartExport] SVG ${index} has no Recharts elements and few chart elements:`, {
-              rechartsElements: rechartsElements.length,
-              chartElements: chartElements.length,
-            });
+            console.log(
+              `⚠️ [ChartExport] SVG ${index} has no Recharts elements and few chart elements:`,
+              {
+                rechartsElements: rechartsElements.length,
+                chartElements: chartElements.length,
+              }
+            );
             allSvgsReady = false;
             return;
           }

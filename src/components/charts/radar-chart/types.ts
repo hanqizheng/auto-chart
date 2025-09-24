@@ -1,5 +1,6 @@
 // Radar Chart 专用类型定义
 import { ChartConfig } from "@/components/ui/chart";
+import { UnifiedColorConfig } from "@/types/chart-config";
 
 /**
  * 雷达图数据点结构
@@ -52,6 +53,12 @@ export interface RadarChartProps {
 
   /** 最大半径刻度值 */
   maxValue?: number;
+
+  /** 颜色配置（新架构） - 必需 */
+  colors: UnifiedColorConfig;
+
+  /** 主色调（可选，用于生成颜色配置） */
+  primaryColor?: string;
 }
 
 /**

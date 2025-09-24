@@ -3,7 +3,6 @@
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
-import { useChartTheme } from "@/contexts/chart-theme-context";
 import { BarChartProps, BarChartValidationResult, BarChartData } from "./types";
 
 /**
@@ -86,9 +85,11 @@ export function BeautifulBarChart({
   barRadius = 4,
   showValueLabels = true,
   showGrid = true,
+  colors: providedColors,
+  primaryColor = "#22c55e",
 }: BarChartProps) {
-  const { getSeriesColor, getCommonColors, palette } = useChartTheme();
-  const commonColors = getCommonColors();
+  // 直接使用传入的颜色配置
+  const finalColors = providedColors;
   // 数据验证
   const validation = validateBarChartData(data);
 
@@ -141,13 +142,13 @@ export function BeautifulBarChart({
             }}
           >
             {showGrid && (
-              <CartesianGrid strokeDasharray="3 3" stroke={commonColors.grid} opacity={0.35} />
+              <CartesianGrid strokeDasharray="3 3" stroke={finalColors.grid} opacity={0.35} />
             )}
             <XAxis
               dataKey={categoryKey}
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: commonColors.label }}
+              tick={{ fontSize: 12, fill: finalColors.text }}
               angle={0}
               textAnchor="middle"
               height={40}
@@ -155,14 +156,14 @@ export function BeautifulBarChart({
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: commonColors.label }}
+              tick={{ fontSize: 12, fill: finalColors.text }}
               tickFormatter={value => value.toLocaleString()}
             />
-            {valueKeys.map(key => (
+            {valueKeys.map((key, index) => (
               <Bar
                 key={key}
                 dataKey={key}
-                fill={getSeriesColor(key)}
+                fill={finalColors.series[index % finalColors.series.length] || finalColors.primary}
                 radius={[barRadius, barRadius, 0, 0]}
                 name={String(config[key]?.label || key)}
               >
@@ -172,7 +173,7 @@ export function BeautifulBarChart({
                     position="top"
                     style={{
                       fontSize: "11px",
-                      fill: commonColors.label,
+                      fill: finalColors.text,
                       fontWeight: "600",
                     }}
                     formatter={(value: number) => value.toLocaleString()}

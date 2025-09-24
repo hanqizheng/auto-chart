@@ -1,5 +1,6 @@
 // Bar Chart 专用类型定义
 import { ChartConfig } from "@/components/ui/chart";
+import { UnifiedColorConfig } from "@/types/chart-config";
 
 /**
  * 柱状图数据点接口
@@ -21,16 +22,16 @@ export type BarChartData = BarChartDataPoint[];
 export interface BarChartProps {
   /** 图表数据 - 必须包含至少一个数据点 */
   data: BarChartData;
-  
+
   /** 图表配置 - 定义数据系列的显示配置 */
   config: ChartConfig;
-  
+
   /** 图表标题 */
   title?: string;
-  
+
   /** 图表描述 */
   description?: string;
-  
+
   /** 自定义样式类名 */
   className?: string;
 
@@ -42,6 +43,12 @@ export interface BarChartProps {
 
   /** 是否显示背景网格 */
   showGrid?: boolean;
+
+  /** 颜色配置（新架构） */
+  colors: UnifiedColorConfig;
+
+  /** 主色调（可选，用于生成颜色配置） */
+  primaryColor?: string;
 }
 
 /**
@@ -50,10 +57,10 @@ export interface BarChartProps {
 export interface BarChartValidationResult {
   /** 数据是否有效 */
   isValid: boolean;
-  
+
   /** 错误信息 */
   errors: string[];
-  
+
   /** 数据统计信息 */
   stats: {
     dataPointCount: number;
@@ -69,18 +76,18 @@ export interface BarChartValidationResult {
 export interface BarChartStyleConfig {
   /** 柱子圆角半径 */
   barRadius?: [number, number, number, number];
-  
+
   /** 柱子间距 */
   barCategoryGap?: string;
-  
+
   /** 同类别柱子间距 */
   barGap?: string;
-  
+
   /** 是否显示数值标签 */
   showValueLabels?: boolean;
-  
+
   /** 数值标签位置 */
-  labelPosition?: 'top' | 'inside' | 'bottom';
+  labelPosition?: "top" | "inside" | "bottom";
 }
 
 /**
@@ -89,10 +96,10 @@ export interface BarChartStyleConfig {
 export interface BarChartConfiguration {
   /** 基础配置 */
   config: ChartConfig;
-  
+
   /** 样式配置 */
   style?: BarChartStyleConfig;
-  
+
   /** 图表元数据 */
   metadata: {
     title?: string;

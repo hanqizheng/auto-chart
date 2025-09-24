@@ -9,7 +9,6 @@ import {
   PieChartAnalysis,
   PIE_CHART_DEFAULTS,
 } from "./types";
-import { useChartTheme } from "@/contexts/chart-theme-context";
 import { cn } from "@/lib/utils";
 
 /**
@@ -175,8 +174,12 @@ export function BeautifulPieChart({
   showLegend = PIE_CHART_DEFAULTS.showLegend,
   innerRadius = PIE_CHART_DEFAULTS.innerRadius,
   outerRadius = PIE_CHART_DEFAULTS.outerRadius,
+  colors: providedColors,
+  primaryColor = "#22c55e",
 }: PieChartProps) {
-  const { pieSliceColors, palette } = useChartTheme();
+  // 直接使用传入的颜色配置
+  const finalColors = providedColors;
+
   const outerClasses = cn("flex h-full w-full flex-col", className);
 
   // 数据验证
@@ -218,15 +221,22 @@ export function BeautifulPieChart({
   const total =
     analysis.total > 0 ? analysis.total : validData.reduce((sum, item) => sum + item.value, 0);
 
-  // 选择颜色调色板，避免对零长度数组取模
+  // 选择颜色调色板，优先使用config中的颜色配置
   const colorPalette = (() => {
-    if (pieSliceColors.length > 0) {
-      return pieSliceColors;
+    // 优先使用config中的colors数组（来自统一配置）
+    if (
+      (config as any)?.colors &&
+      Array.isArray((config as any).colors) &&
+      (config as any).colors.length > 0
+    ) {
+      return (config as any).colors;
     }
-    if (palette.series.length > 0) {
-      return palette.series;
+    // 其次使用finalColors.series
+    if (finalColors.series.length > 0) {
+      return finalColors.series;
     }
-    return [palette.primary];
+    // 最后使用primary颜色
+    return [finalColors.primary];
   })();
 
   // 准备图表数据并分配颜色
@@ -275,7 +285,7 @@ export function BeautifulPieChart({
                 verticalAlign="bottom"
                 height={36}
                 formatter={(value, entry) => (
-                  <span className="text-sm" style={{ color: palette.neutralStrong }}>
+                  <span className="text-sm" style={{ color: finalColors.text || "#666" }}>
                     {value} (
                     {entry?.payload && total > 0
                       ? ((entry.payload.value / total) * 100).toFixed(1)

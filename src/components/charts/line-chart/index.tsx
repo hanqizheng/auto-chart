@@ -4,7 +4,6 @@ import { GitCommitVertical, Minus, TrendingDown, TrendingUp } from "lucide-react
 import { CartesianGrid, LabelList, Line, LineChart, ReferenceLine, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
-import { useChartTheme } from "@/contexts/chart-theme-context";
 import { LineChartProps, LineChartValidationResult, LineChartData, TrendAnalysis } from "./types";
 
 /**
@@ -121,9 +120,23 @@ export function BeautifulLineChart({
   dotSize = 6,
   dotVariant = "default",
   showGrid = true,
+  colors: providedColors,
+  primaryColor = "#22c55e",
 }: LineChartProps) {
-  const { getSeriesColor, getCommonColors, palette } = useChartTheme();
-  const commonColors = getCommonColors();
+  // 直接使用传入的颜色配置
+  const finalColors = providedColors;
+
+  // 简单的系列颜色分配逻辑
+  const getSeriesColor = (key: string, fallbackIndex?: number): string => {
+    const configKeys = Object.keys(config);
+    const keyIndex = configKeys.indexOf(key);
+    const colorIndex = keyIndex >= 0 ? keyIndex : (fallbackIndex ?? 0);
+    return (
+      finalColors.series[colorIndex % finalColors.series.length] ||
+      finalColors.series[0] ||
+      finalColors.primary
+    );
+  };
   // 数据验证
   const validation = validateLineChartData(data);
 
@@ -163,7 +176,7 @@ export function BeautifulLineChart({
           height={baseSize}
           strokeWidth={2}
           stroke={color}
-          fill={palette.background}
+          fill={finalColors.background}
         />
       );
     };
@@ -179,13 +192,13 @@ export function BeautifulLineChart({
           dot: {
             r: dotSize,
             fill: color,
-            stroke: palette.background,
+            stroke: finalColors.background,
             strokeWidth: 1.5,
           },
           activeDot: {
             r: dotSize + 2,
             fill: color,
-            stroke: palette.background,
+            stroke: finalColors.background,
             strokeWidth: 2,
           },
         } as const;
@@ -197,7 +210,7 @@ export function BeautifulLineChart({
       default:
         return {
           dot: {
-            fill: palette.background,
+            fill: finalColors.background,
             strokeWidth: 2,
             r: dotSize,
             stroke: color,
@@ -206,7 +219,7 @@ export function BeautifulLineChart({
             r: dotSize + 2,
             stroke: color,
             strokeWidth: 2,
-            fill: palette.background,
+            fill: finalColors.background,
           },
         } as const;
     }
@@ -246,13 +259,13 @@ export function BeautifulLineChart({
             }}
           >
             {showGrid && (
-              <CartesianGrid strokeDasharray="3 3" stroke={commonColors.grid} opacity={0.4} />
+              <CartesianGrid strokeDasharray="3 3" stroke={finalColors.grid} opacity={0.4} />
             )}
             <XAxis
               dataKey={xAxisKey}
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: commonColors.label }}
+              tick={{ fontSize: 12, fill: finalColors.text }}
               angle={0}
               textAnchor="middle"
               height={40}
@@ -260,7 +273,7 @@ export function BeautifulLineChart({
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: commonColors.label }}
+              tick={{ fontSize: 12, fill: finalColors.text }}
               tickFormatter={value => value.toLocaleString()}
             />
 
@@ -268,7 +281,7 @@ export function BeautifulLineChart({
             {showReferenceLine && (
               <ReferenceLine
                 y={overallAverage}
-                stroke={palette.neutral}
+                stroke={finalColors.grid}
                 strokeDasharray="5 5"
                 opacity={0.6}
               />

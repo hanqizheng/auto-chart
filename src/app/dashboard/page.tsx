@@ -17,7 +17,7 @@ export default function Dashboard() {
       <DashboardLayout />
 
       {/* 主题切换按钮 */}
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-4 left-4 z-50">
         <ThemeToggle />
       </div>
     </div>

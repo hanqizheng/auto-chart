@@ -8,7 +8,6 @@ import { LocalStorageService } from "./local-storage-service";
 import { createRoot } from "react-dom/client";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
 import { aiDirector, ChartGenerationRequest } from "@/lib/ai-agents";
-import { ChartThemeProvider } from "@/contexts/chart-theme-context";
 import { createChartTheme, DEFAULT_CHART_BASE_COLOR, mapSeriesKeysToColors } from "@/lib/colors";
 
 const { BAR, LINE, PIE, AREA, RADAR, RADIAL } = CHART_TYPES;
@@ -406,12 +405,14 @@ export class AutoChartService {
         import("react").then(React => {
           const root = createRoot(chartDiv);
           const { theme, ...restProps } = chartProps;
-          const element = React.createElement(ChartThemeProvider, {
-            chartType: restProps.type,
-            chartData: restProps.data,
-            chartConfig: restProps.config,
-            theme,
-            children: React.createElement(EnhancedChart, restProps),
+
+          // 从theme中提取primaryColor用于新架构
+          const primaryColor = theme?.baseColor || DEFAULT_CHART_BASE_COLOR;
+
+          // 直接创建EnhancedChart，传递primaryColor
+          const element = React.createElement(EnhancedChart, {
+            ...restProps,
+            primaryColor,
           });
 
           root.render(element);

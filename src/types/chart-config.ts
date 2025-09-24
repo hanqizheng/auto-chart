@@ -77,6 +77,14 @@ export interface ColorConfigItem {
   isArray?: boolean;
   /** 是否有描边颜色（仅用于某些图表类型） */
   hasStroke?: boolean;
+  /** 系列索引（用于动态系列配置） */
+  seriesIndex?: number;
+  /** 颜色类型（填充或描边） */
+  colorType?: "fill" | "stroke";
+  /** 系列键（用于关联数据） */
+  seriesKey?: string;
+  /** 数据索引（用于分类图表） */
+  dataIndex?: number;
 }
 
 /**
@@ -119,21 +127,23 @@ export interface ChartConfigSchema {
 export type ChartConfigSchemas = typeof CHART_CONFIG_SCHEMAS;
 
 /**
- * 统一的颜色配置结构
+ * 统一的颜色配置结构 - 支持填充和描边的细粒度控制
  */
 export interface UnifiedColorConfig {
-  /** 主色调（简单模式使用） */
+  /** 主色调（用于生成系列颜色） */
   primary: string;
-  /** 系列颜色（复杂模式可单独配置） */
+  /** 系列填充颜色 */
   series: string[];
+  /** 系列描边颜色（某些图表类型使用） */
+  seriesStroke?: string[];
   /** 网格颜色 */
   grid: string;
   /** 背景颜色 */
   background: string;
   /** 文本颜色 */
   text: string;
-  /** 描边颜色（某些图表类型使用） */
-  stroke?: string[];
+  /** 动态颜色配置（键值对形式，支持复杂配置项） */
+  dynamic?: Record<string, string>;
 }
 
 /**
@@ -183,8 +193,7 @@ export interface UnifiedOptionConfig {
 }
 
 /**
- * 统一的图表配置接口
- * 这是核心数据结构，简单模式和复杂模式都使用这个结构
+ * 统一的图表配置接口 - 使用自定义配置模式
  */
 export interface UnifiedChartConfig {
   /** 图表类型 */
@@ -196,32 +205,33 @@ export interface UnifiedChartConfig {
   /** 选项配置 */
   options: UnifiedOptionConfig;
 
-  /** 配置模式（影响UI渲染，不影响数据结构） */
-  mode: ChartConfigMode;
-
   /** 可配置的系列键（从图表数据中提取） */
   seriesKeys: Array<{ key: string; label: string }>;
 }
 
 /**
- * 配置变更事件
+ * 配置变更事件 - 只支持自定义配置
  */
 export interface ConfigChangeEvent {
   /** 变更类型 */
-  type: "color" | "option" | "mode";
+  type: "color" | "option";
   /** 变更的键 */
   key: string;
   /** 新值 */
   value: any;
   /** 数组索引（仅用于系列颜色） */
   index?: number;
+  /** 颜色类型（填充或描边） */
+  colorType?: "fill" | "stroke";
+  /** 系列键（用于关联数据） */
+  seriesKey?: string;
 }
 
 /**
  * 配置生成选项
  */
 export interface ConfigGenerationOptions {
-  /** 基础颜色（用于简单模式的自动生成） */
+  /** 基础颜色（用于颜色生成） */
   baseColor: string;
   /** 系列数量 */
   seriesCount: number;

@@ -10,7 +10,6 @@ import {
   RadarChart as RechartsRadarChart,
 } from "recharts";
 import { ChartContainer } from "@/components/ui/chart";
-import { useChartTheme } from "@/contexts/chart-theme-context";
 import {
   RadarChartProps,
   RadarChartData,
@@ -105,9 +104,11 @@ export function BeautifulRadarChart({
   fillOpacity = RADAR_CHART_DEFAULTS.fillOpacity,
   strokeWidth = RADAR_CHART_DEFAULTS.strokeWidth,
   maxValue,
+  colors: providedColors,
+  primaryColor = "#22c55e",
 }: RadarChartProps) {
-  const { getSeriesColor, getSeriesConfig, getCommonColors, palette } = useChartTheme();
-  const commonColors = getCommonColors();
+  // 直接使用传入的颜色配置
+  const finalColors = providedColors;
   const validation = validateRadarChartData(data);
   const containerClass = cn("flex h-full w-full flex-col", className);
 
@@ -133,19 +134,19 @@ export function BeautifulRadarChart({
       ? maxValue
       : Math.max(...valueKeys.map(key => Math.max(...data.map(item => Number(item[key]) || 0))), 0);
 
-  const summaries = valueKeys.map(key => {
+  const summaries = valueKeys.map((key, index) => {
     const seriesValues = data.map(item => Number(item[key]) || 0);
     const max = Math.max(...seriesValues);
     const min = Math.min(...seriesValues);
     const avg = seriesValues.reduce((acc, value) => acc + value, 0) / (seriesValues.length || 1);
 
-    // 使用新的结构化颜色配置
-    const colorConfig = getSeriesConfig(key);
+    // 使用简化的颜色获取逻辑
+    const color = finalColors.series[index % finalColors.series.length] || finalColors.primary;
 
     return {
       key,
       label: String(config[key]?.label || key),
-      color: colorConfig.stroke, // 使用边框色作为指示器颜色
+      color, // 使用系列颜色
       max,
       min,
       avg,
@@ -163,27 +164,30 @@ export function BeautifulRadarChart({
 
       <ChartContainer config={config} className="flex-1">
         <RechartsRadarChart data={data} outerRadius="80%">
-          {showGrid && <PolarGrid stroke={commonColors.grid} />}
-          <PolarAngleAxis
-            dataKey={dimensionKey}
-            tick={{ fill: commonColors.label, fontSize: 12 }}
-          />
+          {showGrid && <PolarGrid stroke={finalColors.grid} />}
+          <PolarAngleAxis dataKey={dimensionKey} tick={{ fill: finalColors.text, fontSize: 12 }} />
           <PolarRadiusAxis
-            tick={{ fill: commonColors.label, fontSize: 11 }}
+            tick={{ fill: finalColors.text, fontSize: 11 }}
             angle={30}
             domain={[0, computedMax || "auto"]}
           />
           {valueKeys.map((key, index) => {
-            // 使用新的结构化颜色配置
-            const colorConfig = getSeriesConfig(key, index);
+            // 简化的颜色获取逻辑
+            const strokeColor =
+              finalColors.seriesStroke?.[index] ||
+              finalColors.series[index % finalColors.series.length] ||
+              finalColors.primary;
+            const fillColor =
+              finalColors.series[index % finalColors.series.length] || finalColors.primary;
+
             return (
               <Radar
                 key={key}
                 name={String(config[key]?.label || key)}
                 dataKey={key}
-                stroke={colorConfig.stroke} // 边框色
-                fill={showArea ? colorConfig.fill : undefined} // 填充色（支持透明度）
-                fillOpacity={showArea ? 1 : 0} // 透明度由fill中的rgba控制
+                stroke={strokeColor} // 边框色
+                fill={showArea ? fillColor : undefined} // 填充色
+                fillOpacity={showArea ? fillOpacity : 0} // 使用配置的透明度
                 strokeWidth={strokeWidth}
                 dot={showDots}
                 activeDot={showDots ? { r: 4 } : undefined}
@@ -197,24 +201,25 @@ export function BeautifulRadarChart({
               </Radar>
             );
           })}
-          {showLegend && <Legend wrapperStyle={{ fontSize: 12 }} />}
         </RechartsRadarChart>
       </ChartContainer>
 
-      <div className="text-muted-foreground mt-4 grid gap-2 text-xs">
-        {summaries.map(item => (
-          <div key={item.key} className="flex items-center gap-3">
-            <span
-              className="inline-flex h-2 w-6 rounded-full"
-              style={{ backgroundColor: item.color }}
-            />
-            <span className="text-foreground font-medium">{item.label}</span>
-            <span>max {item.max.toFixed(0)}</span>
-            <span>min {item.min.toFixed(0)}</span>
-            <span>avg {item.avg.toFixed(1)}</span>
-          </div>
-        ))}
-      </div>
+      {showLegend && (
+        <div className="text-muted-foreground mt-4 grid gap-2 text-xs">
+          {summaries.map(item => (
+            <div key={item.key} className="flex items-center gap-3">
+              <span
+                className="inline-flex h-2 w-6 rounded-full"
+                style={{ backgroundColor: item.color }}
+              />
+              <span className="text-foreground font-medium">{item.label}</span>
+              <span>max {item.max.toFixed(0)}</span>
+              <span>min {item.min.toFixed(0)}</span>
+              <span>avg {item.avg.toFixed(1)}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

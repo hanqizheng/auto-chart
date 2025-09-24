@@ -26,11 +26,10 @@ export const COLOR_CONFIG_CATEGORIES = {
 } as const;
 
 /**
- * 配置模式常量
+ * 配置模式常量 - 统一使用自定义模式
  */
 export const CHART_CONFIG_MODES = {
-  SIMPLE: "simple",
-  COMPLEX: "complex",
+  CUSTOM: "custom",
 } as const;
 
 /**
@@ -294,6 +293,12 @@ export const CHART_CONFIG_SCHEMAS = {
     ],
     options: [
       {
+        key: "showLegend",
+        label: "Show Legend",
+        type: CHART_CONFIG_TYPES.BOOLEAN,
+        defaultValue: true,
+      },
+      {
         key: "radialShowLabels",
         label: "Show Value Labels",
         type: CHART_CONFIG_TYPES.BOOLEAN,
@@ -331,9 +336,9 @@ export const CHART_CONFIG_SCHEMAS = {
  * 默认配置值常量
  */
 export const CHART_CONFIG_DEFAULTS = {
-  MODE: CHART_CONFIG_MODES.SIMPLE,
-  PRIMARY_COLOR: "#3b82f6",
-  SERIES_COLORS: ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"],
+  MODE: CHART_CONFIG_MODES.CUSTOM,
+  PRIMARY_COLOR: "#22c55e",
+  SERIES_COLORS: ["#22c55e", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"],
   GRID_COLOR: "#e5e7eb",
   BACKGROUND_COLOR: "#ffffff",
   TEXT_COLOR: "#374151",

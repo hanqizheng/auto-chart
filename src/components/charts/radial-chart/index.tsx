@@ -8,7 +8,6 @@ import {
   RadialBarChart as RechartsRadialBarChart,
 } from "recharts";
 import { ChartContainer } from "@/components/ui/chart";
-import { useChartTheme } from "@/contexts/chart-theme-context";
 import {
   RadialChartProps,
   RadialChartData,
@@ -91,10 +90,18 @@ export function BeautifulRadialChart({
   showLegend = RADIAL_CHART_DEFAULTS.showLegend,
   showBackground = RADIAL_CHART_DEFAULTS.showBackground,
   showLabels = RADIAL_CHART_DEFAULTS.showLabels,
+  colors: providedColors,
+  primaryColor = "#22c55e",
 }: RadialChartProps) {
-  const { palette } = useChartTheme();
+  // 直接使用传入的颜色配置
+  const finalColors = providedColors;
+
   const validation = validateRadialChartData(data);
   const containerClass = cn("flex h-full w-full flex-col", className);
+
+  // 获取background颜色，优先使用config中的配置
+  const backgroundColor =
+    (config as any)?.backgroundColor || finalColors.background || finalColors.grid;
 
   if (!validation.isValid) {
     return (
@@ -113,7 +120,7 @@ export function BeautifulRadialChart({
 
   const coloredData = data.map((item, index) => ({
     ...item,
-    fill: palette.series[index % palette.series.length] || palette.primary,
+    fill: finalColors.series[index % finalColors.series.length] || finalColors.primary,
   }));
 
   const maxValue = Math.max(...coloredData.map(item => Number(item.value) || 0), 0);
@@ -130,7 +137,7 @@ export function BeautifulRadialChart({
       {(title || description) && (
         <div className="mb-4 space-y-1">
           {title && <h3 className="text-lg font-semibold">{title}</h3>}
-          {description && <p className="text-sm text-muted-foreground">{description}</p>}
+          {description && <p className="text-muted-foreground text-sm">{description}</p>}
         </div>
       )}
 
@@ -143,12 +150,7 @@ export function BeautifulRadialChart({
           startAngle={startAngle}
           endAngle={endAngle}
         >
-          <PolarAngleAxis
-            type="number"
-            domain={angleDomain}
-            tick={false}
-            axisLine={false}
-          />
+          <PolarAngleAxis type="number" domain={angleDomain} tick={false} axisLine={false} />
           <PolarRadiusAxis
             dataKey="name"
             type="category"
@@ -158,7 +160,7 @@ export function BeautifulRadialChart({
           />
           <RadialBar
             dataKey="value"
-            background={showBackground ? { fill: palette.background } : undefined}
+            background={showBackground ? { fill: backgroundColor } : undefined}
             cornerRadius={cornerRadius}
             label={
               showLabels
@@ -171,28 +173,23 @@ export function BeautifulRadialChart({
                 : undefined
             }
           />
-          {showLegend && (
-            <Legend
-              align="center"
-              verticalAlign="bottom"
-              wrapperStyle={{ fontSize: 12 }}
-            />
-          )}
         </RechartsRadialBarChart>
       </ChartContainer>
 
-      <div className="mt-4 grid gap-2 text-xs text-muted-foreground">
-        {summaries.map(item => (
-          <div key={item.name} className="flex items-center gap-3">
-            <span
-              className="inline-flex h-2 w-6 rounded-full"
-              style={{ backgroundColor: item.color }}
-            />
-            <span className="font-medium text-foreground">{item.name}</span>
-            <span>{item.value.toLocaleString()}</span>
-          </div>
-        ))}
-      </div>
+      {showLegend && (
+        <div className="text-muted-foreground mt-4 grid gap-2 text-xs">
+          {summaries.map(item => (
+            <div key={item.name} className="flex items-center gap-3">
+              <span
+                className="inline-flex h-2 w-6 rounded-full"
+                style={{ backgroundColor: item.color }}
+              />
+              <span className="text-foreground font-medium">{item.name}</span>
+              <span>{item.value.toLocaleString()}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

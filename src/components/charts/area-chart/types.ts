@@ -1,5 +1,6 @@
 // Area Chart 专用类型定义
 import { ChartConfig } from "@/components/ui/chart";
+import { UnifiedColorConfig } from "@/types/chart-config";
 
 /**
  * 面积图数据点接口
@@ -21,7 +22,7 @@ export type AreaChartData = AreaChartDataPoint[];
 export interface EnhancedAreaChartDataPoint extends AreaChartDataPoint {
   /** 总计值 */
   _total: number;
-  
+
   /** 增长率 */
   _growth: number;
 }
@@ -32,28 +33,28 @@ export interface EnhancedAreaChartDataPoint extends AreaChartDataPoint {
 export interface AreaSeriesAnalysis {
   /** 系列标识 */
   key: string;
-  
+
   /** 总累积值 */
   totalAccumulated: number;
-  
+
   /** 平均值 */
   average: number;
-  
+
   /** 峰值 */
   peak: {
     value: number;
     period: string | number;
   };
-  
+
   /** 谷值 */
   valley: {
     value: number;
     period: string | number;
   };
-  
+
   /** 增长趋势 */
-  growthTrend: 'increasing' | 'decreasing' | 'stable' | 'volatile';
-  
+  growthTrend: "increasing" | "decreasing" | "stable" | "volatile";
+
   /** 变异系数（衡量波动性） */
   coefficientOfVariation: number;
 }
@@ -64,28 +65,28 @@ export interface AreaSeriesAnalysis {
 export interface AreaChartProps {
   /** 图表数据 - 必须包含至少两个数据点 */
   data: AreaChartData;
-  
+
   /** 图表配置 - 定义数据系列的显示配置 */
   config: ChartConfig;
-  
+
   /** 图表标题 */
   title?: string;
-  
+
   /** 图表描述 */
   description?: string;
-  
+
   /** 自定义样式类名 */
   className?: string;
-  
+
   /** 是否堆叠显示 */
   stacked?: boolean;
-  
+
   /** 是否显示总计线 */
   showTotalLine?: boolean;
-  
+
   /** 是否显示增长率指标 */
   showGrowthRate?: boolean;
-  
+
   /** 面积透明度 */
   fillOpacity?: number;
 
@@ -94,6 +95,12 @@ export interface AreaChartProps {
 
   /** 是否显示背景网格 */
   showGrid?: boolean;
+
+  /** 颜色配置（新架构） - 必需 */
+  colors: UnifiedColorConfig;
+
+  /** 主色调（可选，用于生成颜色配置） */
+  primaryColor?: string;
 }
 
 /**
@@ -102,10 +109,10 @@ export interface AreaChartProps {
 export interface AreaChartValidationResult {
   /** 数据是否有效 */
   isValid: boolean;
-  
+
   /** 错误信息 */
   errors: string[];
-  
+
   /** 数据统计信息 */
   stats: {
     dataPointCount: number;
@@ -126,24 +133,24 @@ export interface AreaChartValidationResult {
 export interface AreaChartStyleConfig {
   /** 面积透明度 */
   fillOpacity?: number;
-  
+
   /** 边界线宽度 */
   strokeWidth?: number;
-  
+
   /** 是否显示边界线 */
   showStroke?: boolean;
-  
+
   /** 是否显示数据点 */
   showDots?: boolean;
-  
+
   /** 数据点大小 */
   dotSize?: number;
-  
+
   /** 渐变填充 */
   useGradient?: boolean;
-  
+
   /** 曲线平滑度 */
-  curveType?: 'linear' | 'monotone' | 'step';
+  curveType?: "linear" | "monotone" | "step";
 }
 
 /**
@@ -152,10 +159,10 @@ export interface AreaChartStyleConfig {
 export interface AreaChartConfiguration {
   /** 基础配置 */
   config: ChartConfig;
-  
+
   /** 样式配置 */
   style?: AreaChartStyleConfig;
-  
+
   /** 图表元数据 */
   metadata: {
     title?: string;
@@ -163,7 +170,7 @@ export interface AreaChartConfiguration {
     xAxisLabel?: string;
     yAxisLabel?: string;
   };
-  
+
   /** 显示选项 */
   display?: {
     stacked?: boolean;
@@ -171,7 +178,7 @@ export interface AreaChartConfiguration {
     showGrowthRate?: boolean;
     fillOpacity?: number;
   };
-  
+
   /** 分析配置 */
   analysis?: {
     calculateGrowth?: boolean;
@@ -191,7 +198,7 @@ export const AREA_CHART_DEFAULTS = {
   dotSize: 4,
   useGradient: true,
   showGrid: true,
-  curveType: 'monotone' as const,
+  curveType: "monotone" as const,
   stacked: false,
   showTotalLine: true,
   showGrowthRate: true,
