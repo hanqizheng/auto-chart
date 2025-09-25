@@ -18,7 +18,7 @@ export default function Dashboard() {
       <DashboardLayout />
 
       {/* 主题切换按钮 */}
-      <div className="fixed top-4 left-4 z-50 flex items-center space-x-3">
+      <div className="fixed top-4 left-4 z-50 flex flex-col justify-center space-x-3">
         <ThemeToggle />
         <FeedBack />
       </div>
