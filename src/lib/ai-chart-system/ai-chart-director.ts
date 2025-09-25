@@ -27,8 +27,22 @@ const CHART_TYPE_KEYWORDS: Record<ChartType, string[]> = {
   pie: ["pie", "pie chart", "饼图", "饼状图", "占比", "比例", "份额", "donut"],
   area: ["area", "area chart", "面积图", "面积", "堆叠", "stacked"],
   radar: ["radar", "radar chart", "雷达", "蛛网", "极坐标", "spider"],
-  radial: ["radial", "radial chart", "径向", "环形", "仪表", "gauge", "progress ring"],
+  radial: [
+    "radial",
+    "radial chart",
+    "radial bar",
+    "radial bar chart",
+    "径向",
+    "环形",
+    "仪表",
+    "gauge",
+    "progress ring",
+  ],
 };
+
+const CHART_TYPE_DISAMBIGUATION: Array<{ regex: RegExp; chartType: ChartType }> = [
+  { regex: /\bradial(?:\s*-\s*|\s+)bar(?:\s+chart)?\b/, chartType: "radial" },
+];
 
 /**
  * AI图表系统输入
@@ -913,6 +927,14 @@ function detectChartTypeFromPrompt(prompt: string): ChartType | null {
   }
 
   const normalized = prompt.toLowerCase();
+
+  for (const { regex, chartType } of CHART_TYPE_DISAMBIGUATION) {
+    if (regex.test(normalized)) {
+      return chartType;
+    }
+  }
+
+  const scores: Partial<Record<ChartType, number>> = {};
   let bestMatch: { type: ChartType; score: number } | null = null;
 
   for (const [chartType, keywords] of Object.entries(CHART_TYPE_KEYWORDS) as [
@@ -922,19 +944,59 @@ function detectChartTypeFromPrompt(prompt: string): ChartType | null {
     let score = 0;
     for (const keyword of keywords) {
       if (!keyword) continue;
-      if (normalized.includes(keyword.toLowerCase())) {
-        score += keyword.length >= 2 ? 2 : 1;
+      const keywordScore = countKeywordMatches(normalized, keyword.toLowerCase());
+      if (keywordScore > 0) {
+        const weight = keyword.trim().includes(" ") || keyword.length >= 5 ? 2 : 1;
+        score += keywordScore * weight;
       }
     }
 
     if (score > 0) {
+      scores[chartType] = score;
       if (!bestMatch || score > bestMatch.score) {
         bestMatch = { type: chartType, score };
       }
     }
   }
 
+  if (bestMatch?.type === "bar") {
+    const radialScore = scores.radial ?? 0;
+    const hasRadialSignal =
+      radialScore > 0 ||
+      /\bradial\b/.test(normalized) ||
+      normalized.includes("径向") ||
+      normalized.includes("环形") ||
+      normalized.includes("仪表");
+
+    if (hasRadialSignal && radialScore >= Math.max(bestMatch.score - 1, 1)) {
+      return "radial";
+    }
+  }
+
   return bestMatch?.type ?? null;
+}
+
+function countKeywordMatches(text: string, keyword: string): number {
+  if (!keyword) return 0;
+  const normalizedKeyword = keyword.trim().toLowerCase();
+  if (!normalizedKeyword) return 0;
+
+  if (/[^\x00-\x7f]/.test(normalizedKeyword)) {
+    return text.includes(normalizedKeyword) ? 1 : 0;
+  }
+
+  const escaped = escapeRegExp(normalizedKeyword);
+  const useWordBoundary = /^[a-z0-9][a-z0-9\s-]*$/.test(normalizedKeyword);
+  const pattern = useWordBoundary
+    ? new RegExp(`\\b${escaped}\\b`, "g")
+    : new RegExp(escaped, "g");
+
+  const matches = text.match(pattern);
+  return matches ? matches.length : 0;
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\\]\]/g, "\\$&");
 }
 
 function getChartLabel(chartType: ChartType): string {
