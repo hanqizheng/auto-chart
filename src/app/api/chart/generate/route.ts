@@ -1,14 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ChartIntentAgent } from "@/lib/ai-agents";
 import { AIChartDirector } from "@/lib/ai-chart-system/ai-chart-director";
-import { createServiceFromEnv } from "@/lib/ai/service-factory";
+import { ChartResultContent, ConversationContextPayload } from "@/types";
+import {
+  ensureSessionId,
+  persistConversationResult,
+  resolveConversationContext,
+} from "@/lib/conversation-memory";
 
 export async function POST(req: NextRequest) {
   let files: any[] = []; // 声明在外层作用域，用于错误处理
+  let conversationPayload: ConversationContextPayload | undefined;
 
   try {
     const requestBody = await req.json();
-    const { prompt, files: requestFiles } = requestBody;
+    const { prompt, files: requestFiles, conversation } = requestBody;
+    conversationPayload = conversation;
     files = requestFiles || [];
 
     console.log("🐛🚀 [API] 主流程：开始处理图表生成请求:", {
@@ -16,7 +22,12 @@ export async function POST(req: NextRequest) {
       fileCount: files.length,
       hasFiles: files.length > 0,
       firstFileName: files[0]?.name,
+      hasConversation: !!conversation,
+      conversationHistory: conversation?.history?.length || 0,
     });
+
+    const resolvedConversation = resolveConversationContext(conversationPayload);
+    const sessionId = ensureSessionId(resolvedConversation ?? conversationPayload);
 
     // 🚀 使用新的AI图表系统处理所有场景（包括仅prompt）
     const USE_NEW_SYSTEM = true; // 功能开关：统一使用新系统
@@ -43,6 +54,7 @@ export async function POST(req: NextRequest) {
         promptLength: prompt?.length || 0,
         fileCount: fileObjects.length,
         scenario: fileObjects.length > 0 ? "PROMPT_WITH_FILE" : "PROMPT_ONLY",
+        sessionId,
         firstFile: fileObjects[0]
           ? {
               name: fileObjects[0].name,
@@ -50,11 +62,14 @@ export async function POST(req: NextRequest) {
               size: fileObjects[0].size,
             }
           : null,
+        resolvedHistory: resolvedConversation?.history?.length || 0,
       });
 
       const aiResult = await aiDirector.generateChart({
         prompt: prompt || "请生成一个图表",
         files: fileObjects,
+        conversation: resolvedConversation ?? conversationPayload,
+        sessionId,
       });
 
       console.log("🐛🚀 [API] 主流程：新系统执行结果:", {
@@ -85,7 +100,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 构建图表结果
-    const chartResult = {
+    const chartResult: ChartResultContent = {
       chartData: result.data,
       chartConfig: result.config,
       chartType: result.chartType,
@@ -101,6 +116,13 @@ export async function POST(req: NextRequest) {
       },
     };
 
+    persistConversationResult({
+      sessionId,
+      prompt: prompt || "",
+      conversation: resolvedConversation ?? conversationPayload,
+      chartResult,
+    });
+
     console.log("✅🐛🚀 [API] 主流程：图表生成成功，最终结果:", {
       system:
         USE_NEW_SYSTEM && files && files.length > 0
@@ -110,6 +132,7 @@ export async function POST(req: NextRequest) {
       dataCount: result.data.length,
       title: result.title,
       sampleData: result.data?.slice(0, 2),
+      sessionId,
     });
 
     return NextResponse.json({
@@ -121,6 +144,7 @@ export async function POST(req: NextRequest) {
       error: error instanceof Error ? error.message : error,
       stack: error instanceof Error ? error.stack : undefined,
       hasFiles: !!files && files.length > 0,
+      sessionId: conversationPayload?.sessionId,
     });
 
     return NextResponse.json(

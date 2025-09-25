@@ -1,13 +1,19 @@
 "use client";
 
-import { ChartResultContent, ProcessingFlow, ProcessingStep, ChartType, ChartTheme } from "@/types";
+import {
+  ChartResultContent,
+  ProcessingFlow,
+  ProcessingStep,
+  ChartType,
+  ChartTheme,
+  ConversationContextPayload,
+} from "@/types";
 import { PROCESSING_STEPS } from "@/constants/processing";
 import { CHART_TYPES, CHART_TYPE_LABELS } from "@/constants/chart";
 import { AutoExportService } from "./auto-export-service";
 import { LocalStorageService } from "./local-storage-service";
 import { createRoot } from "react-dom/client";
 import { EnhancedChart } from "@/components/charts/enhanced-chart";
-import { aiDirector, ChartGenerationRequest } from "@/lib/ai-agents";
 import { createChartTheme, DEFAULT_CHART_BASE_COLOR, mapSeriesKeysToColors } from "@/lib/colors";
 
 const { BAR, LINE, PIE, AREA, RADAR, RADIAL } = CHART_TYPES;
@@ -30,13 +36,22 @@ export class AutoChartService {
    */
   async processUserInput(
     input: string,
-    files?: File[],
-    onStepUpdate?: (flow: ProcessingFlow) => void
+    files: File[] = [],
+    options: {
+      onStepUpdate?: (flow: ProcessingFlow) => void;
+      conversationContext?: ConversationContextPayload;
+    } = {}
   ): Promise<{
     processingFlow: ProcessingFlow;
     chartResult: ChartResultContent;
   }> {
-    console.log("🚀 [AutoChart] Processing user input:", { input, fileCount: files?.length || 0 });
+    const { onStepUpdate } = options;
+
+    console.log("🚀 [AutoChart] Processing user input:", {
+      input,
+      fileCount: files.length,
+      hasConversationContext: !!options.conversationContext,
+    });
 
     // 1. 创建处理流程
     const processingFlow = this.createProcessingFlow();
@@ -47,7 +62,8 @@ export class AutoChartService {
         input,
         files,
         processingFlow,
-        onStepUpdate
+        onStepUpdate,
+        options.conversationContext
       );
 
       // 3. 生成图表并导出
@@ -96,9 +112,10 @@ export class AutoChartService {
    */
   private async executeProcessingPipeline(
     input: string,
-    files: File[] | undefined,
+    files: File[],
     flow: ProcessingFlow,
-    onStepUpdate?: (flow: ProcessingFlow) => void
+    onStepUpdate: ((flow: ProcessingFlow) => void) | undefined,
+    conversationContext?: ConversationContextPayload
   ): Promise<any> {
     // 步骤1: AI思考分析
     const thinkingStep = this.addProcessingStep(flow, {
@@ -112,7 +129,7 @@ export class AutoChartService {
 
     await this.simulateStepProgress(thinkingStep, 1000);
     this.completeStep(thinkingStep, {
-      reasoning: files?.length
+      reasoning: files.length
         ? "Uploaded files detected; parsing contents and matching data patterns to chart types"
         : "Received a text prompt; preparing synthetic data and selecting a matching chart",
       considerations: [
@@ -127,7 +144,7 @@ export class AutoChartService {
 
     // 步骤2: 文件解析（如果有文件）
     let uploadedFile: File | undefined = undefined;
-    if (files && files.length > 0) {
+    if (files.length > 0) {
       const parsingStep = this.addProcessingStep(flow, {
         type: PROCESSING_STEPS.FILE_PARSING,
         title: "Parse uploaded file",
@@ -167,12 +184,13 @@ export class AutoChartService {
       // 准备请求数据
       const requestData = {
         prompt: input,
-        files: files?.map(f => ({
+        files: files.map(f => ({
           name: f.name,
           type: f.type,
           size: f.size,
           // 注意：文件内容需要特殊处理，这里暂时只传递元数据
         })),
+        conversation: conversationContext,
       };
 
       // 调用服务端API

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { ChartResultContent, ChatMessage, SingleChatSession, ProcessingStep } from "@/types";
+import { ChartResultContent } from "@/types";
 import { NewChatInput } from "@/components/chat/new-chat-input";
 import { MessageList } from "@/components/messages/message-list";
 import { useChatSession } from "@/hooks/use-chat-session";
@@ -10,6 +10,7 @@ import { AutoChartService } from "@/services/auto-chart-service";
 import { PROCESSING_STEPS } from "@/constants/processing";
 import { ProcessingFlow } from "@/types";
 import { useSecurityValidation } from "@/lib/security";
+import { buildConversationContext } from "@/lib/conversation-context";
 import { useToast } from "@/components/ui/use-toast";
 import { autoTriggerHandler } from "@/lib/auto-trigger-handler";
 import { globalChartManager } from "@/lib/global-chart-manager";
@@ -129,16 +130,17 @@ export function CenteredChatPanel({
     try {
       setLoadingState(true);
 
+      const normalizedFiles = files ?? [];
+
       // 0. 安全验证 - 将文件转换为FileAttachment格式进行验证
-      const fileAttachments =
-        files?.map(file => ({
-          id: `${Date.now()}_${Math.random()}`,
-          name: file.name,
-          size: file.size,
-          type: getFileAttachmentType(file),
-          file: file,
-          uploadedAt: new Date(),
-        })) || [];
+      const fileAttachments = normalizedFiles.map(file => ({
+        id: `${Date.now()}_${Math.random()}`,
+        name: file.name,
+        size: file.size,
+        type: getFileAttachmentType(file),
+        file,
+        uploadedAt: new Date(),
+      }));
 
       console.log("🔐 [Security] 开始安全验证:", {
         messageLength: text.length,
@@ -178,15 +180,33 @@ export function CenteredChatPanel({
       console.log("✅ [Security] 安全验证通过");
 
       // 1. 添加用户消息
-      const userMessageId = addUserMessage(text, files);
+      const userMessageId = addUserMessage(text, normalizedFiles);
 
       // 2. 开始处理流程
       const processingMessageId = addProcessingMessage("Analyzing your request...");
 
+      const pendingAttachmentSummaries = fileAttachments.map(attachment => ({
+        id: attachment.id,
+        name: attachment.name,
+        type: attachment.type,
+        size: attachment.size,
+        uploadedAt: attachment.uploadedAt.toISOString(),
+      }));
+
+      const conversationContext = buildConversationContext(session, {
+        pendingUserMessage: {
+          id: userMessageId,
+          text,
+          attachments: pendingAttachmentSummaries,
+          createdAt: new Date(),
+        },
+      });
+
       // 3. 使用 AutoChartService 处理输入
       console.log("🚀 [CenteredChatPanel] 调用 AutoChartService 处理请求:", {
         text,
-        fileCount: files?.length || 0,
+        fileCount: normalizedFiles.length,
+        hasConversationContext: !!conversationContext,
       });
 
       // 创建处理步骤更新回调
@@ -201,8 +221,11 @@ export function CenteredChatPanel({
 
       const { processingFlow, chartResult } = await autoChartService.processUserInput(
         text,
-        files,
-        onStepUpdate
+        normalizedFiles,
+        {
+          onStepUpdate,
+          conversationContext,
+        }
       );
 
       // 4. 更新处理消息以显示详细步骤
@@ -212,10 +235,10 @@ export function CenteredChatPanel({
       });
 
       // 5. 添加图表结果消息
-      addChartResultMessage(chartResult);
+      const storedChartResult = addChartResultMessage(chartResult);
 
       // 6. 触发图表显示
-      onChartGenerated(chartResult);
+      onChartGenerated(storedChartResult);
 
       console.log("✅ [CenteredChatPanel] 图表生成完成:", {
         chartType: chartResult.chartType,
