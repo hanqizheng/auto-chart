@@ -2,6 +2,7 @@
 
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { FeedBack } from "@/components/feedback";
 
 const isTestExportEnabled =
   process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_ENABLE_TEST_EXPORT === "true";
@@ -17,8 +18,9 @@ export default function Dashboard() {
       <DashboardLayout />
 
       {/* 主题切换按钮 */}
-      <div className="fixed top-4 left-4 z-50">
+      <div className="fixed top-4 left-4 z-50 flex flex-col justify-center space-x-3">
         <ThemeToggle />
+        <FeedBack />
       </div>
     </div>
   );

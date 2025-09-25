@@ -76,6 +76,17 @@ export type {
   MessageMetadata,
 } from "./message";
 
+// 会话上下文类型
+export type {
+  ConversationContextPayload,
+  ConversationMessageSummary,
+  ConversationMessageKind,
+  ConversationChartSnapshot,
+  ConversationAttachmentSummary,
+  ConversationContextMetadata,
+  PendingUserMessageInput,
+} from "./conversation";
+
 // 处理步骤相关类型
 export type {
   ProcessingStepType,

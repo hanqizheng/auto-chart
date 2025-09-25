@@ -129,11 +129,18 @@ export function useChatSession() {
    */
   const addChartResultMessage = useCallback((chartResult: ChartResultContent) => {
     const messageId = uuidv4();
+    const resolvedChartId = chartResult.chartId || `chart-${messageId}`;
+
+    const chartContent: ChartResultContent = {
+      ...chartResult,
+      messageId,
+      chartId: resolvedChartId,
+    };
 
     const chartMessage: ChatMessage = {
       id: messageId,
       type: MESSAGE_TYPES.CHART_RESULT,
-      content: chartResult,
+      content: chartContent,
       timestamp: new Date(),
       status: MESSAGE_STATUS.COMPLETED,
     };
@@ -141,11 +148,11 @@ export function useChatSession() {
     setSession(prev => ({
       ...prev,
       messages: [...prev.messages, chartMessage],
-      currentChart: chartResult,
+      currentChart: chartContent,
       lastActivity: new Date(),
     }));
 
-    return messageId;
+    return chartContent;
   }, []);
 
   /**
@@ -158,39 +165,61 @@ export function useChatSession() {
     });
 
     setSession(prev => {
+      const targetMessageId = updatedChart.messageId;
 
-      // 🚨 修复：只更新最新的图表消息，而不是基于title+chartType匹配
-      // 这样可以避免旧图表数据覆盖新图表数据的问题
-      const chartMessages = prev.messages.filter(msg => msg.type === MESSAGE_TYPES.CHART_RESULT);
-      const latestChartMessage = chartMessages[chartMessages.length - 1]; // 获取最新的图表消息
+      if (!targetMessageId) {
+        console.warn("⚠️🐛 [ChatSession] 更新图表缺少messageId，跳过", {
+          title: updatedChart.title,
+        });
+        return prev;
+      }
 
+      let hasUpdated = false;
 
       const updatedMessages = prev.messages.map(msg => {
-        if (msg.type === MESSAGE_TYPES.CHART_RESULT && msg.id === latestChartMessage?.id) {
+        if (msg.type === MESSAGE_TYPES.CHART_RESULT && msg.id === targetMessageId) {
+          hasUpdated = true;
+
+          const mergedContent: ChartResultContent = {
+            ...msg.content,
+            ...updatedChart,
+            messageId: targetMessageId,
+            chartId: updatedChart.chartId || msg.content.chartId || `chart-${targetMessageId}`,
+          };
 
           return {
             ...msg,
-            content: updatedChart,
+            content: mergedContent,
             timestamp: new Date(),
           };
         }
         return msg;
       });
 
-      const hasUpdated =
-        latestChartMessage &&
-        updatedMessages.some(
-          (msg, index) => msg !== prev.messages[index] && msg.type === MESSAGE_TYPES.CHART_RESULT
-        );
-
       if (!hasUpdated) {
-        console.warn("⚠️🐛 [ChatSession] 没有找到最新图表消息进行更新，或没有图表消息");
+        console.warn("⚠️🐛 [ChatSession] 没有找到对应的图表消息进行更新", {
+          targetMessageId,
+          title: updatedChart.title,
+        });
+        return prev;
       }
+
+      const shouldUpdateCurrentChart = prev.currentChart?.messageId === targetMessageId;
+
+      const mergedCurrentChart = shouldUpdateCurrentChart
+        ? {
+            ...prev.currentChart,
+            ...updatedChart,
+            messageId: targetMessageId,
+            chartId:
+              updatedChart.chartId || prev.currentChart?.chartId || `chart-${targetMessageId}`,
+          }
+        : prev.currentChart;
 
       return {
         ...prev,
         messages: updatedMessages,
-        currentChart: updatedChart,
+        currentChart: mergedCurrentChart,
         lastActivity: new Date(),
       };
     });
@@ -423,8 +452,8 @@ export function useChatSession() {
             processingId,
             (messageId, updates) => updateProcessingMessage(messageId, updates),
             chartResult => {
-              addChartResultMessage(chartResult);
-              generatedChartResult = chartResult; // 捕获图表结果
+              const storedChart = addChartResultMessage(chartResult);
+              generatedChartResult = storedChart; // 捕获图表结果
               console.log("📊 [ChatSession] 自动触发生成图表:", chartResult.title);
             }
           );

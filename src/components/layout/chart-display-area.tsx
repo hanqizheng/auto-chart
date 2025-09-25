@@ -58,7 +58,12 @@ const HEX_INPUT_PATTERN = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i;
 interface ChartDisplayAreaProps {
   chart: ChartResultContent | null;
   onClose: () => void;
-  onImageGenerated?: (imageUrl: string) => void;
+  onImageGenerated?: (payload: {
+    imageUrl: string;
+    chartId?: string;
+    messageId?: string;
+    title?: string;
+  }) => void;
 }
 
 // ✅ CustomPalette 已被 UnifiedColorConfig 替代
@@ -564,7 +569,12 @@ function ThemedChartContent({
 
       // 同时通知图片更新（用于当前图表显示）
       if (updatedChart.imageInfo?.localBlobUrl) {
-        onImageGenerated?.(updatedChart.imageInfo.localBlobUrl);
+        onImageGenerated?.({
+          imageUrl: updatedChart.imageInfo.localBlobUrl,
+          chartId,
+          messageId: chart.messageId,
+          title: chart.title,
+        });
       }
 
       toast({
@@ -644,26 +654,30 @@ interface ThemedChartContentProps {
   progress: number;
   exportError?: string;
   onRetry: () => void;
-  onImageGenerated?: (imageUrl: string) => void;
+  onImageGenerated?: (payload: {
+    imageUrl: string;
+    chartId: string;
+    messageId?: string;
+    title: string;
+  }) => void;
 }
 
 export function ChartDisplayArea({ chart, onClose, onImageGenerated }: ChartDisplayAreaProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const { registerChart } = useChartExport();
-  const chartId = useMemo(
-    () =>
-      chart
-        ? `${chart.title.replace(/[^a-zA-Z0-9]/g, "_")}_${chart.chartType}_${chart.chartData.length}`
-        : "",
-    [chart]
-  );
+  const chartId = useMemo(() => {
+    if (!chart) return "";
+    if (chart.chartId) return chart.chartId;
+    if (chart.messageId) return `chart-${chart.messageId}`;
+    return `${chart.title.replace(/[^a-zA-Z0-9]/g, "_")}_${chart.chartType}_${chart.chartData.length}`;
+  }, [chart?.chartId, chart?.chartData.length, chart?.chartType, chart?.messageId, chart?.title]);
   const { isExporting, progress, stage, error, retry } = useChartExportStatus(chartId);
 
   // 🎯 提取稳定的标识符，避免对象引用变化导致的重新注册
   const chartStableId = useMemo(() => {
     if (!chart) return null;
-    return `${chart.title}_${chart.chartType}_${chart.chartData.length}`;
-  }, [chart?.title, chart?.chartType, chart?.chartData.length]);
+    return chart.messageId ?? chart.chartId ?? `${chart.title}_${chart.chartType}_${chart.chartData.length}`;
+  }, [chart?.chartId, chart?.chartData.length, chart?.chartType, chart?.messageId, chart?.title]);
 
   useEffect(() => {
     if (chart && chartRef.current && chartId && chartStableId) {

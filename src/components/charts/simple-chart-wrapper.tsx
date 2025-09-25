@@ -40,39 +40,39 @@ export function SimpleChartWrapper({
   children,
   className,
 }: SimpleChartWrapperProps) {
-  console.log(`🎯 [SimpleChartWrapper] Rendering ${chartType} chart with ${data.length} data points`);
+  console.log(
+    `🎯 [SimpleChartWrapper] Rendering ${chartType} chart with ${data.length} data points`
+  );
 
   // 使用新的统一配置生成函数
-  const chartConfig = React.useMemo(() => {
-    return generateChartConfig(chartType, data, config, primaryColor);
-  }, [chartType, data, config, primaryColor]);
+  const baseChartConfig = React.useMemo(() => {
+    return generateChartConfig(chartType, data, config);
+  }, [chartType, data, config]);
+
+  const resolvedPrimaryColor = primaryColor ?? baseChartConfig.primaryColor;
 
   // 基于系列数量生成颜色配置
   const colors = React.useMemo(() => {
-    return generateChartColors(chartType, chartConfig.seriesCount, chartConfig.primaryColor);
-  }, [chartType, chartConfig.seriesCount, chartConfig.primaryColor]);
+    return generateChartColors(chartType, baseChartConfig.seriesCount, resolvedPrimaryColor);
+  }, [chartType, baseChartConfig.seriesCount, resolvedPrimaryColor]);
 
   // 构建标准化的props
   const chartProps = React.useMemo(() => {
     return {
-      standardizedData: chartConfig.data,
-      standardizedConfig: chartConfig.config,
+      standardizedData: baseChartConfig.data,
+      standardizedConfig: baseChartConfig.config,
       colors,
-      seriesCount: chartConfig.seriesCount,
+      seriesCount: baseChartConfig.seriesCount,
     };
-  }, [chartConfig.data, chartConfig.config, colors, chartConfig.seriesCount]);
+  }, [baseChartConfig.data, baseChartConfig.config, colors, baseChartConfig.seriesCount]);
 
   console.log(`✅ [SimpleChartWrapper] Generated config for ${chartType}:`, {
-    seriesCount: chartConfig.seriesCount,
+    seriesCount: baseChartConfig.seriesCount,
     colorsCount: colors.series.length,
     hasStroke: !!colors.seriesStroke,
   });
 
-  return (
-    <div className={className}>
-      {children(chartProps)}
-    </div>
-  );
+  return <div className={className}>{children(chartProps)}</div>;
 }
 
 /**
@@ -85,8 +85,9 @@ export function generateChartColorsFromData(
   config?: Record<string, { label?: string; color?: string; show?: boolean }>,
   primaryColor?: string
 ): SimplifiedColorConfig {
-  const chartConfig = generateChartConfig(chartType, data, config, primaryColor);
-  return generateChartColors(chartType, chartConfig.seriesCount, chartConfig.primaryColor);
+  const baseChartConfig = generateChartConfig(chartType, data, config);
+  const resolvedPrimaryColor = primaryColor ?? baseChartConfig.primaryColor;
+  return generateChartColors(chartType, baseChartConfig.seriesCount, resolvedPrimaryColor);
 }
 
 /**
@@ -112,14 +113,15 @@ export function generateStandardChartProps(
   config?: Record<string, { label?: string; color?: string; show?: boolean }>,
   primaryColor?: string
 ) {
-  const chartConfig = generateChartConfig(chartType, data, config, primaryColor);
-  const colors = generateChartColors(chartType, chartConfig.seriesCount, chartConfig.primaryColor);
+  const baseChartConfig = generateChartConfig(chartType, data, config);
+  const resolvedPrimaryColor = primaryColor ?? baseChartConfig.primaryColor;
+  const colors = generateChartColors(chartType, baseChartConfig.seriesCount, resolvedPrimaryColor);
 
   return {
-    data: chartConfig.data,
-    config: chartConfig.config,
+    data: baseChartConfig.data,
+    config: baseChartConfig.config,
     colors,
-    seriesCount: chartConfig.seriesCount,
+    seriesCount: baseChartConfig.seriesCount,
   };
 }
 
@@ -132,20 +134,33 @@ export function useChartConfig(
   config?: Record<string, { label?: string; color?: string; show?: boolean }>,
   primaryColor?: string
 ) {
-  const chartConfig = React.useMemo(() => {
-    return generateChartConfig(chartType, data, config, primaryColor);
-  }, [chartType, data, config, primaryColor]);
+  const baseChartConfig = React.useMemo(() => {
+    return generateChartConfig(chartType, data, config);
+  }, [chartType, data, config]);
+
+  const resolvedPrimaryColor = primaryColor ?? baseChartConfig.primaryColor;
+
+  const chartConfig = React.useMemo(
+    () => ({
+      ...baseChartConfig,
+      primaryColor: resolvedPrimaryColor,
+    }),
+    [baseChartConfig, resolvedPrimaryColor]
+  );
 
   const colors = React.useMemo(() => {
-    return generateChartColors(chartType, chartConfig.seriesCount, chartConfig.primaryColor);
-  }, [chartType, chartConfig.seriesCount, chartConfig.primaryColor]);
+    return generateChartColors(chartType, chartConfig.seriesCount, resolvedPrimaryColor);
+  }, [chartType, chartConfig.seriesCount, resolvedPrimaryColor]);
 
-  const standardProps = React.useMemo(() => ({
-    data: chartConfig.data,
-    config: chartConfig.config,
-    colors,
-    seriesCount: chartConfig.seriesCount,
-  }), [chartConfig.data, chartConfig.config, colors, chartConfig.seriesCount]);
+  const standardProps = React.useMemo(
+    () => ({
+      data: chartConfig.data,
+      config: chartConfig.config,
+      colors,
+      seriesCount: chartConfig.seriesCount,
+    }),
+    [chartConfig.data, chartConfig.config, colors, chartConfig.seriesCount]
+  );
 
   return {
     chartConfig,

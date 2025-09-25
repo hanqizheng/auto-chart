@@ -8,7 +8,13 @@ import { chartExportService, ExportState } from "@/services/chart-export-service
 
 type ChartUpdateHandler = (updatedChart: ChartResultContent) => void;
 type ExportStatusHandler = (chartId: string, status: ExportState) => void;
-type ChartAppendHandler = (chart: ChartResultContent) => void;
+type ChartAppendHandler = (chart: ChartResultContent) => ChartResultContent | void;
+type CurrentChartImageUpdateHandler = (payload: {
+  chartId: string;
+  messageId?: string;
+  imageUrl: string;
+  title: string;
+}) => void;
 
 interface ChartRenderInfo {
   chartId: string;
@@ -18,6 +24,7 @@ interface ChartRenderInfo {
   renderTime?: Date;
   exportAttempts: number;
   lastExportError?: string;
+  messageId?: string;
 }
 
 class GlobalChartManager {
@@ -27,7 +34,7 @@ class GlobalChartManager {
   private renderingCharts = new Map<string, ChartRenderInfo>();
   private pendingExports = new Set<string>();
   // 🎯 单一当前图表的图片更新回调 - 用于自动导出完成后更新DashboardLayout的图片URL
-  private currentChartImageUpdateHandler: ((imageUrl: string) => void) | null = null;
+  private currentChartImageUpdateHandler: CurrentChartImageUpdateHandler | null = null;
 
   /**
    * Set chart update handler
@@ -80,7 +87,7 @@ class GlobalChartManager {
    * 🎯 设置当前图表的图片更新回调
    * 用于自动导出完成后更新DashboardLayout中的图片URL
    */
-  setCurrentChartImageUpdateHandler(handler: ((imageUrl: string) => void) | null) {
+  setCurrentChartImageUpdateHandler(handler: CurrentChartImageUpdateHandler | null) {
     this.currentChartImageUpdateHandler = handler;
     console.log("🎯 [GlobalChartManager] 设置当前图表图片更新回调:", {
       hasHandler: !!handler,
@@ -111,6 +118,7 @@ class GlobalChartManager {
       isRendered: true,
       renderTime: new Date(),
       exportAttempts: 0,
+      messageId: chartData.messageId,
     };
 
     this.renderingCharts.set(chartId, renderInfo);
@@ -193,6 +201,10 @@ class GlobalChartManager {
           },
         };
 
+        // 保持导出后的图表数据与消息关联信息同步
+        renderInfo.chartData = updatedChart;
+        renderInfo.messageId = updatedChart.messageId;
+
         console.log("✅ [GlobalChartManager] 导出成功:", {
           chartId,
           filename: result.filename,
@@ -215,8 +227,14 @@ class GlobalChartManager {
           console.log("🎯 [GlobalChartManager] 通知当前图表图片更新:", {
             chartId,
             imageUrl: updatedChart.imageInfo.localBlobUrl.substring(0, 50) + "...",
+            messageId: updatedChart.messageId,
           });
-          this.currentChartImageUpdateHandler(updatedChart.imageInfo.localBlobUrl);
+          this.currentChartImageUpdateHandler({
+            chartId,
+            messageId: updatedChart.messageId,
+            imageUrl: updatedChart.imageInfo.localBlobUrl,
+            title: updatedChart.title,
+          });
         }
       } else {
         // 导出失败
@@ -293,6 +311,7 @@ class GlobalChartManager {
       title: updatedChart.title,
       handlersCount: this.updateHandlers.size,
       hasImageUrl: !!updatedChart.imageInfo?.localBlobUrl,
+      messageId: updatedChart.messageId,
     });
 
     // 防止过时的图表导出更新影响到用户当前操作
@@ -337,7 +356,13 @@ class GlobalChartManager {
     });
 
     if (this.appendHandler) {
-      this.appendHandler(chart);
+      const storedChart = this.appendHandler(chart);
+      if (storedChart && typeof storedChart === 'object') {
+        console.log("📌 [GlobalChartManager] 追加图表已写入会话", {
+          chartId: storedChart.chartId,
+          messageId: storedChart.messageId,
+        });
+      }
     } else {
       console.warn("⚠️ [GlobalChartManager] 没有设置追加处理器");
     }

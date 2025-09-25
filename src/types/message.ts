@@ -44,7 +44,7 @@ export interface SerializableFileAttachment {
   size: number;
   uploadedAt: Date;
   // 存储策略
-  storageType: 'base64' | 'indexeddb' | 'demo_static';
+  storageType: "base64" | "indexeddb" | "demo_static";
   // Base64数据（小文件）或存储引用（大文件）
   dataUrl?: string;
   storageKey?: string;
@@ -75,6 +75,14 @@ export interface ProcessingMessageContent {
  * 图表结果内容
  */
 export interface ChartResultContent {
+  /**
+   * 唯一的图表标识符，用于导出和渲染跟踪
+   */
+  chartId?: string;
+  /**
+   * 对应的聊天消息ID，便于更新特定消息
+   */
+  messageId?: string;
   chartData: any[];
   chartConfig: Record<string, any>;
   chartType: ChartType;
@@ -133,7 +141,7 @@ export type ChatMessage = UserMessage | ProcessingMessage | ChartResultMessage;
  */
 export interface AutoTriggerConfig {
   enabled: boolean;
-  type: 'ai_processing';
+  type: "ai_processing";
   triggerMessage: string; // 触发消息ID
   expectedFlow: string[]; // 预期处理步骤
 }
@@ -143,7 +151,7 @@ export interface AutoTriggerConfig {
  */
 export interface DemoReplayConfig {
   enabled: boolean;
-  mode: 'step_by_step' | 'instant';
+  mode: "step_by_step" | "instant";
   stepDelay: number; // 步骤间延迟（毫秒）
   predefinedSteps: DemoReplayStep[];
 }
@@ -152,7 +160,7 @@ export interface DemoReplayConfig {
  * Demo重放步骤
  */
 export interface DemoReplayStep {
-  type: 'add_processing_message' | 'update_processing_step' | 'add_chart_result';
+  type: "add_processing_message" | "update_processing_step" | "add_chart_result";
   delay: number;
   data: any;
 }
@@ -177,20 +185,20 @@ export interface SingleChatSession {
   currentChart?: ChartResultContent;
   createdAt: Date;
   lastActivity: Date;
-  
+
   // 会话结构化字段
   version: string; // 数据版本，用于后续升级
-  source?: 'homepage' | 'dashboard' | 'demo' | 'shared'; // 会话来源
-  
+  source?: "homepage" | "dashboard" | "demo" | "shared"; // 会话来源
+
   // 自动触发配置（用于首页跳转场景）
   _autoTrigger?: AutoTriggerConfig;
-  
+
   // Demo重放配置（用于Demo演示场景）
   _demoReplay?: DemoReplayConfig;
-  
+
   // 存储依赖信息
   _storage?: SessionStorageInfo;
-  
+
   // 标记是否正在等待处理（首页跳转时）
   _pendingProcessing?: boolean;
 }
@@ -198,16 +206,16 @@ export interface SingleChatSession {
 /**
  * 可序列化的会话（用于导出/导入）
  */
-export interface SerializableChatSession extends Omit<SingleChatSession, 'messages'> {
+export interface SerializableChatSession extends Omit<SingleChatSession, "messages"> {
   messages: SerializableChatMessage[];
 }
 
 /**
  * 可序列化的消息（替换File对象）
  */
-export type SerializableChatMessage = 
-  | (Omit<UserMessage, 'content'> & {
-      content: Omit<UserMessageContent, 'attachments'> & {
+export type SerializableChatMessage =
+  | (Omit<UserMessage, "content"> & {
+      content: Omit<UserMessageContent, "attachments"> & {
         attachments?: SerializableFileAttachment[];
       };
     })
@@ -230,7 +238,7 @@ export interface MessageListState {
 export interface MessageActions {
   addUserMessage: (text: string, attachments?: FileAttachment[]) => string;
   addProcessingMessage: (title: string) => string;
-  addChartResultMessage: (content: ChartResultContent) => string;
+  addChartResultMessage: (content: ChartResultContent) => ChartResultContent;
   updateProcessingMessage: (messageId: string, updates: Partial<ProcessingMessageContent>) => void;
   toggleProcessingExpanded: (messageId: string) => void;
   clearMessages: () => void;

@@ -26,13 +26,42 @@ export function DashboardLayout() {
   });
 
   // ✅ 图片生成完成回调：只更新图片URL，核心数据不变
-  const handleImageGenerated = useCallback((imageUrl: string) => {
+  const handleImageGenerated = useCallback((payload: {
+    imageUrl: string;
+    chartId?: string;
+    messageId?: string;
+    title?: string;
+  }) => {
+    const { imageUrl, chartId, messageId, title } = payload;
+
     console.log("✅ [DashboardLayout] 图片生成完成 - 更新图片URL:", {
       imageUrl: imageUrl.substring(0, 50) + "...",
+      chartId,
+      messageId,
+      title,
     });
 
     setCurrentChart(prev => {
       if (!prev) return null;
+
+      if (messageId && prev.messageId && messageId !== prev.messageId) {
+        console.warn("⚠️ [DashboardLayout] 忽略非当前图表的图片更新", {
+          currentMessageId: prev.messageId,
+          incomingMessageId: messageId,
+          chartId,
+          title,
+        });
+        return prev;
+      }
+
+      if (chartId && prev.chartId && chartId !== prev.chartId) {
+        console.warn("⚠️ [DashboardLayout] 忽略chartId不匹配的图片更新", {
+          currentChartId: prev.chartId,
+          incomingChartId: chartId,
+          title,
+        });
+        return prev;
+      }
 
       // 检查是否真的需要更新，避免不必要的重新渲染
       if (prev.imageInfo?.localBlobUrl === imageUrl) {
@@ -52,13 +81,22 @@ export function DashboardLayout() {
 
   // 🎯 注册自动导出完成后的图片更新回调
   useEffect(() => {
-    const imageUpdateHandler = (imageUrl: string) => {
+    const imageUpdateHandler = (payload: {
+      imageUrl: string;
+      chartId: string;
+      messageId?: string;
+      title: string;
+    }) => {
+      const { imageUrl, chartId, messageId, title } = payload;
       console.log("🎯 [DashboardLayout] 收到自动导出的图片更新:", {
         imageUrl: imageUrl.substring(0, 50) + "...",
+        chartId,
+        messageId,
+        title,
       });
 
       // 使用现有的handleImageGenerated逻辑
-      handleImageGenerated(imageUrl);
+      handleImageGenerated(payload);
     };
 
     globalChartManager.setCurrentChartImageUpdateHandler(imageUpdateHandler);

@@ -2,6 +2,7 @@
 // 整合所有组件，实现三种场景的统一处理
 
 import { ChartType } from "@/types/chart";
+import { ConversationContextPayload, ConversationMessageSummary } from "@/types";
 import { AIService } from "@/lib/ai/types";
 import { createServiceFromEnv } from "@/lib/ai/service-factory";
 import {
@@ -11,11 +12,23 @@ import {
   ChartGenerationError,
   AIChartError,
   AIChartSystemConfig,
+  UnifiedDataStructure,
 } from "./types";
+import { CHART_TYPE_LABELS } from "@/constants/chart";
 import { InputRouter, IInputRouter } from "./input-router";
 import { DataExtractor, IDataExtractor } from "./data-extractor";
 import { IntentAnalyzer, IIntentAnalyzer } from "./intent-analyzer";
 import { ChartGenerator, IChartGenerator } from "./chart-generator";
+import { getUnifiedDataSnapshot, storeUnifiedDataSnapshot } from "@/lib/conversation-memory";
+
+const CHART_TYPE_KEYWORDS: Record<ChartType, string[]> = {
+  bar: ["bar", "bar chart", "柱状", "条形", "柱状图", "条形图", "柱图", "对比", "比较"],
+  line: ["line", "line chart", "折线", "折线图", "趋势", "走势", "曲线", "line graph"],
+  pie: ["pie", "pie chart", "饼图", "饼状图", "占比", "比例", "份额", "donut"],
+  area: ["area", "area chart", "面积图", "面积", "堆叠", "stacked"],
+  radar: ["radar", "radar chart", "雷达", "蛛网", "极坐标", "spider"],
+  radial: ["radial", "radial chart", "径向", "环形", "仪表", "gauge", "progress ring"],
+};
 
 /**
  * AI图表系统输入
@@ -23,6 +36,8 @@ import { ChartGenerator, IChartGenerator } from "./chart-generator";
 export interface AIChartSystemInput {
   prompt: string;
   files?: File[];
+  conversation?: ConversationContextPayload;
+  sessionId?: string;
 }
 
 /**
@@ -82,6 +97,7 @@ export class AIChartDirector implements IAIChartDirector {
     console.log("🎯 [AIChartDirector] 开始处理图表生成请求:", {
       promptLength: input.prompt.length,
       fileCount: input.files?.length || 0,
+      conversationHistory: input.conversation?.history?.length || 0,
     });
 
     try {
@@ -92,6 +108,15 @@ export class AIChartDirector implements IAIChartDirector {
       // 步骤2: 根据场景处理数据
       console.log("🐛🎯 [AIChartDirector] 开始数据提取和统一化...");
       const unifiedData = await this.extractAndUnifyData(scenario, input);
+
+      const sessionId = input.sessionId || input.conversation?.sessionId;
+      if (sessionId) {
+        storeUnifiedDataSnapshot(sessionId, {
+          data: unifiedData.data,
+          schema: unifiedData.schema,
+          metadata: unifiedData.metadata,
+        });
+      }
       console.log("✅🐛🎯 [AIChartDirector] 数据提取完成:", {
         rows: unifiedData.data.length,
         fields: unifiedData.schema.fields.length,
@@ -104,7 +129,34 @@ export class AIChartDirector implements IAIChartDirector {
       });
 
       // 步骤3: 分析用户意图
-      const chartIntent = await this.analyzeIntent(scenario, input, unifiedData);
+      let chartIntent = await this.analyzeIntent(scenario, input, unifiedData);
+
+      // 如果用户在prompt中明确指定了图表类型，则优先遵循
+      const explicitType = detectChartTypeFromPrompt(input.prompt);
+      if (explicitType && explicitType !== chartIntent.chartType) {
+        console.log("🧭 [AIChartDirector] 检测到用户显式指定图表类型，覆盖AI建议:", {
+          requested: explicitType,
+          previous: chartIntent.chartType,
+        });
+
+        const chartLabel = getChartLabel(explicitType);
+        const previousSuggestions = chartIntent.suggestions || {
+          title: chartLabel,
+          description: "",
+          insights: [],
+        };
+
+        chartIntent = {
+          ...chartIntent,
+          chartType: explicitType,
+          reasoning: `${chartIntent.reasoning || "AI分析"}；用户显式请求 ${explicitType} 图`,
+          suggestions: {
+            ...previousSuggestions,
+            title: chartLabel,
+          },
+        };
+      }
+
       console.log("✅ [AIChartDirector] 意图分析完成:", {
         chartType: chartIntent.chartType,
         confidence: chartIntent.confidence,
@@ -207,13 +259,13 @@ export class AIChartDirector implements IAIChartDirector {
   private async routeAndValidateInput(input: AIChartSystemInput): Promise<ScenarioType> {
     console.log("🔍 [Stage1] 输入路由和验证...");
 
-    const { prompt, files = [] } = input;
+    const { prompt, files = [], conversation } = input;
 
     // 场景分类
-    const scenario = this.inputRouter.classifyScenario(prompt, files);
+    const scenario = this.inputRouter.classifyScenario(prompt, files, conversation);
 
     // 输入验证
-    const validation = this.inputRouter.validateInput(scenario, prompt, files);
+    const validation = this.inputRouter.validateInput(scenario, prompt, files, conversation);
     if (!validation.isValid) {
       throw new AIChartError(
         "input_validation",
@@ -237,14 +289,18 @@ export class AIChartDirector implements IAIChartDirector {
   private async extractAndUnifyData(scenario: ScenarioType, input: AIChartSystemInput) {
     console.log("📊 [Stage2] 数据提取和统一...");
 
-    const { prompt, files = [] } = input;
+    const { prompt, files = [], conversation } = input;
 
     switch (scenario) {
       case "PROMPT_ONLY":
-        return this.handlePromptOnlyData(prompt);
+        return this.handlePromptOnlyData(
+          prompt,
+          conversation,
+          input.sessionId || conversation?.sessionId
+        );
 
       case "PROMPT_WITH_FILE":
-        return this.handlePromptWithFileData(prompt, files);
+        return this.handlePromptWithFileData(prompt, files, conversation);
 
       case "FILE_ONLY":
         return this.handleFileOnlyData(files);
@@ -261,13 +317,20 @@ export class AIChartDirector implements IAIChartDirector {
   /**
    * 步骤3: 意图分析
    */
-  private async analyzeIntent(scenario: ScenarioType, input: AIChartSystemInput, data: any) {
+  private async analyzeIntent(
+    scenario: ScenarioType,
+    input: AIChartSystemInput,
+    data: UnifiedDataStructure
+  ) {
     console.log("🎯 [Stage3] 意图分析...");
 
     switch (scenario) {
       case "PROMPT_ONLY":
       case "PROMPT_WITH_FILE":
-        return this.intentAnalyzer.analyzeChartIntent(input.prompt, data);
+        return this.intentAnalyzer.analyzeChartIntent(
+          this.composePromptWithContext(input.prompt, input.conversation, data),
+          data
+        );
 
       case "FILE_ONLY":
         return this.intentAnalyzer.suggestBestVisualization(data);
@@ -284,7 +347,11 @@ export class AIChartDirector implements IAIChartDirector {
   /**
    * 处理仅Prompt场景 - 优化后的流程
    */
-  private async handlePromptOnlyData(prompt: string) {
+  private async handlePromptOnlyData(
+    prompt: string,
+    conversation?: ConversationContextPayload,
+    sessionId?: string
+  ) {
     console.log("📝 [PromptOnly] 处理仅Prompt场景...");
 
     // 步骤1: 尝试从prompt提取结构化数据
@@ -298,12 +365,34 @@ export class AIChartDirector implements IAIChartDirector {
       });
     }
 
+    // 步骤1.5: 如果没有新数据但存在已有图表，复用上一张图表的数据
+    if (sessionId) {
+      const snapshot = getUnifiedDataSnapshot(sessionId);
+      if (snapshot) {
+        console.log("🗃️ [PromptOnly] 复用会话缓存的结构化数据", {
+          rows: snapshot.data.length,
+          fields: Object.keys(snapshot.schema?.fields ?? {}).length,
+        });
+        return this.dataExtractor.normalizeData(snapshot.data, "prompt", {
+          fileInfo: undefined,
+          ...snapshot.metadata,
+        });
+      }
+    }
+
+    if (conversation?.lastChart?.data && conversation.lastChart.data.length > 0) {
+      console.log("🔄 [PromptOnly] 未检测到新数据，复用最近图表的数据");
+      return this.dataExtractor.normalizeData(conversation.lastChart.data, "prompt", {
+        fileInfo: undefined,
+      });
+    }
+
     // 步骤2: 未找到结构化数据，进行图表意图分析并生成模拟数据
     console.log("🎯 [PromptOnly] 未找到结构化数据，开始图表意图分析...");
 
     try {
       // 分析图表意图（不依赖数据结构）
-      const chartIntent = await this.analyzeIntentFromPromptOnly(prompt);
+      const chartIntent = await this.analyzeIntentFromPromptOnly(prompt, conversation);
       console.log("✅ [PromptOnly] 图表意图分析完成:", {
         chartType: chartIntent.chartType,
         reasoning: chartIntent.reasoning,
@@ -344,10 +433,14 @@ export class AIChartDirector implements IAIChartDirector {
   /**
    * 从prompt分析图表意图（不依赖数据结构）
    */
-  private async analyzeIntentFromPromptOnly(prompt: string) {
+  private async analyzeIntentFromPromptOnly(
+    prompt: string,
+    conversation?: ConversationContextPayload
+  ) {
     console.log("🎯 [PromptOnlyIntent] 开始纯文本意图分析...");
 
     try {
+      const composedPrompt = this.composePromptWithContext(prompt, conversation);
       // 使用AI分析用户意图
       const systemPrompt = `你是一个专业的数据可视化专家。从用户的描述中分析他们的图表需求。
 
@@ -378,7 +471,7 @@ export class AIChartDirector implements IAIChartDirector {
 }`;
 
       const response = await this.aiService.chat({
-        messages: [{ role: "user", content: prompt }],
+        messages: [{ role: "user", content: composedPrompt }],
         systemPrompt,
         params: {
           temperature: 0.2, // 较低温度确保一致性
@@ -579,7 +672,11 @@ export class AIChartDirector implements IAIChartDirector {
   /**
    * 处理Prompt+文件场景
    */
-  private async handlePromptWithFileData(prompt: string, files: File[]) {
+  private async handlePromptWithFileData(
+    prompt: string,
+    files: File[],
+    _conversation?: ConversationContextPayload
+  ) {
     console.log("📁📝 [PromptWithFile] 处理Prompt+文件场景...");
 
     // 提取文件数据
@@ -626,6 +723,113 @@ export class AIChartDirector implements IAIChartDirector {
         type: files[0].type,
       },
     });
+  }
+
+  /**
+   * 构建带上下文的Prompt，指导AI在多轮对话中保持状态
+   */
+  private composePromptWithContext(
+    prompt: string,
+    conversation?: ConversationContextPayload,
+    data?: UnifiedDataStructure
+  ): string {
+    if (!conversation) {
+      return prompt;
+    }
+
+    const sections: string[] = [];
+
+    const historySummary = this.buildHistorySummary(conversation.history);
+    if (historySummary) {
+      sections.push(`Recent conversation context:\n${historySummary}`);
+    }
+
+    if (conversation.lastChart) {
+      const chart = conversation.lastChart;
+      sections.push(
+        [
+          "Existing chart snapshot:",
+          `- Title: ${chart.title}`,
+          `- Type: ${chart.chartType}`,
+          chart.description ? `- Description: ${chart.description}` : undefined,
+          `- Data sample:\n${this.formatDataSample(chart.data)}`,
+          `- Config highlights: ${this.formatConfigHighlights(chart.config)}`,
+        ]
+          .filter(Boolean)
+          .join("\n")
+      );
+    } else if (data) {
+      sections.push(
+        [
+          "Current data preview:",
+          `- Rows: ${data.data.length}`,
+          `- Fields: ${data.schema.fields.map(f => f.name).join(", ")}`,
+          `- Sample:\n${this.formatDataSample(data.data)}`,
+        ].join("\n")
+      );
+    }
+
+    sections.push(
+      "Instructions: When possible, treat the user's request as a continuation of the existing chart. Modify colors, chart type, or configuration incrementally unless the user explicitly provides new data. Keep previously inferred data and context consistent."
+    );
+
+    sections.push(`Current user request:\n${prompt}`);
+
+    return sections.join("\n\n");
+  }
+
+  private buildHistorySummary(history: ConversationMessageSummary[] = []): string {
+    if (!history || history.length === 0) {
+      return "";
+    }
+
+    return history
+      .slice(-6)
+      .map(message => {
+        switch (message.kind) {
+          case "user_text":
+            return `User: ${this.truncateText(message.text || "", 140)}`;
+          case "assistant_chart":
+            return `Assistant chart: ${message.chart?.title || "Chart"} (${message.chart?.chartType})`;
+          case "assistant_processing":
+            return `Assistant processing: ${this.truncateText(message.text || "Processing", 100)}`;
+          case "assistant_text":
+            return `Assistant: ${this.truncateText(message.text || "", 140)}`;
+          default:
+            return null;
+        }
+      })
+      .filter((entry): entry is string => Boolean(entry))
+      .join("\n");
+  }
+
+  private formatDataSample(data: any[] = [], limit = 3): string {
+    if (!Array.isArray(data) || data.length === 0) {
+      return "(no data sample)";
+    }
+
+    try {
+      return JSON.stringify(data.slice(0, limit), null, 2);
+    } catch (error) {
+      console.warn("[AIChartDirector] Failed to stringify data sample", error);
+      return "(data sample unavailable)";
+    }
+  }
+
+  private formatConfigHighlights(config: Record<string, any> = {}): string {
+    const keys = Object.keys(config);
+    if (keys.length === 0) {
+      return "none";
+    }
+
+    const highlightedKeys = keys.slice(0, 8).join(", ");
+    const extra = keys.length > 8 ? ` +${keys.length - 8} more` : "";
+    return `${highlightedKeys}${extra}`;
+  }
+
+  private truncateText(text: string, maxLength: number): string {
+    if (!text) return "";
+    return text.length > maxLength ? `${text.slice(0, maxLength - 3)}...` : text;
   }
 
   /**
@@ -701,4 +905,41 @@ export async function generateChart(input: AIChartSystemInput): Promise<AIChartR
 
 export async function getSystemStatus() {
   return aiChartDirector.getSystemStatus();
+}
+
+function detectChartTypeFromPrompt(prompt: string): ChartType | null {
+  if (!prompt) {
+    return null;
+  }
+
+  const normalized = prompt.toLowerCase();
+  let bestMatch: { type: ChartType; score: number } | null = null;
+
+  for (const [chartType, keywords] of Object.entries(CHART_TYPE_KEYWORDS) as [
+    ChartType,
+    string[],
+  ][]) {
+    let score = 0;
+    for (const keyword of keywords) {
+      if (!keyword) continue;
+      if (normalized.includes(keyword.toLowerCase())) {
+        score += keyword.length >= 2 ? 2 : 1;
+      }
+    }
+
+    if (score > 0) {
+      if (!bestMatch || score > bestMatch.score) {
+        bestMatch = { type: chartType, score };
+      }
+    }
+  }
+
+  return bestMatch?.type ?? null;
+}
+
+function getChartLabel(chartType: ChartType): string {
+  const labels = CHART_TYPE_LABELS as Record<ChartType, { en?: string; zh?: string }>;
+  const entry = labels[chartType];
+  if (!entry) return chartType;
+  return entry.zh || entry.en || chartType;
 }
