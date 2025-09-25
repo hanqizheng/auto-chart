@@ -14,6 +14,7 @@ import { fileToBase64 } from "@/lib/session-serializer";
 import { v4 as uuidv4 } from "uuid";
 import { DEMO_SESSION_LIST, getDemoSession } from "@/data/demo-sessions";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { FeedBack } from "@/components/feedback";
 import { HorizontalDemoSection } from "@/components/horizontal-demo-section";
 import { CustomizableChartSection } from "@/components/customizable-chart-section";
 import TextType from "@/components/ui/TextType";
@@ -250,7 +251,8 @@ export default function HomePage() {
             <h1 className="text-xl font-bold">Auto Chart</h1>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
+            <FeedBack />
             <ThemeToggle />
           </div>
         </div>
